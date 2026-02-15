@@ -54,6 +54,28 @@
 .modal-section{ margin-top:16px; }
 .modal-section-title{ font-weight:900; letter-spacing:0.2px; color:#333; margin-bottom:8px; }
 
+
+
+/* ============================
+   Modal frequency list — responsive (v15.4.8.3)
+   Avoid horizontal scroll on small screens
+   ============================ */
+.freq-listwrap{ margin-top:6px; }
+.freq-row{ display:flex; gap:10px; padding:8px 0; border-bottom:1px solid #eee; align-items:flex-start; }
+.freq-hz{ min-width:140px; font-weight:900; }
+.freq-hz-label{ display:flex; align-items:center; gap:10px; cursor:pointer; }
+.freq-toggle{ margin:0; }
+.freq-meta{ flex:1; min-width:0; }
+.freq-title{ font-size:0.9rem; }
+.freq-src{ font-size:0.8rem; color:#666; }
+.freq-dur{ min-width:70px; text-align:right; font-weight:800; color:#2c3e50; white-space:nowrap; }
+
+@media (max-width: 420px){
+  .freq-row{ flex-direction:column; gap:6px; }
+  .freq-hz{ min-width:0; }
+  .freq-dur{ min-width:0; text-align:left; }
+}
+
 /* Acupressure cards */
 .acup-grid{ display:grid; grid-template-columns:1fr; gap:10px; }
 .acup-card{ background:#fff; border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 2px rgba(0,0,0,0.04); }

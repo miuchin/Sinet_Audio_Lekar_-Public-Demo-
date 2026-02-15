@@ -1,0 +1,276 @@
+
+/* SINET Audio - additions v14.8 */
+
+/* NOW PLAYING list (skip checkboxes) */
+.nowplaying-panel{
+  margin-top:10px;
+  padding:10px;
+  border-top:1px solid rgba(255,255,255,0.12);
+  max-height:45vh;
+  overflow:auto;
+}
+.nowplaying-title{ font-weight:700; margin-bottom:8px; }
+.nowplaying-list{ display:flex; flex-direction:column; gap:6px; }
+.np-row{ padding:6px 8px; border-radius:10px; background:rgba(255,255,255,0.06); }
+.np-row.active{ outline:2px solid rgba(255,255,255,0.25); }
+.np-row.disabled{ opacity:0.5; }
+.np-row label{ display:flex; gap:10px; align-items:flex-start; cursor:pointer; }
+.np-row .muted{ opacity:0.8; font-size:12px; }
+.nowplaying-hint{ margin-top:8px; font-size:12px; opacity:0.85; }
+
+/* Modal frequency checkbox */
+.freq-row .freq-toggle{ margin-right:10px; }
+
+/* ---------------------------
+   UX POLISH (Svetski a naše)
+   --------------------------- */
+
+/* Jasniji status ispod plejera */
+.player-status{opacity:1;font-size:0.9rem;padding-top:6px;font-weight:600;}
+.player-status small{opacity:0.85;font-weight:500;}
+
+/* Dugme "LISTA" da bude jasno, ne belo/blank */
+#btn-nowlist{
+  background:rgba(255,255,255,0.92);
+  color:#1f2d3d;
+  border:1px solid rgba(0,0,0,0.18);
+  font-weight:800;
+  letter-spacing:0.2px;
+}
+#btn-nowlist:hover{ filter:brightness(0.97); }
+
+/* Timer red - malo veći kontrast */
+.player-dock .timers-row{opacity:0.95; font-weight:700;}
+.player-dock .timers-row span{font-variant-numeric:tabular-nums;}
+
+/* NOW PLAYING panel - lepše kartice */
+.np-row{background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08);} 
+.np-row.active{outline:2px solid rgba(255,255,255,0.32);} 
+
+/* ============================
+   STL + ACUPRESSURE UI (v15.1)
+   ============================ */
+
+.modal-section{ margin-top:16px; }
+.modal-section-title{ font-weight:900; letter-spacing:0.2px; color:#333; margin-bottom:8px; }
+
+/* Acupressure cards */
+.acup-grid{ display:grid; grid-template-columns:1fr; gap:10px; }
+.acup-card{ background:#fff; border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+.acup-head{ display:flex; gap:10px; align-items:center; margin-bottom:6px; }
+.acup-code{ font-weight:900; background:#eef6ff; color:#1b5e8a; padding:4px 8px; border-radius:10px; border:1px solid #d8ebff; }
+.acup-name{ font-weight:800; }
+.acup-loc{ font-size:0.9rem; color:#333; margin-top:6px; }
+.acup-how{ font-size:0.9rem; color:#555; margin-top:6px; }
+.acup-actions{ margin-top:10px; display:flex; justify-content:flex-end; }
+.acup-btn{ border:none; background:#4A90E2; color:white; font-weight:900; padding:10px 12px; border-radius:10px; cursor:pointer; }
+.acup-btn:active{ transform:scale(0.98); }
+
+/* Viewer */
+.acup-view{ display:flex; flex-direction:column; gap:12px; margin-top:12px; }
+.acup-imgwrap{ position:relative; width:100%; background:#fafafa; border:1px solid #eee; border-radius:14px; overflow:hidden; min-height:180px; display:flex; align-items:center; justify-content:center; }
+#acup-img{ width:100%; height:auto; display:none; }
+.acup-noimg{ padding:18px; color:#777; font-weight:700; text-align:center; }
+.acup-marker{ position:absolute; width:18px; height:18px; border-radius:50%; background:rgba(231,76,60,0.95); border:2px solid white; transform:translate(-50%, -50%); box-shadow:0 2px 8px rgba(0,0,0,0.25); }
+.acup-text{ font-size:0.95rem; color:#333; }
+.acup-meta{ font-weight:800; margin-bottom:8px; }
+.acup-howtext{ white-space:pre-wrap; line-height:1.35; }
+.acup-src{ margin-top:10px; font-size:0.8rem; color:#666; word-break:break-word; }
+
+
+
+/* ============================
+   v15.3 — Seniors presets + clearer catalog
+   ============================ */
+
+/* Preset chips grid (compact, elder-friendly) */
+.preset-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:14px;
+}
+.preset-chip{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:12px 10px;
+  box-shadow:0 1px 2px rgba(0,0,0,0.05);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  user-select:none;
+}
+.preset-chip:active{ transform:scale(0.99); }
+.preset-chip .ico{
+  width:34px; height:34px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:10px;
+  background:#eaf6ff;
+  border:1px solid #d8ebff;
+  font-size:18px;
+}
+.preset-chip .txt{
+  flex:1;
+  min-width:0;
+}
+.preset-chip .txt .t{
+  font-weight:900;
+  color:#2c3e50;
+  font-size:0.95rem;
+  line-height:1.15;
+}
+.preset-chip .txt .s{
+  color:#777;
+  font-size:0.78rem;
+  margin-top:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.preset-morebar{
+  display:flex;
+  gap:10px;
+  margin:6px 0 18px 0;
+}
+.preset-morebar button{
+  flex:1;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  background:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+
+/* Catalog "Oblasti" cards */
+.oblast-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.oblast-card{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:14px;
+  padding:12px;
+  box-shadow:0 1px 2px rgba(0,0,0,0.05);
+  cursor:pointer;
+}
+.oblast-card:active{ transform:scale(0.99); }
+.oblast-title{ font-weight:900; color:#2c3e50; }
+.oblast-count{ font-size:0.8rem; color:#777; margin-top:4px; }
+.oblast-cta{ margin-top:10px; font-size:0.85rem; color:#4A90E2; font-weight:900; }
+
+/* Catalog list items (less "bezlično") */
+.cat-item{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:10px;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  box-shadow:0 1px 2px rgba(0,0,0,0.04);
+}
+.cat-item .cat-main{ flex:1; min-width:0; cursor:pointer; }
+.cat-item .cat-title{ font-weight:900; color:#2c3e50; line-height:1.15; }
+.cat-item .cat-sub{ margin-top:4px; color:#777; font-size:0.85rem; line-height:1.25; }
+.btn-add-playlist{
+  border:none;
+  background:#2ecc71;
+  color:#fff;
+  font-weight:900;
+  border-radius:10px;
+  min-width:120px;
+  height:44px;
+  padding:0 12px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  white-space:nowrap;
+}
+.btn-add-playlist:active{ transform:scale(0.98); }
+.cat-actions{ display:flex; flex-direction:column; gap:8px; }
+.cat-mini-btn{
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:10px;
+  min-width:120px;
+  height:44px;
+  padding:0 12px;
+  cursor:pointer;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  white-space:nowrap;
+}
+.cat-mini-btn:active{ transform:scale(0.98); }
+
+/* Backbar inside catalog */
+.catalog-backbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:10px 0 12px 0;
+}
+.catalog-backbar .backbtn{
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:10px;
+  padding:10px 12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.catalog-backbar .label{
+  font-weight:900;
+  color:#2c3e50;
+}
+
+/* Player status details block */
+.player-status .line{
+  display:block;
+  margin-top:3px;
+  font-weight:700;
+  opacity:0.95;
+}
+.player-status .muted{
+  opacity:0.8;
+  font-weight:600;
+  font-size:0.82rem;
+}
+
+
+
+/* Player active frequency details (STL v1.1) */
+.player-active-meta{
+  margin-top:8px;
+  padding-top:8px;
+  border-top:1px solid rgba(255,255,255,0.12);
+}
+.player-active-meta .pam-line{ display:block; margin-top:3px; }
+.player-active-meta .pam-main{ font-weight:900; }
+.player-active-meta .pam-muted{
+  opacity:0.85;
+  font-weight:600;
+  font-size:0.82rem;
+}
+.player-active-meta a{ color:#bfe1ff; text-decoration:underline; word-break:break-word; }
+
+/* v15.4.7 — labels for senior-friendly buttons */
+.btn-label{ font-size:0.85rem; font-weight:900; }
+
+@media (max-width:520px){
+  .btn-add-playlist, .cat-mini-btn{
+    min-width:44px;
+    width:44px;
+    padding:0;
+  }
+  .btn-label{ display:none; }
+}

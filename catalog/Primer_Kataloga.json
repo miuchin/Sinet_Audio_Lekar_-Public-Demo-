@@ -1,0 +1,470 @@
+{
+  "meta": {
+    "migratedFrom": "SINET_CATALOG_PRO_2026_EXTENDED.json",
+    "migratedAt": "2026-02-03T07:42:57.352Z",
+    "itemCount": 412
+  },
+  "items": [
+    {
+      "uid": 1,
+      "id": "varenje-zatvor",
+      "version": "1.0",
+      "status": "active",
+      "oblast": "Varenje",
+      "podOblast": null,
+      "simptom": "Zatvor",
+      "opis": "podrška varenju",
+      "frekvencije": [
+        {
+          "value": 95,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 141,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 285,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 99.75,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 148.05,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 299.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 104.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 155.1,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 313.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 109.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 162.15,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 327.75,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 114,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 169.2,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 342,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 118.75,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 176.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 356.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 123.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 183.3,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        }
+      ],
+      "tipFrekvencija": "srednje",
+      "subAudio": "mix",
+      "trajanjePoFrekvencijiMin": 5,
+      "ukupnoTrajanjeMin": 100,
+      "seniorQuick": false,
+      "quickGroup": "Varenje",
+      "favoritesDefault": false,
+      "kontraindikacije": "—",
+      "bezbednost": "Ne zamenjuje terapiju.",
+      "disclaimerLevel": "standard",
+      "izvori": [
+        "biofield",
+        "Rife",
+        "Clark",
+        "SINET",
+        "Legacy"
+      ],
+      "tags": [
+        "varenje",
+        "zatvor"
+      ],
+      "lastReviewed": "2026-02-03"
+    },
+    {
+      "uid": 2,
+      "id": "varenje-nadutost",
+      "version": "1.0",
+      "status": "active",
+      "oblast": "Varenje",
+      "podOblast": null,
+      "simptom": "Nadutost",
+      "opis": "umirenje creva",
+      "frekvencije": [
+        {
+          "value": 62,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 88,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 125,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 65.1,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 92.4,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 131.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 68.2,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 96.8,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 137.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 71.3,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 101.2,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 143.75,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 74.4,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 105.6,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 150,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 77.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 110,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 156.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 80.6,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 114.4,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        }
+      ],
+      "tipFrekvencija": "srednje",
+      "subAudio": "mix",
+      "trajanjePoFrekvencijiMin": 5,
+      "ukupnoTrajanjeMin": 100,
+      "seniorQuick": false,
+      "quickGroup": "Varenje",
+      "favoritesDefault": false,
+      "kontraindikacije": "—",
+      "bezbednost": "Ne zamenjuje terapiju.",
+      "disclaimerLevel": "standard",
+      "izvori": [
+        "biofield",
+        "Rife",
+        "Clark",
+        "SINET",
+        "Legacy"
+      ],
+      "tags": [
+        "varenje",
+        "nadutost"
+      ],
+      "lastReviewed": "2026-02-03"
+    },
+    {
+      "uid": 3,
+      "id": "varenje-zgaravica",
+      "version": "1.0",
+      "status": "active",
+      "oblast": "Varenje",
+      "podOblast": null,
+      "simptom": "Žgaravica",
+      "opis": "smanjenje kiselosti",
+      "frekvencije": [
+        {
+          "value": 47,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 68,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 92,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 49.35,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 71.4,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 96.6,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 51.7,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 74.8,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 101.2,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 54.05,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 78.2,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 105.8,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 56.4,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 81.6,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 110.4,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 58.75,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 85,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 115,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 61.1,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 88.4,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        }
+      ],
+      "tipFrekvencija": "srednje",
+      "subAudio": "mix",
+      "trajanjePoFrekvencijiMin": 5,
+      "ukupnoTrajanjeMin": 100,
+      "seniorQuick": false,
+      "quickGroup": "Varenje",
+      "favoritesDefault": false,
+      "kontraindikacije": "—",
+      "bezbednost": "Ne zamenjuje terapiju.",
+      "disclaimerLevel": "standard",
+      "izvori": [
+        "biofield",
+        "Rife",
+        "Clark",
+        "SINET",
+        "Legacy"
+      ],
+      "tags": [
+        "žgaravica",
+        "varenje"
+      ],
+      "lastReviewed": "2026-02-03"
+    },
+    {

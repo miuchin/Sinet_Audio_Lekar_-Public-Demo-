@@ -1,0 +1,155 @@
+ {
+      "uid": 412,
+      "id": "promene-zivotnih-faza-kraj-zivota-priprema",
+      "version": "1.0",
+      "status": "active",
+      "oblast": "Promene životnih faza",
+      "podOblast": null,
+      "simptom": "Kraj života (priprema)",
+      "opis": "emocionalna i duhovna priprema",
+      "frekvencije": [
+        {
+          "value": 175,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 350,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 525,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 183.75,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 367.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 551.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 192.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 385,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 577.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 201.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 402.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 603.75,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 210,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 420,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 630,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 218.75,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 437.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 656.25,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 227.5,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        },
+        {
+          "value": 455,
+          "svrha": "Podrška / informativna frekvencija",
+          "izvor": "Legacy",
+          "enabled": true
+        }
+      ],
+      "tipFrekvencija": "visoko",
+      "subAudio": "mix",
+      "trajanjePoFrekvencijiMin": 5,
+      "ukupnoTrajanjeMin": 100,
+      "seniorQuick": false,
+      "quickGroup": "Promene životnih faza",
+      "favoritesDefault": false,
+      "kontraindikacije": "—",
+      "bezbednost": "Ne zamenjuje terapiju.",
+      "disclaimerLevel": "standard",
+      "izvori": [
+        "biofield",
+        "Rife",
+        "Clark",
+        "SINET",
+        "Legacy"
+      ],
+      "tags": [
+        "promene životnih faza",
+        "kraj života (priprema)"
+      ],
+      "lastReviewed": "2026-02-03"
+    }
+  ]

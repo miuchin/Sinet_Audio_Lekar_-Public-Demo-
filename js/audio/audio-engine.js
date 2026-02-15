@@ -45,7 +45,16 @@ export class SinetAudioEngine {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       this.audioContext = new AudioContext();
       this.masterGain = this.audioContext.createGain();
-      this.masterGain.connect(this.audioContext.destination);
+      // Split output: direct -> destination, and media -> MediaStreamDestination (iOS background best-effort)
+      this.outGainDirect = this.audioContext.createGain();
+      this.outGainMedia = this.audioContext.createGain();
+      this.mediaDest = this.audioContext.createMediaStreamDestination();
+      this.outGainDirect.gain.value = 1;
+      this.outGainMedia.gain.value = 0;
+      this.masterGain.connect(this.outGainDirect);
+      this.outGainDirect.connect(this.audioContext.destination);
+      this.masterGain.connect(this.outGainMedia);
+      this.outGainMedia.connect(this.mediaDest);
       this.masterGain.gain.value = 0.25; // louder default
     }
     if (this.audioContext.state === "suspended") {
@@ -302,4 +311,41 @@ getStats() {
   getState() {
     return this._buildStats(this._resumeOffsetSec);
   }
+  // Enable HTMLMediaElement output via MediaStream (best-effort; helps iOS lock-screen/background in some cases)
+  enableMediaOutput(audioEl) {
+    this.init();
+    if (!this.mediaDest || !this.outGainMedia || !this.outGainDirect) return false;
+    if (!audioEl) return false;
+    try {
+      audioEl.srcObject = this.mediaDest.stream;
+      audioEl.preload = "auto";
+      audioEl.playsInline = true;
+      audioEl.setAttribute("playsinline", "");
+      audioEl.muted = false;
+      // Switch output: prefer media element, mute direct path to avoid double audio
+      this.outGainMedia.gain.value = 1;
+      this.outGainDirect.gain.value = 0;
+
+      const p = audioEl.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+      return true;
+    } catch (e) {
+      // Fallback: keep direct output
+      try { this.outGainDirect.gain.value = 1; this.outGainMedia.gain.value = 0; } catch(_) {}
+      return false;
+    }
+  }
+
+  disableMediaOutput() {
+    try {
+      if (this.outGainDirect) this.outGainDirect.gain.value = 1;
+      if (this.outGainMedia) this.outGainMedia.gain.value = 0;
+    } catch(_) {}
+  }
+
+  getMediaStream() {
+    this.init();
+    return this.mediaDest ? this.mediaDest.stream : null;
+  }
+
 }

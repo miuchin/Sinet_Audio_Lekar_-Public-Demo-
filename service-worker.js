@@ -4,7 +4,7 @@
     Author: miuchins & SINET AI
 */
 
-const CACHE_NAME = 'sinet-audio-v15.4.8.0';
+const CACHE_NAME = 'sinet-audio-v15.4.8.2';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -17,9 +17,9 @@ const ASSETS_TO_CACHE = [
 
   // JS (cache-bust matches index.html)
   './js/db/indexed-db.js?v=15.4',
-  './js/app.js?v=15.4.8.0',
-  './js/audio/audio-engine.js?v=15.4.8.0',
-  './js/catalog/stl-adapter.js?v=15.4.8.0',
+  './js/app.js?v=15.4.8.2',
+  './js/audio/audio-engine.js?v=15.4.8.2',
+  './js/catalog/stl-adapter.js?v=15.4.8.2',
 
   // Module imports (may be requested without query)
   './js/app.js',
@@ -34,14 +34,16 @@ const ASSETS_TO_CACHE = [
   './data/media/acupressure/registry.json',
 
   './manifest.json',
-  'https://cdn-icons-png.flaticon.com/512/3063/3063822.png'
-];
+  ];
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    await Promise.all(ASSETS_TO_CACHE.map(async (asset) => {
+      try { await cache.add(asset); } catch (e) { /* skip missing assets */ }
+    }));
+  })());
 });
 
 self.addEventListener('activate', (event) => {

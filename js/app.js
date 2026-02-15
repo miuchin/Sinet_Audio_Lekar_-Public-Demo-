@@ -1,15 +1,15 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.4.8.0 (iOS background hardening)
+  Version: 15.4.8.2 (iOS background hardening)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.4.8.0';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.4.8.2';
 import { normalizeCatalogPayload } from './catalog/stl-adapter.js';
 
-const SINET_APP_VERSION = "15.4.8.0";
+const SINET_APP_VERSION = "15.4.8.2";
 
 /** iOS detection (iPhone/iPad/iPod + iPadOS masquerading as Mac) */
 function isIOSDevice() {
@@ -78,6 +78,9 @@ class App {
     this._isIOS = isIOSDevice();
     this._iosKeeper = new IosAudioSessionKeeper(this._isIOS);
     this._iosHintShown = false;
+
+    // iOS: optional MediaStream -> <audio> output (best-effort)
+    this._iosMediaOutEl = null;
 
     // Media Session (best-effort, varies by browser/iOS)
     this._mediaSessionReady = false;
@@ -162,6 +165,32 @@ class App {
     await this.renderResumeHint();
     this.log("APP", "Init", "OK");
   }
+
+  // iOS/Safari: explicit user-gesture unlock (keeps UI simple: tap once, then play)
+  unlockAudio() {
+    try { this.audio.init(); } catch(_) {}
+    try { this._ensurePlaybackSession(); } catch(_) {}
+    try {
+      const b = document.getElementById("unlock-audio-btn");
+      if (b) b.style.display = "none";
+    } catch(_) {}
+    try { this.showToast("🔊 Audio aktiviran. Sada možeš ▶ POKRENI."); } catch(_) { try { alert("Audio aktiviran!"); } catch(__) {} }
+  }
+
+  _ensureIosMediaOutEl() {
+    if (this._iosMediaOutEl) return this._iosMediaOutEl;
+    const el = document.createElement("audio");
+    el.preload = "auto";
+    el.playsInline = true;
+    el.setAttribute("playsinline", "");
+    el.volume = 1.0;
+    el.muted = false;
+    el.style.display = "none";
+    document.body.appendChild(el);
+    this._iosMediaOutEl = el;
+    return el;
+  }
+
 
   cacheUI() {
     this.ui = {
@@ -2725,6 +2754,14 @@ VAŽNO: samo JSON.`;
     if (this._isIOS) {
       this._iosKeeper.start();
 
+      // iOS best-effort: route output through HTMLMediaElement (lock-screen/background may behave better)
+      try {
+        if (this.audio && typeof this.audio.enableMediaOutput === "function") {
+          const outEl = this._ensureIosMediaOutEl();
+          this.audio.enableMediaOutput(outEl);
+        }
+      } catch(_) {}
+
       // One-time UX hint (dismissible)
       try {
         const dismissed = localStorage.getItem("sinet_ios_bg_hint") === "1";
@@ -2755,6 +2792,8 @@ VAŽNO: samo JSON.`;
     }
     if (reason === "stop" || reason === "pause") {
       this._iosKeeper.stop();
+      try { if (this.audio && typeof this.audio.disableMediaOutput === "function") this.audio.disableMediaOutput(); } catch(_) {}
+      try { if (this._iosMediaOutEl) { this._iosMediaOutEl.pause(); this._iosMediaOutEl.srcObject = null; } } catch(_) {}
     }
   }
 

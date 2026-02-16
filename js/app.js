@@ -1,15 +1,16 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.6.0 (Loop protokola + fix loop UI + embedded help)
+  Version: 15.6.3 (Loop protokola + fix loop UI + embedded help)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.6.0';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.6.3';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.6.3';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.6.3';
 
-const SINET_APP_VERSION = "15.6.0";
+const SINET_APP_VERSION = "15.6.3";
 
 /** iOS detection (iPhone/iPad/iPod + iPadOS masquerading as Mac) */
 function isIOSDevice() {
@@ -80,12 +81,23 @@ class App {
     // iOS: background playback in browsers is NOT guaranteed.
     // We expose an explicit (experimental) toggle for the MediaStream->HTMLAudio routing.
     this._iosBgExperimental = false;
-    try { this._iosBgExperimental = (localStorage.getItem("sinet_ios_bg_experimental") === "1"); } catch(_) {}
-    this._iosKeeper = new IosAudioSessionKeeper(this._isIOS && this._iosBgExperimental);
+    this._iosBgRendered = false;
+    try {
+      this._iosBgExperimental = (localStorage.getItem("sinet_ios_bg_experimental") === "1");
+      this._iosBgRendered = (localStorage.getItem("sinet_ios_bg_rendered") === "1");
+    } catch(_) {}
+this._iosKeeper = new IosAudioSessionKeeper(this._isIOS && this._iosBgExperimental);
     this._iosHintShown = false;
 
     // iOS: optional MediaStream -> <audio> output (best-effort)
     this._iosMediaOutEl = null;
+
+    // iOS PRO: Rendered WAV player (<audio> src=blob:)
+    this._iosRenderedEl = null;
+    this._rendered = { active: false };
+    this._renderedRaf = null;
+    this._renderAbort = null;
+    this._renderedBound = false;
 
     // Media Session (best-effort, varies by browser/iOS)
     this._mediaSessionReady = false;
@@ -137,20 +149,14 @@ class App {
   }
 
   async init() {
-    console.log('SINET v15.6.0 Init');
+    console.log('SINET v15.6.3 Init');
     this.cacheUI();
-
-    // Android (Capacitor): if native audio plugin is present, playback can continue in background (screen off).
-    try {
-      if (this.audio && this.audio.isNative) {
-        this.showToast("🤖 Android Native Audio aktivan: radi i kad je ekran ugašen (foreground service).");
-      }
-    } catch(_) {}
-
 
     try {
       const cb = document.getElementById('ios-bg-toggle');
       if (cb) cb.checked = this.isIosBgExperimentalEnabled();
+      const cb2 = document.getElementById('ios-bg-render-toggle');
+      if (cb2) cb2.checked = this.isIosBgRenderedEnabled();
       const card = document.getElementById('ios-settings-card');
       if (card && !this._isIOS) card.style.display = 'none';
     } catch(_) {}
@@ -216,6 +222,207 @@ class App {
     this._iosMediaOutEl = el;
     return el;
   }
+
+  _ensureIosRenderedEl() {
+    if (this._iosRenderedEl) return this._iosRenderedEl;
+    const el = document.createElement("audio");
+    el.preload = "auto";
+    el.playsInline = true;
+    el.setAttribute("playsinline", "");
+    el.controls = false;
+    el.volume = 1.0;
+    el.muted = false;
+    el.style.display = "none";
+    document.body.appendChild(el);
+    this._iosRenderedEl = el;
+    return el;
+  }
+
+  _isRenderedPlaying() {
+    try {
+      const el = this._iosRenderedEl;
+      return !!(el && this._rendered && this._rendered.active && !el.paused && !el.ended);
+    } catch(_) { return false; }
+  }
+
+  async _startRenderedTrack(params = {}) {
+    // params: { sequence, durationsSec, totalSec, resumeTrackSec, titleText, loopAll }
+    if (!this._isIOS) throw new Error("Rendered mode is intended for iOS only.");
+    const seq = Array.isArray(params.sequence) ? params.sequence : [];
+    const durs = Array.isArray(params.durationsSec) ? params.durationsSec : null;
+    const totalSec = Math.max(0, Number(params.totalSec) || 0);
+    const resumeTrackSec = Math.max(0, Number(params.resumeTrackSec) || 0);
+
+    if (!seq.length || !totalSec) throw new Error("Empty rendered track.");
+
+    // Hard safety limit (RAM) — if too big, fallback to live WebAudio
+    const estBytes = estimateWavBytes(totalSec, 22050, 1, 16);
+    const estMB = estBytes / (1024*1024);
+    const HARD_MB = 160; // ~safe-ish on many devices; user can reduce duration if needed
+    if (estMB > HARD_MB) {
+      this.showToast(`⚠️ iOS PRO: Protokol je predugačak za RAM render (~${estMB.toFixed(0)} MB). Prelazim na standardni režim (foreground).`, { timeoutMs: 10000 });
+      this._iosBgRendered = false;
+      try { localStorage.setItem("sinet_ios_bg_rendered", "0"); } catch(_) {}
+      try { const el2 = document.getElementById("ios-bg-render-toggle"); if (el2) el2.checked = false; } catch(_) {}
+      // fallback: let caller start WebAudio path
+      return { fallback: true };
+    }
+
+    // Stop any existing session
+    try { this.audio?.stop?.(); } catch(_) {}
+    try { this._teardownPlaybackSession("render_start"); } catch(_) {}
+
+    const el = this._ensureIosRenderedEl();
+
+    // Abort previous render if any
+    try { if (this._renderAbort) this._renderAbort.abort(); } catch(_) {}
+    this._renderAbort = new AbortController();
+
+    // Update UI immediately
+    if (this.ui.playerDock) this.ui.playerDock.style.display = 'block';
+    if (this.ui.nowPlayingPanel) this.ui.nowPlayingPanel.style.display = 'block';
+    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏳";
+
+    this.showToast(`🍏 iOS PRO: Renderujem protokol u WAV (RAM)... (~${estMB.toFixed(0)} MB)`, { timeoutMs: 6000 });
+
+    let rendered;
+    try {
+      rendered = await renderProtocolToWavBlobURL({
+        sequence: seq,
+        durationsSec: durs,
+        totalSec,
+        sampleRate: 22050,
+        channels: 1,
+        gain: (this.audio?.masterGain?.gain?.value) ? Math.max(0.05, Math.min(0.9, this.audio.masterGain.gain.value)) : 0.25,
+        subCarrierHz: this.audio?.subCarrierHz || 200,
+        subThresholdHz: this.audio?.subCarrierThresholdHz || 50,
+        fadeMs: 12,
+        signal: this._renderAbort.signal
+      });
+    } catch (e) {
+      this.showToast("❌ iOS PRO: render nije uspeo. Vraćam standardni režim.", { timeoutMs: 9000 });
+      return { fallback: true, error: String(e?.message || e) };
+    }
+
+    // Cleanup old URL
+    try {
+      if (this._rendered && this._rendered.url) URL.revokeObjectURL(this._rendered.url);
+    } catch(_) {}
+
+    // Attach rendered playback
+    el.src = rendered.url;
+    el.loop = !!params.loopAll;
+    try { el.currentTime = resumeTrackSec; } catch(_) {}
+
+    // Store meta
+    this._rendered = {
+      active: true,
+      url: rendered.url,
+      bytes: rendered.bytes,
+      totalSec,
+      sampleRate: rendered.sampleRate,
+      channels: rendered.channels,
+      sequence: seq,
+      durationsSec: durs,
+      lastIndex: -1,
+      titleText: (params.titleText || "").toString()
+    };
+
+    // Bind events once (idempotent)
+    if (!this._renderedBound) {
+      this._renderedBound = true;
+      el.addEventListener("ended", () => {
+        if (this._rendered && this._rendered.active && !el.loop) {
+          // mimic engine completion
+          this._rendered.active = false;
+          this.onAudioComplete();
+        }
+      });
+    }
+
+    // Start ticking UI (foreground only)
+    this._startRenderedTicker();
+
+    // Play
+    try {
+      const p = el.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    } catch(_) {}
+
+    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+    this.log("PLAYER", "Play (iOS PRO Rendered)", this.selectedItem?.id || "");
+    return { fallback: false };
+  }
+
+  _startRenderedTicker() {
+    // Update UI while visible; do not assume timers run in background.
+    if (this._renderedRaf) cancelAnimationFrame(this._renderedRaf);
+    const el = this._iosRenderedEl;
+    const loop = () => {
+      try {
+        if (!this._rendered || !this._rendered.active || !el) return;
+        if (document.hidden) { this._renderedRaf = requestAnimationFrame(loop); return; }
+
+        const t = Math.max(0, Number(el.currentTime) || 0);
+        const seq = this._rendered.sequence || [];
+        const durs = this._rendered.durationsSec;
+        let idx = 0;
+        let acc = 0;
+        for (; idx < seq.length; idx++) {
+          const d = durs ? (Number(durs[idx])||0) : (seq.length ? (this._rendered.totalSec/seq.length) : 0);
+          if (t < acc + d) break;
+          acc += d;
+        }
+        idx = Math.min(idx, Math.max(0, seq.length-1));
+        const durCur = durs ? (Number(durs[idx])||0) : (seq.length ? (this._rendered.totalSec/seq.length) : 0);
+        const elapsedInFreq = Math.max(0, t - acc);
+
+        const stats = {
+          currentIndex: idx,
+          totalItems: seq.length,
+          enabledTotalItems: seq.length,
+          currentPos: idx,
+          elapsedInFreq,
+          durationPerFreq: durCur,
+          durationCurrentSec: durCur,
+          totalDurationSec: this._rendered.totalSec,
+          totalTrackSec: this._rendered.totalSec,
+          elapsedTrackSec: t,
+          hasPerFreqDurations: !!durs
+        };
+
+        // trigger freq change callback if needed
+        if (this._rendered.lastIndex !== idx) {
+          this._rendered.lastIndex = idx;
+          this.onFreqChange(seq[idx] || {}, stats);
+        }
+        this.onAudioTick(stats);
+
+        // keep resume state fresh
+        this._lastStats = {
+          currentIndex: stats.currentIndex,
+          totalItems: stats.totalItems,
+          elapsedInFreq: stats.elapsedInFreq,
+          durationPerFreq: stats.durationCurrentSec
+        };
+      } catch(_) {}
+      this._renderedRaf = requestAnimationFrame(loop);
+    };
+    this._renderedRaf = requestAnimationFrame(loop);
+  }
+
+  _stopRenderedTrack() {
+    try { if (this._renderAbort) this._renderAbort.abort(); } catch(_) {}
+    try {
+      const el = this._iosRenderedEl;
+      if (el) { el.pause(); el.removeAttribute("src"); el.load(); }
+    } catch(_) {}
+    try { if (this._rendered && this._rendered.url) URL.revokeObjectURL(this._rendered.url); } catch(_) {}
+    try { if (this._renderedRaf) cancelAnimationFrame(this._renderedRaf); } catch(_) {}
+    this._renderedRaf = null;
+    this._rendered = { active:false };
+  }
+
 
 
   cacheUI() {
@@ -586,6 +793,26 @@ async loadAcupressureRegistry() {
   }
 
   togglePlayPause() {
+    // iOS PRO (Rendered WAV): use HTMLAudioElement controls
+    if (this._isIOS && this.isIosBgRenderedEnabled() && this._rendered && this._rendered.active) {
+      const el = this._iosRenderedEl;
+      if (!el) return;
+      try {
+        if (!el.paused && !el.ended) {
+          el.pause();
+          if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "▶";
+          this.log("PLAYER", "Pause (iOS PRO Rendered)", this.selectedItem?.id || "");
+          this.saveResumeState(false);
+        } else {
+          const p = el.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+          if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+          this.log("PLAYER", "Play (iOS PRO Rendered)", this.selectedItem?.id || "");
+        }
+      } catch(_) {}
+      return;
+    }
+
     if (this.audio.isPlaying) {
       const st = this.audio.pause();
       if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "▶";
@@ -606,8 +833,11 @@ async loadAcupressureRegistry() {
     }
   }
 
+
   async stopPlayer(clearResume=false) {
     this._teardownPlaybackSession("stop");
+    // iOS PRO: stop rendered track if active
+    try { if (this._rendered && this._rendered.active) this._stopRenderedTrack(); } catch(_) {}
     this.log("PLAYER", "Stop", this.selectedItem?.id || "");
     await this.saveResumeState(true);
     this.audio.stop();
@@ -687,6 +917,29 @@ async loadAcupressureRegistry() {
     this.selectedItem = item;
     this.isPlaylistActive = false;
 
+    // iOS PRO (Rendered WAV): resume via rendered WAV track
+    if (this._isIOS && this.isIosBgRenderedEnabled()) {
+      const startIndex = Number(st.freqIndex)||0;
+      const elapsedInFreq = Number(st.elapsedInFreqSec)||0;
+      const perStepSec = (freqs.length ? (totalDurSec / freqs.length) : 0);
+      const resumeTrackSec = Math.max(0, (startIndex * perStepSec) + elapsedInFreq);
+
+      const r = await this._startRenderedTrack({
+        sequence: freqs,
+        durationsSec: null,
+        totalSec: totalDurSec,
+        resumeTrackSec,
+        titleText: `[1/1] ${item.simptom}`,
+        loopAll: false
+      });
+      if (r && r.fallback === false) {
+        if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+        this.log("PLAYER", "Resume Item (iOS PRO Rendered)", id);
+        return;
+      }
+      // else: fallback to live WebAudio
+    }
+
     this.audio.loadSequence(freqs, totalDurSec, Number(st.freqIndex)||0, Number(st.elapsedInFreqSec)||0);
 
     if (this.ui.playerDock) this.ui.playerDock.style.display = 'block';
@@ -716,7 +969,7 @@ async loadAcupressureRegistry() {
     this.log("PLAYER", "Start Protocol", String(this.playlist.length));
   }
 
-  playPlaylistItem(index, resume=null) {
+  async playPlaylistItem(index, resume=null) {
     if (index >= this.playlist.length) {
       this.stopPlayer(true);
       alert("Protokol završen!");
@@ -737,6 +990,26 @@ async loadAcupressureRegistry() {
 
     const startIndex = resume?.freqIndex || 0;
     const elapsedInFreq = resume?.elapsedInFreqSec || 0;
+
+    // iOS PRO (Rendered WAV): render current playlist item to WAV-in-RAM and play via <audio>
+    if (this._isIOS && this.isIosBgRenderedEnabled()) {
+      const perStepSec = (freqs.length ? (totalDurSec / freqs.length) : 0);
+      const resumeTrackSec = Math.max(0, (startIndex * perStepSec) + elapsedInFreq);
+      const r = await this._startRenderedTrack({
+        sequence: freqs,
+        durationsSec: null,
+        totalSec: totalDurSec,
+        resumeTrackSec,
+        titleText: `[${index+1}/${this.playlist.length}] ${item.simptom}`,
+        loopAll: false
+      });
+      if (r && r.fallback === false) {
+        if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+        this.renderPlaylistUI();
+        return;
+      }
+      // else: fallback to live WebAudio
+    }
 
     this.audio.loadSequence(freqs, totalDurSec, startIndex, elapsedInFreq);
 
@@ -1093,7 +1366,7 @@ closeAcupressureViewer(){
   }
 
   // v15.4.4 — Play selected symptom immediately (without destroying user's playlist)
-  playItemNow(id) {
+  async playItemNow(id) {
     const item = this.catalogItems.find(i => i.id === id);
     if (!item) return;
 
@@ -1103,6 +1376,24 @@ closeAcupressureViewer(){
 
     this.selectedItem = item;
     this.isPlaylistActive = false;
+
+    // iOS PRO (Rendered WAV): render protocol to WAV-in-RAM and play via <audio> (better chance to continue in background)
+    if (this._isIOS && this.isIosBgRenderedEnabled()) {
+      const r = await this._startRenderedTrack({
+        sequence: freqs,
+        durationsSec: null,
+        totalSec: totalDurSec,
+        resumeTrackSec: 0,
+        titleText: `[1/1] ${item.simptom}`,
+        loopAll: false
+      });
+      if (r && r.fallback === false) {
+        if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+        this.log("PLAYER", "Play Now (iOS PRO Rendered)", item.id);
+        return;
+      }
+      // else: fallback to live WebAudio
+    }
 
     this.audio.loadSequence(freqs, totalDurSec, 0, 0);
 
@@ -1422,7 +1713,7 @@ _repeatSteps(steps, loops) {
     this._protoEdit.name = (v || "").toString().slice(0, 120);
   }
 
-  // v15.5.1.1 — Loop controls (fix: functions referenced by inline handlers)
+  // v15.6.3 — Loop controls (fix: functions referenced by inline handlers)
   protoSetLoopEnabled(isEnabled) {
     if (!this._protoEdit) return;
     const enabled = !!isEnabled;
@@ -1735,6 +2026,28 @@ _repeatSteps(steps, loops) {
 
     this.selectedItem = { id: p.id, simptom: p.name || "Protokol" };
     this.isPlaylistActive = false;
+
+    // iOS PRO (Rendered WAV): render protocol to WAV-in-RAM and play via <audio>
+    if (this._isIOS && this.isIosBgRenderedEnabled()) {
+      let resumeTrackSec = 0;
+      for (let i=0;i<startIndex;i++) resumeTrackSec += (Number(durs[i])||0);
+      resumeTrackSec += Math.max(0, Number(elapsedInFreq) || 0);
+
+      const r = await this._startRenderedTrack({
+        sequence: seq,
+        durationsSec: durs,
+        totalSec,
+        resumeTrackSec,
+        titleText: `[PROTO${loops>1 ? ' x'+loops : ''}] ${(p.name || 'Protokol').toString()}`,
+        loopAll: false
+      });
+      if (r && r.fallback === false) {
+        if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+        this.log("PLAYER", "Play Protocol (iOS PRO Rendered)", p.id);
+        return;
+      }
+      // else: fallback to live WebAudio
+    }
 
     this.audio.loadSequence(seq, totalSec, startIndex, elapsedInFreq, durs);
 
@@ -3443,6 +3756,14 @@ VAŽNO: samo JSON.`;
     try { localStorage.setItem("sinet_ios_bg_experimental", val ? "1" : "0"); } catch(_) {}
     try { if (this._iosKeeper) this._iosKeeper.enabled = (this._isIOS && val); } catch(_) {}
 
+    // If experimental is ON, force-disable PRO rendered mode (avoid conflicts)
+    if (val && this._iosBgRendered) {
+      this._iosBgRendered = false;
+      try { localStorage.setItem("sinet_ios_bg_rendered", "0"); } catch(_) {}
+      try { const el2 = document.getElementById("ios-bg-render-toggle"); if (el2) el2.checked = false; } catch(_) {}
+    }
+
+
     // If playing, re-apply routing immediately
     try {
       if (this.audio && this.audio.isPlaying) {
@@ -3463,6 +3784,40 @@ VAŽNO: samo JSON.`;
     );
   }
 
+
+  setIosBgRendered(enabled) {
+    const val = !!enabled;
+    this._iosBgRendered = val;
+    try { localStorage.setItem("sinet_ios_bg_rendered", val ? "1" : "0"); } catch(_) {}
+
+    // If rendered is ON, force-disable experimental MediaStream route (avoid pulsing conflicts)
+    if (val && this._iosBgExperimental) {
+      this._iosBgExperimental = false;
+      try { localStorage.setItem("sinet_ios_bg_experimental", "0"); } catch(_) {}
+      try { const el = document.getElementById("ios-bg-toggle"); if (el) el.checked = false; } catch(_) {}
+    }
+
+    // Update UI checkbox
+    try {
+      const el2 = document.getElementById("ios-bg-render-toggle");
+      if (el2) el2.checked = val;
+    } catch(_) {}
+
+    // If playing, re-apply routing immediately
+    try {
+      if (this.audio && (this.audio.isPlaying || this._isRenderedPlaying?.())) {
+        this._teardownPlaybackSession("ios_render_toggle");
+        this._ensurePlaybackSession();
+      }
+    } catch(_) {}
+
+    this.showToast(val
+      ? "🍏 iOS: PRO režim uključen — protokol se renderuje u WAV (RAM) i može da nastavi u pozadini (web-only, bez garancije)."
+      : "🍏 iOS: PRO režim isključen.",
+      { timeoutMs: 8000 }
+    );
+  }
+
 /* ===================== iOS / Background Hardening ===================== */
 
   _ensurePlaybackSession() {
@@ -3471,6 +3826,7 @@ VAŽNO: samo JSON.`;
     // Optional (experimental): route WebAudio output through HTMLMediaElement (MediaStream).
     if (this._isIOS) {
       const exp = this.isIosBgExperimentalEnabled();
+      const pro = this.isIosBgRenderedEnabled();
 
       // Avoid "silent keep-alive" loops by default (can cause audible pulsing on some devices).
       try { this._iosKeeper.stop(); } catch(_) {}
@@ -3480,7 +3836,7 @@ VAŽNO: samo JSON.`;
         if (this.audio && typeof this.audio.disableMediaOutput === "function") {
           this.audio.disableMediaOutput();
         }
-        if (exp && this.audio && typeof this.audio.enableMediaOutput === "function") {
+        if (exp && !pro && this.audio && typeof this.audio.enableMediaOutput === "function") {
           const outEl = this._ensureIosMediaOutEl();
           this.audio.enableMediaOutput(outEl);
         }
@@ -3519,6 +3875,8 @@ VAŽNO: samo JSON.`;
     }
 
     // Always stop iOS helper elements; keep routing clean between sessions
+    // iOS PRO: stop rendered track if any
+    try { if (this._rendered && this._rendered.active) this._stopRenderedTrack(); } catch(_) {}
     try { if (this._iosKeeper) this._iosKeeper.stop(); } catch(_) {}
     try { if (this.audio && typeof this.audio.disableMediaOutput === "function") this.audio.disableMediaOutput(); } catch(_) {}
     try {
@@ -3546,7 +3904,7 @@ VAŽNO: samo JSON.`;
       // iOS stable policy: pause on background to avoid glitches/pulsing and forced stop after a few seconds.
       if (document.hidden) {
         try {
-          if (this._isIOS && this.audio?.isPlaying && !this.isIosBgExperimentalEnabled()) {
+          if (this._isIOS && (this.audio?.isPlaying || this._rendered?.active) && !this.isIosBgExperimentalEnabled() && !this.isIosBgRenderedEnabled()) {
             this.togglePlayPause(); // pause
             this.showToast("🍏 iOS: zvuk je pauziran u pozadini (Safari ograničenje). Vrati se u aplikaciju i tapni ▶ za nastavak.", { timeoutMs: 9000 });
           }

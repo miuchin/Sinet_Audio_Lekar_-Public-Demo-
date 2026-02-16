@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SINET — Odgovor v15.6.3</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 16px; line-height: 1.45; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 14px; }
+    button { padding: 10px 14px; border-radius: 10px; border: 1px solid #aaa; background: #f7f7f7; cursor: pointer; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+    .muted { color: #666; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <h1>SINET — Patch v15.6.3 (iOS PRO Render)</h1>
+  <p class="muted">Author: miuchins • Co-author: SINET AI</p>
+
+  <div class="card">
+    <p><button id="copyBtn">📋 KOPIRAJ</button></p>
+    <pre id="content">ZIP: SINET_Audio_Lekar_Public_Demo_v15.6.3_iOS_PRO_Render.zip
+
+Šta je dodato:
+- iOS PRO toggle: Renderuj protokol u WAV (RAM-only) i pusti preko &lt;audio&gt; (veća šansa da nastavi na lock-screen).
+- Konflikt-zaštita: PRO i Eksperimentalno se međusobno gase.
+- Service Worker dopunjen za novi modul.
+
+Fajlovi:
+- NOVO: js/audio/ios-rendered-track.js
+- IZMENA: js/app.js, service-worker.js, index.html, index-nosw.html
+- DOCS: 00_manifest_projekta_v15.6.3.md, 01_iOS_PRO_step_by_step_v15.6.3.md
+
+Napomena:
+- Ovo je web-only workaround. iOS i dalje nema 100% garanciju za background audio u browseru.
+- RAM procena (22.05kHz mono 16-bit): ~2.6 MB/min.</pre>
+  </div>
+
+  <script>
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      const txt = document.getElementById('content').innerText;
+      try {
+        await navigator.clipboard.writeText(txt);
+        document.getElementById('copyBtn').innerText = "✅ Kopirano";
+        setTimeout(()=>document.getElementById('copyBtn').innerText="📋 KOPIRAJ", 1200);
+      } catch (e) {
+        alert("Clipboard nije dostupan. Označi tekst ručno i kopiraj.");
+      }
+    });
+  </script>
+</body>
+</html>

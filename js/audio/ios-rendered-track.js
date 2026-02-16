@@ -1,7 +1,7 @@
 /* 
   🚩 START: iOS Rendered Track (WAV in RAM) — Web-only background workaround
   File: js/audio/ios-rendered-track.js
-  Version: 1.1 (SINET v15.6.4)
+  Version: 1.1 (SINET v15.6.5)
   Author: miuchins | Co-author: SINET AI
 
   Purpose:

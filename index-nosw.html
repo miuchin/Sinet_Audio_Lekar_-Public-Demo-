@@ -129,7 +129,23 @@
         .toast-x { background: transparent; border: 1px solid rgba(255,255,255,0.35); color:#fff; padding: 6px 10px; border-radius: 10px; cursor: pointer; }
 
 
-    </style>
+    
+
+        /* MOBILE HEADER HARDENING */
+        html, body { overflow-x: hidden; }
+        .preset-info { min-width: 0; }
+        .preset-info h4, .preset-info p { overflow-wrap: anywhere; word-break: break-word; }
+
+        @media (max-width: 520px) {
+          header { flex-wrap: wrap; gap: 10px; }
+          .logo-area { width: 100%; justify-content: space-between; }
+          .header-actions { width: 100%; justify-content: flex-end; flex-wrap: wrap; }
+          .header-actions .icon-btn { display: none; }
+          .header-actions .icon-btn.back-btn { display: inline-flex; }
+          .hamburger-btn { font-size: 2.2rem; padding: 0 10px; }
+          #unlock-audio-btn { font-size: 0.8rem; padding: 7px 10px; margin-right: 0; }
+        }
+</style>
 </head>
 <body>
 
@@ -139,7 +155,7 @@
             <button id="unlock-audio-btn" onclick="app.audio.init(); this.style.display='none'; alert('Audio aktiviran!');">🔊 AKTIVIRAJ</button>
         </div>
         <div class="header-actions" style="display:flex; gap:8px; align-items:center;">
-            <button class="icon-btn" onclick="app.goBack()" aria-label="Nazad" title="Nazad">←<span class="icon-label">Nazad</span></button>
+            <button class="icon-btn back-btn" onclick="app.goBack()" aria-label="Nazad" title="Nazad">←<span class="icon-label">Nazad</span></button>
             <button class="icon-btn" onclick="nav('home')" aria-label="Početna" title="Početna">🏠<span class="icon-label">Početna</span></button>
             <button class="icon-btn" onclick="nav('catalog')" aria-label="Katalog" title="Katalog">📚<span class="icon-label">Katalog</span></button>
             <button class="icon-btn" onclick="nav('playlist')" aria-label="Moji protokoli" title="Moji protokoli">🎵<span class="icon-label">Lista</span></button>
@@ -351,23 +367,27 @@
                 </div>
             </div>
 
-            <div class="welcome-card" style="text-align:left; border-left:5px solid #c0392b;">
+            
+            <div id="ios-settings-card" class="welcome-card" style="text-align:left; border-left:5px solid #27ae60;">
+                <h4 style="margin-top:0;">🍏 iOS audio</h4>
+                <p style="font-size:0.85rem; color:#666; margin-bottom:10px;">
+                  Na iPhone/iPad u browseru zvuk u pozadini često biva pauziran ili “glitch”-uje (pulsiranje). Stabilno rešenje je rad u foreground-u. Eksperimentalno može pomoći, ali nije garantovano.
+                </p>
+                <label style="display:flex; gap:10px; align-items:flex-start; font-size:0.95rem; cursor:pointer;">
+                    <input id="ios-bg-toggle" type="checkbox" onchange="app.setIosBgExperimental(this.checked)" style="margin-top:3px;">
+                    <span>Пусти звук у позадини (експериментално)</span>
+                </label>
+                <p style="font-size:0.8rem; color:#777; margin-top:10px; margin-bottom:0;">
+                  Preporuka: za terapiju na iOS-u drži ekran uključen (Auto-Lock: Never) ili koristi native aplikaciju (Capacitor) za pravi background режим.
+                </p>
+            </div>
+
+<div class="welcome-card" style="text-align:left; border-left:5px solid #c0392b;">
                 <h4 style="color:#c0392b; margin-top:0;">🛠️ Održavanje</h4>
                 <p style="font-size:0.85rem; color:#666;">Ako nešto ne radi, osvežite sistem:</p>
                 <button onclick="resetAppCache()" style="width:100%; padding:15px; background:#c0392b; color:white; border:none; border-radius:8px; font-weight:bold;">🚀 OČISTI KEŠ I AŽURIRAJ</button>
             </div>
         </div>
-
-            <div id="ios-audio-card" class="welcome-card" style="text-align:left; border-left:5px solid #8e44ad;">
-                <h4 style="color:#8e44ad; margin-top:0;">🍏 iOS Audio</h4>
-                <p style="font-size:0.85rem; color:#666;">iOS Safari često prekida zvuk u pozadini. Podrazumevano pauziramo u pozadini (SAFE) da nema pulsiranja i prekida. Ako želiš, možeš probati eksperimentalni režim.</p>
-                <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; font-weight:700;">
-                    <input type="checkbox" id="ios-allow-bg" onchange="app.setIosAllowBackground(this.checked)">
-                    Pusti zvuk u pozadini (eksperimentalno)
-                </label>
-                <button onclick="app.showIosAudioStatus()" style="width:100%; padding:10px; margin-top:10px; background:white; border:1px solid #ddd; border-radius:5px;">🔎 iOS Audio Status</button>
-            </div>
-
     </main>
 
     <div id="toast" class="toast" style="display:none;"></div>
@@ -483,8 +503,8 @@
     </div>
 </div>
 
-    <script src="js/db/indexed-db.js?v=15.4"></script>
-    <script type="module" src="js/app.js?v=15.4.9.2"></script>
+    <script src="js/db/indexed-db.js?v=15.4.9.4"></script>
+    <script type="module" src="js/app.js?v=15.4.9.4"></script>
 
     <script>
         // PWA & WORKER

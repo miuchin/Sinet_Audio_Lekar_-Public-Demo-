@@ -184,8 +184,9 @@ class SinetDB {
     await this._ensure();
     const state = await this._getAll("state");
     const favorites = await this._getAll("favorites");
+    const playlists = await this._getAll("playlists");
     const audit = await this._getAll("audit_log");
-    return { exportedAt: new Date().toISOString(), state, favorites, audit };
+    return { exportedAt: new Date().toISOString(), state, favorites, playlists, audit };
   }
 
   async importAll(payload) {
@@ -195,11 +196,21 @@ class SinetDB {
     // read-only audit philosophy: DO NOT import audit
     const state = Array.isArray(payload.state) ? payload.state : [];
     const favorites = Array.isArray(payload.favorites) ? payload.favorites : [];
+    const playlists = Array.isArray(payload.playlists) ? payload.playlists : [];
 
-    for (const s of state) await this._put("state", s);
-    for (const f of favorites) await this._put("favorites", f);
+    for (const s of state) {
+      if (s && typeof s === "object" && s.key) await this._put("state", s);
+    }
+    for (const f of favorites) {
+      if (f && typeof f === "object" && f.id) await this._put("favorites", f);
+    }
 
-    this.logAction("USER", "Restore Backup", "Imported state+favorites");
+    // playlists store uses keyPath "id" (autoIncrement). We import as-is; if ids clash, later import overwrites.
+    for (const p of playlists) {
+      if (p && typeof p === "object") await this._put("playlists", p);
+    }
+
+    this.logAction("USER", "Restore Backup", "Import All");
     return true;
   }
 }

@@ -274,36 +274,3 @@
   }
   .btn-label{ display:none; }
 }
-
-
-/* Prevent accidental horizontal scroll on mobile */
-html, body { overflow-x: hidden; }
-
-
-/* Frequency rows in modal */
-.freq-row{
-  display:flex;
-  gap:10px;
-  padding:8px 0;
-  border-bottom:1px solid #eee;
-}
-.freq-col-left{ flex:0 0 auto; font-weight:900; }
-.freq-col-mid{ flex:1 1 auto; min-width:0; }
-.freq-col-right{ flex:0 0 auto; text-align:right; font-weight:800; color:#2c3e50; white-space:nowrap; }
-.freq-hz{ display:flex; align-items:center; gap:10px; white-space:nowrap; }
-.freq-line{ font-size:0.9rem; }
-.freq-src{ font-size:0.8rem; color:#666; }
-
-@media (max-width:420px){
-  .freq-row{ flex-direction:column; gap:6px; }
-  .freq-col-right{ text-align:left; }
-}
-
-
-/* Mobile hardening */
-@media (max-width:420px){
-  .oblast-grid{ grid-template-columns: 1fr; }
-  .cat-item{ flex-direction: column; }
-  .cat-actions{ flex-direction: row; flex-wrap: wrap; }
-  .btn-add-playlist, .cat-mini-btn{ width:100%; min-width:0; }
-}

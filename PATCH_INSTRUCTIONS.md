@@ -1,4 +1,4 @@
-# SINET GitHub Patch v15.4.8.2 (iOS + Netlify fix)
+# SINET GitHub Patch v15.5.1.0 (iOS + Netlify fix)
 
 Ovaj patch rešava 3 praktična problema:
 

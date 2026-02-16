@@ -9,7 +9,7 @@
 
 const DB_CONFIG = {
   name: "SINET_Audio_DB",
-  version: 3,
+  version: 4,
 };
 
 class SinetDB {
@@ -35,6 +35,9 @@ class SinetDB {
         }
         if (!db.objectStoreNames.contains("playlists")) {
           db.createObjectStore("playlists", { keyPath: "id", autoIncrement: true });
+        }
+        if (!db.objectStoreNames.contains("protocols")) {
+          db.createObjectStore("protocols", { keyPath: "id" });
         }
         if (!db.objectStoreNames.contains("audit_log")) {
           db.createObjectStore("audit_log", { keyPath: "id", autoIncrement: true });
@@ -179,6 +182,43 @@ class SinetDB {
     return this._delete("state", "last_session");
   }
 
+
+  /* ---------- Protocols (user-defined sequences) ---------- */
+  async getProtocols() {
+    await this._ensure();
+    const rows = await this._getAll("protocols");
+    // newest first
+    return (Array.isArray(rows) ? rows : []).sort((a,b)=> (Number(b.updatedAt||b.createdAt||0) - Number(a.updatedAt||a.createdAt||0)));
+  }
+
+  async getProtocol(id) {
+    await this._ensure();
+    if (!id) return null;
+    const raw = await this._getRaw("protocols", id);
+    return raw || null;
+  }
+
+  async putProtocol(proto) {
+    await this._ensure();
+    if (!proto || typeof proto !== "object") throw new Error("Invalid protocol");
+    if (!proto.id) throw new Error("Protocol missing id");
+    const now = Date.now();
+    const row = { ...proto };
+    if (!row.createdAt) row.createdAt = now;
+    row.updatedAt = now;
+    await this._put("protocols", row);
+    this.logAction("USER", "Save Protocol", String(row.id));
+    return true;
+  }
+
+  async deleteProtocol(id) {
+    await this._ensure();
+    if (!id) return false;
+    await this._delete("protocols", id);
+    this.logAction("USER", "Delete Protocol", String(id));
+    return true;
+  }
+
   /* ---------- Backup / Restore ---------- */
   async exportAll() {
     await this._ensure();
@@ -186,7 +226,8 @@ class SinetDB {
     const favorites = await this._getAll("favorites");
     const playlists = await this._getAll("playlists");
     const audit = await this._getAll("audit_log");
-    return { exportedAt: new Date().toISOString(), state, favorites, playlists, audit };
+    const protocols = await this._getAll("protocols");
+    return { exportedAt: new Date().toISOString(), state, favorites, playlists, protocols, audit };
   }
 
   async importAll(payload) {

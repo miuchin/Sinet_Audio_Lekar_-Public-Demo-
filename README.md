@@ -1,5 +1,7 @@
 # SINET Audio Lekar + NUTRI Pro (Public Demo)
 
+**Version:** 15.5.1.1
+
 **Authors:** miuchins (Svetozar Miuchin) • **Co-author:** SINET AI  
 **Status:** Public demo + ongoing development  
 **Date:** 2026-02-15

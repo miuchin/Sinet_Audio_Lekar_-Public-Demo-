@@ -1,15 +1,15 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.4.9.4 (iOS-safe background + mobile header + full backup)
+  Version: 15.5.1.1 (Loop protokola + fix loop UI + embedded help)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.4.8.2';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.5.1.1';
 import { normalizeCatalogPayload } from './catalog/stl-adapter.js';
 
-const SINET_APP_VERSION = "15.4.8.2";
+const SINET_APP_VERSION = "15.5.1.1";
 
 /** iOS detection (iPhone/iPad/iPod + iPadOS masquerading as Mac) */
 function isIOSDevice() {
@@ -127,12 +127,17 @@ class App {
     this.navStack = [];
     this._toastTimer = null;
 
+
+
+    // v15.5 — Moji Protokoli (user-defined frequency sequences)
+    this.protocols = [];
+    this._protoEdit = null;
     // v15.4.7 — cached favorite IDs
     this._favSet = new Set();
   }
 
   async init() {
-    console.log('SINET v15.4.9.4 Init');
+    console.log('SINET v15.5.1.1 Init');
     this.cacheUI();
 
     try {
@@ -154,6 +159,7 @@ class App {
     await this.refreshFavoritesSet();
     await this.loadCatalogData();
     await this.loadPlaylistFromDB();
+    await this.loadProtocolsFromDB();
 
     // optional offline registry (images, licensing)
     await this.loadAcupressureRegistry();
@@ -210,6 +216,7 @@ class App {
         home: document.getElementById('page-home'),
         catalog: document.getElementById('page-catalog'),
         playlist: document.getElementById('page-playlist'),
+        protocols: document.getElementById('page-protocols'),
         favorites: document.getElementById('page-favorites'),
         mysymptoms: document.getElementById('page-mysymptoms'),
         ai: document.getElementById('page-ai'),
@@ -220,6 +227,9 @@ class App {
       catalogList: document.getElementById('catalog-list'),
       userSymptomsList: document.getElementById('user-symptoms-list'),
       userSymptomForm: document.getElementById('user-symptom-form'),
+      protocolsList: document.getElementById('protocols-list'),
+      protocolEditor: document.getElementById('protocol-editor'),
+      protocolEditorBox: document.getElementById('protocol-editor-box'),
       aiPrompt: document.getElementById('ai_prompt'),
       playerDock: document.getElementById('player-dock'),
       pTitle: document.getElementById('p-title'),
@@ -323,6 +333,7 @@ async loadAcupressureRegistry() {
     if (pageId === 'favorites') this.updateFavorites();
     if (pageId === 'catalog') this.showCatalogHome();
     if (pageId === 'playlist') this.renderPlaylistUI();
+    if (pageId === 'protocols') this.renderProtocolsUI();
     if (pageId === 'mysymptoms') this.renderUserSymptomsUI();
     if (pageId === 'ai') this.prepareAIUI();
   }
@@ -418,7 +429,8 @@ async loadAcupressureRegistry() {
     const recMinRaw = (freqObj?.trajanje_min ?? freqObj?.preporuceno_min ?? freqObj?.preporucenoMin ?? null);
     const recMin = (recMinRaw === null || recMinRaw === undefined || recMinRaw === "") ? null : Math.max(0, Number(recMinRaw) || 0);
 
-    const currentMin = (Number(stats?.durationPerFreq) || 0) / 60;
+    const curDurSec = (stats && Number.isFinite(Number(stats.durationCurrentSec))) ? Number(stats.durationCurrentSec) : (Number(stats?.durationPerFreq) || 0);
+    const currentMin = curDurSec / 60;
     const fmtMin = (v) => {
       const n = Math.max(0, Number(v) || 0);
       if (!n) return "0";
@@ -512,20 +524,32 @@ async loadAcupressureRegistry() {
 
   onAudioTick(stats) {
     this._lastStats = stats;
-    this._updateMediaSessionMetadata(freqObj, stats);
-    const per = Number(stats.durationPerFreq) || 0;
-    const totalTrack = (Number(stats.totalItems) || 0) * per;
+    const seq = (this.audio && this.audio.currentSequence) ? this.audio.currentSequence : [];
+    const curObj = seq && seq.length ? (seq[Number(stats?.currentIndex||0)] || {}) : {};
+    this._updateMediaSessionMetadata(curObj, stats);
+
+    const hasPer = !!stats?.hasPerFreqDurations;
+    const totalTrack = hasPer ? (Number(stats.totalTrackSec)||0) : (Number(stats.totalItems)||0) * (Number(stats.durationPerFreq)||0);
 
     // robustno: ako elapsedInFreq ne "radi" u nekim browserima / audio režimima,
     // izračunaj ga iz ukupnog vremena
-    const elapsedTrack = (Number(stats.currentIndex) || 0) * per + (Number(stats.elapsedInFreq) || 0);
+    const per = Number(stats.durationPerFreq) || 0;
+    const curDur = hasPer ? (Number(stats.durationCurrentSec)||0) : per;
+
+    const elapsedTrack = hasPer ? (Number(stats.elapsedTrackSec)||0) : (Number(stats.currentIndex)||0) * per + (Number(stats.elapsedInFreq)||0);
+
     let elapsedInFreq = Number(stats.elapsedInFreq);
-    if (!Number.isFinite(elapsedInFreq) || elapsedInFreq <= 0) {
+    if (!Number.isFinite(elapsedInFreq) || elapsedInFreq < 0) elapsedInFreq = 0;
+    if (!elapsedInFreq && !hasPer) {
       const approx = elapsedTrack - (Number(stats.currentIndex) || 0) * per;
       elapsedInFreq = Math.max(0, Math.min(per, approx));
     }
+    if (hasPer) {
+      // clamp to current duration
+      elapsedInFreq = Math.max(0, Math.min(curDur, elapsedInFreq));
+    }
 
-    // UI: levo = u frekvenciji, sredina = ukupno, desno = ukupno trajanje
+// UI: levo = u frekvenciji, sredina = ukupno, desno = ukupno trajanje
     if (this.ui.pTimerNow) this.ui.pTimerNow.innerText = this.formatTime(elapsedInFreq);
     if (this.ui.pTimerElapsed) this.ui.pTimerElapsed.innerText = this.formatTime(elapsedTrack);
     if (this.ui.pTimerTotal) this.ui.pTimerTotal.innerText = this.formatTime(totalTrack);
@@ -614,20 +638,60 @@ async loadAcupressureRegistry() {
     const st = await this.db?.getPlayerState?.();
     if (!st) return alert("Nema sačuvanog stanja.");
 
+    // Always refresh sources
     await this.loadPlaylistFromDB();
-
-    // optional offline registry (images, licensing)
+    await this.loadProtocolsFromDB();
     await this.loadAcupressureRegistry();
-    if (!this.playlist.length) return alert("Playlist je prazna.");
 
-    this.isPlaylistActive = !!st.isPlaylistActive;
-    const plIndex = Math.max(0, Number(st.activePlaylistIndex) || 0);
+    const id = (st.activePresetId || "").toString();
 
-    this.playPlaylistItem(plIndex, {
-      freqIndex: Number(st.freqIndex)||0,
-      elapsedInFreqSec: Number(st.elapsedInFreqSec)||0
-    });
-    this.log("PLAYER", "Resume", st.activePresetId);
+    // 1) Resume user protocol
+    if (id.startsWith("PROTO_")) {
+      await this.playUserProtocolById(id, {
+        freqIndex: Number(st.freqIndex)||0,
+        elapsedInFreqSec: Number(st.elapsedInFreqSec)||0
+      });
+      this.log("PLAYER", "Resume Protocol", id);
+      return;
+    }
+
+    // 2) Resume playlist protocol (queue of symptoms)
+    if (st.isPlaylistActive) {
+      if (!this.playlist.length) return alert("Lista je prazna.");
+      const plIndex = Math.max(0, Number(st.activePlaylistIndex) || 0);
+      this.isPlaylistActive = true;
+      this.playPlaylistItem(plIndex, {
+        freqIndex: Number(st.freqIndex)||0,
+        elapsedInFreqSec: Number(st.elapsedInFreqSec)||0
+      });
+      this.log("PLAYER", "Resume Playlist", id);
+      return;
+    }
+
+    // 3) Resume single symptom play-now
+    const item = this.catalogItems.find(x => x.id === id);
+    if (!item) return alert("Ne mogu da pronađem terapiju za RESUME.");
+
+    const freqs = (item.frekvencije || []).filter(f => f.enabled !== false);
+    const perFreqMin = Math.max(1, Number(item.trajanjePoFrekvencijiMin) || 5);
+    const totalDurSec = freqs.length * perFreqMin * 60;
+
+    this.selectedItem = item;
+    this.isPlaylistActive = false;
+
+    this.audio.loadSequence(freqs, totalDurSec, Number(st.freqIndex)||0, Number(st.elapsedInFreqSec)||0);
+
+    if (this.ui.playerDock) this.ui.playerDock.style.display = 'block';
+    if (this.ui.nowPlayingPanel) this.ui.nowPlayingPanel.style.display = 'block';
+    const btnNowList = document.getElementById('btn-nowlist');
+    if (btnNowList) btnNowList.innerHTML = '▾ FREKVENCIJE';
+    if (this.ui.pTitle) this.ui.pTitle.innerText = `[1/1] ${item.simptom}`;
+    if (this.ui.pProtocolTimer) this.ui.pProtocolTimer.style.display = 'none';
+
+    this._ensurePlaybackSession();
+    this.audio.play();
+    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+    this.log("PLAYER", "Resume Item", id);
   }
 
   /* ===================== PROTOCOL ===================== */
@@ -1107,6 +1171,580 @@ closeAcupressureViewer(){
     this.log("USER", "Clear Playlist", "");
   }
 
+
+  /* ===================== MY PROTOCOLS (frequency sequences) ===================== */
+
+  async loadProtocolsFromDB() {
+    if (!this.db || !this.db.getProtocols) { this.protocols = []; return; }
+    try {
+      this.protocols = await this.db.getProtocols();
+    } catch(e) {
+      this.protocols = [];
+    }
+  }
+
+  _newProtoId() {
+    const r = Math.random().toString(36).slice(2,8);
+    return `PROTO_${Date.now()}_${r}`;
+  }
+
+  _clone(obj) {
+    try { return JSON.parse(JSON.stringify(obj)); } catch(e) { return obj; }
+  }
+
+  _expandSymptomToSteps(item, perFreqMinOverride=null, metaLabel="") {
+    if (!item) return [];
+    const freqs = (item.frekvencije || []).filter(f => f && f.enabled !== false);
+    const perMin = Math.max(0.5, Number(perFreqMinOverride ?? item.userPerFreqMin ?? item.trajanjePoFrekvencijiMin ?? 5) || 5);
+    const steps = [];
+    for (const f of freqs) {
+      const hz = Number(f.value ?? f.hz) || 0;
+      if (!hz) continue;
+      const step = this._clone(f);
+      step.value = hz; // audio engine uses .value
+      step.hz = hz;
+      step._from = { symptomId: item.id, symptom: item.simptom };
+      if (metaLabel) step.note = metaLabel;
+      // keep catalog descriptive fields; ensure string safety
+      steps.push({ freq: step, minutes: perMin });
+    }
+    return steps;
+  }
+
+  _stepsToSequence(steps) {
+    const seq = [];
+    const durs = [];
+    for (const s of (Array.isArray(steps) ? steps : [])) {
+      const f = (s && typeof s === "object") ? (s.freq || s) : null;
+      if (!f) continue;
+      const hz = Number(f.value ?? f.hz) || 0;
+      if (!hz) continue;
+
+      const obj = this._clone(f);
+      obj.value = hz;
+      obj.hz = hz;
+
+      // Make custom label visible in player
+      if (!obj.funkcija && !obj.svrha && obj.note) obj.funkcija = obj.note;
+
+      seq.push(obj);
+      const min = Math.max(0, Number(s.minutes ?? s.min ?? s.trajanje_min ?? 0) || 0);
+      durs.push(Math.max(0, min * 60));
+    }
+    return { seq, durs, totalSec: durs.reduce((a,b)=>a+b,0) };
+  }
+
+
+_sanitizeLoopCount(n) {
+  const v = Math.floor(Number(n) || 1);
+  if (!Number.isFinite(v)) return 1;
+  return Math.max(1, Math.min(20, v));
+}
+
+_repeatSteps(steps, loops) {
+  const L = this._sanitizeLoopCount(loops);
+  if (L <= 1) return Array.isArray(steps) ? steps : [];
+  const src = Array.isArray(steps) ? steps : [];
+  const out = [];
+  for (let i=0;i<L;i++) {
+    for (const s of src) out.push(this._clone(s));
+  }
+  return out;
+}
+
+  renderProtocolsUI() {
+    const listEl = this.ui.protocolsList || document.getElementById("protocols-list");
+    const editorEl = this.ui.protocolEditor || document.getElementById("protocol-editor");
+    if (!listEl || !editorEl) return;
+
+    // Render list
+    const protos = Array.isArray(this.protocols) ? this.protocols : [];
+    if (!protos.length) {
+      listEl.innerHTML = `<p style="text-align:center; padding:20px; color:#999">Nema sačuvanih protokola.\n<br>Napravite novi protokol ili generišite iz Favorita / Liste.</p>`;
+    } else {
+      listEl.innerHTML = protos.map(p => {
+        const name = (p.name || p.naziv || "Protokol").toString();
+        const steps = Array.isArray(p.steps) ? p.steps : [];
+        const baseMin = steps.reduce((acc,s)=> acc + (Number(s.minutes||0) || 0), 0);
+        const loops = this._sanitizeLoopCount(p.loopCount ?? p.loops ?? 1);
+        const totalMin = baseMin * loops;
+        const updated = p.updatedAt ? new Date(p.updatedAt).toLocaleString() : "";
+        return `
+          <div class="proto-card">
+            <div class="proto-head">
+              <div style="flex:1;">
+                <div class="proto-title">🧩 ${this.escapeHtml(name)}</div>
+                <div class="proto-meta">Koraka: <b>${steps.length}</b> • Trajanje: <b>${Math.round(totalMin*10)/10} min</b>${loops>1 ? ` • Loop: <b>${loops}×</b>` : ''}${updated ? ` • <span class="muted">${this.escapeHtml(updated)}</span>` : ""}</div>
+              </div>
+              <div class="proto-actions">
+                <button class="btn-mini" onclick="window.app.playUserProtocolById('${this.escapeAttr(p.id)}')">▶ Pusti</button>
+                <button class="btn-mini" onclick="window.app.openProtocolEditor('${this.escapeAttr(p.id)}')">✏️ Izmeni</button>
+                <button class="btn-mini" onclick="window.app.exportSingleProtocol('${this.escapeAttr(p.id)}')">⬆ Export</button>
+                <button class="btn-mini danger" onclick="window.app.deleteProtocolById('${this.escapeAttr(p.id)}')">🗑</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Render editor
+    if (!this._protoEdit) {
+      editorEl.innerHTML = "";
+      return;
+    }
+
+    const p = this._protoEdit;
+    const name = (p.name || "Novi protokol").toString();
+    const steps = Array.isArray(p.steps) ? p.steps : [];
+    const baseMin = steps.reduce((acc,s)=> acc + (Number(s.minutes||0) || 0), 0);
+    const loops = this._sanitizeLoopCount(p.loopCount ?? p.loops ?? 1);
+    const totalMin = baseMin * loops;
+
+    const stepRows = steps.map((s, idx) => {
+      const f = s.freq || {};
+      const hz = Number(f.value ?? f.hz) || 0;
+      const label = (f.funkcija || f.svrha || f.desc || f.note || f.naziv || "").toString();
+      const min = Math.max(0, Number(s.minutes || 0) || 0);
+      return `
+        <div class="proto-step-row">
+          <div class="proto-step-main">
+            <div><b>${hz} Hz</b> ${label ? `<span class="muted">— ${this.escapeHtml(label)}</span>` : ""}</div>
+            <div class="muted" style="font-size:0.82rem;">⏱ ${min} min</div>
+          </div>
+          <div class="proto-step-actions">
+            <button class="btn-mini" onclick="window.app.protoMoveStep(${idx}, -1)">↑</button>
+            <button class="btn-mini" onclick="window.app.protoMoveStep(${idx}, 1)">↓</button>
+            <button class="btn-mini danger" onclick="window.app.protoRemoveStep(${idx})">✖</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    editorEl.innerHTML = `
+      <div id="protocol-editor-box" class="proto-editor">
+        <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+          <h3 style="margin:0;">🧩 Uređivanje protokola</h3>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn-mini" onclick="window.app.protoAppendFromFavorites()">⭐ Dodaj iz Favorita</button>
+            <button class="btn-mini" onclick="window.app.protoAppendFromQueue()">🎵 Dodaj iz Liste</button>
+            <button class="btn-mini" onclick="window.app.protoSave()">💾 Sačuvaj</button>
+            <button class="btn-mini danger" onclick="window.app.protoCancel()">✖ Zatvori</button>
+          </div>
+        </div>
+
+        <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <label style="flex:1; min-width:200px;">
+            <div class="muted" style="font-size:0.85rem; margin-bottom:4px;">Naziv</div>
+            <input class="input" value="${this.escapeAttr(name)}" oninput="window.app.protoSetName(this.value)" placeholder="Naziv protokola">
+          
+          </label>
+
+          <div style="min-width:220px;">
+            <div class="muted" style="font-size:0.85rem; margin-bottom:4px;">Loop protokola</div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <label style="display:flex; gap:6px; align-items:center; user-select:none;">
+                <input type="checkbox" ${loops>1 ? "checked" : ""} onchange="window.app.protoSetLoopEnabled(this.checked)">
+                <span>Uključi</span>
+              </label>
+              <input class="input" type="number" min="1" max="20" step="1" value="${loops}" oninput="window.app.protoSetLoopCount(this.value)" style="width:92px;" ${loops>1 ? "" : "disabled"}>
+              <span class="muted" style="font-size:0.85rem;">× (1–20)</span>
+            </div>
+          </div>
+
+          <div style="min-width:180px; text-align:right;">
+
+            <div class="muted" style="font-size:0.85rem;">Ukupno</div>
+            <div style="font-weight:900;">${Math.round(totalMin*10)/10} min</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;" class="proto-add-grid">
+          <div class="proto-add-card">
+            <div style="font-weight:900; margin-bottom:6px;">➕ Dodaj ručno</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <input id="proto_hz" class="input" type="number" step="0.01" placeholder="Hz (npr 7.83)" style="width:140px;">
+              <input id="proto_min" class="input" type="number" step="0.5" placeholder="min (npr 5)" style="width:120px;">
+              <input id="proto_lbl" class="input" type="text" placeholder="opis (opciono)" style="flex:1; min-width:180px;">
+              <button class="btn-mini" onclick="window.app.protoAddManual()">Dodaj</button>
+            </div>
+          </div>
+
+          <div class="proto-add-card">
+            <div style="font-weight:900; margin-bottom:6px;">🔎 Dodaj iz kataloga</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+              <input id="proto_search" class="input" type="text" placeholder="pretraga (simptom ili Hz)" style="flex:1; min-width:180px;">
+              <button class="btn-mini" onclick="window.app.protoSearch()">Traži</button>
+            </div>
+            <div id="proto_search_results" style="margin-top:8px;"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div style="font-weight:900; margin-bottom:6px;">Koraci</div>
+          <div class="proto-steps">${stepRows || "<div class='muted'>Nema koraka (još).</div>"}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  openProtocolEditor(id=null) {
+    if (!id) {
+      this._protoEdit = { id: this._newProtoId(), name: "Novi protokol", loopCount: 1, steps: [] };
+      this.nav("protocols");
+      this.renderProtocolsUI();
+      return;
+    }
+    const p = (this.protocols || []).find(x => x.id === id);
+    if (!p) return;
+    this._protoEdit = this._clone(p);
+    if (!Array.isArray(this._protoEdit.steps)) this._protoEdit.steps = [];
+    if (!this._protoEdit.loopCount) this._protoEdit.loopCount = 1;
+    this.nav("protocols");
+    this.renderProtocolsUI();
+  }
+
+  protoCancel() {
+    this._protoEdit = null;
+    this.renderProtocolsUI();
+  }
+
+  protoSetName(v) {
+    if (!this._protoEdit) return;
+    this._protoEdit.name = (v || "").toString().slice(0, 120);
+  }
+
+  // v15.5.1.1 — Loop controls (fix: functions referenced by inline handlers)
+  protoSetLoopEnabled(isEnabled) {
+    if (!this._protoEdit) return;
+    const enabled = !!isEnabled;
+    const current = this._sanitizeLoopCount(this._protoEdit.loopCount ?? this._protoEdit.loops ?? 1);
+
+    if (enabled) {
+      const remembered = this._sanitizeLoopCount(this._protoEdit._lastLoopCount ?? current);
+      this._protoEdit.loopCount = Math.max(2, remembered);
+    } else {
+      if (current > 1) this._protoEdit._lastLoopCount = current;
+      this._protoEdit.loopCount = 1;
+    }
+
+    this.renderProtocolsUI();
+  }
+
+  protoSetLoopCount(v) {
+    if (!this._protoEdit) return;
+    let n = this._sanitizeLoopCount(v);
+
+    // If user is editing loop count (input is enabled), keep it >= 2.
+    const currentlyEnabled = this._sanitizeLoopCount(this._protoEdit.loopCount ?? 1) > 1;
+    if (currentlyEnabled) n = Math.max(2, n);
+
+    this._protoEdit.loopCount = n;
+    if (n > 1) this._protoEdit._lastLoopCount = n;
+    this.renderProtocolsUI();
+  }
+
+  async protoSave() {
+    if (!this._protoEdit || !this.db?.putProtocol) return;
+    const p = this._protoEdit;
+    if (!p.name || !p.name.trim()) p.name = "Protokol";
+    if (!Array.isArray(p.steps)) p.steps = [];
+    p.loopCount = this._sanitizeLoopCount(p.loopCount ?? p.loops ?? 1);
+    // prune invalid steps
+    p.steps = p.steps.filter(s => {
+      const f = s?.freq || {};
+      const hz = Number(f.value ?? f.hz) || 0;
+      const min = Number(s.minutes||0) || 0;
+      return hz > 0 && min > 0;
+    });
+    try {
+      await this.db.putProtocol(p);
+      await this.loadProtocolsFromDB();
+      this._protoEdit = null;
+      this.renderProtocolsUI();
+      this.showToast("✅ Protokol sačuvan.", { actionLabel: "Protokoli", actionNav: "protocols" });
+    } catch(e) {
+      alert("Ne mogu da sačuvam protokol: " + (e?.message || e));
+    }
+  }
+
+  protoMoveStep(idx, delta) {
+    if (!this._protoEdit) return;
+    const steps = this._protoEdit.steps || [];
+    const i = Number(idx);
+    const d = Number(delta);
+    if (!Number.isFinite(i) || !Number.isFinite(d)) return;
+    const j = i + d;
+    if (j < 0 || j >= steps.length) return;
+    const tmp = steps[i];
+    steps[i] = steps[j];
+    steps[j] = tmp;
+    this._protoEdit.steps = steps;
+    this.renderProtocolsUI();
+  }
+
+  protoRemoveStep(idx) {
+    if (!this._protoEdit) return;
+    const i = Number(idx);
+    if (!Number.isFinite(i)) return;
+    this._protoEdit.steps = (this._protoEdit.steps || []).filter((_,k)=>k!==i);
+    this.renderProtocolsUI();
+  }
+
+  protoAddManual() {
+    if (!this._protoEdit) return;
+    const hz = Number(document.getElementById("proto_hz")?.value || 0);
+    const min = Number(document.getElementById("proto_min")?.value || 0);
+    const lbl = (document.getElementById("proto_lbl")?.value || "").toString().trim();
+
+    if (!hz || hz <= 0) return alert("Unesi Hz.");
+    if (!min || min <= 0) return alert("Unesi trajanje (min).");
+
+    const freq = { value: hz, hz, funkcija: lbl || "Custom", opis: "", izvor: "user", note: lbl || "" };
+    this._protoEdit.steps = this._protoEdit.steps || [];
+    this._protoEdit.steps.push({ minutes: min, freq });
+
+    // clear inputs
+    try { document.getElementById("proto_hz").value=""; } catch(_) {}
+    try { document.getElementById("proto_min").value=""; } catch(_) {}
+    try { document.getElementById("proto_lbl").value=""; } catch(_) {}
+    this.renderProtocolsUI();
+  }
+
+  protoAppendFromFavorites() {
+    if (!this._protoEdit) return;
+    const ids = Array.from(this._favSet || []);
+    const items = ids.map(id => this.catalogItems.find(x => x.id === id)).filter(Boolean);
+    const steps = [];
+    for (const it of items) steps.push(...this._expandSymptomToSteps(it, null, `⭐ ${it.simptom}`));
+    this._protoEdit.steps = (this._protoEdit.steps || []).concat(steps);
+    this.renderProtocolsUI();
+  }
+
+  protoAppendFromQueue() {
+    if (!this._protoEdit) return;
+    const items = Array.isArray(this.playlist) ? this.playlist : [];
+    const steps = [];
+    for (const it of items) steps.push(...this._expandSymptomToSteps(it, Number(it.userPerFreqMin)||null, `🎵 ${it.simptom}`));
+    this._protoEdit.steps = (this._protoEdit.steps || []).concat(steps);
+    this.renderProtocolsUI();
+  }
+
+  protoSearch() {
+    if (!this._protoEdit) return;
+    const q = (document.getElementById("proto_search")?.value || "").toString().trim().toLowerCase();
+    const box = document.getElementById("proto_search_results");
+    if (!box) return;
+
+    if (!q) { box.innerHTML = "<div class='muted'>Unesi pojam.</div>"; return; }
+
+    // Search symptoms first (by name)
+    const hitsItems = (this.catalogItems || []).filter(it => (it.simptom||"").toString().toLowerCase().includes(q)).slice(0, 6);
+
+    // Search individual frequencies by label or Hz exact/partial
+    const hitsFreq = [];
+    const hzQ = Number(q);
+    for (const it of (this.catalogItems || [])) {
+      const freqs = (it.frekvencije || []).filter(f=>f && f.enabled!==false);
+      for (const f of freqs) {
+        const hz = Number(f.value ?? f.hz) || 0;
+        const label = (f.svrha || f.funkcija || f.desc || f.naziv || "").toString().toLowerCase();
+        if (Number.isFinite(hzQ) && hzQ>0 && Math.abs(hz - hzQ) < 0.001) {
+          hitsFreq.push({ it, f, hz });
+        } else if (label && label.includes(q)) {
+          hitsFreq.push({ it, f, hz });
+        }
+        if (hitsFreq.length >= 10) break;
+      }
+      if (hitsFreq.length >= 10) break;
+    }
+
+    const htmlItems = hitsItems.map(it => {
+      const perMin = Math.max(1, Number(it.trajanjePoFrekvencijiMin)||5);
+      return `<div class="proto-hit">
+        <div style="flex:1;">
+          <div><b>${this.escapeHtml(it.simptom)}</b></div>
+          <div class="muted">Dodaje sve frekvencije (${(it.frekvencije||[]).filter(f=>f&&f.enabled!==false).length}) • ${perMin} min / frekv.</div>
+        </div>
+        <button class="btn-mini" onclick="window.app.protoAddSymptom('${this.escapeAttr(it.id)}')">➕ Dodaj</button>
+      </div>`;
+    }).join("");
+
+    const htmlFreq = hitsFreq.map(h => {
+      const label = (h.f.svrha || h.f.funkcija || h.f.desc || h.f.naziv || "").toString();
+      return `<div class="proto-hit">
+        <div style="flex:1;">
+          <div><b>${h.hz} Hz</b> <span class="muted">— ${this.escapeHtml(label||'')}</span></div>
+          <div class="muted">(${this.escapeHtml(h.it.simptom)})</div>
+        </div>
+        <button class="btn-mini" onclick="window.app.protoAddFreq('${this.escapeAttr(h.it.id)}','${this.escapeAttr(String(h.hz))}')">➕ Dodaj</button>
+      </div>`;
+    }).join("");
+
+    box.innerHTML = `
+      ${htmlItems ? `<div style="font-weight:900; margin:6px 0;">Simptomi</div>${htmlItems}` : ""}
+      ${htmlFreq ? `<div style="font-weight:900; margin:10px 0 6px;">Pojedinačne frekvencije</div>${htmlFreq}` : ""}
+      ${(!htmlItems && !htmlFreq) ? "<div class='muted'>Nema rezultata.</div>" : ""}
+    `;
+  }
+
+  protoAddSymptom(itemId) {
+    if (!this._protoEdit) return;
+    const it = (this.catalogItems || []).find(x => x.id === itemId);
+    if (!it) return;
+    const steps = this._expandSymptomToSteps(it, null, `📚 ${it.simptom}`);
+    this._protoEdit.steps = (this._protoEdit.steps || []).concat(steps);
+    this.renderProtocolsUI();
+  }
+
+  protoAddFreq(itemId, hzStr) {
+    if (!this._protoEdit) return;
+    const it = (this.catalogItems || []).find(x => x.id === itemId);
+    if (!it) return;
+    const hzQ = Number(hzStr) || 0;
+    if (!hzQ) return;
+    const f0 = (it.frekvencije || []).find(f => Math.abs((Number(f.value ?? f.hz)||0) - hzQ) < 0.001);
+    if (!f0) return;
+
+    const perMin = Math.max(1, Number(it.trajanjePoFrekvencijiMin)||5);
+    const step = this._clone(f0);
+    step.value = hzQ;
+    step.hz = hzQ;
+    step.note = `(${it.simptom})`;
+    this._protoEdit.steps = (this._protoEdit.steps || []).concat([{ minutes: perMin, freq: step }]);
+    this.renderProtocolsUI();
+  }
+
+  async deleteProtocolById(id) {
+    if (!id) return;
+    if (!confirm("Obrisati protokol?")) return;
+    try {
+      await this.db?.deleteProtocol?.(id);
+      await this.loadProtocolsFromDB();
+      this.renderProtocolsUI();
+      this.showToast("🗑 Protokol obrisan.", { actionLabel: "Protokoli", actionNav: "protocols" });
+    } catch(e) {
+      alert("Ne mogu da obrišem protokol: " + (e?.message || e));
+    }
+  }
+
+  async exportProtocols() {
+    try {
+      await this.loadProtocolsFromDB();
+      const payload = { format: "SINET_PROTOCOLS_v1", exportedAt: new Date().toISOString(), protocols: this.protocols || [] };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `SINET_PROTOCOLS_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      this.log("USER", "Protocols Export", "");
+    } catch(e) {
+      alert("Export nije uspeo: " + (e?.message || e));
+    }
+  }
+
+  exportSingleProtocol(id) {
+    const p = (this.protocols || []).find(x => x.id === id);
+    if (!p) return;
+    const payload = { format: "SINET_PROTOCOL_v1", exportedAt: new Date().toISOString(), protocol: p };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `SINET_PROTOCOL_${id}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    this.log("USER", "Protocol Export", id);
+  }
+
+  importProtocolsPrompt() {
+    const inp = document.createElement("input");
+    inp.type = "file";
+    inp.accept = "application/json";
+    inp.onchange = async () => {
+      const file = inp.files?.[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const payload = JSON.parse(text);
+        const arr = payload?.protocols ? payload.protocols : (payload?.protocol ? [payload.protocol] : []);
+        if (!Array.isArray(arr) || !arr.length) throw new Error("Nema protokola u fajlu.");
+
+        for (const p0 of arr) {
+          if (!p0 || typeof p0 !== "object") continue;
+          const p = this._clone(p0);
+          if (!p.id) p.id = this._newProtoId();
+          if (!Array.isArray(p.steps)) p.steps = [];
+          // avoid id clashes by suffix
+          const exists = (this.protocols || []).some(x => x.id === p.id);
+          if (exists) p.id = this._newProtoId();
+          await this.db.putProtocol(p);
+        }
+
+        await this.loadProtocolsFromDB();
+        this.renderProtocolsUI();
+        this.showToast("✅ Uvoz protokola uspešan.", { actionLabel: "Protokoli", actionNav: "protocols" });
+        this.log("USER", "Protocols Import", "");
+      } catch(e) {
+        alert("Uvoz nije uspeo: " + (e?.message || e));
+      } finally {
+        try { inp.value = ""; } catch(_) {}
+      }
+    };
+    inp.click();
+  }
+
+  async createProtocolFromFavorites() {
+    const ids = Array.from(this._favSet || []);
+    const items = ids.map(id => this.catalogItems.find(x => x.id === id)).filter(Boolean);
+    const steps = [];
+    for (const it of items) steps.push(...this._expandSymptomToSteps(it, null, `⭐ ${it.simptom}`));
+    this._protoEdit = { id: this._newProtoId(), name: `Favoriti • ${new Date().toISOString().slice(0,10)}`, loopCount: 1, steps };
+    this.nav("protocols");
+    this.renderProtocolsUI();
+  }
+
+  async createProtocolFromQueue() {
+    const items = Array.isArray(this.playlist) ? this.playlist : [];
+    const steps = [];
+    for (const it of items) steps.push(...this._expandSymptomToSteps(it, Number(it.userPerFreqMin)||null, `🎵 ${it.simptom}`));
+    this._protoEdit = { id: this._newProtoId(), name: `Lista • ${new Date().toISOString().slice(0,10)}`, loopCount: 1, steps };
+    this.nav("protocols");
+    this.renderProtocolsUI();
+  }
+
+  async playUserProtocolById(id, resume=null) {
+    const p = (this.protocols || []).find(x => x.id === id) || await this.db?.getProtocol?.(id);
+    if (!p) return alert("Ne mogu da nađem protokol.");
+    const steps0 = Array.isArray(p.steps) ? p.steps : [];
+    const loops = this._sanitizeLoopCount(p.loopCount ?? p.loops ?? 1);
+    const steps = this._repeatSteps(steps0, loops);
+    const { seq, durs, totalSec } = this._stepsToSequence(steps);
+    if (!seq.length) return alert("Protokol nema koraka.");
+
+    const startIndex = resume?.freqIndex || 0;
+    const elapsedInFreq = resume?.elapsedInFreqSec || 0;
+
+    this.selectedItem = { id: p.id, simptom: p.name || "Protokol" };
+    this.isPlaylistActive = false;
+
+    this.audio.loadSequence(seq, totalSec, startIndex, elapsedInFreq, durs);
+
+    if (this.ui.playerDock) this.ui.playerDock.style.display = 'block';
+    if (this.ui.nowPlayingPanel) this.ui.nowPlayingPanel.style.display = 'block';
+    const btnNowList = document.getElementById('btn-nowlist');
+    if (btnNowList) btnNowList.innerHTML = '▾ FREKVENCIJE';
+
+    if (this.ui.pTitle) this.ui.pTitle.innerText = `[PROTO${loops>1 ? ' x'+loops : ''}] ${(p.name || 'Protokol').toString()}`;
+    if (this.ui.pProtocolTimer) this.ui.pProtocolTimer.style.display = 'none';
+
+    this._ensurePlaybackSession();
+    this.audio.play();
+    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+    this.log("PLAYER", "Play Protocol", p.id);
+  }
+
+
   /* ===================== FAVORITES ===================== */
 
   // v15.4.7 — fast favorite lookup
@@ -1261,6 +1899,7 @@ async importData(fileInput) {
     // 3) Reload in-memory state + UI
     await this.refreshFavoritesSet();
     await this.loadPlaylistFromDB();
+    await this.loadProtocolsFromDB();
     await this.loadUserSymptoms();
     await this.loadOverrides();
     this.applyUserDataToCatalog();
@@ -1316,6 +1955,7 @@ async importData(fileInput) {
         const payload = JSON.parse(text);
         await this.db.importAll(payload);
         await this.loadPlaylistFromDB();
+    await this.loadProtocolsFromDB();
 
     // optional offline registry (images, licensing)
     await this.loadAcupressureRegistry();
@@ -3035,3 +3675,11 @@ window.generateAIPrompt = () => window.app && window.app.generateAIPrompt();
 window.copyAIPrompt = () => window.app && window.app.copyAIPrompt();
 window.exportCatalogTxt = (mode) => window.app && window.app.exportCatalogTxt(mode);
 window.exportCatalogSTL = (mode) => window.app && window.app.exportCatalogSTL(mode);
+
+
+// Protocols (global onclick helpers)
+window.newProtocol = () => window.app && window.app.openProtocolEditor(null);
+window.createProtocolFromFavorites = () => window.app && window.app.createProtocolFromFavorites();
+window.createProtocolFromQueue = () => window.app && window.app.createProtocolFromQueue();
+window.exportProtocols = () => window.app && window.app.exportProtocols();
+window.importProtocols = () => window.app && window.app.importProtocolsPrompt();

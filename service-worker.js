@@ -4,7 +4,7 @@
     Author: miuchins & SINET AI
 */
 
-const CACHE_NAME = 'sinet-audio-v15.4.9.4';
+const CACHE_NAME = 'sinet-audio-v15.5.1.1';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -16,10 +16,10 @@ const ASSETS_TO_CACHE = [
   './css/main.css',
 
   // JS (cache-bust matches index.html)
-  './js/db/indexed-db.js?v=15.4.9.4',
-  './js/app.js?v=15.4.9.4',
-  './js/audio/audio-engine.js?v=15.4.8.2',
-  './js/catalog/stl-adapter.js?v=15.4.8.2',
+  './js/db/indexed-db.js?v=15.5.1.1',
+  './js/app.js?v=15.5.1.1',
+  './js/audio/audio-engine.js?v=15.5.1.1',
+  './js/catalog/stl-adapter.js?v=15.5.1.1',
 
   // Module imports (may be requested without query)
   './js/app.js',
@@ -34,6 +34,7 @@ const ASSETS_TO_CACHE = [
   './data/media/acupressure/registry.json',
 
   './manifest.json',
+  './SINET_User_Manual_v1.0_SR.md',
   ];
 
 self.addEventListener('install', (event) => {

@@ -1,15 +1,15 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.5.1.1 (Loop protokola + fix loop UI + embedded help)
+  Version: 15.6.0 (Loop protokola + fix loop UI + embedded help)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.5.1.1';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.6.0';
 import { normalizeCatalogPayload } from './catalog/stl-adapter.js';
 
-const SINET_APP_VERSION = "15.5.1.1";
+const SINET_APP_VERSION = "15.6.0";
 
 /** iOS detection (iPhone/iPad/iPod + iPadOS masquerading as Mac) */
 function isIOSDevice() {
@@ -137,8 +137,16 @@ class App {
   }
 
   async init() {
-    console.log('SINET v15.5.1.1 Init');
+    console.log('SINET v15.6.0 Init');
     this.cacheUI();
+
+    // Android (Capacitor): if native audio plugin is present, playback can continue in background (screen off).
+    try {
+      if (this.audio && this.audio.isNative) {
+        this.showToast("🤖 Android Native Audio aktivan: radi i kad je ekran ugašen (foreground service).");
+      }
+    } catch(_) {}
+
 
     try {
       const cb = document.getElementById('ios-bg-toggle');

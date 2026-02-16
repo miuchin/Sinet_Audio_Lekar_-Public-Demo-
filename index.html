@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SINET Audio Lekar v15.5.1.1</title>
+    <title>SINET Audio Lekar v15.6.0</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4A90E2">
@@ -587,8 +587,10 @@
     </div>
 </div>
 
-    <script src="js/db/indexed-db.js?v=15.5.1.1"></script>
-    <script type="module" src="js/app.js?v=15.5.1.1"></script>
+    <script src="js/db/indexed-db.js?v=15.6.0">
+    <!-- Capacitor runtime (only available inside native shell). Safe to 404 on web. -->
+    <script src="capacitor.js"></script></script>
+    <script type="module" src="js/app.js?v=15.6.0"></script>
 
     <script>
         // PWA & WORKER

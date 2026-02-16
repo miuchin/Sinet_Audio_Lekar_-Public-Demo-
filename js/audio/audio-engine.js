@@ -322,12 +322,42 @@ getStats() {
       audioEl.playsInline = true;
       audioEl.setAttribute("playsinline", "");
       audioEl.muted = false;
-      // Switch output: prefer media element, mute direct path to avoid double audio
+
+      // IMPORTANT (iOS Safari): srcObject/play may "succeed" but still produce silence.
+      // Strategy:
+      //  1) enable media path
+      //  2) keep direct path ON until <audio> confirms 'playing'
+      //  3) if not playing within a short timeout, fallback to direct path
       this.outGainMedia.gain.value = 1;
-      this.outGainDirect.gain.value = 0;
+      this.outGainDirect.gain.value = 1;
+
+      let switched = false;
+      const switchToMedia = () => {
+        if (switched) return;
+        switched = true;
+        try { this.outGainDirect.gain.value = 0; } catch(_) {}
+      };
+      const fallback = () => {
+        try { this.outGainDirect.gain.value = 1; this.outGainMedia.gain.value = 0; } catch(_) {}
+      };
+
+      audioEl.addEventListener?.('playing', switchToMedia, { once: true });
+      audioEl.addEventListener?.('error', fallback, { once: true });
 
       const p = audioEl.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
+      if (p && typeof p.catch === "function") {
+        p.catch(() => fallback());
+      }
+
+      setTimeout(() => {
+        try {
+          if (!switched) {
+            // If the media element is not actually playing, don't risk muting the direct path.
+            if (audioEl.paused || audioEl.readyState < 2) fallback();
+          }
+        } catch(_) { fallback(); }
+      }, 900);
+
       return true;
     } catch (e) {
       // Fallback: keep direct output

@@ -4,7 +4,7 @@
     Author: miuchins & SINET AI
 */
 
-const CACHE_NAME = 'sinet-audio-v15.6.3';
+const CACHE_NAME = 'sinet-audio-v15.6.4';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -16,11 +16,11 @@ const ASSETS_TO_CACHE = [
   './css/main.css',
 
   // JS (cache-bust matches index.html)
-  './js/db/indexed-db.js?v=15.6.3',
-  './js/app.js?v=15.6.3',
-  './js/audio/audio-engine.js?v=15.6.3',
-  './js/audio/ios-rendered-track.js?v=15.6.3',
-  './js/catalog/stl-adapter.js?v=15.6.3',
+  './js/db/indexed-db.js?v=15.6.4',
+  './js/app.js?v=15.6.4',
+  './js/audio/audio-engine.js?v=15.6.4',
+  './js/audio/ios-rendered-track.js?v=15.6.4',
+  './js/catalog/stl-adapter.js?v=15.6.4',
 
   // Module imports (may be requested without query)
   './js/app.js',

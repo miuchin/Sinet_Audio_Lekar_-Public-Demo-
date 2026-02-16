@@ -1,16 +1,16 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.6.3 (Loop protokola + fix loop UI + embedded help)
+  Version: 15.6.4 (iOS: unlock + experimental routing fallback)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.6.3';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.6.3';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.6.3';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.6.4';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.6.4';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.6.4';
 
-const SINET_APP_VERSION = "15.6.3";
+const SINET_APP_VERSION = "15.6.4";
 
 /** iOS detection (iPhone/iPad/iPod + iPadOS masquerading as Mac) */
 function isIOSDevice() {
@@ -86,7 +86,10 @@ class App {
       this._iosBgExperimental = (localStorage.getItem("sinet_ios_bg_experimental") === "1");
       this._iosBgRendered = (localStorage.getItem("sinet_ios_bg_rendered") === "1");
     } catch(_) {}
-this._iosKeeper = new IosAudioSessionKeeper(this._isIOS && this._iosBgExperimental);
+    // iOS: we use a silent HTMLAudio keep-alive to (a) unlock playback via user gesture and
+    // (b) improve the chance that iOS keeps the session alive on lock-screen.
+    // Enabled for BOTH experimental and PRO rendered modes.
+    this._iosKeeper = new IosAudioSessionKeeper(this._isIOS && (this._iosBgExperimental || this._iosBgRendered));
     this._iosHintShown = false;
 
     // iOS: optional MediaStream -> <audio> output (best-effort)
@@ -149,7 +152,7 @@ this._iosKeeper = new IosAudioSessionKeeper(this._isIOS && this._iosBgExperiment
   }
 
   async init() {
-    console.log('SINET v15.6.3 Init');
+    console.log('SINET v15.6.4 Init');
     this.cacheUI();
 
     try {
@@ -274,6 +277,16 @@ this._iosKeeper = new IosAudioSessionKeeper(this._isIOS && this._iosBgExperiment
 
     const el = this._ensureIosRenderedEl();
 
+    // 🔑 iOS: prime/unlock the playback session with a silent HTMLAudio loop.
+    // This MUST run within the same user gesture as the Play click at least once.
+    // (Even if rendering takes time, the session remains unlocked more often.)
+    try {
+      if (this._iosKeeper) {
+        this._iosKeeper.enabled = true;
+        this._iosKeeper.start();
+      }
+    } catch(_) {}
+
     // Abort previous render if any
     try { if (this._renderAbort) this._renderAbort.abort(); } catch(_) {}
     this._renderAbort = new AbortController();
@@ -346,7 +359,16 @@ this._iosKeeper = new IosAudioSessionKeeper(this._isIOS && this._iosBgExperiment
     // Play
     try {
       const p = el.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
+      if (p && typeof p.catch === "function") {
+        p.catch((e) => {
+          try {
+            // Surface the real iOS reason (often NotAllowedError) instead of failing silently.
+            this.showToast("🍏 iPhone blokira ▶ dok se audio ne aktivira. Tapni 🔊 AKTIVIRAJ, pa opet ▶.", { timeoutMs: 12000 });
+            const b = document.getElementById('unlock-audio-btn');
+            if (b) b.style.display = 'inline-flex';
+          } catch(_) {}
+        });
+      }
     } catch(_) {}
 
     if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
@@ -1713,7 +1735,7 @@ _repeatSteps(steps, loops) {
     this._protoEdit.name = (v || "").toString().slice(0, 120);
   }
 
-  // v15.6.3 — Loop controls (fix: functions referenced by inline handlers)
+  // v15.6.4 — iOS unlock + experimental routing fallback
   protoSetLoopEnabled(isEnabled) {
     if (!this._protoEdit) return;
     const enabled = !!isEnabled;
@@ -3754,7 +3776,7 @@ VAŽNO: samo JSON.`;
     const val = !!enabled;
     this._iosBgExperimental = val;
     try { localStorage.setItem("sinet_ios_bg_experimental", val ? "1" : "0"); } catch(_) {}
-    try { if (this._iosKeeper) this._iosKeeper.enabled = (this._isIOS && val); } catch(_) {}
+    try { if (this._iosKeeper) this._iosKeeper.enabled = (this._isIOS && (val || this._iosBgRendered)); } catch(_) {}
 
     // If experimental is ON, force-disable PRO rendered mode (avoid conflicts)
     if (val && this._iosBgRendered) {
@@ -3762,6 +3784,9 @@ VAŽNO: samo JSON.`;
       try { localStorage.setItem("sinet_ios_bg_rendered", "0"); } catch(_) {}
       try { const el2 = document.getElementById("ios-bg-render-toggle"); if (el2) el2.checked = false; } catch(_) {}
     }
+
+    // keeper enabled follows the final effective state
+    try { if (this._iosKeeper) this._iosKeeper.enabled = (this._isIOS && (this._iosBgExperimental || this._iosBgRendered)); } catch(_) {}
 
 
     // If playing, re-apply routing immediately
@@ -3790,12 +3815,18 @@ VAŽNO: samo JSON.`;
     this._iosBgRendered = val;
     try { localStorage.setItem("sinet_ios_bg_rendered", val ? "1" : "0"); } catch(_) {}
 
+    // keeper enabled follows rendered/experimental state
+    try { if (this._iosKeeper) this._iosKeeper.enabled = (this._isIOS && (val || this._iosBgExperimental)); } catch(_) {}
+
     // If rendered is ON, force-disable experimental MediaStream route (avoid pulsing conflicts)
     if (val && this._iosBgExperimental) {
       this._iosBgExperimental = false;
       try { localStorage.setItem("sinet_ios_bg_experimental", "0"); } catch(_) {}
       try { const el = document.getElementById("ios-bg-toggle"); if (el) el.checked = false; } catch(_) {}
     }
+
+    // keeper enabled follows the final effective state
+    try { if (this._iosKeeper) this._iosKeeper.enabled = (this._isIOS && (this._iosBgExperimental || this._iosBgRendered)); } catch(_) {}
 
     // Update UI checkbox
     try {
@@ -3828,8 +3859,16 @@ VAŽNO: samo JSON.`;
       const exp = this.isIosBgExperimentalEnabled();
       const pro = this.isIosBgRenderedEnabled();
 
-      // Avoid "silent keep-alive" loops by default (can cause audible pulsing on some devices).
-      try { this._iosKeeper.stop(); } catch(_) {}
+      // iOS: unlock / keep audio session alive via a silent HTMLAudio loop.
+      // IMPORTANT: must be started from a user gesture at least once.
+      try {
+        if ((exp || pro) && this._iosKeeper) {
+          this._iosKeeper.enabled = true;
+          this._iosKeeper.start();
+        } else if (this._iosKeeper) {
+          this._iosKeeper.stop();
+        }
+      } catch(_) {}
 
       // Configure output routing
       try {

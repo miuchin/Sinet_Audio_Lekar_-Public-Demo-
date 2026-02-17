@@ -1,16 +1,24 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.6.6 (iOS: unlock + experimental routing fallback)
+  Version: 15.7.1.2 (iOS: segmented PRO render + full timeline + repeat)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.6.6';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.6.6';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.6.6';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.1.2';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.1.2';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.1.2';
 
-const SINET_APP_VERSION = "15.6.6";
+const SINET_APP_VERSION = "15.7.1.2";
+
+
+
+// v15.7.1.2 — default segment length for long sessions (esp. iOS PRO rendered WAV)
+const DEFAULT_SEGMENT_MIN = 40; // minutes
+// Repeat scopes
+const REPEAT_SCOPE_ITEM = "item";   // (A) ponovi jedan simptom/protokol
+const REPEAT_SCOPE_QUEUE = "queue"; // (B) ponovi celu Queue listu
 
 /** iOS detection (iPhone/iPad/iPod + iPadOS masquerading as Mac) */
 function isIOSDevice() {
@@ -121,6 +129,34 @@ class App {
     this.protocolTotalTimeSec = 0;
     this.protocolBaseElapsedSec = 0;
 
+    // v15.7.1.2 — Repeat/Loop controls (default: (A) "lekarski" — jedan simptom)
+    this.repeat = {
+      scope: REPEAT_SCOPE_ITEM,
+      infinite: false,
+      count: 1,        // N
+      remaining: 1,    // runtime counter
+      cycle: 1,        // current cycle number (1-based)
+      totalCycles: 1
+    };
+
+    // v15.7.1.2 — Repeat runtime + protocol timer control
+    this._repeatRt = { baseProtocolSec: 0, queueCycle: 1, itemCycle: 1 };
+    this._protocolTimerEnabled = true;
+
+    // v15.7.1.2 — iOS PRO segmented rendered playback buffers
+    this._renderSeg = {
+      enabled: true,
+      segMin: DEFAULT_SEGMENT_MIN,
+      // runtime
+      active: false,
+      itemTotalSec: 0,
+      perFreqSec: 0,
+      startOffsetSec: 0,
+      // pre-rendered next
+      next: null, // { url, bytes, totalSec, segmentState }
+      preparing: false
+    };
+
     this.selectedItem = null;
     this.currentModalId = null;
 
@@ -156,7 +192,7 @@ class App {
   }
 
   async init() {
-    console.log('SINET v15.6.6 Init');
+    console.log('SINET v15.7.1.2 Init');
     this.cacheUI();
 
     try {
@@ -483,39 +519,25 @@ _showIosDiag(detail) {
       return !!(el && this._rendered && this._rendered.active && !el.paused && !el.ended);
     } catch(_) { return false; }
   }
-
   async _startRenderedTrack(params = {}) {
-    // params: { sequence, durationsSec, totalSec, resumeTrackSec, titleText, loopAll }
-    if (!this._isIOS) throw new Error("Rendered mode is intended for iOS only.");
-    const seq = Array.isArray(params.sequence) ? params.sequence : [];
-    const durs = Array.isArray(params.durationsSec) ? params.durationsSec : null;
-    const totalSec = Math.max(0, Number(params.totalSec) || 0);
+    // params: { sequence, durationsSec, totalSec, resumeTrackSec, titleText, loopAll, segmentMin }
+    if (!this._isIOS) throw new Error('Rendered mode is intended for iOS only.');
+
+    const fullSeq = Array.isArray(params.sequence) ? params.sequence : [];
+    const fullDurs = Array.isArray(params.durationsSec) ? params.durationsSec : null;
+    const fullTotalSec = Math.max(0, Number(params.totalSec) || 0);
     const resumeTrackSec = Math.max(0, Number(params.resumeTrackSec) || 0);
 
-    if (!seq.length || !totalSec) throw new Error("Empty rendered track.");
+    if (!fullSeq.length || !fullTotalSec) throw new Error('Empty rendered track.');
 
-    // Hard safety limit (RAM) — if too big, fallback to live WebAudio
-    const estBytes = estimateWavBytes(totalSec, 22050, 1, 16);
-    const estMB = estBytes / (1024*1024);
-    const HARD_MB = 160; // ~safe-ish on many devices; user can reduce duration if needed
-    if (estMB > HARD_MB) {
-      this.showToast(`⚠️ iOS PRO: Protokol je predugačak za RAM render (~${estMB.toFixed(0)} MB). Prelazim na standardni režim (foreground).`, { timeoutMs: 10000 });
-      this._iosBgRendered = false;
-      try { localStorage.setItem("sinet_ios_bg_rendered", "0"); } catch(_) {}
-      try { const el2 = document.getElementById("ios-bg-render-toggle"); if (el2) el2.checked = false; } catch(_) {}
-      // fallback: let caller start WebAudio path
-      return { fallback: true };
-    }
+    const segMin = Math.max(5, Number(params.segmentMin) || Number(this._renderSeg?.segMin) || DEFAULT_SEGMENT_MIN);
+    const segLenSec = segMin * 60;
 
-    // Stop any existing session
     try { this.audio?.stop?.(); } catch(_) {}
-    try { this._teardownPlaybackSession("render_start"); } catch(_) {}
+    try { this._teardownPlaybackSession('render_start'); } catch(_) {}
 
     const el = this._ensureIosRenderedEl();
 
-    // 🔑 iOS: prime/unlock the playback session with a silent HTMLAudio loop.
-    // This MUST run within the same user gesture as the Play click at least once.
-    // (Even if rendering takes time, the session remains unlocked more often.)
     try {
       if (this._iosKeeper) {
         this._iosKeeper.enabled = true;
@@ -523,151 +545,277 @@ _showIosDiag(detail) {
       }
     } catch(_) {}
 
-    // Abort previous render if any
     try { if (this._renderAbort) this._renderAbort.abort(); } catch(_) {}
     this._renderAbort = new AbortController();
 
-    // Update UI immediately
     if (this.ui.playerDock) this.ui.playerDock.style.display = 'block';
     if (this.ui.nowPlayingPanel) this.ui.nowPlayingPanel.style.display = 'block';
-    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏳";
+    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = '⏳';
 
-    this.showToast(`🍏 iOS PRO: Renderujem protokol u WAV (RAM)... (~${estMB.toFixed(0)} MB)`, { timeoutMs: 6000 });
+    const r = await this._startRenderedSegment({
+      fullSeq,
+      fullDurs,
+      fullTotalSec,
+      resumeTrackSec,
+      segLenSec,
+      titleText: (params.titleText || '').toString(),
+      signal: this._renderAbort.signal
+    });
+
+    return r;
+  }
+
+  _durationAt(i, fullDurs, perStep) {
+    try {
+      if (fullDurs && fullDurs.length) return Math.max(0, Number(fullDurs[i]) || 0);
+      return Math.max(0, perStep);
+    } catch (_) {
+      return Math.max(0, perStep);
+    }
+  }
+
+  _computeRenderedSegment(fullSeq, fullDurs, fullTotalSec, resumeTrackSec, segLenSec) {
+    const n = fullSeq.length;
+    const perStep = n ? (fullTotalSec / n) : 0;
+
+    let startIdx = 0;
+    let startOffset = 0;
+    for (let i = 0; i < n; i++) {
+      const d = this._durationAt(i, fullDurs, perStep);
+      if (resumeTrackSec < startOffset + d) { startIdx = i; break; }
+      startOffset += d;
+      startIdx = Math.min(n - 1, i + 1);
+    }
+
+    startIdx = Math.max(0, Math.min(n - 1, startIdx));
+
+    let endIdx = startIdx;
+    let segTotal = 0;
+    for (let i = startIdx; i < n; i++) {
+      const d = this._durationAt(i, fullDurs, perStep);
+      segTotal += d;
+      endIdx = i;
+      if (segTotal >= segLenSec && i > startIdx) break;
+    }
+
+    const segSeq = fullSeq.slice(startIdx, endIdx + 1);
+    const segDurs = fullDurs ? fullDurs.slice(startIdx, endIdx + 1) : null;
+
+    const resumeInSeg = Math.max(0, resumeTrackSec - startOffset);
+    const endOffset = Math.min(fullTotalSec, startOffset + segTotal);
+
+    return {
+      startIdx,
+      endIdx,
+      startOffsetSec: startOffset,
+      endOffsetSec: endOffset,
+      segSeq,
+      segDurs,
+      segTotalSec: Math.max(0, segTotal),
+      resumeInSegSec: resumeInSeg
+    };
+  }
+
+  async _startRenderedSegment({ fullSeq, fullDurs, fullTotalSec, resumeTrackSec, segLenSec, titleText, signal }) {
+    const el = this._ensureIosRenderedEl();
+
+    const seg = this._computeRenderedSegment(fullSeq, fullDurs, fullTotalSec, resumeTrackSec, segLenSec);
+
+    const estBytes = estimateWavBytes(seg.segTotalSec, 22050, 1, 16);
+    const estMB = estBytes / (1024 * 1024);
+    const HARD_MB = 160;
+    if (estMB > HARD_MB) {
+      this.showToast(`⚠️ iOS PRO: Segment je prevelik za RAM render (~${estMB.toFixed(0)} MB). Prelazim na standardni režim (foreground).`, { timeoutMs: 10000 });
+      this._iosBgRendered = false;
+      try { localStorage.setItem('sinet_ios_bg_rendered', '0'); } catch (_) {}
+      try { const el2 = document.getElementById('ios-bg-render-toggle'); if (el2) el2.checked = false; } catch (_) {}
+      try { this._hideStartOverlay(); this._setStartButtonsEnabled(true); } catch (_) {}
+      return { fallback: true };
+    }
+
+    try {
+      const fromMin = Math.floor(seg.startOffsetSec / 60);
+      const toMin = Math.ceil(Math.min(fullTotalSec, seg.endOffsetSec) / 60);
+      this.showToast(`🍏 iOS PRO: Renderujem segment ${fromMin}–${toMin} min (~${estMB.toFixed(0)} MB)`, { timeoutMs: 4500 });
+    } catch (_) {}
 
     let rendered;
     try {
       rendered = await renderProtocolToWavBlobURL({
-        sequence: seq,
-        durationsSec: durs,
-        totalSec,
+        sequence: seg.segSeq,
+        durationsSec: seg.segDurs,
+        totalSec: seg.segTotalSec,
         sampleRate: 22050,
         channels: 1,
         gain: (this.audio?.masterGain?.gain?.value) ? Math.max(0.05, Math.min(0.9, this.audio.masterGain.gain.value)) : 0.25,
         subCarrierHz: this.audio?.subCarrierHz || 200,
         subThresholdHz: this.audio?.subCarrierThresholdHz || 50,
         fadeMs: 12,
-        signal: this._renderAbort.signal
+        signal
       });
     } catch (e) {
-      this.showToast("❌ iOS PRO: render nije uspeo. Vraćam standardni režim.", { timeoutMs: 9000 });
+      this.showToast('❌ iOS PRO: render nije uspeo. Vraćam standardni režim.', { timeoutMs: 9000 });
+      try { this._hideStartOverlay(); this._setStartButtonsEnabled(true); } catch (_) {}
       return { fallback: true, error: String(e?.message || e) };
     }
 
-    // Cleanup old URL
     try {
       if (this._rendered && this._rendered.url) URL.revokeObjectURL(this._rendered.url);
-    } catch(_) {}
+    } catch (_) {}
 
-    // Attach rendered playback
     el.src = rendered.url;
-    el.loop = !!params.loopAll;
-    try { el.currentTime = resumeTrackSec; } catch(_) {}
+    el.loop = false;
+    try { el.currentTime = Math.max(0, seg.resumeInSegSec); } catch (_) {}
 
-    // Store meta
     this._rendered = {
       active: true,
       url: rendered.url,
       bytes: rendered.bytes,
-      totalSec,
+      totalSec: seg.segTotalSec,
+      fullTotalSec,
       sampleRate: rendered.sampleRate,
       channels: rendered.channels,
-      sequence: seq,
-      durationsSec: durs,
+      sequence: seg.segSeq,
+      durationsSec: seg.segDurs,
+      fullSequence: fullSeq,
+      fullDurationsSec: fullDurs,
+      segStartIndex: seg.startIdx,
+      segEndIndex: seg.endIdx,
+      segStartOffsetSec: seg.startOffsetSec,
+      segEndOffsetSec: seg.endOffsetSec,
       lastIndex: -1,
-      titleText: (params.titleText || "").toString()
+      titleText: titleText || ''
     };
 
-    // Bind events once (idempotent)
     if (!this._renderedBound) {
       this._renderedBound = true;
-      el.addEventListener("ended", () => {
-        if (this._rendered && this._rendered.active && !el.loop) {
-          // mimic engine completion
-          this._rendered.active = false;
-          this.onAudioComplete();
-        }
+      el.addEventListener('ended', () => {
+        try { this._handleRenderedEnded(); } catch (_) {}
       });
     }
 
-    // Start ticking UI (foreground only)
     this._startRenderedTicker();
 
-    // Play
     try {
       const p = el.play();
-      if (p && typeof p.catch === "function") {
-        p.catch((e) => {
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => {
           try {
-            // Surface the real iOS reason (often NotAllowedError) instead of failing silently.
-            this.showToast("🍏 iPhone blokira ▶ dok se audio ne aktivira. Tapni 🔊 AKTIVIRAJ, pa opet ▶.", { timeoutMs: 12000 });
+            this.showToast('🍏 iPhone blokira ▶ dok se audio ne aktivira. Tapni 🔊 AKTIVIRAJ, pa opet ▶.', { timeoutMs: 12000 });
             const b = document.getElementById('unlock-audio-btn');
             if (b) b.style.display = 'inline-flex';
-          } catch(_) {}
+          } catch (_) {}
         });
       }
-    } catch(_) {}
+    } catch (_) {}
 
-    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
-    this.log("PLAYER", "Play (iOS PRO Rendered)", this.selectedItem?.id || "");
+    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = '⏸';
+
+    try { this._hideStartOverlay(); this._setStartButtonsEnabled(true); } catch (_) {}
+
+    this.log('PLAYER', 'Play (iOS PRO Rendered Seg)', this.selectedItem?.id || '');
+
     return { fallback: false };
   }
 
+  async _handleRenderedEnded() {
+    try {
+      if (!this._rendered || !this._rendered.active) return;
+
+      const nextResume = Number(this._rendered.segEndOffsetSec) || 0;
+      const fullTotal = Number(this._rendered.fullTotalSec) || Number(this._rendered.totalSec) || 0;
+
+      if (nextResume >= (fullTotal - 0.01)) {
+        this._rendered.active = false;
+        this.onAudioComplete();
+        return;
+      }
+
+      try {
+        this._showStartOverlay('⏳ PRIPREMAM…', 'Sledeći segment (iOS PRO)…');
+        this._setStartButtonsEnabled(false);
+      } catch (_) {}
+
+      await this._startRenderedSegment({
+        fullSeq: this._rendered.fullSequence || [],
+        fullDurs: this._rendered.fullDurationsSec || null,
+        fullTotalSec: fullTotal,
+        resumeTrackSec: nextResume,
+        segLenSec: Math.max(5*60, Number(this._renderSeg?.segMin || DEFAULT_SEGMENT_MIN) * 60),
+        titleText: this._rendered.titleText || '',
+        signal: (this._renderAbort && this._renderAbort.signal) ? this._renderAbort.signal : undefined
+      });
+    } catch (e) {
+      try { this._rendered.active = false; } catch (_) {}
+      try { this._hideStartOverlay(); this._setStartButtonsEnabled(true); } catch (_) {}
+      this.onAudioComplete();
+    }
+  }
+
   _startRenderedTicker() {
-    // Update UI while visible; do not assume timers run in background.
     if (this._renderedRaf) cancelAnimationFrame(this._renderedRaf);
     const el = this._iosRenderedEl;
+
     const loop = () => {
       try {
         if (!this._rendered || !this._rendered.active || !el) return;
         if (document.hidden) { this._renderedRaf = requestAnimationFrame(loop); return; }
 
-        const t = Math.max(0, Number(el.currentTime) || 0);
-        const seq = this._rendered.sequence || [];
-        const durs = this._rendered.durationsSec;
+        const tSeg = Math.max(0, Number(el.currentTime) || 0);
+        const base = Math.max(0, Number(this._rendered.segStartOffsetSec) || 0);
+        const tFull = Math.max(0, Math.min((Number(this._rendered.fullTotalSec) || 0), base + tSeg));
+
+        const seqFull = this._rendered.fullSequence || this._rendered.sequence || [];
+        const dursFull = this._rendered.fullDurationsSec || this._rendered.durationsSec;
+        const fullTotalSec = Number(this._rendered.fullTotalSec || this._rendered.totalSec || 0);
+        const perStep = (!dursFull && seqFull.length) ? (fullTotalSec / seqFull.length) : 0;
+
         let idx = 0;
         let acc = 0;
-        for (; idx < seq.length; idx++) {
-          const d = durs ? (Number(durs[idx])||0) : (seq.length ? (this._rendered.totalSec/seq.length) : 0);
-          if (t < acc + d) break;
+        for (; idx < seqFull.length; idx++) {
+          const d = dursFull ? (Number(dursFull[idx]) || 0) : perStep;
+          if (tFull < acc + d) break;
           acc += d;
         }
-        idx = Math.min(idx, Math.max(0, seq.length-1));
-        const durCur = durs ? (Number(durs[idx])||0) : (seq.length ? (this._rendered.totalSec/seq.length) : 0);
-        const elapsedInFreq = Math.max(0, t - acc);
+        idx = Math.min(idx, Math.max(0, seqFull.length - 1));
+        const durCur = dursFull ? (Number(dursFull[idx]) || 0) : perStep;
+        const elapsedInFreq = Math.max(0, tFull - acc);
 
         const stats = {
           currentIndex: idx,
-          totalItems: seq.length,
-          enabledTotalItems: seq.length,
+          totalItems: seqFull.length,
+          enabledTotalItems: seqFull.length,
           currentPos: idx,
           elapsedInFreq,
           durationPerFreq: durCur,
           durationCurrentSec: durCur,
-          totalDurationSec: this._rendered.totalSec,
-          totalTrackSec: this._rendered.totalSec,
-          elapsedTrackSec: t,
-          hasPerFreqDurations: !!durs
+          totalDurationSec: fullTotalSec,
+          totalTrackSec: fullTotalSec,
+          elapsedTrackSec: tFull,
+          hasPerFreqDurations: !!dursFull
         };
 
-        // trigger freq change callback if needed
         if (this._rendered.lastIndex !== idx) {
           this._rendered.lastIndex = idx;
-          this.onFreqChange(seq[idx] || {}, stats);
+          this.onFreqChange(seqFull[idx] || {}, stats);
         }
+
         this.onAudioTick(stats);
 
-        // keep resume state fresh
         this._lastStats = {
           currentIndex: stats.currentIndex,
           totalItems: stats.totalItems,
           elapsedInFreq: stats.elapsedInFreq,
           durationPerFreq: stats.durationCurrentSec
         };
-      } catch(_) {}
+      } catch (_) {}
+
       this._renderedRaf = requestAnimationFrame(loop);
     };
+
     this._renderedRaf = requestAnimationFrame(loop);
   }
+
 
   _stopRenderedTrack() {
     try { if (this._renderAbort) this._renderAbort.abort(); } catch(_) {}
@@ -721,6 +869,162 @@ _showIosDiag(detail) {
       pActiveSrc: document.getElementById('p-active-src'),
       pActiveDur: document.getElementById('p-active-dur')
     };
+  }
+
+
+  /* ===================== v15.7.1.2 — Loop / Repeat (UI) ===================== */
+
+  _readRepeatSettings(ctx = "playlist") {
+    // ctx: "playlist" | "modal"
+    const isModal = (ctx === "modal");
+    const idCount = isModal ? "m-repeat-count" : "pl-repeat-count";
+    const idInf = isModal ? "m-repeat-infinite" : "pl-repeat-infinite";
+    const nameScope = isModal ? "m-repeat-scope" : "pl-repeat-scope";
+
+    let count = 1;
+    let infinite = false;
+    let scope = REPEAT_SCOPE_ITEM;
+
+    try {
+      const elC = document.getElementById(idCount);
+      count = Math.max(1, Math.min(200, Number(elC?.value || 1) || 1));
+    } catch(_) { count = 1; }
+
+    try { infinite = !!document.getElementById(idInf)?.checked; } catch(_) { infinite = false; }
+
+    try {
+      const el = document.querySelector(`input[name="${nameScope}"]:checked`);
+      const v = (el?.value || "").toString();
+      if (v === REPEAT_SCOPE_QUEUE) scope = REPEAT_SCOPE_QUEUE;
+      else scope = REPEAT_SCOPE_ITEM;
+    } catch(_) { scope = REPEAT_SCOPE_ITEM; }
+
+    // Safety: if infinite + scope item + playlist mode and playlist has >1 items, user probably meant queue.
+    // But do NOT override automatically — just warn subtly in status line.
+    return { count, infinite, scope };
+  }
+
+  _applyRepeatSettings(s) {
+    const count = Math.max(1, Number(s?.count) || 1);
+    const infinite = !!s?.infinite;
+    const scope = (s?.scope === REPEAT_SCOPE_QUEUE) ? REPEAT_SCOPE_QUEUE : REPEAT_SCOPE_ITEM;
+
+    this.repeat.scope = scope;
+    this.repeat.infinite = infinite;
+    this.repeat.count = count;
+    this.repeat.totalCycles = infinite ? Infinity : count;
+    this.repeat.remaining = infinite ? Infinity : count;
+    this.repeat.cycle = 1;
+
+    try { this._renderRepeatStatus(); } catch(_) {}
+  }
+
+  _renderRepeatStatus(extra = "") {
+    if (!this.ui?.pStatus) return;
+
+    const scope = (this.repeat.scope === REPEAT_SCOPE_QUEUE) ? REPEAT_SCOPE_QUEUE : REPEAT_SCOPE_ITEM;
+    const nLbl = (this.repeat.infinite) ? '∞' : String(this.repeat.count || 1);
+
+    let cycLbl = '';
+    if (scope === REPEAT_SCOPE_QUEUE) {
+      const q = Math.max(1, Number(this._repeatRt?.queueCycle) || 1);
+      cycLbl = this.repeat.infinite ? `Queue ciklus ${q}` : `Queue ciklus ${q}/${this.repeat.count || 1}`;
+    } else {
+      const ic = Math.max(1, Number(this._repeatRt?.itemCycle) || 1);
+      cycLbl = this.repeat.infinite ? `Simptom ciklus ${ic}` : `Simptom ciklus ${ic}/${this.repeat.count || 1}`;
+    }
+
+    const msg = `🔁 ${cycLbl} (N=${nLbl})${extra ? ' • ' + extra : ''}`;
+    this.ui.pStatus.innerText = msg;
+  }
+
+  /* ===================== v15.7.1.2 — UX overlay (“⏳ PRIPREMAM…”) ===================== */
+
+  _showStartOverlay(text="⏳ PRIPREMAM…", sub="Sačekaj 5 sekundi…") {
+    const ov = document.getElementById("start-overlay");
+    const t = document.getElementById("start-overlay-text");
+    const s = document.getElementById("start-overlay-sub");
+    const bar = document.getElementById("start-overlay-bar");
+    if (!ov) return;
+    if (t) t.innerText = text;
+    if (s) s.innerText = sub;
+    if (bar) bar.style.width = "0%";
+    ov.style.display = "flex";
+
+    // pseudo-progress (indeterminate)
+    const start = Date.now();
+    const tick = () => {
+      if (ov.style.display === "none") return;
+      const dt = Date.now() - start;
+      const pct = Math.min(92, Math.max(5, Math.floor((dt / 5200) * 92)));
+      if (bar) bar.style.width = pct + "%";
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  _hideStartOverlay() {
+    const ov = document.getElementById("start-overlay");
+    const bar = document.getElementById("start-overlay-bar");
+    if (bar) bar.style.width = "100%";
+    if (ov) ov.style.display = "none";
+  }
+
+  _setStartButtonsEnabled(enabled) {
+    try {
+      const b = document.querySelector('button.btn-full[onclick="startProtocol()"]');
+      if (b) { b.disabled = !enabled; b.style.opacity = enabled ? "1" : "0.65"; }
+    } catch(_) {}
+    try {
+      const b2 = document.getElementById("m-play-btn");
+      if (b2) { b2.disabled = !enabled; b2.style.opacity = enabled ? "1" : "0.65"; }
+    } catch(_) {}
+  }
+
+  /* ===================== v15.7.1.2 — Preporuka block ===================== */
+
+  _getRecommendation(item) {
+    const p = item?.preporuka || item?.preporuke || item?.recommendation || null;
+
+    const perFreqMin = Number(
+      p?.trajanje_po_frekv_min ?? p?.trajanjePoFrekvMin ?? p?.trajanjePoFrekvencijiMin ??
+      item?.trajanjePoFrekvencijiMin ?? item?.trajanje_po_frekv_min ?? 5
+    ) || 5;
+
+    const loopN = Number(p?.loop_uzastopno ?? p?.loopN ?? p?.ponovi ?? 1) || 1;
+    const daysN = Number(p?.dnevno_dana ?? p?.dnevnoDana ?? p?.dnevno ?? 1) || 1;
+    const pauseDays = Number(p?.pauza_dana ?? p?.pauzaDana ?? p?.pauza ?? 0) || 0;
+
+    const segMin = Number(p?.segment_min ?? p?.segmentMin ?? DEFAULT_SEGMENT_MIN) || DEFAULT_SEGMENT_MIN;
+
+    return {
+      perFreqMin: Math.max(1, perFreqMin),
+      loopN: Math.max(1, loopN),
+      daysN: Math.max(1, daysN),
+      pauseDays: Math.max(0, pauseDays),
+      segMin: Math.max(5, segMin)
+    };
+  }
+
+  _renderRecommendationToModal(item) {
+    const r = this._getRecommendation(item);
+    try { const el = document.getElementById("m-reco-dur"); if (el) el.innerText = `${r.perFreqMin} min`; } catch(_) {}
+    try { const el = document.getElementById("m-reco-loop"); if (el) el.innerText = `${r.loopN}×`; } catch(_) {}
+    try { const el = document.getElementById("m-reco-days"); if (el) el.innerText = `${r.daysN}`; } catch(_) {}
+    try { const el = document.getElementById("m-reco-pause"); if (el) el.innerText = `${r.pauseDays}`; } catch(_) {}
+    try { const el = document.getElementById("m-reco-seg"); if (el) el.innerText = `${r.segMin}`; } catch(_) {}
+  }
+
+  _renderRecommendationToPlayer(item) {
+    const box = document.getElementById("p-reco-box");
+    if (!box) return;
+    const r = this._getRecommendation(item);
+    try { const el = document.getElementById("p-reco-dur"); if (el) el.innerText = `${r.perFreqMin} min`; } catch(_) {}
+    try { const el = document.getElementById("p-reco-loop"); if (el) el.innerText = `${r.loopN}×`; } catch(_) {}
+    try { const el = document.getElementById("p-reco-days"); if (el) el.innerText = `${r.daysN}`; } catch(_) {}
+    try { const el = document.getElementById("p-reco-pause"); if (el) el.innerText = `${r.pauseDays}`; } catch(_) {}
+    try { const el = document.getElementById("p-reco-seg"); if (el) el.innerText = `${r.segMin}`; } catch(_) {}
+    box.style.display = "block";
   }
 
   async log(cat, action, details="") {
@@ -1078,7 +1382,7 @@ async loadAcupressureRegistry() {
     if (this.ui.pTimerElapsed) this.ui.pTimerElapsed.innerText = this.formatTime(elapsedTrack);
     if (this.ui.pTimerTotal) this.ui.pTimerTotal.innerText = this.formatTime(totalTrack);
 
-    if (this.isPlaylistActive) {
+    if (this.isPlaylistActive && this._protocolTimerEnabled) {
       const currentTotal = this.protocolBaseElapsedSec + elapsedTrack;
       if (this.ui.pProtocolTimer) {
         this.ui.pProtocolTimer.innerText = `UKUPNO: ${this.formatTime(currentTotal)} / ${this.formatTime(this.protocolTotalTimeSec)}`;
@@ -1090,16 +1394,68 @@ async loadAcupressureRegistry() {
 
     this.saveResumeState(false);
   }
-
   onAudioComplete() {
-    this.log("PLAYER", "Complete", this.selectedItem?.id || "");
-    if (this.isPlaylistActive) {
-      setTimeout(() => this.playPlaylistItem(this.currentPlaylistIndex + 1), 400);
-    } else {
+    this.log('PLAYER', 'Complete', this.selectedItem?.id || '');
+
+    if (!this.isPlaylistActive) {
       this.stopPlayer(true);
-      alert("Terapija završena.");
+      alert('Terapija završena.');
+      return;
     }
+
+    this._repeatRt = this._repeatRt || { baseProtocolSec: 0, queueCycle: 1, itemCycle: 1 };
+
+    const scope = this.repeat?.scope || REPEAT_SCOPE_ITEM;
+    const N = (this.repeat?.infinite) ? Infinity : Math.max(1, Number(this.repeat?.count) || 1);
+
+    const idx = Number(this.currentPlaylistIndex) || 0;
+    const isLastItem = (idx >= (this.playlist.length - 1));
+
+    if (scope === REPEAT_SCOPE_ITEM) {
+      const canRepeatItem = (this.repeat?.infinite) || (this._repeatRt.itemCycle < N);
+
+      if (canRepeatItem) {
+        this._repeatRt.itemCycle = (Number(this._repeatRt.itemCycle) || 1) + 1;
+        try { this._renderRepeatStatus(); } catch (_) {}
+        setTimeout(() => this.playPlaylistItem(idx), 250);
+        return;
+      }
+
+      this._repeatRt.itemCycle = 1;
+      try { this._renderRepeatStatus(); } catch (_) {}
+
+      if (!isLastItem) {
+        setTimeout(() => this.playPlaylistItem(idx + 1), 250);
+        return;
+      }
+
+      this.stopPlayer(true);
+      alert('Protokol završen!');
+      return;
+    }
+
+    if (scope === REPEAT_SCOPE_QUEUE) {
+      if (!isLastItem) {
+        setTimeout(() => this.playPlaylistItem(idx + 1), 250);
+        return;
+      }
+
+      const canRepeatQueue = (this.repeat?.infinite) || (this._repeatRt.queueCycle < N);
+      if (canRepeatQueue) {
+        this._repeatRt.queueCycle = (Number(this._repeatRt.queueCycle) || 1) + 1;
+        try { this._renderRepeatStatus(); } catch (_) {}
+        setTimeout(() => this.playPlaylistItem(0), 250);
+        return;
+      }
+
+      this.stopPlayer(true);
+      alert('Protokol završen!');
+      return;
+    }
+
+    setTimeout(() => this.playPlaylistItem(idx + 1), 250);
   }
+
 
   togglePlayPause() {
     // iOS PRO (Rendered WAV): use HTMLAudioElement controls
@@ -1263,35 +1619,125 @@ async loadAcupressureRegistry() {
     if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
     this.log("PLAYER", "Resume Item", id);
   }
+  /* ===================== v15.7.1.2 — Repeat helpers ===================== */
 
-  /* ===================== PROTOCOL ===================== */
+  _getPlaylistItemTotalSec(item) {
+    const m = Number(item?.userTotalMin ?? 0) || 0;
+    if (m > 0) return Math.max(1, m) * 60;
+    const freqs = (item?.frekvencije || []).filter(f => f?.enabled !== false);
+    const perFreqMin = Math.max(1, Number(item?.userPerFreqMin) || Number(item?.trajanjePoFrekvencijiMin) || 5);
+    return Math.max(1, freqs.length * perFreqMin) * 60;
+  }
+
+  _computeBaseProtocolSec() {
+    try {
+      return (this.playlist || []).reduce((acc, it) => acc + this._getPlaylistItemTotalSec(it), 0);
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  _computeProtocolBaseElapsedSec(index) {
+    const baseTotal = Number(this._repeatRt?.baseProtocolSec) || this._computeBaseProtocolSec();
+
+    if (this.repeat?.scope === REPEAT_SCOPE_QUEUE) {
+      const q = Math.max(1, Number(this._repeatRt?.queueCycle) || 1);
+      let before = 0;
+      for (let i = 0; i < index; i++) before += this._getPlaylistItemTotalSec(this.playlist[i]);
+      return Math.max(0, (q - 1) * baseTotal + before);
+    }
+
+    // default: REPEAT_SCOPE_ITEM (A)
+    let beforeItems = 0;
+    for (let i = 0; i < index; i++) beforeItems += this._getPlaylistItemTotalSec(this.playlist[i]);
+    const itemTotal = this._getPlaylistItemTotalSec(this.playlist[index]);
+    const ic = Math.max(1, Number(this._repeatRt?.itemCycle) || 1);
+    const N = (this.repeat?.infinite) ? Infinity : Math.max(1, Number(this.repeat?.count) || 1);
+    const mult = Number.isFinite(N) ? N : 1;
+    return Math.max(0, beforeItems * mult + itemTotal * (ic - 1));
+  }  /* ===================== PROTOCOL ===================== */
   startProtocol() {
     if (!this.playlist.length) return;
+
+    // Repeat settings (Playlist UI)
+    try {
+      const s = this._readRepeatSettings('playlist');
+      this._applyRepeatSettings(s);
+    } catch (_) {}
+
     this.isPlaylistActive = true;
+    this._protocolTimerEnabled = true;
     this.currentPlaylistIndex = 0;
 
-    // total = sum(totalMin)
-    this.protocolTotalTimeSec = this.playlist.reduce((acc, it) => acc + (Number(it.userTotalMin)||0)*60, 0);
+    // Repeat runtime
+    this._repeatRt = this._repeatRt || { baseProtocolSec: 0, queueCycle: 1, itemCycle: 1 };
+    this._repeatRt.queueCycle = 1;
+    this._repeatRt.itemCycle = 1;
+    this._repeatRt.baseProtocolSec = this._computeBaseProtocolSec();
+
+    // Total protocol time (informational)
+    if (this.repeat?.infinite) this.protocolTotalTimeSec = Infinity;
+    else this.protocolTotalTimeSec = this._repeatRt.baseProtocolSec * Math.max(1, Number(this.repeat?.count) || 1);
     this.protocolBaseElapsedSec = 0;
 
-    this.playPlaylistItem(0);
-    this.log("PLAYER", "Start Protocol", String(this.playlist.length));
+    try { this._renderRepeatStatus(); } catch (_) {}
+
+    // UX overlay
+    try {
+      this._showStartOverlay('⏳ PRIPREMAM…', 'Render/Start može potrajati (iPhone).');
+      this._setStartButtonsEnabled(false);
+    } catch (_) {}
+
+    try {
+      const p = this.playPlaylistItem(0);
+      if (p && typeof p.catch === 'function') {
+        p.catch(err => {
+          console.warn('startProtocol failed', err);
+          const msg = (err && (err.name || err.message)) ? `${err.name || ''} ${err.message || ''}`.trim() : 'unknown';
+          this._hideStartOverlay?.();
+          this._setStartButtonsEnabled?.(true);
+          this.showToast(`⚠️ iPhone: start playback failed (${msg}). Pokušaj još jednom (tap ▶).`, {
+            timeoutMs: 6500,
+            action2Label: '▶',
+            action2Onclick: 'window.app && window.app.startProtocol && window.app.startProtocol()'
+          });
+        });
+      }
+    } catch (err) {
+      console.warn('startProtocol failed (sync)', err);
+      const msg = (err && (err.name || err.message)) ? `${err.name || ''} ${err.message || ''}`.trim() : 'unknown';
+      this._hideStartOverlay?.();
+      this._setStartButtonsEnabled?.(true);
+      this.showToast(`⚠️ iPhone: start playback failed (${msg}). Pokušaj još jednom (tap ▶).`, {
+        timeoutMs: 6500,
+        action2Label: '▶',
+        action2Onclick: 'window.app && window.app.startProtocol && window.app.startProtocol()'
+      });
+    }
+
+    this.log('PLAYER', 'Start Protocol', `${this.playlist.length} • repeat=${this.repeat?.scope||'item'} N=${this.repeat?.infinite?'∞':(this.repeat?.count||1)}`);
   }
 
   async playPlaylistItem(index, resume=null) {
     if (index >= this.playlist.length) {
       this.stopPlayer(true);
-      alert("Protokol završen!");
+      alert('Protokol završen!');
       return;
     }
 
     const item = this.playlist[index];
     this.selectedItem = item;
+
+    try {
+      const r = this._getRecommendation(item);
+      if (r?.segMin) this._renderSeg.segMin = Number(r.segMin) || DEFAULT_SEGMENT_MIN;
+    } catch (_) {}
+
+    try { this._renderRecommendationToPlayer(item); } catch(_) {}
+
     this.currentPlaylistIndex = index;
 
-    // base elapsed before this item
-    this.protocolBaseElapsedSec = 0;
-    for (let i=0;i<index;i++) this.protocolBaseElapsedSec += (Number(this.playlist[i].userTotalMin)||0)*60;
+    this.protocolBaseElapsedSec = this._computeProtocolBaseElapsedSec(index);
 
     const freqs = (item.frekvencije || []).filter(f => f.enabled !== false);
     const perFreqMin = Math.max(1, Number(item.userPerFreqMin) || Number(item.trajanjePoFrekvencijiMin) || 5);
@@ -1300,30 +1746,31 @@ async loadAcupressureRegistry() {
     const startIndex = resume?.freqIndex || 0;
     const elapsedInFreq = resume?.elapsedInFreqSec || 0;
 
-    // iOS PRO (Rendered WAV): render current playlist item to WAV-in-RAM and play via <audio>
     if (this._isIOS && this.isIosBgRenderedEnabled()) {
       const perStepSec = (freqs.length ? (totalDurSec / freqs.length) : 0);
       const resumeTrackSec = Math.max(0, (startIndex * perStepSec) + elapsedInFreq);
+      const segMin = Number(this._renderSeg?.segMin) || DEFAULT_SEGMENT_MIN;
+
       const r = await this._startRenderedTrack({
         sequence: freqs,
         durationsSec: null,
         totalSec: totalDurSec,
         resumeTrackSec,
         titleText: `[${index+1}/${this.playlist.length}] ${item.simptom}`,
-        loopAll: false
+        loopAll: false,
+        segmentMin: segMin
       });
+
       if (r && r.fallback === false) {
-        if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+        if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = '⏸';
         this.renderPlaylistUI();
         return;
       }
-      // else: fallback to live WebAudio
     }
 
     this.audio.loadSequence(freqs, totalDurSec, startIndex, elapsedInFreq);
 
     if (this.ui.playerDock) this.ui.playerDock.style.display = 'block';
-    // Podrazumevano pokaži checklistu frekvencija ispod plejera (korisniku je korisno)
     if (this.ui.nowPlayingPanel) this.ui.nowPlayingPanel.style.display = 'block';
     const btnNowList = document.getElementById('btn-nowlist');
     if (btnNowList) btnNowList.innerHTML = '▾ FREKVENCIJE';
@@ -1331,9 +1778,13 @@ async loadAcupressureRegistry() {
 
     this._ensurePlaybackSession();
     this.audio.play();
-    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
+    if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = '⏸';
+
+    try { this._hideStartOverlay(); this._setStartButtonsEnabled(true); } catch (_) {}
+
     this.renderPlaylistUI();
   }
+
 
   /* ===================== MODAL (details) ===================== */
   openModal(id) {
@@ -1368,6 +1819,20 @@ async loadAcupressureRegistry() {
     if (slider) slider.value = String(perMinInit);
     const durLbl = document.getElementById('m-dur-lbl');
     if (durLbl) durLbl.innerText = `${perMinInit} min`;
+
+    // v15.7.1.2 — Preporuka block + default loop controls
+    try { this._renderRecommendationToModal(item); } catch(_) {}
+    try {
+      const r = this._getRecommendation(item);
+      const sel = document.getElementById("m-repeat-count");
+      if (sel) sel.value = String(Math.max(1, r.loopN || 1));
+      const cb = document.getElementById("m-repeat-infinite");
+      if (cb) cb.checked = false;
+
+      // scope default (A) — item
+      const ra = document.querySelector('input[name="m-repeat-scope"][value="item"]');
+      if (ra) ra.checked = true;
+    } catch(_) {}
 
     // show frequencies list with svrha/izvor
     const freqsAll = (item.frekvencije || []);
@@ -1599,17 +2064,25 @@ closeAcupressureViewer(){
     document.getElementById('modal').style.display = 'none';
     this.log("UI", "Close Modal", this.currentModalId||"");
   }
-
   playFromModal() {
     const item = this.catalogItems.find(i => i.id === this.currentModalId);
     if (!item) return;
 
-    const perFreqMin = Number(document.getElementById('m-slider')?.value || "5");
+    try {
+      const s = this._readRepeatSettings('modal');
+      if (s && s.scope === REPEAT_SCOPE_QUEUE) s.scope = REPEAT_SCOPE_ITEM;
+      this._applyRepeatSettings(s);
+    } catch (_) {}
+
+    const perFreqMin = Number(document.getElementById('m-slider')?.value || '5');
     const freqsAll = (item.frekvencije || []);
-    const freqs = freqsAll.filter(f=>f.enabled!==false);
+    const freqs = freqsAll.filter(f => f.enabled !== false);
     const totalMin = Math.max(1, freqs.length * perFreqMin);
 
-    this.isPlaylistActive = false;
+    this.isPlaylistActive = true;
+    this._protocolTimerEnabled = false;
+    this.currentPlaylistIndex = 0;
+
     this.playlist = [{
       ...item,
       uid: Date.now(),
@@ -1618,9 +2091,60 @@ closeAcupressureViewer(){
     }];
     this.savePlaylistToDB();
 
-    this.playPlaylistItem(0);
+    this._repeatRt = this._repeatRt || { baseProtocolSec: 0, queueCycle: 1, itemCycle: 1 };
+    this._repeatRt.queueCycle = 1;
+    this._repeatRt.itemCycle = 1;
+    this._repeatRt.baseProtocolSec = this._computeBaseProtocolSec();
+
+    if (this.repeat?.infinite) this.protocolTotalTimeSec = Infinity;
+    else this.protocolTotalTimeSec = this._repeatRt.baseProtocolSec * Math.max(1, Number(this.repeat?.count) || 1);
+    this.protocolBaseElapsedSec = 0;
+
+    try { this._renderRepeatStatus(); } catch (_) {}
+
+    try {
+      this._showStartOverlay('⏳ PRIPREMAM…', 'Render/Start može potrajati (iPhone).');
+      this._setStartButtonsEnabled(false);
+    } catch (_) {}
+
+    try {
+      const p = this.playPlaylistItem(0);
+      if (p && typeof p.catch === 'function') {
+        p.catch(err => {
+          console.error('playFromModal error', err);
+          const msg = (err && (err.name || err.message)) ? `${err.name || ''} ${err.message || ''}`.trim() : 'unknown';
+          this._hideStartOverlay?.();
+          this._setStartButtonsEnabled?.(true);
+          this.showToast(`⚠️ iPhone: start playback failed (${msg}). Pokušaj još jednom (tap ▶).`, {
+            timeoutMs: 6500,
+            action2Label: '▶',
+            action2Onclick: 'window.app && window.app.playPlaylistItem && window.app.playPlaylistItem(0)'
+          });
+        });
+      }
+    } catch (err) {
+      console.error('playFromModal error (sync)', err);
+      const msg = (err && (err.name || err.message)) ? `${err.name || ''} ${err.message || ''}`.trim() : 'unknown';
+      this._hideStartOverlay?.();
+      this._setStartButtonsEnabled?.(true);
+      this.showToast(`⚠️ iPhone: start playback failed (${msg}). Pokušaj još jednom (tap ▶).`, {
+        timeoutMs: 6500,
+        action2Label: '▶',
+        action2Onclick: 'window.app && window.app.playPlaylistItem && window.app.playPlaylistItem(0)'
+      });
+    }
+
     if (this.ui.pProtocolTimer) this.ui.pProtocolTimer.style.display = 'none';
+
     this.closeModal();
+    this.nav('playlist');
+
+    try {
+      requestAnimationFrame(() => {
+        const dock = this.ui.playerDock;
+        if (dock) dock.scrollIntoView({ block: 'end' });
+      });
+    } catch (_) {}
   }
 
   async addToPlaylistFromModal() {
@@ -2022,7 +2546,7 @@ _repeatSteps(steps, loops) {
     this._protoEdit.name = (v || "").toString().slice(0, 120);
   }
 
-  // v15.6.6 — iOS one-tap mode + self-test
+  // v15.7.1.2 — iOS: keep playback start inside user gesture (no Promise microtask)
   protoSetLoopEnabled(isEnabled) {
     if (!this._protoEdit) return;
     const enabled = !!isEnabled;
@@ -4140,11 +4664,23 @@ VAŽNO: samo JSON.`;
       }
     } catch(_) {}
 
-    this.showToast(val
+    this.showToast(enabled
       ? "🍏 iOS: PRO režim uključen — protokol se renderuje u WAV (RAM) i može da nastavi u pozadini (web-only, bez garancije)."
       : "🍏 iOS: PRO režim isključen.",
       { timeoutMs: 8000 }
     );
+  }
+
+  // v15.7.1.2: Bugfix — v15.6.8 referenced isIosBgRenderedEnabled() in several
+  // places (playback start / settings), but the method was missing. On iPhone
+  // this throws and prevents the "Play frekvencije" panel from opening.
+  isIosBgRenderedEnabled() {
+    return !!this._iosBgRendered;
+  }
+
+  // Defensive alias (mixed naming in older patches)
+  isIOSBgRenderedEnabled() {
+    return this.isIosBgRenderedEnabled();
   }
 
 /* ===================== iOS / Background Hardening ===================== */
@@ -4338,7 +4874,9 @@ try {
   }
 
   formatTime(sec) {
-    const s = Math.max(0, Math.floor(Number(sec)||0));
+    const n = Number(sec);
+    if (!Number.isFinite(n)) return '∞';
+    const s = Math.max(0, Math.floor(n||0));
     const m = Math.floor(s/60);
     const r = s%60;
     return `${m}:${r<10 ? "0"+r : r}`;

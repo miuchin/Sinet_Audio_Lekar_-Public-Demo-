@@ -1,15 +1,15 @@
-# SINET Audio Lekar — Patch Instructions v15.6.6 (iPhone FIX ✅)
+# SINET Audio Lekar — Patch Instructions v15.6.7 (iPhone FIX ✅)
 
 Ovaj patch rešava **2 kritična iPhone problema**:
 
 1) 🍏 **iPhone: Play se ne startuje u PRO (rendered) režimu**
    - iOS ume da “zaključa” `HTMLAudioElement.play()` **po-elementu**.
    - Ranije smo testirali zvuk na *drugom* audio elementu (beep), a **PRO player** je bio nov element → `play()` ume da bude blokiran.
-   - v15.6.6 sada **primuje isti hidden audio element** koji se koristi za PRO playback (SILENT_WAV), pa `play()` radi i kada render završi (async).
+   - v15.6.7 sada **primuje isti hidden audio element** koji se koristi za PRO playback (SILENT_WAV), pa `play()` radi i kada render završi (async).
 
 2) 🧩 **Na iPhone-u klik na “STARIJI — NAJČEŠĆE” ponekad ne otvara ništa**
    - To se dešava kada katalog nije učitan (SW-cache /data problem) → preset ne može da se mapira na simptom.
-   - v15.6.6 dodaje:
+   - v15.6.7 dodaje:
      - “🔄 Retry” dugme + `app.retryCatalog()`
      - iOS DIAG sada prikazuje `catalog=state:count` da odmah vidiš šta je problem.
 

@@ -390,3 +390,57 @@
   background:#fff;
   margin-top:8px;
 }
+
+
+/* =========================
+   v15.7.1.2 — Loop + Segment UX
+   ========================= */
+.start-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  z-index:9999;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+.start-overlay-card{
+  width:min(520px, 92vw);
+  background:#fff;
+  border-radius:16px;
+  padding:18px 16px;
+  text-align:center;
+  box-shadow:0 14px 40px rgba(0,0,0,0.25);
+}
+.start-spinner{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:5px solid rgba(0,0,0,0.12);
+  border-top-color: rgba(0,0,0,0.55);
+  margin:0 auto;
+  animation:sinetSpin 0.85s linear infinite;
+}
+@keyframes sinetSpin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+.start-progress{
+  margin-top:12px;
+  width:100%;
+  height:10px;
+  background:rgba(0,0,0,0.08);
+  border-radius:999px;
+  overflow:hidden;
+}
+.start-progress-bar{
+  height:100%;
+  background:rgba(46,204,113,0.85);
+  width:0%;
+  transition:width 180ms linear;
+}
+
+/* Loop controls (small polish) */
+.loop-controls select, .loop-controls input[type="checkbox"], .loop-controls input[type="radio"]{
+  accent-color: var(--primary);
+}
+.reco-box b{ color: var(--primary); }
+

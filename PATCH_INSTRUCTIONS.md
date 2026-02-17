@@ -1,43 +1,74 @@
-# SINET GitHub Patch v15.5.1.0 (iOS + Netlify fix)
+# SINET Audio Lekar — Patch Instructions v15.6.6 (iPhone FIX ✅)
 
-Ovaj patch rešava 3 praktična problema:
+Ovaj patch rešava **2 kritična iPhone problema**:
 
-1) **Netlify 404 za `data/SINET_STL.json`**  
-   - dodaje kanonski fajl `data/SINET_STL.json` u repo (uklanja 404 i stabilizuje STL auto-detekciju).
+1) 🍏 **iPhone: Play se ne startuje u PRO (rendered) režimu**
+   - iOS ume da “zaključa” `HTMLAudioElement.play()` **po-elementu**.
+   - Ranije smo testirali zvuk na *drugom* audio elementu (beep), a **PRO player** je bio nov element → `play()` ume da bude blokiran.
+   - v15.6.6 sada **primuje isti hidden audio element** koji se koristi za PRO playback (SILENT_WAV), pa `play()` radi i kada render završi (async).
 
-2) **Service Worker nije robustan** (instalacija može da padne ako 1 fajl fali)  
-   - menja install logiku: cache-uje assete pojedinačno i preskače 404.
-
-3) **iPhone / iOS UI + background (best-effort)**  
-   - `AKTIVIRAJ` dugme je sada **vidljivo** (nije više `display:none`)  
-   - dodata je **safe-area** podrška (`viewport-fit=cover` + padding za notch)  
-   - audio output se (na iOS-u) pokušava routovati kroz `<audio>` element (MediaStream) kao **best-effort** za lock-screen/background.
-
-> Napomena (realnost iOS-a): Safari/PWA može i dalje povremeno pauzirati WebAudio u pozadini. Ovo je “best-effort” i uz UX hint ostaje preporuka: **ne zaključavati ekran tokom terapije** / koristiti *Add to Home Screen* + *Guided Access*.
+2) 🧩 **Na iPhone-u klik na “STARIJI — NAJČEŠĆE” ponekad ne otvara ništa**
+   - To se dešava kada katalog nije učitan (SW-cache /data problem) → preset ne može da se mapira na simptom.
+   - v15.6.6 dodaje:
+     - “🔄 Retry” dugme + `app.retryCatalog()`
+     - iOS DIAG sada prikazuje `catalog=state:count` da odmah vidiš šta je problem.
 
 ---
 
-## Kako primeniti (GitHub)
+## 1) Brzi test na iPhone-u (bez ikakvih podešavanja)
 
-1. U repo root-u zameni:
-   - `index.html`
-   - `service-worker.js`
-   - `js/app.js`
-   - `js/audio/audio-engine.js`
+1. Otvori aplikaciju na iPhone-u.
+2. Tapni **🍏 iPhone MODE**.
+3. U dnu će se pojaviti **iOS DIAG** (tap to close) — proveri da piše:
+   - `htmlAudio=OK`
+   - `catalog=ok:<broj>`
+   - `pro=1 primeR=1`
 
-2. U folderu `data/` dodaj:
-   - `SINET_STL.json`
-
-3. Commit + push na GitHub.
-
-4. Netlify: redeploy (ili sačekaj auto deploy).
+Ako `catalog=loading:0` — sačekaj par sekundi.  
+Ako `catalog=err:0` — tapni **🔄 Retry** (u žutom loader-u) ili koristi **index-nosw** (sledeće poglavlje).
 
 ---
 
-## Kako forsirati update (browser)
+## 2) Ako Service Worker pravi problem (najčešći iOS problem)
 
-- Desktop Chrome: hard refresh (Ctrl+Shift+R)
-- iOS Safari: Settings → Safari → Advanced → Website Data → (site) → Remove  
-  ili: otvoriti site, pa u iOS Safari “aA” → Website Settings → Clear Data (ako postoji)
+✅ Na Netlify-u otvori **NO-SW** verziju:
 
-Datum: 2026-02-15
+- `https://TVOJ-SAJT.netlify.app/index-nosw.html`
+
+Ovo potpuno preskače Service Worker i cache.
+
+---
+
+## 3) Ako želiš lokalni LAN test (Manjaro/Linux)
+
+1. U folderu projekta pokreni:
+
+```bash
+./start-server.sh
+```
+
+2. Script će prikazati LAN URL tipa:
+
+- `http://192.168.x.x:8000/index.html`
+- `http://192.168.x.x:8000/index-nosw.html`
+
+3. Na iPhone-u (Safari) otvori **LAN URL**.
+
+Ako se LAN ne otvara:
+- laptop + iPhone moraju biti na istoj Wi‑Fi mreži,
+- router ne sme imati “Client isolation / AP isolation” uključeno,
+- firewall može blokirati port 8000 (po potrebi otvori ga u firewall-u).
+
+---
+
+## 4) Šta mi pošaljiš ako i dalje ne radi
+
+Pošalji screenshot **iOS DIAG** linije, naročito:
+- `ctx=...`
+- `webAudio=... htmlAudio=...`
+- `catalog=...`
+- `pro=... exp=... primeR=...`
+
+To nam je “crna kutija” za iPhone bez Safari console. 🧰
+
+Datum: 2026-02-17

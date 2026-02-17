@@ -1,16 +1,16 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.6.5 (iOS: unlock + experimental routing fallback)
+  Version: 15.6.6 (iOS: unlock + experimental routing fallback)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.6.5';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.6.5';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.6.5';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.6.6';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.6.6';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.6.6';
 
-const SINET_APP_VERSION = "15.6.5";
+const SINET_APP_VERSION = "15.6.6";
 
 /** iOS detection (iPhone/iPad/iPod + iPadOS masquerading as Mac) */
 function isIOSDevice() {
@@ -113,6 +113,7 @@ class App {
     this.db = window.db;
 
     this.catalogItems = [];
+    this._catalogLoad = { state: "init", err: null, count: 0, url: null, ts: 0 };
     this.playlist = [];
     this.isPlaylistActive = false;
     this.currentPlaylistIndex = 0;
@@ -155,7 +156,7 @@ class App {
   }
 
   async init() {
-    console.log('SINET v15.6.5 Init');
+    console.log('SINET v15.6.6 Init');
     this.cacheUI();
 
     try {
@@ -279,13 +280,30 @@ async iphoneMode() {
 async _iosAudioSelfTest() {
   const detail = {
     isIOS: !!this._isIOS,
-    ua: (navigator.userAgent || "").slice(0, 120),
+    ua: (navigator.userAgent || "").slice(0, 160),
     ctxState: null,
+    ios: {
+      proRendered: !!this.isIosBgRenderedEnabled?.(),
+      experimental: !!this.isIosBgExperimentalEnabled?.()
+    },
+    catalog: null,
     webAudio: { ok: false, err: null },
-    htmlAudio: { ok: false, err: null }
+    htmlAudio: { ok: false, err: null },
+    prime: { renderedEl: false, mediaOutEl: false, err: null }
   };
 
-  // WebAudio beep
+  // Snapshot catalog state (useful when clicks do nothing because catalog isn't loaded)
+  try {
+    const c = this._catalogLoad || {};
+    detail.catalog = {
+      state: c.state || "unknown",
+      count: Number(c.count || 0),
+      url: c.url || null,
+      err: c.err || null
+    };
+  } catch(_) {}
+
+  // WebAudio beep (may be muted by iOS silent switch)
   try {
     this.audio.init();
     const ctx = this.audio.audioContext;
@@ -315,7 +333,7 @@ async _iosAudioSelfTest() {
     detail.webAudio.err = String(e?.message || e);
   }
 
-  // HTMLAudio beep
+  // HTMLAudio beep (should play even with silent switch off; varies by device settings)
   try {
     const a = new Audio(BEEP_WAV_DATA_URI);
     a.preload = "auto";
@@ -334,6 +352,56 @@ async _iosAudioSelfTest() {
     detail.htmlAudio.ok = false;
     detail.htmlAudio.err = String(e?.message || e);
   }
+
+  // IMPORTANT: Prime the SAME hidden <audio> elements that will later be used for iOS playback.
+  // iOS sometimes unlocks playback per-element; priming a different element may not help.
+  try {
+    if (this._isIOS) {
+      if (detail.ios.proRendered) {
+        const el = this._ensureIosRenderedEl();
+        el.src = SILENT_WAV_DATA_URI;
+        el.loop = true;
+        el.preload = "auto";
+        el.playsInline = true;
+        el.setAttribute && el.setAttribute("playsinline", "");
+        el.volume = 0.0001;
+        el.muted = false;
+
+        const pr = el.play();
+        if (pr && pr.catch) await pr.catch(() => {});
+        detail.prime.renderedEl = true;
+      }
+
+      if (detail.ios.experimental && !detail.ios.proRendered) {
+        const el2 = this._ensureIosMediaOutEl();
+        // prime with silent src; later we switch to srcObject
+        el2.src = SILENT_WAV_DATA_URI;
+        el2.loop = true;
+        el2.preload = "auto";
+        el2.playsInline = true;
+        el2.setAttribute && el2.setAttribute("playsinline", "");
+        el2.volume = 0.0001;
+        el2.muted = false;
+
+        const pm = el2.play();
+        if (pm && pm.catch) await pm.catch(() => {});
+        detail.prime.mediaOutEl = true;
+      }
+    }
+  } catch (e) {
+    detail.prime.err = String(e?.message || e);
+  }
+
+  // Refresh catalog snapshot post-actions
+  try {
+    const c = this._catalogLoad || {};
+    detail.catalog = {
+      state: c.state || "unknown",
+      count: Number(c.count || 0),
+      url: c.url || null,
+      err: c.err || null
+    };
+  } catch(_) {}
 
   return { ok: !!(detail.webAudio.ok || detail.htmlAudio.ok), detail };
 }
@@ -365,7 +433,15 @@ _showIosDiag(detail) {
 
   const lines = [];
   lines.push("🍏 iOS DIAG (tap to close)");
-  lines.push("ctx=" + (detail.ctxState || "n/a") + " webAudio=" + (detail.webAudio?.ok ? "OK" : "FAIL") + " htmlAudio=" + (detail.htmlAudio?.ok ? "OK" : "FAIL"));
+  lines.push("ctx=" + (detail.ctxState || "n/a") +
+    " webAudio=" + (detail.webAudio?.ok ? "OK" : "FAIL") +
+    " htmlAudio=" + (detail.htmlAudio?.ok ? "OK" : "FAIL") +
+    " catalog=" + ((detail.catalog?.state || "n/a") + ":" + (detail.catalog?.count ?? "0")) +
+    " pro=" + (detail.ios?.proRendered ? "1" : "0") +
+    " exp=" + (detail.ios?.experimental ? "1" : "0") +
+    " primeR=" + (detail.prime?.renderedEl ? "1" : "0") +
+    " primeM=" + (detail.prime?.mediaOutEl ? "1" : "0")
+  );
   if (detail.webAudio && detail.webAudio.err) lines.push("webAudio.err=" + detail.webAudio.err);
   if (detail.htmlAudio && detail.htmlAudio.err) lines.push("htmlAudio.err=" + detail.htmlAudio.err);
   lines.push("UA=" + (detail.ua || ""));
@@ -653,8 +729,25 @@ _showIosDiag(detail) {
 
   /* ===================== DATA ===================== */
   
-async loadCatalogData() {
+async loadCatalogData(force = false) {
   const loader = document.getElementById('loader');
+  const loaderText = document.getElementById('loader-text') || loader;
+  const loaderRetry = document.getElementById('loader-retry');
+  const loaderDetail = document.getElementById('loader-detail');
+
+  // Track state for iOS diag / UX
+  try {
+    this._catalogLoad = this._catalogLoad || { state: "init", err: null, count: 0, url: null, ts: 0 };
+    this._catalogLoad.state = "loading";
+    this._catalogLoad.err = null;
+    this._catalogLoad.count = 0;
+    this._catalogLoad.url = null;
+    this._catalogLoad.ts = Date.now();
+  } catch(_) {}
+
+  if (loaderRetry) loaderRetry.style.display = "none";
+  if (loaderDetail) loaderDetail.style.display = "none";
+  if (loaderText) loaderText.innerText = "⏳ Učitavam katalog iz /data/...";
 
   // Prefer canonical STL if present, fallback to runtime catalog
   const candidates = [
@@ -665,7 +758,9 @@ async loadCatalogData() {
   let lastErr = null;
   for (const url of candidates) {
     try {
-      const res = await fetch(url, { cache: "no-store" });
+      // cache-bust on force
+      const u = force ? (url + (url.includes('?') ? '&' : '?') + 't=' + Date.now()) : url;
+      const res = await fetch(u, { cache: "no-store" });
       if (!res.ok) throw new Error(`${url} nije pronađen (${res.status})`);
       const raw = await res.json();
 
@@ -676,6 +771,15 @@ async loadCatalogData() {
       this.catalogCoreItems = this.catalogItems.slice();
 
       if (loader) loader.style.display = 'none';
+
+      try {
+        this._catalogLoad.state = "ok";
+        this._catalogLoad.err = null;
+        this._catalogLoad.count = this.catalogItems.length;
+        this._catalogLoad.url = url;
+        this._catalogLoad.ts = Date.now();
+      } catch(_) {}
+
       this.log("DATA", "Catalog Loaded", `${this.catalogItems.length} • ${url}`);
       return;
     } catch (e) {
@@ -684,11 +788,25 @@ async loadCatalogData() {
   }
 
   // All failed
-  if (loader) loader.innerText = "GREŠKA: " + (lastErr?.message || "Catalog load failed");
+  const msg = "GREŠKA: " + (lastErr?.message || "Catalog load failed");
+  if (loaderText) loaderText.innerText = msg;
+  if (loaderRetry) loaderRetry.style.display = "inline-flex";
+  if (loaderDetail) {
+    loaderDetail.style.display = "block";
+    loaderDetail.innerText = "Saveti: 1) osveži stranicu 2) otvori /index-nosw.html 3) proveri da li fajlovi postoje u /data/.";
+  }
+
+  try {
+    this._catalogLoad.state = "err";
+    this._catalogLoad.err = String(lastErr?.message || lastErr || "unknown");
+    this._catalogLoad.count = 0;
+    this._catalogLoad.url = null;
+    this._catalogLoad.ts = Date.now();
+  } catch(_) {}
+
   console.error(lastErr);
   this.log("ERROR", "Catalog Load Failed", lastErr?.message || "");
 }
-
 
 async loadAcupressureRegistry() {
   // Optional offline registry (images/licensing). Must NEVER break init.
@@ -704,6 +822,15 @@ async loadAcupressureRegistry() {
     this.log("DATA", "Acupressure Registry Missing", e?.message || "unknown");
   }
 }
+
+  // Manual retry (useful on iOS / SW-cache issues)
+  async retryCatalog() {
+    this.showToast("🔄 Pokušavam ponovo da učitam katalog...", { timeoutMs: 3500 });
+    await this.loadCatalogData(true);
+    try { this.renderSystemPresets(); } catch(_) {}
+    try { if (this.currentPageId === 'catalog') this.showCatalogHome(); } catch(_) {}
+    try { if (this.catalogItems && this.catalogItems.length) this.showToast(`✅ Katalog učitan (${this.catalogItems.length}).`, { timeoutMs: 3500 }); } catch(_) {}
+  }
 
   /* ===================== NAV ===================== */
   nav(pageId, opts = {}) {
@@ -1895,7 +2022,7 @@ _repeatSteps(steps, loops) {
     this._protoEdit.name = (v || "").toString().slice(0, 120);
   }
 
-  // v15.6.5 — iOS one-tap mode + self-test
+  // v15.6.6 — iOS one-tap mode + self-test
   protoSetLoopEnabled(isEnabled) {
     if (!this._protoEdit) return;
     const enabled = !!isEnabled;
@@ -2619,6 +2746,17 @@ async importData(fileInput) {
     const g0 = this.seniorPresets?.groups?.find(g => g.id === "senior") || this.seniorPresets?.groups?.[0];
     const entry = g0?.entries?.[Number(idx)];
     if (!entry) return;
+
+// If catalog isn't loaded, preset resolution cannot work (common on iOS when SW-cache breaks /data fetch)
+if (!Array.isArray(this.catalogItems) || this.catalogItems.length === 0) {
+  const st = (this._catalogLoad && this._catalogLoad.state) ? this._catalogLoad.state : "unknown";
+  this.showToast(`⚠️ Katalog nije spreman (state: ${st}). Sačekaj 5–10s ili tapni 🔄 Retry.`, {
+    timeoutMs: 12000,
+    action2Label: "🔄 Retry",
+    action2Onclick: "window.app && window.app.retryCatalog && window.app.retryCatalog()"
+  });
+  return;
+}
 
     const found = this.resolvePresetEntry(entry);
     if (found) return this.openModal(found.id);
@@ -4029,6 +4167,38 @@ VAŽNO: samo JSON.`;
           this._iosKeeper.stop();
         }
       } catch(_) {}
+
+// Prime hidden media elements (per-element unlock on iOS can be strict).
+// We prime with SILENT_WAV to avoid audible noise, but it still counts as a user-initiated play.
+try {
+  if (pro) {
+    const el = this._ensureIosRenderedEl();
+    if (el && el.paused) {
+      el.src = SILENT_WAV_DATA_URI;
+      el.loop = true;
+      el.preload = "auto";
+      el.playsInline = true;
+      el.setAttribute && el.setAttribute("playsinline", "");
+      el.volume = 0.0001;
+      el.muted = false;
+      const pr = el.play();
+      if (pr && pr.catch) pr.catch(()=>{});
+    }
+  } else if (exp && !pro) {
+    const el2 = this._ensureIosMediaOutEl();
+    if (el2 && el2.paused) {
+      el2.src = SILENT_WAV_DATA_URI;
+      el2.loop = true;
+      el2.preload = "auto";
+      el2.playsInline = true;
+      el2.setAttribute && el2.setAttribute("playsinline", "");
+      el2.volume = 0.0001;
+      el2.muted = false;
+      const pm = el2.play();
+      if (pm && pm.catch) pm.catch(()=>{});
+    }
+  }
+} catch(_) {}
 
       // Configure output routing
       try {

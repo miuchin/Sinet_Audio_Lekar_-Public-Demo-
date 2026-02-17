@@ -4,8 +4,8 @@
     Author: miuchins & SINET AI
 */
 
-// v15.7.1.2 — cache key bump (prevents stale SW cache)
-const CACHE_NAME = 'sinet-audio-v15.7.1.2';
+// v15.7.1.3 — cache key bump (prevents stale SW cache)
+const CACHE_NAME = 'sinet-audio-v15.7.1.3';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -17,11 +17,11 @@ const ASSETS_TO_CACHE = [
   './css/main.css',
 
   // JS (cache-bust matches index.html)
-  './js/db/indexed-db.js?v=15.7.1.2',
-  './js/app.js?v=15.7.1.2',
-  './js/audio/audio-engine.js?v=15.7.1.2',
-  './js/audio/ios-rendered-track.js?v=15.7.1.2',
-  './js/catalog/stl-adapter.js?v=15.7.1.2',
+  './js/db/indexed-db.js?v=15.7.1.3',
+  './js/app.js?v=15.7.1.3',
+  './js/audio/audio-engine.js?v=15.7.1.3',
+  './js/audio/ios-rendered-track.js?v=15.7.1.3',
+  './js/catalog/stl-adapter.js?v=15.7.1.3',
 
   // Module imports (may be requested without query)
   './js/app.js',
@@ -38,7 +38,7 @@ const ASSETS_TO_CACHE = [
 
   './manifest.json',
   './SINET_User_Manual_v1.0_SR.md',
-  './RELEASE_NOTES_v15.7.1.2.md',
+  './RELEASE_NOTES_v15.7.1.3.md',
   './index-nosw.html',
   ];
 

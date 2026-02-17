@@ -2,8 +2,8 @@
 <html lang="sr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SINET Audio Lekar v15.7.1.2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SINET Audio Lekar v15.7.1.3 (NO-SW)</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4A90E2">
@@ -18,12 +18,13 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: #333; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-        header { background: var(--primary); color: white; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.15); z-index: 100; flex-shrink: 0; }
+        header { background: var(--primary); color: white; padding: 12px 15px; padding-top: calc(12px + env(safe-area-inset-top)); padding-left: calc(15px + env(safe-area-inset-left)); padding-right: calc(15px + env(safe-area-inset-right)); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.15); z-index: 100; flex-shrink: 0; }
         .logo { font-size: 1.2rem; font-weight: bold; letter-spacing: 0.5px; }
         
-        /* iOS BUTTON */
-        #unlock-audio-btn { font-size: 0.75rem; padding: 5px 10px; background: #2ecc71; border: none; color: white; border-radius: 4px; font-weight: bold; cursor: pointer; display: inline-flex; margin-right: 10px; }
-        #iphone-mode-btn { font-size: 0.75rem; padding: 5px 10px; background: #9b59b6; border: none; color: white; border-radius: 4px; font-weight: bold; cursor: pointer; display: none; }
+        /* iOS BUTTONS */
+        #unlock-audio-btn { font-size: 0.85rem; padding: 8px 12px; background: #2ecc71; border: none; color: white; border-radius: 10px; font-weight: 900; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-right: 10px; }
+        #iphone-mode-btn { font-size: 0.85rem; padding: 8px 12px; background: #9b59b6; border: none; color: white; border-radius: 10px; font-weight: 900; cursor: pointer; display: none; align-items: center; gap: 6px; }
+        #iphone-mode-btn.active { background: #8e44ad; box-shadow: 0 0 0 2px rgba(255,255,255,0.25) inset; }
         .hamburger-btn { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; padding: 0 5px; }
         .icon-btn { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.22); color: white; border-radius: 10px; padding: 8px 10px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
         .icon-btn:active { transform: scale(0.98); }
@@ -39,7 +40,7 @@
         .nav-menu a { text-decoration: none; color: #444; font-weight: 600; font-size: 1rem; display: block; padding: 12px; border-radius: 8px; transition: 0.2s; border-left: 4px solid transparent; }
         .nav-menu a.active { background: #eaf6ff; color: var(--primary); border-left-color: var(--primary); }
 
-        main { flex: 1; overflow-y: auto; padding: 15px; position: relative; padding-bottom: 160px; }
+        main { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; overscroll-behavior: contain; padding: 15px; position: relative; padding-bottom: calc(var(--dock-h, 0px) + 24px + env(safe-area-inset-bottom)); }
         .section { display: none; animation: fadeIn 0.3s; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -64,7 +65,7 @@
         .playlist-item { background: white; border-left: 4px solid #e67e22; padding: 12px; margin-bottom: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .playlist-item.playing { background: #eafaf1; border-left-color: var(--success); border: 1px solid var(--success); }
 
-        .player-dock { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--dark); color: white; padding: 15px; box-shadow: 0 -2px 15px rgba(0,0,0,0.2); z-index: 150; display: none; }
+        .player-dock { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--dark); color: white; padding: 15px; padding-bottom: calc(15px + env(safe-area-inset-bottom)); box-shadow: 0 -2px 15px rgba(0,0,0,0.2); z-index: 150; display: none; }
         .player-info { margin-bottom: 10px; text-align: center; }
         .track-title { font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1rem; margin-bottom: 5px; }
         .timers-row { display: flex; justify-content: space-between; font-family: monospace; font-size: 0.9rem; color: #ddd; margin-bottom: 5px; }
@@ -78,7 +79,7 @@
         
         /* HOLISTIKA */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 300; display: none; justify-content: center; align-items: end; }
-        .modal-content { background: white; width: 100%; max-height: 85vh; border-radius: 20px 20px 0 0; padding: 25px; overflow-y: auto; animation: slideUp 0.3s; }
+        .modal-content { background: white; width: 100%; max-height: 85vh; max-height: 85dvh; border-radius: 20px 20px 0 0; padding: 25px; padding-bottom: calc(25px + env(safe-area-inset-bottom)); overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; animation: slideUp 0.3s; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .holistic-box { background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #8e44ad; }
         .mkb-badge { background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 5px; }
@@ -154,7 +155,8 @@
     <header>
         <div class="logo-area" style="display:flex; align-items:center;">
             <span class="logo">SINET Audio</span>
-            <button id="unlock-audio-btn" onclick="app.unlockAudio()">🔊 AKTIVIRAJ</button>
+            <button id="unlock-audio-btn" onclick="app.unlockAudio()" title="iOS/Safari: prvo aktiviraj audio">🔊 AKTIVIRAJ</button>
+            <button id="iphone-mode-btn" onclick="app.iphoneMode()" title="1-tap: iPhone režim (PRO + test)">🍏 iPhone MODE</button>
         </div>
         <div class="header-actions" style="display:flex; gap:8px; align-items:center;">
             <button class="icon-btn back-btn" onclick="app.goBack()" aria-label="Nazad" title="Nazad">←<span class="icon-label">Nazad</span></button>
@@ -183,7 +185,7 @@
                 <li><a href="#" onclick="nav('settings')">⚙️ Podešavanja</a></li>
             </ul>
             <div style="margin-top:auto; font-size:0.8rem; color:#999; text-align:center;">
-                v15.7.1.2<br>miuchins & SINET AI
+                v15.7.1.3<br>miuchins & SINET AI
             </div>
             <button onclick="toggleMenu()" style="width:100%; padding:10px; margin-top:10px; background:#eee; border:none; border-radius:5px;">ZATVORI</button>
         </div>
@@ -244,16 +246,63 @@
                 <h2>🎵 Queue / Lista</h2>
                 <button onclick="clearPlaylist()" style="color:#c0392b; background:none; border:none; font-weight:bold;">🗑️ Obriši sve</button>
             </div>
-            <div id="playlist-container">
-                <p style="text-align:center; color:#999; margin-top:40px;">Queue je prazan.<br>Dodajte terapije iz kataloga klikom na (+).</p>
-            </div>
             <div id="pl-actions" style="display:none;">
                 <div style="background:white; padding:10px; border-radius:8px; margin-bottom:10px; text-align:center;">
                     Ukupno trajanje: <strong id="pl-total-duration">0 min</strong>
                 </div>
-                <button class="btn-full" onclick="startProtocol()">▶ POKRENI LISTU</button>
+                
+                <div id="pl-loop-controls" class="loop-controls" style="background:white; padding:12px; border-radius:8px; margin-bottom:10px;">
+                    <div style="font-weight:900; margin-bottom:8px; color:#2c3e50;">🔁 Ponovi (Loop)</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center;">
+                        <label style="font-weight:800;">Ponovi:</label>
+                        <select id="pl-repeat-count" style="padding:8px 10px; border-radius:8px; border:1px solid #ddd; font-weight:800;">
+                            <option value="1">1×</option>
+<option value="2">2×</option>
+<option value="3">3×</option>
+<option value="4">4×</option>
+<option value="5">5×</option>
+<option value="6">6×</option>
+<option value="7">7×</option>
+<option value="8">8×</option>
+<option value="9">9×</option>
+<option value="10">10×</option>
+<option value="11">11×</option>
+<option value="12">12×</option>
+<option value="13">13×</option>
+<option value="14">14×</option>
+<option value="15">15×</option>
+<option value="16">16×</option>
+<option value="17">17×</option>
+<option value="18">18×</option>
+<option value="19">19×</option>
+<option value="20">20×</option>
+                        </select>
+                        <label style="display:flex; align-items:center; gap:8px; font-weight:800;">
+                            <input type="checkbox" id="pl-repeat-infinite">
+                            Loop dok ne zaustavim
+                        </label>
+                    </div>
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; justify-content:center;">
+                        <span style="font-weight:800;">Opseg:</span>
+                        <label style="display:flex; align-items:center; gap:6px; font-weight:800;">
+                            <input type="radio" name="pl-repeat-scope" value="item" checked>
+                            (A) Jedan simptom
+                        </label>
+                        <label style="display:flex; align-items:center; gap:6px; font-weight:800;">
+                            <input type="radio" name="pl-repeat-scope" value="queue">
+                            (B) Cela Queue lista
+                        </label>
+                    </div>
+                    <div style="margin-top:8px; font-size:0.82rem; color:#666; text-align:center;">
+                        🛈 Default je <b>(A)</b> — “lekarski” režim (ponavlja se jedan simptom). Za kruženje cele liste izaberi <b>(B)</b>.
+                    </div>
+                </div>
+<button class="btn-full" onclick="startProtocol()">▶ POKRENI LISTU</button>
             </div>
-        </div>
+        <div id="playlist-container">
+                <p style="text-align:center; color:#999; margin-top:40px;">Queue je prazan.<br>Dodajte terapije iz kataloga klikom na (+).</p>
+            </div>
+            </div>
 
         
         <div id="page-protocols" class="section">
@@ -358,7 +407,7 @@
 	                <div class="help-links">
 	                  <span>📄 Ako želiš i fajl za štampu/GitHub:</span>
 	                  <a href="./SINET_User_Manual_v1.0_SR.md" target="_blank" rel="noopener">SINET_User_Manual_v1.0_SR.md</a>
-	                  <span class="muted">(verzija aplikacije 15.7.1.2)</span>
+	                  <span class="muted">(verzija aplikacije 15.7.1.3)</span>
 	                </div>
 
 	                <details class="help-details" open>
@@ -486,7 +535,19 @@
 
     <div id="toast" class="toast" style="display:none;"></div>
 
-    <div id="player-dock" class="player-dock">
+    
+    <div id="start-overlay" class="start-overlay" style="display:none;">
+        <div class="start-overlay-card">
+            <div class="start-spinner" aria-hidden="true"></div>
+            <div id="start-overlay-text" style="font-weight:900; font-size:1.1rem; margin-top:10px;">⏳ PRIPREMAM…</div>
+            <div id="start-overlay-sub" style="margin-top:6px; color:#555; font-weight:700;">Sačekaj 5 sekundi…</div>
+            <div class="start-progress">
+                <div id="start-overlay-bar" class="start-progress-bar" style="width:0%;"></div>
+            </div>
+        </div>
+    </div>
+
+<div id="player-dock" class="player-dock">
         <div class="player-info">
             <div class="track-title" id="p-title">Mirovanje</div>
             <div class="timers-row">
@@ -503,7 +564,18 @@
                 <div id="p-active-src" class="pam-line pam-muted"></div>
                 <div id="p-active-dur" class="pam-line pam-muted"></div>
             </div>
-        </div>
+        
+            <div id="p-reco-box" class="reco-box" style="display:none; margin-top:10px; background:rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+                <div style="font-weight:900; margin-bottom:6px;">📌 PREPORUKA</div>
+                <div class="reco-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:0.85rem;">
+                    <div>⏱ Po frekvenciji: <b id="p-reco-dur">—</b></div>
+                    <div>🔁 Uzastopno: <b id="p-reco-loop">—</b></div>
+                    <div>📅 Dnevno (dana): <b id="p-reco-days">—</b></div>
+                    <div>⏸ Pauza (dana): <b id="p-reco-pause">—</b></div>
+                </div>
+                <div style="font-size:0.75rem; opacity:0.85; margin-top:6px;">Default segment: <b id="p-reco-seg">40</b> min</div>
+            </div>
+</div>
         <div class="controls">
             <button class="btn-ctrl btn-stop" onclick="stopAudio()">⏹ STOP</button>
             <button class="btn-ctrl btn-pause" id="btn-pp" onclick="togglePause()">⏸ PAUZA</button>
@@ -523,7 +595,7 @@
             <div style="text-align:right"><button onclick="closeModal()" style="border:none; background:none; font-size:1.5rem;">✖</button></div>
             <h2 id="m-title" style="color:var(--primary); margin-top:0;">Naslov</h2>
             <div class="quickstart-bar" aria-label="Quick start">
-                <button class="qs-btn qs-play" onclick="playFromModal()">▶ PUSTI</button>
+                <button class="qs-btn qs-play" id="m-play-btn" onclick="playFromModal()">▶ PUSTI</button>
                 <button class="qs-btn qs-add" onclick="addToPlaylistFromModal()">➕ U LISTU</button>
             
                 <button class="qs-btn qs-fav" id="btn-qs-fav" onclick="toggleFavoriteFromModal()">☆ FAVORIT</button>
@@ -539,7 +611,56 @@
                 </div>
             </div>
             
-            <div id="m-holistic"></div>
+            
+
+                    <div id="m-loop-controls" class="loop-controls" style="background:#fff; border:1px solid #eee; padding:12px; border-radius:10px; margin-top:12px;">
+                        <div style="font-weight:900; margin-bottom:8px; color:#2c3e50;">🔁 Ponovi (Loop)</div>
+                        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                            <label style="font-weight:800;">Ponovi:</label>
+                            <select id="m-repeat-count" style="padding:8px 10px; border-radius:8px; border:1px solid #ddd; font-weight:800;">
+                                <option value="1">1×</option>
+<option value="2">2×</option>
+<option value="3">3×</option>
+<option value="4">4×</option>
+<option value="5">5×</option>
+<option value="6">6×</option>
+<option value="7">7×</option>
+<option value="8">8×</option>
+<option value="9">9×</option>
+<option value="10">10×</option>
+<option value="11">11×</option>
+<option value="12">12×</option>
+<option value="13">13×</option>
+<option value="14">14×</option>
+<option value="15">15×</option>
+<option value="16">16×</option>
+<option value="17">17×</option>
+<option value="18">18×</option>
+<option value="19">19×</option>
+<option value="20">20×</option>
+                            </select>
+                            <label style="display:flex; align-items:center; gap:8px; font-weight:800;">
+                                <input type="checkbox" id="m-repeat-infinite">
+                                Loop dok ne zaustavim
+                            </label>
+                        </div>
+                        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+                            <span style="font-weight:800;">Opseg:</span>
+                            <label style="display:flex; align-items:center; gap:6px; font-weight:800;">
+                                <input type="radio" name="m-repeat-scope" value="item" checked>
+                                (A) Jedan simptom
+                            </label>
+                            <label style="display:flex; align-items:center; gap:6px; font-weight:800;">
+                                <input type="radio" name="m-repeat-scope" value="queue">
+                                (B) Cela Queue lista
+                            </label>
+                        </div>
+                        <div style="margin-top:8px; font-size:0.82rem; color:#666;">
+                            🛈 Default je <b>(A)</b> — “lekarski” režim. Ako želiš da se ponavlja cela lista izaberi <b>(B)</b>.
+                        </div>
+                    </div>
+
+<div id="m-holistic"></div>
 
 
 <div class="modal-section">
@@ -558,6 +679,18 @@
                         <div style="margin-top:10px; display:flex; gap:10px; align-items:flex-start;">
                             <input type="checkbox" id="m-usecatdur" style="margin-top:4px;" onchange="window.app && window.app.onToggleUseCatalogDurations && window.app.onToggleUseCatalogDurations(this.checked)">
                             <label for="m-usecatdur" style="font-size:0.95rem; font-weight:700; color:#2c3e50; line-height:1.25;">Koristi preporučeno trajanje iz kataloga (trajanje_min po frekvenciji) — ako nema, koristi slider</label>
+                        </div>
+                    </div>
+                    <div id="m-reco-box" class="reco-box" style="background:#f8fbff; border:1px solid #e3edf8; padding:12px; border-radius:10px; margin-top:12px;">
+                        <div style="font-weight:900; color:#2c3e50; margin-bottom:8px;">📌 PREPORUKA (iz kataloga)</div>
+                        <div class="reco-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.92rem;">
+                            <div>⏱ Po frekvenciji: <b id="m-reco-dur">—</b></div>
+                            <div>🔁 Uzastopno: <b id="m-reco-loop">—</b></div>
+                            <div>📅 Dnevno (dana): <b id="m-reco-days">—</b></div>
+                            <div>⏸ Pauza (dana): <b id="m-reco-pause">—</b></div>
+                        </div>
+                        <div style="margin-top:6px; font-size:0.78rem; color:#666;">
+                            Default segment: <b id="m-reco-seg">40</b> min (radi stabilnosti / RAM u iOS PRO).
                         </div>
                     </div>
 
@@ -597,12 +730,12 @@
     </div>
 </div>
 
-    <script src="js/db/indexed-db.js?v=15.7.1.2"></script>
-    <script type="module" src="js/app.js?v=15.7.1.2"></script>
+    <script src="js/db/indexed-db.js?v=15.7.1.3"></script>
+    <script type="module" src="js/app.js?v=15.7.1.3"></script>
 
     <script>
-        // PWA & WORKER
-// (NOSW) service worker disabled for emergency run
+        // PWA & WORKER (index-nosw.html)
+        // Service Worker registration is intentionally DISABLED here.
         let deferredPrompt;
         const installBox = document.getElementById('pwa-install-promo');
         const installBtn = document.getElementById('pwa-install-btn');
@@ -620,7 +753,10 @@
                 const keys = await caches.keys();
                 for(let key of keys) await caches.delete(key);
             }
-// (NOSW) SW cache clear disabled
+            if ('serviceWorker' in navigator) {
+                const regs = await navigator.serviceWorker.getRegistrations();
+                for(let reg of regs) await reg.unregister();
+            }
             window.location.reload(true);
         }
 

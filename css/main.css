@@ -444,3 +444,29 @@
 }
 .reco-box b{ color: var(--primary); }
 
+
+
+/* ============================
+   v15.7.1.4 — Dock loop + rendered list visibility
+   ============================ */
+
+/* Now Playing panel: improve contrast on iPhone (avoid looking like a blank white area) */
+.nowplaying-panel{
+  background: rgba(0,0,0,0.14);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+}
+.nowplaying-title{ color:#fff; }
+.nowplaying-hint{ color: rgba(255,255,255,0.85); }
+
+/* Dock loop controls (if inline styles are overridden somewhere) */
+.dock-tool-btn{
+  width:100%;
+  background: rgba(255,255,255,0.12);
+  color:#fff;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 900;
+}
+.dock-tool-btn:active{ transform: scale(0.99); }

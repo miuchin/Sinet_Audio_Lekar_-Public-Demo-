@@ -1,20 +1,20 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.7.1.3 (iOS: segmented PRO render + full timeline + repeat)
+  Version: 15.7.1.4 (iOS: segmented PRO render + full timeline + repeat)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.1.3';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.1.3';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.1.3';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.1.4';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.1.4';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.1.4';
 
-const SINET_APP_VERSION = "15.7.1.3";
+const SINET_APP_VERSION = "15.7.1.4";
 
 
 
-// v15.7.1.3 — default segment length for long sessions (esp. iOS PRO rendered WAV)
+// v15.7.1.4 — default segment length for long sessions (esp. iOS PRO rendered WAV)
 const DEFAULT_SEGMENT_MIN = 40; // minutes
 // Repeat scopes
 const REPEAT_SCOPE_ITEM = "item";   // (A) ponovi jedan simptom/protokol
@@ -129,7 +129,7 @@ class App {
     this.protocolTotalTimeSec = 0;
     this.protocolBaseElapsedSec = 0;
 
-    // v15.7.1.3 — Repeat/Loop controls (default: (A) "lekarski" — jedan simptom)
+    // v15.7.1.4 — Repeat/Loop controls (default: (A) "lekarski" — jedan simptom)
     this.repeat = {
       scope: REPEAT_SCOPE_ITEM,
       infinite: false,
@@ -139,11 +139,11 @@ class App {
       totalCycles: 1
     };
 
-    // v15.7.1.3 — Repeat runtime + protocol timer control
+    // v15.7.1.4 — Repeat runtime + protocol timer control
     this._repeatRt = { baseProtocolSec: 0, queueCycle: 1, itemCycle: 1 };
     this._protocolTimerEnabled = true;
 
-    // v15.7.1.3 — iOS PRO segmented rendered playback buffers
+    // v15.7.1.4 — iOS PRO segmented rendered playback buffers
     this._renderSeg = {
       enabled: true,
       segMin: DEFAULT_SEGMENT_MIN,
@@ -192,8 +192,11 @@ class App {
   }
 
   async init() {
-    console.log('SINET v15.7.1.3 Init');
+    console.log('SINET v15.7.1.4 Init');
     this.cacheUI();
+
+    // v15.7.1.4 — restore Loop/Repeat settings (dock + playlist + modal)
+    try { this._restoreRepeatFromStorage(); } catch(_) {}
 
     try {
       const cb = document.getElementById('ios-bg-toggle');
@@ -687,6 +690,10 @@ _showIosDiag(detail) {
       titleText: titleText || ''
     };
 
+    // Fill "FREKVENCIJE" panel immediately (iOS PRO rendered mode)
+    try { this.renderNowPlayingList({ currentIndex: Number(this._rendered.segStartIndex||0) }); } catch(_) {}
+
+
     if (!this._renderedBound) {
       this._renderedBound = true;
       el.addEventListener('ended', () => {
@@ -892,14 +899,15 @@ _showIosDiag(detail) {
 
 
 
-  /* ===================== v15.7.1.3 — Loop / Repeat (UI) ===================== */
+  /* ===================== v15.7.1.4 — Loop / Repeat (UI) ===================== */
 
   _readRepeatSettings(ctx = "playlist") {
-    // ctx: "playlist" | "modal"
+    // ctx: "playlist" | "modal" | "dock"
     const isModal = (ctx === "modal");
-    const idCount = isModal ? "m-repeat-count" : "pl-repeat-count";
-    const idInf = isModal ? "m-repeat-infinite" : "pl-repeat-infinite";
-    const nameScope = isModal ? "m-repeat-scope" : "pl-repeat-scope";
+    const isDock = (ctx === "dock");
+    const idCount = isModal ? "m-repeat-count" : (isDock ? "p-repeat-count" : "pl-repeat-count");
+    const idInf = isModal ? "m-repeat-infinite" : (isDock ? "p-repeat-infinite" : "pl-repeat-infinite");
+    const nameScope = isModal ? "m-repeat-scope" : (isDock ? "p-repeat-scope" : "pl-repeat-scope");
 
     let count = 1;
     let infinite = false;
@@ -958,7 +966,7 @@ _showIosDiag(detail) {
     this.ui.pStatus.innerText = msg;
   }
 
-  /* ===================== v15.7.1.3 — UX overlay (“⏳ PRIPREMAM…”) ===================== */
+  /* ===================== v15.7.1.4 — UX overlay (“⏳ PRIPREMAM…”) ===================== */
 
   _showStartOverlay(text="⏳ PRIPREMAM…", sub="Sačekaj 5 sekundi…") {
     const ov = document.getElementById("start-overlay");
@@ -1001,7 +1009,7 @@ _showIosDiag(detail) {
     } catch(_) {}
   }
 
-  /* ===================== v15.7.1.3 — Preporuka block ===================== */
+  /* ===================== v15.7.1.4 — Preporuka block ===================== */
 
   _getRecommendation(item) {
     const p = item?.preporuka || item?.preporuke || item?.recommendation || null;
@@ -1639,7 +1647,7 @@ async loadAcupressureRegistry() {
     if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
     this.log("PLAYER", "Resume Item", id);
   }
-  /* ===================== v15.7.1.3 — Repeat helpers ===================== */
+  /* ===================== v15.7.1.4 — Repeat helpers ===================== */
 
   _getPlaylistItemTotalSec(item) {
     const m = Number(item?.userTotalMin ?? 0) || 0;
@@ -1840,7 +1848,7 @@ async loadAcupressureRegistry() {
     const durLbl = document.getElementById('m-dur-lbl');
     if (durLbl) durLbl.innerText = `${perMinInit} min`;
 
-    // v15.7.1.3 — Preporuka block + default loop controls
+    // v15.7.1.4 — Preporuka block + default loop controls
     try { this._renderRecommendationToModal(item); } catch(_) {}
     try {
       const r = this._getRecommendation(item);
@@ -2566,7 +2574,7 @@ _repeatSteps(steps, loops) {
     this._protoEdit.name = (v || "").toString().slice(0, 120);
   }
 
-  // v15.7.1.3 — iOS: keep playback start inside user gesture (no Promise microtask)
+  // v15.7.1.4 — iOS: keep playback start inside user gesture (no Promise microtask)
   protoSetLoopEnabled(isEnabled) {
     if (!this._protoEdit) return;
     const enabled = !!isEnabled;
@@ -4560,6 +4568,86 @@ VAŽNO: samo JSON.`;
       btnNowList.setAttribute('aria-expanded', (!open).toString());
     }
 
+
+  /* ===== v15.7.1.4 — Dock Loop controls ===== */
+
+  toggleDockLoopPanel(){
+    const panel = document.getElementById('dock-loop-panel');
+    const btn = document.getElementById('btn-dock-loop');
+    if(!panel || !btn) return;
+
+    const open = panel.style.display !== 'none';
+    panel.style.display = open ? 'none' : 'block';
+    btn.setAttribute('aria-expanded', (!open).toString());
+
+    if(!open) this._syncRepeatControlsFromState('dock');
+  }
+
+  _syncRepeatControlsFromState(ctx){
+    const s = { count: this.repeat?.count || 1, infinite: !!this.repeat?.infinite, scope: this.repeat?.scope || REPEAT_SCOPE_ITEM };
+    this._setRepeatControls(ctx, s);
+  }
+
+  _setRepeatControls(ctx, s){
+    // ctx: 'dock' | 'playlist' | 'modal'
+    const isModal = (ctx === 'modal');
+    const isDock = (ctx === 'dock');
+
+    const idCount = isModal ? 'm-repeat-count' : (isDock ? 'p-repeat-count' : 'pl-repeat-count');
+    const idInf = isModal ? 'm-repeat-infinite' : (isDock ? 'p-repeat-infinite' : 'pl-repeat-infinite');
+    const nameScope = isModal ? 'm-repeat-scope' : (isDock ? 'p-repeat-scope' : 'pl-repeat-scope');
+
+    try {
+      const elC = document.getElementById(idCount);
+      if (elC) elC.value = String(Math.max(1, Math.min(200, Number(s?.count) || 1)));
+    } catch(_) {}
+
+    try {
+      const elI = document.getElementById(idInf);
+      if (elI) elI.checked = !!s?.infinite;
+    } catch(_) {}
+
+    try {
+      const scope = (s?.scope === REPEAT_SCOPE_QUEUE) ? REPEAT_SCOPE_QUEUE : REPEAT_SCOPE_ITEM;
+      const el = document.querySelector(`input[name="${nameScope}"][value="${scope}"]`);
+      if (el) el.checked = true;
+    } catch(_) {}
+  }
+
+  onDockRepeatChange(){
+    const s = this._readRepeatSettings('dock');
+    this._applyRepeatSettings(s);
+
+    // Keep other UIs in sync
+    this._setRepeatControls('playlist', s);
+    this._setRepeatControls('modal', s);
+
+    // Persist
+    try { localStorage.setItem('sinet_repeat_settings', JSON.stringify(s)); } catch(_) {}
+
+    try { this._renderRepeatStatus(); } catch(_) {}
+
+    try {
+      if (this.isPlaying && this.isPlaying()) {
+        this.showToast('🔁 Loop podešen. Važi odmah (najkasnije od sledećeg ciklusa).', { timeoutMs: 3500 });
+      }
+    } catch(_) {}
+  }
+
+  _restoreRepeatFromStorage(){
+    try {
+      const raw = localStorage.getItem('sinet_repeat_settings');
+      if (!raw) return;
+      const s = JSON.parse(raw);
+      if (!s) return;
+
+      this._applyRepeatSettings(s);
+      this._setRepeatControls('dock', s);
+      this._setRepeatControls('playlist', s);
+      this._setRepeatControls('modal', s);
+    } catch(_) {}
+  }
+
     if(!open) this.renderNowPlayingList();
   }
 
@@ -4579,10 +4667,47 @@ VAŽNO: samo JSON.`;
 
   renderNowPlayingList(statsOverride=null){
     if(!this.ui.nowPlayingList) return;
+
+    // iOS PRO (Rendered Segments): audio.currentSequence is not used → show list from rendered fullSequence.
+    if((!this.audio || !this.audio.currentSequence) && this._rendered && this._rendered.active){
+      const seqFull = this._rendered.fullSequence || this._rendered.sequence || [];
+      const stats = statsOverride || this._lastStats || { currentIndex: Number(this._rendered.segStartIndex||0) };
+      const cur = Math.max(0, Math.min(seqFull.length-1, Number(stats.currentIndex||0)));
+
+      try {
+        const hintEl = document.getElementById('nowplaying-hint');
+        if (hintEl) hintEl.textContent = '🍏 iOS PRO (Render): lista je pregled. Preskakanje se primenjuje od sledećeg segmenta.';
+      } catch(_) {}
+
+      let html = "";
+      for(let i=cur;i<seqFull.length;i++){
+        const f = seqFull[i] || {};
+        const hz = f.hz ?? f.value ?? "";
+        const desc = (f.svrha || f.funkcija || f.desc || f.note || "").toString();
+        const src = (f.izvor || f.src || "").toString();
+        html += `
+          <div class="np-row ${i===cur ? "active" : ""}" id="rfreq_${i}">
+            <label>
+              <input type="checkbox" checked disabled>
+              <div>
+                <div><b>${hz} Hz</b></div>
+                ${desc ? `<div class="muted">${desc}</div>` : ""}
+                ${src ? `<div class="muted">Izvor: ${src}</div>` : ""}
+              </div>
+            </label>
+          </div>`;
+      }
+      this.ui.nowPlayingList.innerHTML = html || '<div class="muted" style="opacity:0.9; padding:8px;">Nema preostalih frekvencija.</div>';
+      return;
+    }
+
     if(!this.audio || !this.audio.currentSequence){
+      try { const hintEl = document.getElementById('nowplaying-hint'); if (hintEl) hintEl.textContent = 'Odčekiraj da preskočiš (može i tokom rada).'; } catch(_) {}
       this.ui.nowPlayingList.innerHTML = "";
       return;
     }
+
+    try { const hintEl = document.getElementById('nowplaying-hint'); if (hintEl) hintEl.textContent = 'Odčekiraj da preskočiš (može i tokom rada).'; } catch(_) {}
     const stats = statsOverride || (this.audio.getStats ? this.audio.getStats() : {currentIndex:0});
     const seq = this.audio.currentSequence || [];
     const cur = Number(stats.currentIndex||0);
@@ -4691,7 +4816,7 @@ VAŽNO: samo JSON.`;
     );
   }
 
-  // v15.7.1.3: Bugfix — v15.6.8 referenced isIosBgRenderedEnabled() in several
+  // v15.7.1.4: Bugfix — v15.6.8 referenced isIosBgRenderedEnabled() in several
   // places (playback start / settings), but the method was missing. On iPhone
   // this throws and prevents the "Play frekvencije" panel from opening.
   isIosBgRenderedEnabled() {
@@ -4962,6 +5087,8 @@ window.closeAcupressureViewer = () => app.closeAcupressureViewer();
 
 // Global helpers for inline HTML onclick
 window.toggleNowList = () => window.app && window.app.toggleNowList();
+window.toggleDockLoopPanel = () => window.app && window.app.toggleDockLoopPanel();
+window.onDockRepeatChange = () => window.app && window.app.onDockRepeatChange();
 window.clearPlaylist = () => window.app && window.app.clearPlaylist();
 window.doSearch = (v) => window.app && window.app.filterCatalog(v);
 window.generateAIPrompt = () => window.app && window.app.generateAIPrompt();

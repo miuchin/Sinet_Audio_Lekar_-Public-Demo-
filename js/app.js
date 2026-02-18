@@ -1,20 +1,20 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.7.1.4 (iOS: segmented PRO render + full timeline + repeat)
+  Version: 15.7.1.6 (Hotfix: fix class-body stray token; keep Dock Loop + Frequencies)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.1.4';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.1.4';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.1.4';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.1.6';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.1.6';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.1.6';
 
-const SINET_APP_VERSION = "15.7.1.4";
+const SINET_APP_VERSION = "15.7.1.6";
 
 
 
-// v15.7.1.4 — default segment length for long sessions (esp. iOS PRO rendered WAV)
+// v15.7.1.6 — default segment length for long sessions (esp. iOS PRO rendered WAV)
 const DEFAULT_SEGMENT_MIN = 40; // minutes
 // Repeat scopes
 const REPEAT_SCOPE_ITEM = "item";   // (A) ponovi jedan simptom/protokol
@@ -129,7 +129,7 @@ class App {
     this.protocolTotalTimeSec = 0;
     this.protocolBaseElapsedSec = 0;
 
-    // v15.7.1.4 — Repeat/Loop controls (default: (A) "lekarski" — jedan simptom)
+    // v15.7.1.5 — Repeat/Loop controls (default: (A) "lekarski" — jedan simptom)
     this.repeat = {
       scope: REPEAT_SCOPE_ITEM,
       infinite: false,
@@ -139,11 +139,11 @@ class App {
       totalCycles: 1
     };
 
-    // v15.7.1.4 — Repeat runtime + protocol timer control
+    // v15.7.1.5 — Repeat runtime + protocol timer control
     this._repeatRt = { baseProtocolSec: 0, queueCycle: 1, itemCycle: 1 };
     this._protocolTimerEnabled = true;
 
-    // v15.7.1.4 — iOS PRO segmented rendered playback buffers
+    // v15.7.1.5 — iOS PRO segmented rendered playback buffers
     this._renderSeg = {
       enabled: true,
       segMin: DEFAULT_SEGMENT_MIN,
@@ -192,10 +192,10 @@ class App {
   }
 
   async init() {
-    console.log('SINET v15.7.1.4 Init');
+    console.log('SINET v15.7.1.5 Init');
     this.cacheUI();
 
-    // v15.7.1.4 — restore Loop/Repeat settings (dock + playlist + modal)
+    // v15.7.1.5 — restore Loop/Repeat settings (dock + playlist + modal)
     try { this._restoreRepeatFromStorage(); } catch(_) {}
 
     try {
@@ -899,7 +899,7 @@ _showIosDiag(detail) {
 
 
 
-  /* ===================== v15.7.1.4 — Loop / Repeat (UI) ===================== */
+  /* ===================== v15.7.1.5 — Loop / Repeat (UI) ===================== */
 
   _readRepeatSettings(ctx = "playlist") {
     // ctx: "playlist" | "modal" | "dock"
@@ -966,7 +966,7 @@ _showIosDiag(detail) {
     this.ui.pStatus.innerText = msg;
   }
 
-  /* ===================== v15.7.1.4 — UX overlay (“⏳ PRIPREMAM…”) ===================== */
+  /* ===================== v15.7.1.5 — UX overlay (“⏳ PRIPREMAM…”) ===================== */
 
   _showStartOverlay(text="⏳ PRIPREMAM…", sub="Sačekaj 5 sekundi…") {
     const ov = document.getElementById("start-overlay");
@@ -1009,7 +1009,7 @@ _showIosDiag(detail) {
     } catch(_) {}
   }
 
-  /* ===================== v15.7.1.4 — Preporuka block ===================== */
+  /* ===================== v15.7.1.5 — Preporuka block ===================== */
 
   _getRecommendation(item) {
     const p = item?.preporuka || item?.preporuke || item?.recommendation || null;
@@ -1647,7 +1647,7 @@ async loadAcupressureRegistry() {
     if (this.ui.btnPlayPause) this.ui.btnPlayPause.innerText = "⏸";
     this.log("PLAYER", "Resume Item", id);
   }
-  /* ===================== v15.7.1.4 — Repeat helpers ===================== */
+  /* ===================== v15.7.1.5 — Repeat helpers ===================== */
 
   _getPlaylistItemTotalSec(item) {
     const m = Number(item?.userTotalMin ?? 0) || 0;
@@ -1848,7 +1848,7 @@ async loadAcupressureRegistry() {
     const durLbl = document.getElementById('m-dur-lbl');
     if (durLbl) durLbl.innerText = `${perMinInit} min`;
 
-    // v15.7.1.4 — Preporuka block + default loop controls
+    // v15.7.1.5 — Preporuka block + default loop controls
     try { this._renderRecommendationToModal(item); } catch(_) {}
     try {
       const r = this._getRecommendation(item);
@@ -2574,7 +2574,7 @@ _repeatSteps(steps, loops) {
     this._protoEdit.name = (v || "").toString().slice(0, 120);
   }
 
-  // v15.7.1.4 — iOS: keep playback start inside user gesture (no Promise microtask)
+  // v15.7.1.5 — iOS: keep playback start inside user gesture (no Promise microtask)
   protoSetLoopEnabled(isEnabled) {
     if (!this._protoEdit) return;
     const enabled = !!isEnabled;
@@ -4568,8 +4568,12 @@ VAŽNO: samo JSON.`;
       btnNowList.setAttribute('aria-expanded', (!open).toString());
     }
 
+    // Render list when opening (esp. iOS PRO Render mode uses fullSequence)
+    if(!open) this.renderNowPlayingList();
+  }
 
-  /* ===== v15.7.1.4 — Dock Loop controls ===== */
+
+  /* ===== v15.7.1.5 — Dock Loop controls ===== */
 
   toggleDockLoopPanel(){
     const panel = document.getElementById('dock-loop-panel');
@@ -4646,9 +4650,6 @@ VAŽNO: samo JSON.`;
       this._setRepeatControls('playlist', s);
       this._setRepeatControls('modal', s);
     } catch(_) {}
-  }
-
-    if(!open) this.renderNowPlayingList();
   }
 
   toggleFreqEnabled(index, enabled){
@@ -4816,7 +4817,7 @@ VAŽNO: samo JSON.`;
     );
   }
 
-  // v15.7.1.4: Bugfix — v15.6.8 referenced isIosBgRenderedEnabled() in several
+  // v15.7.1.5: Bugfix — v15.6.8 referenced isIosBgRenderedEnabled() in several
   // places (playback start / settings), but the method was missing. On iPhone
   // this throws and prevents the "Play frekvencije" panel from opening.
   isIosBgRenderedEnabled() {

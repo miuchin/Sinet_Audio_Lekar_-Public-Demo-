@@ -1,5 +1,5 @@
 # SINET Audio Lekar — Korisničko uputstvo (SR) v1.0
-**Verzija aplikacije:** 15.7.1.4  
+**Verzija aplikacije:** 15.7.1.6  
 **Autor:** miuchins (Svetozar Miuchin) • **Koautor:** SINET AI  
 **Tip:** Public demo (offline‑friendly / PWA)
 

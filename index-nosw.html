@@ -31,6 +31,26 @@
         .icon-label { display:none; font-size: 0.85rem; }
         @media (min-width: 520px) { .icon-label { display:inline; } }
 
+/* MOBILE NAV FIX (DS/Help dostupni na malim ekranima) */
+.header-actions{
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    white-space: nowrap;
+}
+.header-actions::-webkit-scrollbar{ display:none; }
+.header-actions .icon-btn, .header-actions .hamburger-btn { flex: 0 0 auto; }
+
+@media (max-width: 520px){
+    /* oslobodi prostor u headeru na mobilnom */
+    #iphone-mode-btn{ display:none !important; }
+    #unlock-audio-btn{ padding: 6px 8px; font-size: 0.78rem; margin-right: 6px; }
+    .logo{ font-size: 1.05rem; }
+}
+
+
 
         .nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; display: none; backdrop-filter: blur(2px); }
         .nav-content { background: white; width: 280px; height: 100%; padding: 20px; box-shadow: 2px 0 10px rgba(0,0,0,0.2); display: flex; flex-direction: column; animation: slideRight 0.3s; }
@@ -178,6 +198,8 @@
                 <li><a href="#" onclick="nav('playlist')">🎵 Queue / Lista <span id="badge-pl" style="background:orange; color:white; padding:2px 6px; border-radius:10px; font-size:0.8rem; display:none;">0</span></a></li>
                 <li><a href="#" onclick="nav('protocols')">🧩 Moji protokoli</a></li>
                 <li><a href="#" onclick="nav('favorites')">⭐ Moji Favoriti</a></li>
+                <li><a href="#" onclick="openDSGenerator(); toggleMenu();">🧾 DS Generator</a></li>
+                <li><a href="#" onclick="window.app && window.app.openQuickHelpModal && window.app.openQuickHelpModal(); toggleMenu();">❓ Brza pomoć</a></li>
                 <li><a href="#" onclick="nav('mysymptoms')">➕ Moji Simptomi</a></li>
                 <li><a href="#" onclick="nav('ai')">🤖 AI Upitnik</a></li>
                 <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">

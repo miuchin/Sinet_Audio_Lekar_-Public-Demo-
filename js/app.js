@@ -1,20 +1,20 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.7.1.6 (Hotfix: fix class-body stray token; keep Dock Loop + Frequencies)
+  Version: 15.7.3.0 (Hotfix: fix class-body stray token; keep Dock Loop + Frequencies)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.1.6';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.1.6';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.1.6';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.3.0';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.3.0';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.3.0';
 
-const SINET_APP_VERSION = "15.7.1.6";
+const SINET_APP_VERSION = "15.7.3.0";
 
 
 
-// v15.7.1.6 — default segment length for long sessions (esp. iOS PRO rendered WAV)
+// v15.7.3.0 — default segment length for long sessions (esp. iOS PRO rendered WAV)
 const DEFAULT_SEGMENT_MIN = 40; // minutes
 // Repeat scopes
 const REPEAT_SCOPE_ITEM = "item";   // (A) ponovi jedan simptom/protokol
@@ -1229,6 +1229,20 @@ async loadAcupressureRegistry() {
       clearTimeout(this._toastTimer);
       this._toastTimer = null;
     }
+  openQuickHelpModal() {
+    const ov = document.getElementById("quick-help-modal");
+    if (!ov) {
+      this.showToast("ℹ️ Help modal nije učitan.");
+      return;
+    }
+    ov.style.display = "flex";
+  }
+
+  closeQuickHelpModal() {
+    const ov = document.getElementById("quick-help-modal");
+    if (!ov) return;
+    ov.style.display = "none";
+  }
   }
 
   _createToast() {
@@ -2429,17 +2443,29 @@ _repeatSteps(steps, loops) {
         const loops = this._sanitizeLoopCount(p.loopCount ?? p.loops ?? 1);
         const totalMin = baseMin * loops;
         const updated = p.updatedAt ? new Date(p.updatedAt).toLocaleString() : "";
+        const meta = (p && (p._meta || p.meta)) ? (p._meta || p.meta) : {};
+        const subParts = [];
+        try {
+          if (meta && typeof meta === 'object') {
+            if (meta.symptomOpis) subParts.push(String(meta.symptomOpis));
+            if (meta.mkb10) subParts.push(String(meta.mkb10));
+          }
+        } catch(_) {}
+        const sub = subParts.filter(Boolean).join(' • ');
+        const subShort = sub.length > 160 ? (sub.slice(0, 157) + '…') : sub;
         return `
           <div class="proto-card">
             <div class="proto-head">
               <div style="flex:1;">
                 <div class="proto-title">🧩 ${this.escapeHtml(name)}</div>
                 <div class="proto-meta">Koraka: <b>${steps.length}</b> • Trajanje: <b>${Math.round(totalMin*10)/10} min</b>${loops>1 ? ` • Loop: <b>${loops}×</b>` : ''}${updated ? ` • <span class="muted">${this.escapeHtml(updated)}</span>` : ""}</div>
+                ${subShort ? `<div class="proto-submeta">${this.escapeHtml(subShort)}</div>` : ``}
               </div>
               <div class="proto-actions">
                 <button class="btn-mini" onclick="window.app.playUserProtocolById('${this.escapeAttr(p.id)}')">▶ Pusti</button>
                 <button class="btn-mini" onclick="window.app.openProtocolEditor('${this.escapeAttr(p.id)}')">✏️ Izmeni</button>
                 <button class="btn-mini" onclick="window.app.exportSingleProtocol('${this.escapeAttr(p.id)}')">⬆ Export</button>
+                ${(p && p._guideHtml) ? `<button class="btn-mini" onclick="window.app.openProtocolGuideById('${this.escapeAttr(p.id)}')">🧾 Vodič</button>` : ``}
                 <button class="btn-mini danger" onclick="window.app.deleteProtocolById('${this.escapeAttr(p.id)}')">🗑</button>
               </div>
             </div>
@@ -2815,6 +2841,24 @@ _repeatSteps(steps, loops) {
     a.click();
     URL.revokeObjectURL(a.href);
     this.log("USER", "Protocol Export", id);
+  }
+
+  openProtocolGuideById(id) {
+    const p = (this.protocols || []).find(x => x.id === id);
+    if (!p || !p._guideHtml) {
+      alert("Nema vodiča (HTML) za ovaj protokol.");
+      return;
+    }
+    try {
+      const blob = new Blob([String(p._guideHtml)], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank", "noopener");
+      setTimeout(() => { try { URL.revokeObjectURL(url); } catch(_) {} }, 60_000);
+      this.log("USER", "Protocol Guide Open", id);
+    } catch(e) {
+      console.warn("openProtocolGuideById failed", e);
+      alert("Ne mogu da otvorim vodič.");
+    }
   }
 
   importProtocolsPrompt() {

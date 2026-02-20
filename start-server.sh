@@ -2,7 +2,7 @@
 # SINET Audio Lekar — start-server (Linux)
 # Usage: ./start-server.sh [PORT]
 set -e
-PORT="${1:-8000}"
+PORT="${1:-8001}"
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT_DIR"
 PY=python3

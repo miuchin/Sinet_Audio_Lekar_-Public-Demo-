@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SINET – Items → STL Converter</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;margin:0;background:#0b1220;color:#e8eefc}
+    header{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);background:#0f1930}
+    h1{font-size:18px;margin:0}
+    main{max-width:980px;margin:0 auto;padding:18px}
+    .card{background:#0f1930;border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:14px;margin:12px 0}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btn{background:#2b6cff;color:white;border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
+    .btn:disabled{opacity:.4;cursor:not-allowed}
+    .btn2{background:transparent;color:#e8eefc;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
+    .btnG{background:#25a05a;color:white;border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
+    .drop{border:1px dashed rgba(255,255,255,.22);border-radius:14px;padding:16px;text-align:center}
+    input[type="file"]{display:block;margin-top:10px}
+    textarea{width:100%;min-height:220px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:#0b1220;color:#e8eefc;padding:10px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+    .small{opacity:.8;font-size:12px}
+    .ok{color:#86efac}
+    .warn{color:#fbbf24}
+    .bad{color:#fb7185}
+    code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:8px}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.15);font-size:12px;opacity:.9}
+    .grid{display:grid;grid-template-columns:1fr;gap:10px}
+    @media(min-width:840px){.grid{grid-template-columns:1fr 1fr}}
+    label{font-weight:800}
+    .kpi{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .kpi span{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.15);font-weight:800;font-size:12px}
+  </style>
+</head>
+<body>
+<header>
+  <h1>🧩 SINET – Items → STL Converter <span class="pill">ENRICHED items[] → STL simptomi[]</span></h1>
+  <div class="small">Offline alat: učitaj <code>items[]</code> (ili <code>{items:[]}</code>), konvertuj u <code>{meta, simptomi[]}</code> STL v1.1, preuzmi JSON.</div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="drop" id="dropZone">
+      <div><b>Prevuci i pusti JSON</b> (items[]) ili izaberi fajl</div>
+      <input type="file" id="fileInput" accept=".json,.txt,application/json"/>
+      <div class="small" style="margin-top:8px;">Podržano: <code>[...]</code>, <code>{items:[...]}</code>, <code>{entries:[...]}</code>, ili STL (biće prepoznat i preskočen).</div>
+    </div>
+    <div class="kpi">
+      <span>📦 Input items: <b id="kpiItems">0</b></span>
+      <span>✅ STL simptomi: <b id="kpiOut">0</b></span>
+      <span>⚠️ Warning: <b id="kpiWarn">0</b></span>
+    </div>
+    <div class="row" style="margin-top:12px;">
+      <button class="btn" id="btnConvert" disabled>➡️ Konvertuj</button>
+      <button class="btnG" id="btnDownload" disabled>💾 Preuzmi STL JSON</button>
+      <button class="btn2" id="btnCopy" disabled>📋 Kopiraj STL</button>
+      <a class="btn2" href="admin.html">↩ Admin</a>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3 style="margin:0 0 8px 0;">Input (items)</h3>
+      <textarea id="inBox" placeholder="Ovde će se pojaviti input JSON..."></textarea>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 8px 0;">Output (STL)</h3>
+      <textarea id="outBox" placeholder="Ovde će se pojaviti STL JSON..."></textarea>
+      <div class="small" id="status"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  const $ = (id)=>document.getElementById(id);
+  const inBox = $("inBox");
+  const outBox = $("outBox");
+  const btnConvert = $("btnConvert");
+  const btnDownload = $("btnDownload");
+  const btnCopy = $("btnCopy");
+  const status = $("status");
+  const kpiItems = $("kpiItems");
+  const kpiOut = $("kpiOut");
+  const kpiWarn = $("kpiWarn");
+
+  let inputRaw = null;
+  let inputItems = [];
+  let outputSTL = null;
+
+  function isObj(v){ return v && typeof v === 'object' && !Array.isArray(v); }
+
+  function tryParseJSON(txt){
+    try{ return JSON.parse(txt); }catch(e){ return null; }
+  }
+
+  function srcToObj(src){
+    if (!src) return null;
+    if (typeof src === "string") {
+      const s = src.trim();
+      if (/^https?:\/\//i.test(s)) return { url: s, sistem: "" };
+      return { url: "", sistem: s };
+    }
+    if (!isObj(src)) return { url:"", sistem:String(src) };
+    // normalize common keys
+    return {
+      sistem: src.sistem || src.system || src.tradicija || "",
+      autor: src.autor || src.author || "",
+      delo: src.delo || src.work || "",
+      url: src.url || src.URL || src.link || "",
+      licenca: src.licenca || src.license || ""
+    };
+  }
+
+  function mkbToObj(mkb){
+    if (!mkb) return { sifra:"", naziv:"", izvor:{sistem:"", url:""} };
+    if (typeof mkb === "string") return { sifra: mkb, naziv:"", izvor:{sistem:"", url:""} };
+    if (!isObj(mkb)) return { sifra:String(mkb), naziv:"", izvor:{sistem:"", url:""} };
+    return {
+      sifra: mkb.sifra || mkb.code || mkb.sifra_mkb || "",
+      naziv: mkb.naziv || mkb.title || mkb.opis || "",
+      izvor: srcToObj(mkb.izvor || mkb.source || mkb.src || mkb.url || "")
+    };
+  }
+
+  function holistikaToSTL(item){
+    const h = item.holisticki || item.holistika || {};
+    const ps = h.psihosomatika || item.psihosomatika || {};
+    const af = h.afirmacija || item.afirmacija || {};
+    const mol = h.molitva || h.duhovnost || item.molitva || item.duhovnost || {};
+    const nl = h.narodni_lek || item.narodni_lek || item.saveti || {};
+
+    const psihosomatika = {
+      uzrok: ps.uzrok || "",
+      lek: ps.lek || "",
+      izvor: srcToObj(ps.izvor || "")
+    };
+    const afirmacija = {
+      tekst: af.tekst || "",
+      autor: af.autor || "",
+      izvor: srcToObj(af.izvor || "")
+    };
+    const molitva = {
+      tekst: mol.tekst || "",
+      izvor: srcToObj(mol.izvor || "")
+    };
+    const narodni_lek = {
+      opis: nl.opis || nl.tekst || nl.narodno || "",
+      napomena: nl.napomena || "",
+      izvor: srcToObj(nl.izvor || "")
+    };
+    return { psihosomatika, afirmacija, molitva, narodni_lek };
+  }
+
+  function freqToSTL(f){
+    if (!f) return null;
+    const hz = Number(f.hz ?? f.value ?? 0);
+    if (!Number.isFinite(hz) || hz <= 0) return null;
+    return {
+      hz,
+      naziv: (f.naziv || "").toString(),
+      opis: (f.opis || f.description || "").toString(),
+      funkcija: (f.funkcija || f.svrha || f.desc || "").toString(),
+      trajanje_min: (f.trajanje_min ?? f.trajanjeMin ?? null),
+      izvor: srcToObj(f.izvor_obj || f.izvor || f.src || "")
+    };
+  }
+
+  function nameOf(item){
+    return (item.simptom || item.naziv || item.name || item.title || item.id || "").toString().trim();
+  }
+
+  function idOf(item){
+    const raw = (item.id || "").toString().trim();
+    if (raw) return raw;
+    const n = nameOf(item);
+    return n.toLowerCase()
+      .replace(/č/g,"c").replace(/ć/g,"c").replace(/đ/g,"dj").replace(/š/g,"s").replace(/ž/g,"z")
+      .replace(/[^a-z0-9]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,90) || "symptom";
+  }
+
+  function toSTL(items){
+    const simptomi = [];
+    let warn = 0;
+
+    for (const it of (items||[])) {
+      if (!it) continue;
+      const id = idOf(it);
+      const naziv = nameOf(it) || id;
+
+      const opis = (it.opis || it.description || it.desc || "").toString();
+
+      const mkb10 = mkbToObj(it.mkb10_obj || it.mkb10 || null);
+      const hol = holistikaToSTL(it);
+
+      const frekvencije = Array.isArray(it.frekvencije) ? it.frekvencije.map(freqToSTL).filter(Boolean) : [];
+
+      const ext = {};
+      if (it.preporuka) ext.preporuka = it.preporuka;
+      if (it.integrativni) ext.integrativni = it.integrativni;
+
+      if (!frekvencije.length) warn++;
+
+      simptomi.push({
+        id,
+        uid: it.uid ?? null,
+        naziv,
+        opis,
+        mkb10,
+        psihosomatika: hol.psihosomatika,
+        afirmacija: hol.afirmacija,
+        molitva: hol.molitva,
+        narodni_lek: hol.narodni_lek,
+        akupresura: it.akupresura || null,
+        frekvencije,
+        extensions: Object.keys(ext).length ? ext : undefined
+      });
+    }
+
+    const meta = {
+      schema: "SINET_STL",
+      version: "1.1",
+      generatedAt: new Date().toISOString(),
+      sourceFile: "items[]",
+      notes: "Generated by SINET Items → STL Converter"
+    };
+    return { meta, simptomi, _warn: warn };
+  }
+
+  function setStatus(msg, cls="") {
+    status.className = "small " + cls;
+    status.textContent = msg;
+  }
+
+  function setInput(obj, rawText){
+    inputRaw = obj;
+    inBox.value = rawText || JSON.stringify(obj, null, 2);
+
+    // detect items
+    if (Array.isArray(obj)) inputItems = obj;
+    else if (Array.isArray(obj.items)) inputItems = obj.items;
+    else if (Array.isArray(obj.entries)) inputItems = obj.entries;
+    else if (isObj(obj) && Array.isArray(obj.simptomi) && isObj(obj.meta)) {
+      inputItems = [];
+      setStatus("Ovo izgleda kao STL (meta+simptomi). Ovaj alat je za items[].", "warn");
+    } else {
+      inputItems = [];
+    }
+
+    kpiItems.textContent = String(inputItems.length || 0);
+    btnConvert.disabled = !(inputItems && inputItems.length);
+    btnDownload.disabled = true;
+    btnCopy.disabled = true;
+    outBox.value = "";
+    outputSTL = null;
+  }
+
+  async function readFile(file){
+    const txt = await file.text();
+    const obj = tryParseJSON(txt);
+    if (!obj) {
+      alert("Ne mogu da parsiram JSON. Proveri format.");
+      return;
+    }
+    setInput(obj, txt);
+  }
+
+  $("fileInput").addEventListener("change", (e)=>{
+    const f = e.target.files && e.target.files[0];
+    if (f) readFile(f);
+  });
+
+  const dz = $("dropZone");
+  dz.addEventListener("dragover", (e)=>{ e.preventDefault(); dz.style.opacity="0.85"; });
+  dz.addEventListener("dragleave", ()=>{ dz.style.opacity="1"; });
+  dz.addEventListener("drop", (e)=>{
+    e.preventDefault(); dz.style.opacity="1";
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) readFile(f);
+  });
+
+  btnConvert.addEventListener("click", ()=>{
+    if (!inputItems.length) return;
+    const res = toSTL(inputItems);
+    outputSTL = { meta: res.meta, simptomi: res.simptomi };
+    outBox.value = JSON.stringify(outputSTL, null, 2);
+    kpiOut.textContent = String(res.simptomi.length);
+    kpiWarn.textContent = String(res._warn || 0);
+    btnDownload.disabled = false;
+    btnCopy.disabled = false;
+    setStatus("Konverzija završena ✅", "ok");
+  });
+
+  btnDownload.addEventListener("click", ()=>{
+    if (!outputSTL) return;
+    const blob = new Blob([JSON.stringify(outputSTL, null, 2)], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "SINET_STL_from_items.json";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+  });
+
+  btnCopy.addEventListener("click", async ()=>{
+    if (!outputSTL) return;
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(outputSTL, null, 2));
+      alert("STL kopiran ✅");
+    } catch(e) {
+      outBox.select();
+      document.execCommand("copy");
+      alert("STL kopiran ✅");
+    }
+  });
+
+  // Allow paste JSON directly
+  inBox.addEventListener("input", ()=>{
+    const obj = tryParseJSON(inBox.value);
+    if (obj) {
+      inputRaw = obj;
+      // detect items again
+      if (Array.isArray(obj)) inputItems = obj;
+      else if (Array.isArray(obj.items)) inputItems = obj.items;
+      else if (Array.isArray(obj.entries)) inputItems = obj.entries;
+      else inputItems = [];
+      kpiItems.textContent = String(inputItems.length || 0);
+      btnConvert.disabled = !(inputItems && inputItems.length);
+      setStatus(inputItems.length ? "Input prepoznat ✅" : "Input nije items[] (još).", inputItems.length ? "ok" : "warn");
+    }
+  });
+})();
+</script>
+</body>
+</html>

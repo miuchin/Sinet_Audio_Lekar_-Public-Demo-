@@ -5030,7 +5030,88 @@ try {
 }
 
 const app = new App();
-window.addEventListener('DOMContentLoaded', () => app.init());
+
+
+// === DS Generator integration (safe global hooks) ===
+window.openDSGenerator = function(){
+  try{
+    const a = window.app;
+    const itemId = (a && a.selectedItem && a.selectedItem.id) ? a.selectedItem.id : '';
+    const back = encodeURIComponent(window.location.href);
+    const url = `DS-Generator.html?catalog=/data/SINET_STL.json${itemId ? `&freqId=${encodeURIComponent(itemId)}` : ''}&back=${back}`;
+    window.open(url, '_blank');
+  }catch(e){
+    console.warn('openDSGenerator failed', e);
+    window.open('DS-Generator.html?catalog=/data/SINET_STL.json', '_blank');
+  }
+};
+
+async function __importDsBridgeIfAny(){
+  try{
+    const raw = localStorage.getItem('SINET_DS_BRIDGE');
+    if(!raw) return false;
+
+    const payload = JSON.parse(raw);
+    if(!payload || payload.format !== 'SINET_DS_TO_PROTOCOL_v1' || !payload.protocol) return false;
+
+    const p0 = payload.protocol;
+    if(!p0 || typeof p0 !== 'object' || !Array.isArray(p0.steps) || p0.steps.length===0){
+      localStorage.removeItem('SINET_DS_BRIDGE');
+      window.app?.showToast?.('⚠️ DS Generator: protokol je prazan ili neispravan.', {timeoutMs: 9000});
+      return false;
+    }
+
+    const a = window.app;
+    if(!a) return false;
+
+    // Ensure db exists
+    if(!a.db && window.db) a.db = window.db;
+
+    const p = JSON.parse(JSON.stringify(p0));
+    if(!p.id) p.id = a._newProtoId?.() || (`DS_${Date.now()}`);
+    if(!p.name) p.name = 'DS protokol';
+
+    // Normalize dates for IndexedDB / UI
+    const now = Date.now();
+    if(!p.createdAt || (typeof p.createdAt === 'string')) p.createdAt = now;
+    p.updatedAt = now;
+    if(!Number.isFinite(p.loopCount)) p.loopCount = 1;
+
+    // Avoid id clash
+    try{
+      await a.loadProtocolsFromDB?.();
+      if(Array.isArray(a.protocols) && a.protocols.some(x=>x.id===p.id)){
+        p.id = a._newProtoId?.() || (`DS_${Date.now()}`);
+      }
+    }catch(_){}
+
+    // Persist
+    if(a.db?.putProtocol){
+      await a.db.putProtocol(p);
+    }else{
+      a.protocols = Array.isArray(a.protocols) ? a.protocols : [];
+      a.protocols.unshift(p);
+    }
+
+    // Cleanup bridge
+    localStorage.removeItem('SINET_DS_BRIDGE');
+
+    // Reload + show
+    try{ await a.loadProtocolsFromDB?.(); }catch(_){}
+    try{ a.nav?.('protocols'); }catch(_){}
+    try{ a.renderProtocolsUI?.(); }catch(_){}
+
+    a.showToast?.(`✅ DS Generator: protokol dodat u "Moji protokoli" (${p.name}).`, {timeoutMs: 10000});
+    return true;
+  }catch(e){
+    console.warn('__importDsBridgeIfAny failed', e);
+    return false;
+  }
+}
+window.addEventListener('DOMContentLoaded', async () => {
+  await app.init();
+  try { await __importDsBridgeIfAny(); } catch(e) { console.warn('DS import call failed', e); }
+});
 window.app = app;
 window.nav = (id) => app.nav(id);
 

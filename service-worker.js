@@ -5,7 +5,7 @@
 */
 
 // v15.7.1.6 — cache key bump (prevents stale SW cache)
-const CACHE_NAME = 'sinet-audio-v15.7.1.6';
+const CACHE_NAME = 'sinet-audio-v15.7.2.5';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -14,6 +14,7 @@ const ASSETS_TO_CACHE = [
   './sinet_inspector_v15.html',
   './sinet-catalog-converter.html',
   './sinet-deduplicator.html',
+  './DS-Generator.html',
   './css/main.css',
 
   // JS (cache-bust matches index.html)
@@ -72,7 +73,8 @@ self.addEventListener('fetch', (event) => {
     path.endsWith('.js') ||
     path.endsWith('.css') ||
     path.endsWith('.json') ||
-    path.endsWith('index.html');
+    path.endsWith('.html') ||
+    path.endsWith('/');
 
   if (isCritical) {
     event.respondWith((async () => {

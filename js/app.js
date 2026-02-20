@@ -1,7 +1,7 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.7.3.0 (Hotfix: fix class-body stray token; keep Dock Loop + Frequencies)
+  Version: 15.7.3.2 (Hotfix: fix hideToast brace + Help modal methods)
   Author: miuchins | Co-author: SINET AI
 */
 
@@ -1229,6 +1229,8 @@ async loadAcupressureRegistry() {
       clearTimeout(this._toastTimer);
       this._toastTimer = null;
     }
+  }
+
   openQuickHelpModal() {
     const ov = document.getElementById("quick-help-modal");
     if (!ov) {
@@ -1242,7 +1244,6 @@ async loadAcupressureRegistry() {
     const ov = document.getElementById("quick-help-modal");
     if (!ov) return;
     ov.style.display = "none";
-  }
   }
 
   _createToast() {

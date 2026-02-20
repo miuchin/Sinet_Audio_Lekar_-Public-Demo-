@@ -5,7 +5,7 @@
 */
 
 // v15.7.1.6 — cache key bump (prevents stale SW cache)
-const CACHE_NAME = 'sinet-audio-v15.7.3.2';
+const CACHE_NAME = 'sinet-audio-v15.7.4.0';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -41,6 +41,7 @@ const ASSETS_TO_CACHE = [
   './SINET_User_Manual_v1.0_SR.md',
   './RELEASE_NOTES_v15.7.1.6.md',
   './index-nosw.html',
+  './anamneza.html',
   ];
 
 self.addEventListener('install', (event) => {

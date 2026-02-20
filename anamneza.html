@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Anamneza · Dijagnostički vodič (srpski)</title>
+    <!-- Bootstrap 5 + Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { background: #f2f5f9; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; font-size: 1rem; line-height: 1.5; }
+        .card-header { background-color: #dde9f5; font-weight: 600; }
+        .section-title { font-size: 1.25rem; border-left: 6px solid #0d6efd; padding-left: 12px; margin: 20px 0 15px; color: #0b3b5c; }
+        .list-group-item { cursor: pointer; transition: 0.2s; font-size: 1rem; }
+        .list-group-item:hover { background-color: #e2eaf6; }
+        .icd-badge { background-color: #0d6efd; color: white; font-size: 0.75rem; margin-right: 6px; padding: 4px 8px; border-radius: 30px; }
+        .export-btn { min-width: 110px; }
+        @media print { .no-print, .btn, .navbar { display: none !important; } }
+        textarea { min-height: 80px; font-size: 0.95rem; }
+        .accordion-button:not(.collapsed) { background-color: #cfe2ff; }
+        .footer { font-size: 0.85rem; color: #6c757d; }
+        .kopi-btn { background: none; border: none; color: #0d6efd; }
+        .pregled-kartica { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.02); }
+        .pretrage-ikona { color: #b02a37; margin-right: 8px; }
+        /* veći font i proređ za čitkost */
+        body, input, textarea, select, button { font-size: 1rem; }
+        .lead { font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR (srpski) -->
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary no-print shadow-sm">
+    <div class="container-fluid">
+        <span class="navbar-brand"><i class="fas fa-notes-medical me-2"></i>Anamneza · Dijagnostika</span>
+        <div class="ms-auto">
+            <button class="btn btn-sm btn-light me-2" onclick="prikaziFormu()"><i class="fas fa-pen"></i> Nova anamneza</button>
+            <button class="btn btn-sm btn-light" onclick="prikaziListu()"><i class="fas fa-list"></i> Lista pacijenata</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid mt-2 mb-5">
+    <!-- Gornji gumbi za brzi export/print -->
+    <div class="d-flex flex-wrap gap-2 mb-3 no-print">
+        <button class="btn btn-outline-primary btn-sm export-btn" onclick="exportJSON()"><i class="fas fa-download"></i> JSON</button>
+        <button class="btn btn-outline-primary btn-sm export-btn" onclick="exportTXT()"><i class="fas fa-file-alt"></i> TXT</button>
+        <button class="btn btn-outline-primary btn-sm export-btn" onclick="exportHTML()"><i class="fas fa-code"></i> HTML</button>
+        <button class="btn btn-outline-primary btn-sm export-btn" onclick="window.print()"><i class="fas fa-print"></i> Štampaj</button>
+        <button class="btn btn-outline-primary btn-sm export-btn" onclick="sendMail()"><i class="fas fa-envelope"></i> E-mail</button>
+        <input type="file" id="jsonUpload" accept=".json" style="display: none;" onchange="importJSON(event)">
+        <button class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('jsonUpload').click()"><i class="fas fa-upload"></i> Uvezi JSON</button>
+        <button class="btn btn-outline-success btn-sm ms-auto" onclick="kopirajMarkdown()"><i class="fas fa-copy"></i> Kopiraj Rekapitulaciju (md)</button>
+        <span id="anam-badge" class="badge bg-info text-dark d-flex align-items-center ms-2">anamneza</span>
+    </div>
+
+    <!-- Glavni red -->
+    <div class="row">
+        <!-- leva kolona – forma / lista -->
+        <div class="col-md-8">
+            <div id="mainView" class="pregled-kartica"></div>
+        </div>
+        <!-- desna kolona – MKB i preporuke (prošireno) -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-header bg-white fw-bold"><i class="fas fa-book-open me-2 text-primary"></i>MKB-10 pretraga / poglavlja</div>
+                <div class="card-body p-2" style="max-height: 340px; overflow-y: auto;">
+                    <input class="form-control form-control-sm mb-2" type="text" id="searchICD" placeholder="🔍 pretraži šifru ili naziv..." onkeyup="pretraziMKB()">
+                    <div id="icdList" style="font-size:0.9rem;">
+                        <!-- MKB poglavlja (učitava se iz JS) -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-header bg-white fw-bold"><i class="fas fa-flask me-2 text-danger"></i>Preporučene pretrage (uz hipertenziju i dr.)</div>
+                <div class="card-body small">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-droplet pretrage-ikona"></i> <strong>Laboratorija:</strong> KKS, CRP, glukoza, kreatinin, urea, elektroliti, lipidogram (ukupni holesterol, LDL, HDL, trigliceridi), HbA1c, TSH, ac. mokraćna</li>
+                        <li><i class="fas fa-heart pretrage-ikona"></i> <strong>Kardiovaskularno:</strong> EKG (12 kanala), Holter krvnog pritiska 24h, chokardiografija (UZV srca), Doppler krvnih sudova vrata, ABI indeks</li>
+                        <li><i class="fas fa-lungs pretrage-ikona"></i> <strong>Respiratorno:</strong> Spirometrija, RTG pluća i srca, gasne analize</li>
+                        <li><i class="fas fa-stethoscope pretrage-ikona"></i> <strong>Imidžing:</strong> UZV abdomena (jetra, bubrezi, nadbubrežne žlezde), MR/CT po indikaciji (moždani udar, aneurizma)</li>
+                        <li><i class="fas fa-vial pretrage-ikona"></i> <strong>Dodatno:</strong> mikroalbuminurija, fundus oka (hipertenzivna retinopatija), test opterećenja glukozom, PSAD (prostata)</li>
+                    </ul>
+                    <hr>
+                    <p class="mb-0"><i class="fas fa-clipboard-check me-1"></i> <strong>Plan praćenja:</strong> ponoviti merenje krvnog pritiska u ordinaciji i kod kuće. Ako je pritisak ≥140/90 mmHg, uvesti dnevnik i razmotriti farmakoterapiju uz promenu životnih navika.</p>
+                </div>
+            </div>
+
+            <!-- Kratak opis hipertenzije (sa slike) -->
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white fw-bold"><i class="fas fa-exclamation-triangle me-2 text-warning"></i>Hipertenzija – podsetnik</div>
+                <div class="card-body small">
+                    <p>Hipertenzija je čest faktor rizika za infarkt srca, moždani udar, oštećenje bubrega. Ciljne vrednosti za većinu pacijenata < 140/90 mmHg (za starije i dijabetičare cilj se individualizira).</p>
+                    <p><strong>Simptomi:</strong> glavobolja, vrtoglavica, zamućen vid, otežano disanje, krvarenje iz nosa (često odsutni – tihi ubica).</p>
+                    <p><strong>Uzroci:</strong> esencijalna (90-95%): nasleđe, gojaznost, sol, stres, alkohol, pušenje, fizička neaktivnost. Sekundarna: bubrežne bolesti, endokrini poremećaji.</p>
+                    <p><strong>Obavezne pretrage kod otkrivanja:</strong> EKG, UZV srca, laboratorija (uključujući kreatinin, elektroliti, TSH, lipidogram), pregled očnog dna, merenje pritiska na obe ruke.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer text-center no-print mt-4">© Dijagnostički vodič — sinhronizacija sa <code>/data/anamneza.json</code> (server :8011) i localStorage.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    //
+// ================== KONFIG ==================
+// Default: pokušaj statički fajl (Netlify/GitHub Pages), pa tek onda lokalni server :8011.
+// Možeš forsirati server: ?src=server
+const QS = new URLSearchParams(location.search);
+const FORCE_SERVER = QS.get('src') === 'server';
+const STATIC_URL = './data/anamneza.json';
+const LOCAL_SERVER_URL = 'http://localhost:8011/data/anamneza.json';
+
+// U praksi: na hostingu radi localStorage + export; lokalno (sa json-server) radi i snimanje u fajl.
+const SERVER_URL = FORCE_SERVER ? LOCAL_SERVER_URL : STATIC_URL;
+
+function setBadge(text){
+    const el = document.getElementById('anam-badge');
+    if (el) el.textContent = text;
+}
+
+// ================== GLOBALNI PODACI ==================
+    // Pokušaj učitavanja sa servera :8011, inače localStorage
+    let pacijenti = [];
+
+    // Inicijalno učitavanje
+    setBadge('učitavam…');
+    ucitajPacijenteSaServera();
+
+    // MKB-10 prošireni pregled (sva poglavlja sa karakterističnim šiframa)
+    const mkbPoglavlja = [
+        { poglavlje: 'I. Zarazne i parazitarne bolesti (A00–B99)', sifre: ['A09 (dijareja)', 'A15 (tuberkuloza)', 'B18 (hronični hepatitis)', 'B20 (HIV)'] },
+        { poglavlje: 'II. Neoplazme (C00–D48)', sifre: ['C34 (karcinom pluća)', 'C50 (karcinom dojke)', 'C61 (karcinom prostate)', 'C18 (karcinom debelog creva)'] },
+        { poglavlje: 'III. Bolesti krvi i imunog sistema (D50–D89)', sifre: ['D50 (sideropenijska anemija)', 'D69 (trombocitopenija)'] },
+        { poglavlje: 'IV. Endokrine bolesti (E00–E90)', sifre: ['E10 (diabetes tip 1)', 'E11 (diabetes tip 2)', 'E05 (hipertireoza)', 'E03 (hipotireoza)', 'E66 (gojaznost)'] },
+        { poglavlje: 'V. Mentalni poremećaji (F00–F99)', sifre: ['F32 (depresija)', 'F41 (anksiozni poremećaj)', 'F10 (alkoholizam)'] },
+        { poglavlje: 'VI. Bolesti nervnog sistema (G00–G99)', sifre: ['G40 (epilepsija)', 'G43 (migrena)', 'G45 (TIA)'] },
+        { poglavlje: 'VII. Bolesti oka (H00–H59)', sifre: ['H40 (glaukom)', 'H25 (katarakta)'] },
+        { poglavlje: 'VIII. Bolesti uva (H60–H95)', sifre: ['H81 (vertigo)'] },
+        { poglavlje: 'IX. Cirkulacijski sistem (I00–I99)', sifre: ['I10 (hipertenzija)', 'I20 (angina pektoris)', 'I50 (srčana insuficijencija)', 'I63 (moždani infarkt)', 'I70 (ateroskleroza)'] },
+        { poglavlje: 'X. Respiratorne bolesti (J00–J99)', sifre: ['J45 (astma)', 'J44 (KOPB)', 'J15 (pneumonija)', 'J20 (akutni bronhitis)'] },
+        { poglavlje: 'XI. Digestivne bolesti (K00–K95)', sifre: ['K25 (ulkus želuca)', 'K29 (gastritis)', 'K80 (kolelitijaza)', 'K74 (fibroza jetre)'] },
+        { poglavlje: 'XII. Koža (L00–L99)', sifre: ['L40 (psorijaza)'] },
+        { poglavlje: 'XIII. Mišićno-koštani sistem (M00–M99)', sifre: ['M17 (gonartroza)', 'M54 (lumbalni bol)', 'M81 (osteoporoza)'] },
+        { poglavlje: 'XIV. Genitourinarne bolesti (N00–N99)', sifre: ['N18 (HBI)', 'N40 (hiperplazija prostate)', 'N39 (UTI)'] }
+    ];
+
+    function prikaziMKB() {
+        let html = '';
+        mkbPoglavlja.forEach(p => {
+            html += `<div class="mb-2"><strong>${p.poglavlje}</strong><br>`;
+            p.sifre.forEach(s => html += `<span class="icd-badge">${s.split(' ')[0]}</span> ${s}<br>`);
+            html += `</div><hr class="my-1">`;
+        });
+        document.getElementById('icdList').innerHTML = html;
+    }
+    window.pretraziMKB = function() {
+        let filter = document.getElementById('searchICD').value.toLowerCase();
+        let filtered = mkbPoglavlja.map(p => {
+            let sifreF = p.sifre.filter(s => s.toLowerCase().includes(filter) || p.poglavlje.toLowerCase().includes(filter));
+            return { ...p, sifre: sifreF };
+        }).filter(p => p.sifre.length > 0 || p.poglavlje.toLowerCase().includes(filter));
+        let html = '';
+        filtered.forEach(p => {
+            html += `<div class="mb-2"><strong>${p.poglavlje}</strong><br>`;
+            p.sifre.forEach(s => html += `<span class="icd-badge">${s.split(' ')[0]}</span> ${s}<br>`);
+            html += `</div><hr class="my-1">`;
+        });
+        if (filtered.length === 0) html = '<p class="text-muted">Nema rezultata.</p>';
+        document.getElementById('icdList').innerHTML = html;
+    };
+
+    // ========== Server operacije (port 8011) ==========
+    async function ucitajPacijenteSaServera() {
+    const tryUrls = FORCE_SERVER ? [LOCAL_SERVER_URL] : [STATIC_URL, LOCAL_SERVER_URL];
+    let loaded = false;
+
+    for (const url of tryUrls) {
+        try {
+            const response = await fetch(url, { cache: 'no-store' });
+            if (!response.ok) continue;
+
+            const data = await response.json();
+            // podrži i: []  ili  { pacijenti: [] }
+            if (Array.isArray(data)) {
+                pacijenti = data;
+            } else if (data && Array.isArray(data.pacijenti)) {
+                pacijenti = data.pacijenti;
+            } else {
+                pacijenti = [];
+            }
+            loaded = true;
+            setBadge(url.includes('8011') ? 'port 8011 · /data/anamneza.json (server)' : '/data/anamneza.json (static)');
+            break;
+        } catch (e) {
+            // probaj sledeći URL
+        }
+    }
+
+    if (!loaded) {
+        console.warn('Server/fajl nije dostupan, koristi localStorage.');
+        let local = localStorage.getItem('anamneza_pacijenti');
+        pacijenti = local ? JSON.parse(local) : [];
+        setBadge('localStorage (offline)');
+    }
+
+    // osiguraj bar jednog primera ako je prazno
+    if (pacijenti.length === 0) pacijenti = [kreirajPrimerPacijenta()];
+    localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti)); // sync
+    prikaziListu();
+    prikaziMKB();
+}
+
+        } catch (e) {
+            console.warn('Server nije dostupan, koristi localStorage.');
+            let local = localStorage.getItem('anamneza_pacijenti');
+            pacijenti = local ? JSON.parse(local) : [];
+        }
+        // osiguraj bar jednog primera ako je prazno
+        if (pacijenti.length === 0) pacijenti = [kreirajPrimerPacijenta()];
+        localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti)); // sync
+        prikaziListu();
+        prikaziMKB();
+    }
+
+    async function snimiNaServer() {
+    // Uvek čuvamo lokalno
+    localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti));
+
+    // Na statičkom hostingu ne postoji upis u fajl.
+    if (!SERVER_URL.includes('localhost:8011')) return;
+
+    let podaci = JSON.stringify(pacijenti, null, 2);
+    try {
+        let response = await fetch(SERVER_URL, {
+            method: 'PUT', // json-server: PUT cele kolekcije
+            headers: { 'Content-Type': 'application/json' },
+            body: podaci
+        });
+        if (!response.ok) throw new Error('Server nije dozvolio upis');
+    } catch (e) {
+        console.warn('Ne mogu da snimim na server, čuvam samo u localStorage.');
+    }
+}
+
+        localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti));
+    }
+
+    function kreirajPrimerPacijenta() {
+        return {
+            id: 'p1',
+            osobni: { ime: 'Marko', prezime: 'Perić', godina: '1955', mjesto: 'Split', adresa: 'Poljička 12', zanimanje: 'umirovljeni bravar', bracno: 'oženjen', djeca: 'dvoje' },
+            razlog: 'Hitni prijem – bol u prsima i otežano disanje',
+            obiteljska: 'Otac: hipertenzija, majka: diabetes tip 2, sestra: zdrava',
+            osobna: { dječje: 'vodenice, ospice', dosadasnje: '2018. hipertenzija, 2020. operacija ingvinalne kile', sadasnja: 'Bol u prsima zadnja 2 sata, širi se u lijevu ruku, znojenje' },
+            seksualna: 'uredna, bez smetnji',
+            socijalna: 'živi sa suprugom u stanu (lift), primanja prosječna',
+            radna: '40 godina u strojobravariji, izložen buci i metalnoj prašini',
+            epidemioloska: 'nedavno putovanje u Mađarsku, bez kontakta sa zarazom',
+            funkcije: 'mokraća: uredna, stolica: uredna, apetit: smanjen, gubitak težine: ne',
+            navike: 'alkohol: 2 čašice vina/dan, cigarete: 20/dan 35 godina, kava: 3 dnevno',
+            alergije: 'negira',
+            lijekovi: 'Enalapril 10mg 1x1, Aspirin 100mg',
+            status: {
+                opci: 'Pri svijesti, kontaktibilan, eupnoičan, koža bljedunjava, RR 160/95, puls 88/min',
+                glava: 'uredna',
+                oci: 'zjenice izokorične, uredna reakcija',
+                usi: 'bezbolne',
+                usna: 'sluznica vlažna, jezik neobložen',
+                vrat: 'pokretan, vratne vene uredne',
+                prsni: 'simetričan, uredno pomičan',
+                pluca: 'vezikularno disanje, bez hropaca',
+                srce: 'ritmično, tonovi jasni, sistolički šum 2/6 na vrhu',
+                trbuh: 'mekan, bezbolan, jetra nije povećana',
+                kraljesnica: 'bezbolna',
+                ekstremiteti: 'bez edema',
+                zakljucak: 'Sumnja na STEMI? Angina pektoris, hipertenzija'
+            }
+        };
+    }
+
+    // ========== Pregled / forme (srpski jezik, poboljšana čitljivost) ==========
+    function prikaziFormu(editId = null) {
+        let html = `
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white"><i class="fas fa-notes-medical me-2"></i>Unos nove anamneze (standardni obrazac)</div>
+                <div class="card-body" style="max-height: 70vh; overflow-y: auto;">
+        `;
+        html += `
+            <form id="anamnezaForm" onsubmit="spisiPacijenta(event)">
+                <div class="accordion" id="accordionForm">
+                    <!-- 1. Osobni podaci -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#f1">1. Lični podaci</button></h2>
+                        <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#accordionForm">
+                            <div class="accordion-body row g-2">
+                                <div class="col-6"><label>Ime</label><input type="text" id="ime" class="form-control" value="Marko"></div>
+                                <div class="col-6"><label>Prezime</label><input type="text" id="prezime" class="form-control" value="Perić"></div>
+                                <div class="col-4"><label>God. rođ.</label><input type="text" id="godina" class="form-control" value="1955"></div>
+                                <div class="col-4"><label>Mesto</label><input type="text" id="mjesto" class="form-control" value="Split"></div>
+                                <div class="col-4"><label>Adresa</label><input type="text" id="adresa" class="form-control" value="Poljička 12"></div>
+                                <div class="col-4"><label>Zanimanje</label><input type="text" id="zanimanje" class="form-control" value="bravar"></div>
+                                <div class="col-4"><label>Bračno</label><input type="text" id="bracno" class="form-control" value="oženjen"></div>
+                                <div class="col-4"><label>Deca</label><input type="text" id="djeca" class="form-control" value="dvoje"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2. Razlog dolaska -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2">2. Razlog dolaska</button></h2>
+                        <div id="f2" class="accordion-collapse collapse" data-bs-parent="#accordionForm">
+                            <div class="accordion-body"><textarea id="razlog" class="form-control">Hitni prijem – bol u prsima, otežano disanje</textarea></div>
+                        </div>
+                    </div>
+                    <!-- 3. Porodična anamneza -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3">3. Porodična anamneza</button></h2>
+                        <div id="f3" class="accordion-collapse collapse" data-bs-parent="#accordionForm">
+                            <div class="accordion-body"><textarea id="obiteljska" class="form-control">Otac hipertenzija, majka diabetes</textarea></div>
+                        </div>
+                    </div>
+                    <!-- 4. Lična anamneza -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f4">4. Lična anamneza</button></h2>
+                        <div id="f4" class="accordion-collapse collapse" data-bs-parent="#accordionForm">
+                            <div class="accordion-body">
+                                <label>Dečje bolesti</label><textarea id="djecije" class="form-control mb-2">vodenice, ospice</textarea>
+                                <label>Dosadašnje bolesti</label><textarea id="dosadasnje" class="form-control mb-2">hipertenzija od 2018, operacija kile 2020</textarea>
+                                <label>Sadašnja bolest</label><textarea id="sadasnja" class="form-control">Bol u prsima 2h, znojenje, mučnina</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 5. Socijalna, radna, epidemiološka -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f5">5. Socijalna / radna / epidemiološka</button></h2>
+                        <div id="f5" class="accordion-collapse collapse" data-bs-parent="#accordionForm">
+                            <div class="accordion-body">
+                                <label>Seksualna</label><textarea id="seksualna" class="form-control mb-2">uredna</textarea>
+                                <label>Socijalna</label><textarea id="socijalna" class="form-control mb-2">živi sa suprugom, lift, primanja solidna</textarea>
+                                <label>Radna</label><textarea id="radna" class="form-control mb-2">bravar 40 god, izložen prašini</textarea>
+                                <label>Epidemiološka</label><textarea id="epidemioloska" class="form-control">put u Mađarsku, bez zaraze</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 6. Funkcije, navike, alergije, lekovi -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f6">6. Funkcije / navike / alergije / lekovi</button></h2>
+                        <div id="f6" class="accordion-collapse collapse" data-bs-parent="#accordionForm">
+                            <div class="accordion-body">
+                                <label>Funkcije (mokraća, stolica, apetit, menstruacija...)</label><textarea id="funkcije" class="form-control mb-2">mokraća uredna, stolica uredna, apetit smanjen</textarea>
+                                <label>Navike (alkohol, cigarete, kafa, tjelovježba, droge)</label><textarea id="navike" class="form-control mb-2">2 vina/dan, 20 cig/d, 3 kafe</textarea>
+                                <label>Alergije</label><input id="alergije" class="form-control mb-2" value="negira">
+                                <label>Lekovi koje uzima (doze)</label><textarea id="lijekovi" class="form-control">Enalapril 10mg, Aspirin 100mg</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 7. Status praesens -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f7">7. Status praesens</button></h2>
+                        <div id="f7" class="accordion-collapse collapse" data-bs-parent="#accordionForm">
+                            <div class="accordion-body">
+                                <label>Opšti status</label><textarea id="opci" class="form-control mb-2">Pri svijesti, kontaktibilan, RR 160/95, puls 88, afebrilan</textarea>
+                                <label>Glava, oči, uši, usna duplja</label><textarea id="glava" class="form-control mb-2">glava uredna, zjenice izokorične, sluznica vlažna</textarea>
+                                <label>Vrat, grudni koš, pluća</label><textarea id="vratPrsni" class="form-control mb-2">vrat pokretan, pluća: vezikularno disanje</textarea>
+                                <label>Srce, trbuh, kičma, ekstremiteti</label><textarea id="srceOstalo" class="form-control mb-2">srce ritmično, šum 2/6; trbuh mekan; ekstremiteti bez edema</textarea>
+                                <label>Zaključak (klinički utisak)</label><textarea id="zakljucak" class="form-control">Sumnja na akutni koronarni sindrom, hipertenzija</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-3 w-100"><i class="fas fa-save"></i> Sačuvaj anamnezu</button>
+            </form>
+        `;
+        html += `</div></div>`;
+        document.getElementById('mainView').innerHTML = html;
+    }
+
+    function prikaziListu() {
+        let pac = pacijenti;
+        let html = `<div class="card shadow-sm border-0"><div class="card-header bg-secondary text-white">Pregled svih anamneza (${pac.length})</div><div class="list-group list-group-flush" style="max-height: 70vh; overflow-y: auto;">`;
+        pac.forEach((p, idx) => {
+            let imePrez = p.osobni?.ime + ' ' + p.osobni?.prezime || 'nepoznato';
+            html += `<div class="list-group-item d-flex justify-content-between align-items-center" onclick="prikaziDetalj(${idx})">
+                <span><i class="fas fa-user-injured me-2"></i><strong>${imePrez}</strong> (${p.osobni?.godina || '?'})</span>
+                <small class="text-secondary">${p.razlog?.substring(0,35)}…</small>
+            </div>`;
+        });
+        html += `</div></div>`;
+        if (pac.length === 0) html += '<p class="mt-2">Nema spremljenih anamneza.</p>';
+        document.getElementById('mainView').innerHTML = html;
+    }
+
+    function prikaziDetalj(index) {
+        let p = pacijenti[index];
+        let sadrzaj = `
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-info text-white"><i class="fas fa-file-medical me-2"></i>Detalji anamneze</div>
+                <div class="card-body" style="max-height:70vh; overflow-y:auto; background:#fafbfe;">
+                    <pre style="white-space: pre-wrap; font-family: 'Segoe UI', Roboto; font-size:1rem;">${JSON.stringify(p, null, 2)}</pre>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-warning" onclick="prikaziFormu()">Nova anamneza</button>
+                    <button class="btn btn-sm btn-danger" onclick="obrisi(${index})">Obriši</button>
+                </div>
+            </div>
+        `;
+        document.getElementById('mainView').innerHTML = sadrzaj;
+    }
+
+    function spisiPacijenta(e) {
+        e.preventDefault();
+        const novi = {
+            id: 'p' + Date.now(),
+            osobni: {
+                ime: document.getElementById('ime')?.value || '',
+                prezime: document.getElementById('prezime')?.value || '',
+                godina: document.getElementById('godina')?.value || '',
+                mjesto: document.getElementById('mjesto')?.value || '',
+                adresa: document.getElementById('adresa')?.value || '',
+                zanimanje: document.getElementById('zanimanje')?.value || '',
+                bracno: document.getElementById('bracno')?.value || '',
+                djeca: document.getElementById('djeca')?.value || ''
+            },
+            razlog: document.getElementById('razlog')?.value || '',
+            obiteljska: document.getElementById('obiteljska')?.value || '',
+            osobna: {
+                dječje: document.getElementById('djecije')?.value || '',
+                dosadasnje: document.getElementById('dosadasnje')?.value || '',
+                sadasnja: document.getElementById('sadasnja')?.value || ''
+            },
+            seksualna: document.getElementById('seksualna')?.value || '',
+            socijalna: document.getElementById('socijalna')?.value || '',
+            radna: document.getElementById('radna')?.value || '',
+            epidemioloska: document.getElementById('epidemioloska')?.value || '',
+            funkcije: document.getElementById('funkcije')?.value || '',
+            navike: document.getElementById('navike')?.value || '',
+            alergije: document.getElementById('alergije')?.value || '',
+            lijekovi: document.getElementById('lijekovi')?.value || '',
+            status: {
+                opci: document.getElementById('opci')?.value || '',
+                glava: document.getElementById('glava')?.value || '',
+                vratPrsni: document.getElementById('vratPrsni')?.value || '',
+                srceOstalo: document.getElementById('srceOstalo')?.value || '',
+                zakljucak: document.getElementById('zakljucak')?.value || ''
+            }
+        };
+        pacijenti.push(novi);
+        snimiNaServer().then(() => {
+            alert('Anamneza sačuvana (server + lokalno)');
+            prikaziListu();
+        });
+    }
+
+    function obrisi(index) {
+        if (confirm('Obrisati?')) {
+            pacijenti.splice(index,1);
+            snimiNaServer().then(() => prikaziListu());
+        }
+    }
+
+    // Export / Import (ista imena funkcija)
+    function exportJSON() { downloadFile(JSON.stringify(pacijenti,null,2), 'anamneza.json', 'application/json'); }
+    function exportTXT() { 
+        let txt = '';
+        pacijenti.forEach((p,i) => { txt += `PACIJENT ${i+1}\n${JSON.stringify(p,null,2)}\n\n`; });
+        downloadFile(txt, 'anamneza.txt', 'text/plain');
+    }
+    function exportHTML() {
+        let html = `<html><head><meta charset="UTF-8"><title>Anamneze</title></head><body>`;
+        pacijenti.forEach(p => { html += `<pre>${JSON.stringify(p,null,2)}</pre><hr>`; });
+        html += `</body></html>`;
+        downloadFile(html, 'anamneza.html', 'text/html');
+    }
+    function downloadFile(content, fileName, mime) {
+        const blob = new Blob([content], {type: mime});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+    }
+    function importJSON(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                let uvezeni = JSON.parse(e.target.result);
+                if (Array.isArray(uvezeni)) {
+                    pacijenti = uvezeni;
+                    snimiNaServer().then(() => prikaziListu());
+                } else alert('Neispravan JSON (treba biti niz)');
+            } catch (er) { alert('Greška u JSON formatu'); }
+        };
+        reader.readAsText(file);
+    }
+    function sendMail() {
+        const subject = 'Anamneza podaci';
+        const body = encodeURIComponent(JSON.stringify(pacijenti, null, 2));
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    function kopirajMarkdown() {
+        let md = `# Rekapitulacija anamneza i plan rada\n\nDatum: ${new Date().toLocaleString('sr-RS')}\n\n`;
+        md += `## Ukupan broj pacijenata: ${pacijenti.length}\n\n`;
+        pacijenti.forEach((p, i) => {
+            md += `### ${i+1}. ${p.osobni?.ime || ''} ${p.osobni?.prezime || ''} (${p.osobni?.godina || '?'})\n`;
+            md += `- Razlog: ${p.razlog || '/'}\n- Sadašnja bolest: ${p.osobna?.sadasnja || '/'}\n- Status (zaključak): ${p.status?.zakljucak || '/'}\n- Lekovi: ${p.lijekovi || '/'}\n- Preporučene pretrage: KKS, EKG, chokardiografija, troponin, UZV abdomen, Holter krvnog pritiska, lipidogram, kreatinin, TSH\n\n`;
+        });
+        md += `## Plan daljnjeg rada\n- Za svakog pacijenta potrebno je uzeti ciljanu anamnezu, fizikalni pregled, osnovne laboratorijske pretrage, EKG, chokardiografiju kod srčanih simptoma, UZV abdomena kod sumnje na patologiju probavnog sustava, RTG pluća kod respiratornih tegoba. Pratiti vrednosti krvnog pritiska, šećera, prema MKB-10 grupama razmotriti specijalističke konzilije. Svu dokumentaciju arhivirati u JSON formatu na serveru :8011.\n`;
+        navigator.clipboard.writeText(md).then(() => alert('Markdown rekapitulacija kopirana u međuspremnik!'));
+    }
+
+    window.onload = () => { /* ucitavanje se vrši u ucitajPacijenteSaServera() */ };
+
+t>
+</body>
+</html>

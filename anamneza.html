@@ -113,7 +113,7 @@
 const QS = new URLSearchParams(location.search);
 const FORCE_SERVER = QS.get('src') === 'server';
 const STATIC_URL = './data/anamneza.json';
-const LOCAL_SERVER_URL = 'http://localhost:8011/data/anamneza.json';
+const LOCAL_SERVER_URL = '/data/anamneza.json';
 
 // U praksi: na hostingu radi localStorage + export; lokalno (sa json-server) radi i snimanje u fajl.
 const SERVER_URL = FORCE_SERVER ? LOCAL_SERVER_URL : STATIC_URL;
@@ -174,7 +174,7 @@ function setBadge(text){
         document.getElementById('icdList').innerHTML = html;
     };
 
-    // ========== Server operacije (port 8011) ==========
+    // ========== Server operacije (port 8000) ==========
     async function ucitajPacijenteSaServera() {
     const tryUrls = FORCE_SERVER ? [LOCAL_SERVER_URL] : [STATIC_URL, LOCAL_SERVER_URL];
     let loaded = false;
@@ -194,7 +194,7 @@ function setBadge(text){
                 pacijenti = [];
             }
             loaded = true;
-            setBadge(url.includes('8011') ? 'port 8011 · /data/anamneza.json (server)' : '/data/anamneza.json (static)');
+            setBadge(url.includes('8011') ? 'port 8000 · /data/anamneza.json (server)' : '/data/anamneza.json (static)');
             break;
         } catch (e) {
             // probaj sledeći URL
@@ -232,7 +232,7 @@ function setBadge(text){
     localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti));
 
     // Na statičkom hostingu ne postoji upis u fajl.
-    if (!SERVER_URL.includes('localhost:8011')) return;
+    if (!SERVER_URL.includes('localhost:8000')) return;
 
     let podaci = JSON.stringify(pacijenti, null, 2);
     try {
@@ -472,7 +472,17 @@ function setBadge(text){
     function exportHTML() {
         let html = `<html><head><meta charset="UTF-8"><title>Anamneze</title></head><body>`;
         pacijenti.forEach(p => { html += `<pre>${JSON.stringify(p,null,2)}</pre><hr>`; });
-        html += `</body></html>`;
+        html += `<script>
+  function goBackAnamneza(){
+    try{
+      const p = new URLSearchParams(location.search);
+      const back = p.get('back');
+      if (back) { location.href = back; return; }
+    }catch(_){}
+    location.href = 'index.html';
+  }
+</script>
+</body></html>`;
         downloadFile(html, 'anamneza.html', 'text/html');
     }
     function downloadFile(content, fileName, mime) {
@@ -516,5 +526,15 @@ function setBadge(text){
     window.onload = () => { /* ucitavanje se vrši u ucitajPacijenteSaServera() */ };
 
 t>
+<script>
+  function goBackAnamneza(){
+    try{
+      const p = new URLSearchParams(location.search);
+      const back = p.get('back');
+      if (back) { location.href = back; return; }
+    }catch(_){}
+    location.href = 'index.html';
+  }
+</script>
 </body>
 </html>

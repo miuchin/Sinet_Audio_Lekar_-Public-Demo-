@@ -4,8 +4,8 @@
     Author: miuchins & SINET AI
 */
 
-// v15.7.1.6 — cache key bump (prevents stale SW cache)
-const CACHE_NAME = 'sinet-audio-v15.7.4.1';
+// v15.7.6.9 — cache key bump (prevents stale SW cache)
+const CACHE_NAME = 'sinet-audio-v15.7.6.9';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -14,12 +14,14 @@ const ASSETS_TO_CACHE = [
   './sinet_inspector_v15.html',
   './sinet-catalog-converter.html',
   './sinet-deduplicator.html',
+  './sinet-mkb-linker.html',
+  './sinet-dx-index-generator.html',
   './DS-Generator.html',
   './css/main.css',
 
   // JS (cache-bust matches index.html)
   './js/db/indexed-db.js?v=15.7.1.6',
-  './js/app.js?v=15.7.1.6',
+  './js/app.js?v=15.7.6.6',
   './js/audio/audio-engine.js?v=15.7.1.6',
   './js/audio/ios-rendered-track.js?v=15.7.1.6',
   './js/catalog/stl-adapter.js?v=15.7.1.6',
@@ -34,14 +36,28 @@ const ASSETS_TO_CACHE = [
   // Data
   './data/SINET_CATALOG.json',
   './data/SINET_STL.json',
+  './data/sinet_dx_index.json',
+  './data/mkb10_sr.json',
   './data/presets/senior_presets.json',
   './data/media/acupressure/registry.json',
 
   './manifest.json',
+  './favicon.ico',
   './SINET_User_Manual_v1.0_SR.md',
+  './docs/SINET_TEMPLATE_v1.md',
   './RELEASE_NOTES_v15.7.1.6.md',
+  './RELEASE_NOTES_v15.7.5.9.md',
+  './RELEASE_NOTES_v15.7.6.1.md',
+  './RELEASE_NOTES_v15.7.6.7.md',
+  './RELEASE_NOTES_v15.7.6.9.md',
   './index-nosw.html',
   './anamneza.html',
+  './pages/antiparazitski.html',
+  './pages/speaker_clean_proof.html',
+  './pages/integrativni_vodic_RA_sake.html',
+  './pages/integrativni_vodic.html',
+  './js/anamneza-sinet-bridge.js',
+  './js/anamneza-sinet-bridge.js?v=15.7.6.6',
   ];
 
 self.addEventListener('install', (event) => {

@@ -238,6 +238,7 @@ class SinetDB {
     const state = Array.isArray(payload.state) ? payload.state : [];
     const favorites = Array.isArray(payload.favorites) ? payload.favorites : [];
     const playlists = Array.isArray(payload.playlists) ? payload.playlists : [];
+    const protocols = Array.isArray(payload.protocols) ? payload.protocols : [];
 
     for (const s of state) {
       if (s && typeof s === "object" && s.key) await this._put("state", s);
@@ -249,6 +250,11 @@ class SinetDB {
     // playlists store uses keyPath "id" (autoIncrement). We import as-is; if ids clash, later import overwrites.
     for (const p of playlists) {
       if (p && typeof p === "object") await this._put("playlists", p);
+    }
+
+    // protocols store uses keyPath "id". Import as-is.
+    for (const pr of protocols) {
+      if (pr && typeof pr === "object" && pr.id) await this._put("protocols", pr);
     }
 
     this.logAction("USER", "Restore Backup", "Import All");

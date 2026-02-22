@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌿 SINET Generator (sa eksternim katalogom)</title>
+    <title>🌿 SINET Generator (sa eksternim katalogom) · v15.7.5.5</title>
     <style>
         /* Isti CSS kao pre – nije menjan */
         :root {
@@ -650,10 +650,23 @@
 
     // Učitavanje JSON fajla (putanja: ./data/SINET_STL.json)
     const qs = new URLSearchParams(location.search);
-    const CATALOG_DEFAULT = '/data/SINET_STL.json';
-    const catalogUrl = qs.get('catalog') || CATALOG_DEFAULT;
+    const CATALOG_DEFAULT = './data/SINET_STL.json';
+    const catalogUrl = qs.get('catalog') || CATALOG_DEFAULT; // može: ./data/SINET_STL.json ili 'local'
 
-    fetch(catalogUrl)
+    (function(){
+      // catalogUrl može biti URL ili specijalno: 'local' (uzima SINET_STL_OVERRIDE iz localStorage)
+      if(String(catalogUrl).toLowerCase()==='local'){
+        try{
+          const raw = localStorage.getItem('SINET_STL_OVERRIDE');
+          if(!raw) throw new Error('Nema SINET_STL_OVERRIDE u localStorage.');
+          const data = JSON.parse(raw);
+          return Promise.resolve({ ok:true, json: ()=>Promise.resolve(data) });
+        }catch(e){
+          return Promise.reject(e);
+        }
+      }
+      return fetch(catalogUrl);
+    })()
         .then(response => {
             if (!response.ok) throw new Error(`Neuspešno učitavanje kataloga (HTTP ${response.status})`);
             return response.json();
@@ -1528,7 +1541,7 @@ const sName = (_o && (_isGeneric || !_n)) ? _o : (_s || _n || _o || 'Simptom');
                 symptomName: sName,
                 symptomOpis: (_o || null),
                 mkb10: mkb || null,
-                catalogUrl: (new URLSearchParams(location.search)).get('catalog') || '/data/SINET_STL.json'
+                catalogUrl: (new URLSearchParams(location.search)).get('catalog') || './data/SINET_STL.json'
             }
         };
     }

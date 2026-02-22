@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Totalni integrativni vodič za RA – Standardna, alternativna, narodna i duhovna medicina</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #faf9f7;
+        }
+        h1, h2, h3 {
+            color: #1e4660;
+            border-bottom: 2px solid #b89e84;
+            padding-bottom: 8px;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .soul-box {
+            background: #f3e9de;
+            border-left: 6px solid #9b6b43;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        .folk-box {
+            background: #e8f0e0;
+            border-left: 6px solid #2d6a4f;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,20,30,0.08);
+            border: 1px solid #e8dfd3;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0,20,30,0.12);
+        }
+        .card h3 {
+            margin-top: 0;
+            border-bottom: 1px dashed #c1a57b;
+        }
+        .btn-copy {
+            background-color: #6f4e37;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 25px 0 10px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(111,78,55,0.3);
+            transition: all 0.2s;
+            border: 1px solid #5a3e2b;
+        }
+        .btn-copy:hover {
+            background-color: #5a3e2b;
+            transform: translateY(-2px);
+        }
+        .badge {
+            background-color: #d9c8b2;
+            color: #3d2b1c;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        .protocol-box {
+            background: #f7f1e9;
+            border-left: 4px solid #6f4e37;
+            padding: 12px 18px;
+            margin: 15px 0;
+            border-radius: 14px;
+        }
+        .prayer-box {
+            background: #fff4e6;
+            border: 1px solid #e2c7b0;
+            padding: 20px;
+            border-radius: 24px;
+            font-style: italic;
+            text-align: center;
+            box-shadow: inset 0 0 15px #fbe9d2;
+        }
+        .frequency-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fcf8f3;
+            margin: 15px 0;
+        }
+        .frequency-table th {
+            background: #d9c8b2;
+            color: #2c3e50;
+            padding: 10px;
+            text-align: left;
+        }
+        .frequency-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .footer-note {
+            font-size: 0.9rem;
+            color: #5d6d7e;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid #d0deeb;
+            padding-top: 20px;
+        }
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #b89e84, transparent);
+        }
+        .two-column {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .two-column > * {
+            flex: 1 1 300px;
+        }
+    
+        .topbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .topbar .btn-copy {
+            margin: 0;
+        }
+        @media print {
+            .no-print { display:none !important; }
+            body { background: #fff; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar no-print">
+    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <button class="btn-copy" onclick="goBack()">← Nazad u SINET</button>
+        <button class="btn-copy" id="btnTXT">TXT</button>
+        <button class="btn-copy" id="btnMD">📋 Kopiraj (.md)</button>
+        <button class="btn-copy" id="btnHTML">HTML</button>
+        <button class="btn-copy" onclick="window.print()">🖨️ Štampaj</button>
+        <button class="btn-copy" id="btnEmail">✉️ E-mail</button>
+    </div>
+    <div class="badge">Template: SINET_TEMPLATE_v1</div>
+</div>
+
+<h1>🧩 Totalni integrativni vodič za reumatoidni artritis šaka</h1>
+<p><strong>Standardna medicina + sve alternativne metode + psihosomatika + duhovnost + narodni travarski recepti</strong></p>
+
+<div class="warning-box">
+    ⚠️ <strong>Obavezno upozorenje:</strong> Ovo je informativni materijal, a ne zamena za lekarski savet. Reumatoidni artritis (RA) je ozbiljna autoimuna bolest koju mora voditi reumatolog. Pre bilo kakve promene terapije ili uvođenja novih sredstava, obavezna je konsultacija sa lekarom. Svrab i jaka upala zahtevaju hitnu obradu.
+</div>
+
+<div style="text-align: right;">
+    <button class="btn-copy" id="copyButton">📋 Kopiraj kompletan plan (sve metode)</button>
+</div>
+
+<div id="contentToCopy">
+
+    <!-- ========== 1. KONVENCIONALNA MEDICINA ========== -->
+    <h2>🔷 1. Standardni medicinski pristup (simptomatsko i osnovno lečenje)</h2>
+    <p><em>Ovi lekovi se koriste za brzo suzbijanje bola i zapaljenja, ali ih mora propisati i nadzirati lekar.</em></p>
+    <div class="two-column">
+        <div>
+            <h3>Lekovi za brzo olakšanje</h3>
+            <ul>
+                <li><strong>NSAIL gelovi:</strong> Diklofenak gel 1% (npr. Voltaren) nanositi 3-4 puta dnevno na bolne zglobove, nežno utrljati. Izbegavati na otvorene rane.</li>
+                <li><strong>Oralni NSAIL:</strong> Ibuprofen 400 mg – maksimalno 1200 mg dnevno, uz hranu, najduže 7 dana bez lekarskog saveta. Naproksen 250-500 mg 2x dnevno.</li>
+                <li><strong>Kortikosteroidi (prednizon):</strong> Kratka kura 10-20 mg/dan, isključivo po receptu, uz postepeno smanjivanje.</li>
+                <li><strong>Antihistaminici za svrab:</strong> Cetirizin 10 mg 1x dnevno ili loratadin 10 mg – probati 3 dana; ako svrab ne prolazi – hitno javiti lekaru (svrab nije tipičan za RA).</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Lekovi koji menjaju tok bolesti (DMARD)</h3>
+            <ul>
+                <li><strong>Metotreksat:</strong> Osnovni lek, obično 7.5-25 mg jednom nedeljno, uz dodatak folne kiseline. Deluje sporo (4-8 nedelja).</li>
+                <li><strong>Leflunomid, sulfasalazin, hidroksihlorokin:</strong> Drugi izbor ili u kombinaciji.</li>
+                <li><strong>Biološki lekovi (anti-TNF, anti-IL6):</strong> Za teže oblike, primenjuju se injekcijama ili infuzijama, isključivo pod nadzorom specijaliste.</li>
+                <li><strong>JAK inhibitori:</strong> Nove oralne terapije (tofacitinib, baricitinib).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ========== 2. PSIHOSOMATSKI UZROCI ========== -->
+    <div class="soul-box">
+        <h2>🌀 2. Psihosomatski uzroci RA – dublje razumevanje</h2>
+        <p><em>Prema brojnim psihoterapeutskim i holističkim modelima, RA nije samo fizičko stanje. Evo ključnih psihogenih faktora:</em></p>
+        <ul>
+            <li><strong>Potisnuta emocionalna ekspresija:</strong> Osobe sa RA često imaju blokiranu sposobnost izražavanja besa, ljutnje i agresije. Emocije se „zamrzavaju“ u zglobovima.</li>
+            <li><strong>Perfekcionizam i hiperodgovornost:</strong> Stroga očekivanja od sebe, osećaj da se mora biti jak i izdržati bez pokazivanja slabosti.</li>
+            <li><strong>Rana trauma i porodični obrasci:</strong> U detinjstvu često prisutan dominantan, hladan ili prezaštitnički roditelj. Osećaj zarobljenosti u odnosima.</li>
+            <li><strong>Stres i inflamacija:</strong> Hronični stres podiže nivoe kortizola i citokina (TNF, IL-6), direktno podstičući zapaljenje. Distres svakodnevnice može biti okidač.</li>
+            <li><strong>Depresija i anksioznost:</strong> 14–48% RA pacijenata ima depresiju – dvosmerna veza: zapaljenje izaziva depresiju, depresija pogoršava zapaljenje.</li>
+        </ul>
+        <h3>🧠 Psihoterapijski pristupi (sa recepturom)</h3>
+        <div class="protocol-box">
+            <strong>1. Dnevnik emocija:</strong> Svako veče 15 min pisati sve potisnute emocije (bes, tugu, strah). Bez cenzure. Posle 21 dan, primetićete smanjenje napetosti u šakama.<br>
+            <strong>2. Vežba opraštanja (kao proces):</strong> Napišite pismo osobi prema kojoj osećate gorčinu (ne morate ga poslati). Zatim ga spalite uz nameru oslobađanja.<br>
+            <strong>3. Afirmacije za emocionalno oslobađanje:</strong> „Dozvoljavam sebi da osetim i oslobodim sve emocije. Moji zglobovi su slobodni od prošlosti.“ Ponavljati 10 min dnevno.<br>
+            <strong>4. EMDR ili somatic experiencing:</strong> Rad sa traumatologom na otpuštanju somatskih blokada.
+        </div>
+    </div>
+
+    <!-- ========== 3. DUHOVNOST I MOLITVE ========== -->
+    <h2>🕯️ 3. Duhovnost i molitve za umanjenje bolova</h2>
+    <div class="section-grid">
+        <div class="card">
+            <span class="badge">🙏 Molitve – kršćanska tradicija</span>
+            <div class="prayer-box">
+                <strong>Molitva sv. Hildegard iz Bingena</strong><br>
+                „Bože, izvore života, u tvoje ruke predajem svoje bolne ruke. Neka tvoja isceljujuća svetlost protekne kroz svaku kost, svaki zglob. Smiri oganj u meni i vrati me u sklad.“<br>
+                <small>Ponavljati 3 puta dnevno, držeći ruke na obolelim šakama.</small>
+            </div>
+            <div class="prayer-box" style="margin-top:15px;">
+                <strong>Molitva anđelu čuvaru</strong><br>
+                „Anđele Božji, ti si moj zaštitnik, obasjaj moje šake svetlošću milosti. Neka svaki bol bude preobražen u ljubav.“<br>
+                <small>Ujutro i pred spavanje.</small>
+            </div>
+        </div>
+        <div class="card">
+            <span class="badge">🕉 Budističke i univerzalne</span>
+            <div class="prayer-box">
+                <strong>Metta (ljubazna meditacija) za bol</strong><br>
+                „Neka moje ruke budu mirne. Neka moje ruke budu bez bola. Neka moje ruke budu ispunjene blagošću. Neka celo moje telo bude lepo.“<br>
+                <small>Pevati polako, usmeravajući dah ka šakama, 10 minuta.</small>
+            </div>
+            <div class="prayer-box" style="margin-top:15px;">
+                <strong>Reči isceljenja (Louise L. Hay)</strong><br>
+                „S ljubavlju i radošću oslobađam prošlost. Oni su slobodni, a i ja sam slobodan. Sada je sve dobro u mom srcu.“ – izgovarati 21 put dnevno.
+            </div>
+        </div>
+        <div class="card">
+            <span class="badge">✨ Duhovno-energetske prakse</span>
+            <ul>
+                <li><strong>Reiki samo-tretman za šake:</strong> Postaviti ruke na bolna mesta 15-20 minuta dnevno, vizualizovati zlatnu svetlost.</li>
+                <li><strong>Plejadeanska svetlosna terapija:</strong> Zamisliti plavo-ljubičastu svetlost kako spiralno ulazi u zglobove i čisti upalu. 10 minuta pre spavanja.</li>
+                <li><strong>Kvantno dodirivanje (Quantum Touch):</strong> Tehnika disanja i fokusa na podizanje vibracije u rukama – raditi po 20 minuta sa partnerom.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ========== 4. ALTERNATIVNE METODE – DETALJNI PROTOKOLI (fitoterapija, homeopatija, zvuk, akupresura, masaža, suplementi, kvantno, TKM, ajurveda) ========== -->
+    <h2>🌿 4. Sve alternativne metode – detaljni protokoli</h2>
+    <p><em>Integracija fitoterapije, homeopatije, suplemenata, telesnih terapija, energetskih modaliteta i tradicionalnih sistema.</em></p>
+
+    <div class="section-grid">
+        <!-- Fitoterapija (prošireno) -->
+        <div class="card">
+            <span class="badge">🌱 Fitoterapija – biljni lekovi</span>
+            <h3>Kurkuma (kurkumin)</h3>
+            <div class="protocol-box">
+                <strong>Doziranje:</strong> 500–1000 mg kurkumina sa 5 mg bioperina, 2 puta dnevno. Maksimalno 3 meseca, pauza 1 mesec. Tinktura: 30 kapi 3x dnevno u malo vode.
+            </div>
+            <h3>Bosvelija (tamjan)</h3>
+            <div class="protocol-box">
+                Standardizovani ekstrakt sa 60% bosveličnih kiselina: 300–500 mg 3 puta dnevno. Kurs 8-12 nedelja.
+            </div>
+            <h3>Đumbir – svež i suplement</h3>
+            <div class="protocol-box">
+                Čaj: 2 cm svežeg korena kuvati 10 min u 3 dl vode, piti 3 šolje dnevno. Kapsule: 500 mg 3x dnevno.
+            </div>
+            <h3>Zeleni čaj (EGCG)</h3>
+            <div class="protocol-box">
+                3-4 šolje svežeg zelenog čaja dnevno ili ekstrakt 300 mg/dan (50% EGCG). Antioksidans i antiinflamator.
+            </div>
+            <h3>Thunder God Vine – samo pod nadzorom TCM</h3>
+            <div class="protocol-box">
+                Tripterygium wilfordii – potencijalno toksičan, koristiti isključivo uz nadzor iskusnog praktičara.
+            </div>
+        </div>
+
+        <!-- Homeopatija ultra detaljna -->
+        <div class="card">
+            <span class="badge">💧 Homeopatija – potencije, ponavljanja</span>
+            <p><em>Izabrati lek prema totalitetu simptoma. Rastvoriti 5 granula u 1 dl vode, piti po 1 kašičicu 3 puta dnevno.</em></p>
+            <div class="protocol-box">
+                <strong>Apis mellifica 15C:</strong> za otok, ubodni bol, svrab, poboljšanje od hladnog. Uzimati 3 puta dnevno 5 dana.
+            </div>
+            <div class="protocol-box">
+                <strong>Bryonia alba 30C:</strong> za bol koji se pogoršava pokretom, olakšanje od čvrstog pritiska. 2 puta dnevno 7 dana.
+            </div>
+            <div class="protocol-box">
+                <strong>Rhus toxicodendron 6C:</strong> za ukočenost koja se popravlja nastavkom pokreta, bol kao posle napora. 4 puta dnevno 7 dana.
+            </div>
+            <div class="protocol-box">
+                <strong>Ruta graveolens 6C:</strong> za bolove u tetivama, pokosnici, osećaj ogrebotina. 3 puta dnevno 10 dana.
+            </div>
+            <div class="protocol-box">
+                <strong>Calcarea carbonica 30C:</strong> za hladne, vlažne osobe sa sklonošću ka otocima, umor. Jednom nedeljno tokom mesec dana.
+            </div>
+            <p>Napomena: Homeopatija deluje na energetskom nivou; uzimati 15 min pre ili posle jela, bez mentola.</p>
+        </div>
+
+        <!-- Zvuk i frekvencije -->
+        <div class="card">
+            <span class="badge">🎵 Zvuk – frekvencije, instrumenti</span>
+            <h3>Solfeggio frekvencije – dnevni plan</h3>
+            <table class="frequency-table">
+                <tr><th>Frekvencija</th><th>Dejstvo</th><th>Vreme slušanja</th></tr>
+                <tr><td>174 Hz</td><td>Analgetik, osnova</td><td>20 min ujutro</td></tr>
+                <tr><td>285 Hz</td><td>Regeneracija tkiva</td><td>20 min pre podne</td></tr>
+                <tr><td>396 Hz</td><td>Oslobađanje od potisnutog besa</td><td>15 min popodne</td></tr>
+                <tr><td>528 Hz</td><td>Transformacija, DNK popravka</td><td>30 min uveče</td></tr>
+                <tr><td>639 Hz</td><td>Harmonizacija odnosa (važno za psihosomatiku)</td><td>20 min pred spavanje</td></tr>
+            </table>
+            <div class="protocol-box">
+                <strong>Gong / tibetanske pevale:</strong> Ako imate pristup, sesija 45-60 min jednom nedeljno. Samostalno: snimci tibetanskih činija, slušati sa slušalicama, fokus na šake.
+            </div>
+            <div class="protocol-box">
+                <strong>Binauralni ritmovi (delta/theta talasi):</strong> Za bol i san, slušati 30 min pre spavanja (frekvencije 3-6 Hz).
+            </div>
+        </div>
+
+        <!-- Akupresura sa vremenima -->
+        <div class="card">
+            <span class="badge">📍 Akupresura – tačke i trajanje</span>
+            <div class="protocol-box">
+                <strong>LI4 (He Gu):</strong> Pritiskati 2 minuta, 4x dnevno. Kontraindikovano u trudnoći.<br>
+                <strong>ST36 (Zu San Li):</strong> Ispod kolena, spolja. Jača imunitet i energiju. Pritisak 2 min svako jutro.<br>
+                <strong>SP6 (San Yin Jiao):</strong> Iznad unutrašnjeg skočnog zgloba. Za hormonalnu ravnotežu i zapaljenje. 2 min dnevno.<br>
+                <strong>LV3 (Tai Chong):</strong> Na stopalu, između 1. i 2. prsta. Smiruje bes i stres. 1-2 min pre spavanja.<br>
+                <strong>Lokalne tačke na šaci:</strong> SI3 (na ivici šake), TE5 (na podlaktici). Pritisak po 1 min.
+            </div>
+            <p>Akupunktura: tretmani 2x nedeljno tokom 6 nedelja, zatim 1x nedeljno. Koriste se sterilne igle, moguća i elektroakupunktura na niskim frekvencijama (2-10 Hz) za oslobađanje endorfina.</p>
+        </div>
+
+        <!-- Masaža i telesne terapije -->
+        <div class="card">
+            <span class="badge">💆 Terapije dodirom</span>
+            <h3>Masaža – specifične tehnike</h3>
+            <div class="protocol-box">
+                <strong>Limfna drenaža za šake:</strong> Nežni kružni pokreti od prstiju ka ramenu, 10 minuta dnevno. Smanjuje otok.<br>
+                <strong>Masaža vezivnog tkiva (refleksna):</strong> Raditi preko stručnjaka 1x nedeljno.<br>
+                <strong>Eterična ulja za masažu:</strong> U 30 ml baznog ulja (badem, jojoba) dodati: 5 kapi lavande, 3 kapi nane, 2 kapi eukaliptusa, 3 kapi kamilice. Masirati šake uveče.
+            </div>
+            <h3>Osteopatija i kiropraktika</h3>
+            <div class="protocol-box">
+                Nežne manipulacije zglobova i fascija. Preporučuje se 1 tretman na 2-3 nedelje.
+            </div>
+            <h3>Hidroterapija (balneoterapija)</h3>
+            <div class="protocol-box">
+                Kupke u toploj vodi (34-36°C) sa morskom solju 20 minuta dnevno. Kontrastni tuševi: toplo 3 min, hladno 30 sek (ponoviti 3 puta) – poboljšava cirkulaciju.
+            </div>
+        </div>
+
+        <!-- Mind-body: Joga, Tai Chi, Qigong -->
+        <div class="card">
+            <span class="badge">🧘 Joga, Tai Chi, Qigong</span>
+            <h3>Joga za šake – sekvence</h3>
+            <div class="protocol-box">
+                <strong>Pranayama (disanje):</strong> Anuloma-viloma (naizmenično disanje) 5 min, 3x dnevno.<br>
+                <strong>Vežbe za šake:</strong> Polako stiskati lopticu za masažu, širenje prstiju u toploj vodi.<br>
+                <strong>Asane:</strong> Mačka-krava (mobilizacija kičme), dete u položaju (odmor). Izbegavati nošenje težine na rukama.<br>
+                <strong>Učestalost:</strong> 20 min dnevno, 6 dana u nedelji.
+            </div>
+            <h3>Tai Chi / Qigong</h3>
+            <div class="protocol-box">
+                Spori kružni pokreti, opuštanje zglobova. Preporučeni stil: Yang (kraće forme). Vežbati 30 min dnevno. Studije pokazuju smanjenje bola i poboljšanje funkcije.
+            </div>
+        </div>
+
+        <!-- Suplementi detaljno -->
+        <div class="card">
+            <span class="badge">💊 Suplementi – doze i vreme</span>
+            <div class="protocol-box">
+                <strong>Omega-3 (EPA/DHA):</strong> 2,7–3,5 g dnevno (npr. 3 kapsule od 1000 mg sa 60% omega-3). Uzimati uz obrok. Efekat nakon 3 meseca.<br>
+                <strong>MSM (metilsulfonilmetan):</strong> 1–3 g dnevno, podeljeno u 2 doze. Smanjuje bol i upalu.<br>
+                <strong>Glukozamin sulfat:</strong> 1500 mg dnevno, uz hranu. Kurs 3 meseca.<br>
+                <strong>Vitamin D3:</strong> 2000–4000 IU dnevno (zavisno od nivoa u krvi). Imunomodulator.<br>
+                <strong>Probiotske kulture:</strong> 1 kapsula dnevno (npr. Lactobacillus, Bifidobacterium) – važno za crevnu mikrobiotu koja utiče na imunitet.
+            </div>
+        </div>
+
+        <!-- Kvantne i energetske metode -->
+        <div class="card">
+            <span class="badge">⚛️ Kvantno / bioenergija</span>
+            <h3>Kvantno isceljivanje (Džo Dispenza)</h3>
+            <div class="protocol-box">
+                Meditacija: 20 min dnevno zamišljati šake potpuno zdrave, bez bola, kao da se već desilo. Osećati emociju zahvalnosti. Raditi 40 dana.
+            </div>
+            <h3>Polaritetna terapija</h3>
+            <div class="protocol-box">
+                Tretman kod terapeuta 1x nedeljno, ili samostalno: dodirivati tačke na rukama i nogama po mapi polariteta, 10 min dnevno.
+            </div>
+            <h3>Terapija biofotonima</h3>
+            <div class="protocol-box">
+                Izlaganje šaka dnevnoj sunčevoj svetlosti (kroz prozor) 10 min dnevno, uz nameru apsorpcije svetlosti.
+            </div>
+        </div>
+
+        <!-- Tradicionalne medicine: Ajurveda, TKM -->
+        <div class="card">
+            <span class="badge">🌍 Tradicionalne medicine</span>
+            <h3>Ajurveda (Indijska medicina)</h3>
+            <div class="protocol-box">
+                <strong>Ashwagandha:</strong> 500 mg 2x dnevno (adaptogen, smanjuje stres).<br>
+                <strong>Guggul (Commiphora mukul):</strong> 500 mg 2x dnevno – antiinflamator.<br>
+                <strong>Panchakarma:</strong> procedura čišćenja pod nadzorom ajurvedskog lekara (npr. vasti – lekoviti klistiri).
+            </div>
+            <h3>TKM (tradicionalna kineska medicina)</h3>
+            <div class="protocol-box">
+                <strong>Akupunktura + moksibustija:</strong> zagrevanje tačaka pelinom – 2x nedeljno.<br>
+                <strong>Biljne formule:</strong> npr. Du Huo Ji Sheng Tang (dekocija). Prepisuje TKM praktičar na osnovu dijagnoze.
+            </div>
+        </div>
+    </div> <!-- kraj grid -->
+
+    <!-- ========== 5. NARODNA MEDICINA I TRAVARSKI RECEPTI ========== -->
+    <div class="folk-box">
+        <h2>🌾 5. Narodna medicina i travarski recepti (dodatno uz prethodno)</h2>
+        <p><em>Tradicionalni recepti sa Balkana i Evrope, koji se prenose generacijama. Mnogi su jednostavni, a mogu pružiti olakšanje.</em></p>
+
+        <div class="section-grid">
+            <div class="card">
+                <span class="badge">🧅 Oblozi i paste</span>
+                <h3>Oblog od luka</h3>
+                <div class="protocol-box">
+                    <strong>Priprema:</strong> Glavicu crnog luka iseckati sitno, lagano propržiti na suvo (bez ulja) da omekša, ili je ispeći u pećnici. Toplu kašu staviti na gazu i priložiti na bolne šake, prekriti folijom i umotati u šal. Držati 30-60 minuta.<br>
+                    <strong>Dejstvo:</strong> Luk deluje antiinflamatorno, poboljšava cirkulaciju. Ponavljati 1-2 puta dnevno.
+                </div>
+                <h3>Kupusni list</h3>
+                <div class="protocol-box">
+                    Svež list kupusa lagano izgnječiti oklagijom (da pusti sok), staviti na šake, preko zaviti. Menjati svaka 2 sata. Kupus vuče toplotu i smanjuje otok.
+                </div>
+                <h3>Oblog od brašna i meda</h3>
+                <div class="protocol-box">
+                    Pomešati kašiku meda, kašiku brašna i belance jednog jajeta. Nanesiti na zglobove, prekriti gazom i ostaviti 1 sat. Med hrani i smiruje.
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="badge">🌿 Trave za čajeve i tinkture</span>
+                <h3>Čaj od koprive (Urtica dioica)</h3>
+                <div class="protocol-box">
+                    <strong>Priprema:</strong> 2 kašike suve koprive preliti sa 0,5 l ključale vode, ostaviti 15 min. Piti 2-3 šolje dnevno. Kopriva je bogata mineralima i deluje protivupalno.
+                </div>
+                <h3>Čaj od vrbove kore (prirodni aspirin)</h3>
+                <div class="protocol-box">
+                    Kašičicu suve kore bele vrbe kuvati 10 min u 2 dl vode, procediti. Piti 2-3 šolje dnevno. Sadrži salicin – preteču aspirina. Ne koristiti uz NSAIL ili ako ste alergični na aspirin.
+                </div>
+                <h3>Tinktura gaveza (Symphytum officinale)</h3>
+                <div class="protocol-box">
+                    <strong>Spoljna upotreba!</strong> Gavez ubrzava zarastanje kostiju i tkiva, ali je otrovan za jetru ako se pije. Natopiti 50 g suvog korena gaveza u 0,5 l rakije ili alkohola 40% – ostaviti 2 nedelje, procediti. Koristiti za utrljavanje u šake 2 puta dnevno.
+                </div>
+                <h3>Ulje nevena za masažu</h3>
+                <div class="protocol-box">
+                    Suve glavice nevena preliti maslinovim uljem, ostaviti na suncu 3 nedelje, procediti. Umasirati u šake uveče. Neven umiruje kožu i smanjuje zapaljenje.
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="badge">🍯 Melemi i masti</span>
+                <h3>Melem od propolisa i pčelinjeg voska</h3>
+                <div class="protocol-box">
+                    Na pari otopiti 50 g pčelinjeg voska, dodati 100 ml maslinovog ulja i 10 ml tečnog propolisa. Sipati u male tegle. Hladiti. Mazati šake po potrebi. Propolis je prirodni antibiotik i antiinflamator.
+                </div>
+                <h3>Mast od gaveza i nevena</h3>
+                <div class="protocol-box">
+                    Pomešati 50 g svinjske masti (ili biljnog ulja) sa 20 g suvog korena gaveza i 20 g suvog cveta nevena. Zagrejati na tihoj vatri 30 min (ne kuvati), procediti kroz gazu. Čuvati u frižideru. Umasirati u bolne zglobove 2-3 puta dnevno.
+                </div>
+                <h3>Rakija sa biljem za utrljavanje</h3>
+                <div class="protocol-box">
+                    U 1 l rakije (lozovača ili šljivovica) staviti po šaku: korena gaveza, lista koprive, cveta kamilice, korena čička. Ostaviti 3 nedelje, procediti. Utrljavati u šake ujutro i uveče. Alkohol nosi aktivne materije, greje i stimuliše cirkulaciju.
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="badge">🧂 Kupke i obloge</span>
+                <h3>Kupka od sena (pljeve)</h3>
+                <div class="protocol-box">
+                    Šaku sena (suva trava sa livade) preliti sa 2 l ključale vode, ostaviti 30 min, procediti u posudu za šake. Potapati ruke 20 minuta. Seno sadrži eterična ulja i koristi se kod reume.
+                </div>
+                <h3>Oblog od gline</h3>
+                <div class="protocol-box">
+                    Zelenu ili belu glinu pomešati sa malo mlake vode da dobijete pastu. Nanesiti na šake, prekriti gazom, ostaviti dok se ne osuši (oko 30 min). Glina izvlači toksine i smanjuje otok.
+                </div>
+                <h3>Sirćetni oblozi</h3>
+                <div class="protocol-box">
+                    Pomešati jabukovo sirće i vodu (1:1), natopiti gazu i staviti na šake 20 min. Sirće ublažava bol ako nema otvorenih rana.
+                </div>
+            </div>
+        </div>
+        <p><em>Napomena: Narodni recepti se prenose usmenom tradicijom i nisu naučno potvrđeni uvek. Koristiti ih oprezno i prestati ako se javi iritacija.</em></p>
+    </div>
+
+    <!-- ========== 6. INTEGRATIVNI DNEVNI RASPORED ========== -->
+    <h2>📅 6. Predlog integrisanog dnevnog protokola</h2>
+    <div class="soul-box">
+        <ul>
+            <li><strong>07:00</strong> – Buđenje, čaša tople vode sa limunom. Disanje 4-7-8. Akupresura LI4, ST36.</li>
+            <li><strong>08:00</strong> – Doručak + omega-3, vitamin D. Zeleni čaj. Molitva/afirmacije 5 min.</li>
+            <li><strong>10:00</strong> – Slušanje 174 Hz 20 min. Oblozi (po potrebi: kupus ili glina).</li>
+            <li><strong>12:00</strong> – Kurkuma + bioperin uz ručak. Hidroterapija za šake (topla kupka sa solju).</li>
+            <li><strong>15:00</strong> – Tai Chi / joga 20 min. Homeopatija (po simptomima).</li>
+            <li><strong>18:00</strong> – Večernja meditacija (vizualizacija plave svetlosti). Masaža šaka uljem (neven, gavez).</li>
+            <li><strong>21:00</strong> – Slušanje 528 Hz 20 min. Molitva pre spavanja. Reiki samo-tretman.</li>
+        </ul>
+    </div>
+
+    <div class="disclaimer" style="background:#f9e3d0; padding:20px; border-radius:20px;">
+        ☯️ <strong>Završna reč:</strong> Svi navedeni pristupi – od konvencionalnih lekova do travarskih recepata i duhovnih praksi – mogu delovati sinergijski. Ne zaboravite da je RA kompleksna bolest i da je najvažniji nadzor lekara. Koristite ovaj vodič kao inspiraciju za saradnju sa svojim reumatologom i istraživanje onoga što vama lično pomaže.
+    </div>
+</div> <!-- kraj contentToCopy -->
+
+<div class="footer-note">
+    © Integrativni vodič – sve metode su informativne. Konsultujte se sa specijalistom pre primene.
+</div>
+
+<script>
+    const qs = new URLSearchParams(location.search);
+    function goBack(){ const back = qs.get('back'); if(back) { location.href = back; return; } location.href = '../index.html'; }
+
+    const contentEl = () => document.getElementById('contentToCopy');
+    const buildMd = () => {
+        const title = document.querySelector('h1')?.innerText || 'Integrativni vodič';
+        const txt = contentEl()?.innerText || '';
+        return `# ${title}
+
+${txt}`;
+    };
+    const buildTxt = () => contentEl()?.innerText || '';
+    const download = (content, filename, mime) => {
+        const blob = new Blob([content], {type: mime||'text/plain;charset=utf-8'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(()=>{ try{ URL.revokeObjectURL(url);}catch(_){} }, 30000);
+    };
+
+    document.getElementById('btnMD')?.addEventListener('click', async ()=>{
+        try{ await navigator.clipboard.writeText(buildMd()); alert('✅ Kopirano kao Markdown (.md).'); }
+        catch(e){ alert('Ne mogu da kopiram (browser dozvole).'); }
+    });
+    document.getElementById('btnTXT')?.addEventListener('click', ()=> download(buildTxt(), 'SINET_RA_SAKE.txt', 'text/plain;charset=utf-8'));
+    document.getElementById('btnHTML')?.addEventListener('click', ()=> download(document.documentElement.outerHTML, 'SINET_RA_SAKE.html', 'text/html;charset=utf-8'));
+    document.getElementById('btnEmail')?.addEventListener('click', ()=>{ const subj = document.querySelector('h1')?.innerText || 'SINET vodič'; window.location.href = `mailto:?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildTxt())}`; });
+
+    document.getElementById('copyButton').addEventListener('click', function() {
+        const content = document.getElementById('contentToCopy').innerHTML;
+        const plainText = document.getElementById('contentToCopy').innerText;
+
+        if (navigator.clipboard && window.ClipboardItem) {
+            try {
+                navigator.clipboard.write([
+                    new ClipboardItem({
+                        'text/html': new Blob([content], { type: 'text/html' }),
+                        'text/plain': new Blob([plainText], { type: 'text/plain' })
+                    })
+                ]).then(() => alert('Kompletan plan sa svim metodama i narodnim receptima je kopiran!'));
+            } catch (err) {
+                fallbackCopy(plainText);
+            }
+        } else {
+            fallbackCopy(plainText);
+        }
+    });
+
+    function fallbackCopy(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Kopiran je običan tekst (HTML opcija nije podržana).');
+    }
+</script>
+</body>
+</html>

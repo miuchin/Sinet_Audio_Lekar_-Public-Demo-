@@ -1,5 +1,5 @@
-# SINET Audio Lekar — Korisničko uputstvo (SR) v1.0
-**Verzija aplikacije:** 15.7.1.6  
+# SINET Audio Lekar — Korisničko uputstvo (SR) v1.1
+**Verzija aplikacije:** 15.7.6.1  
 **Autor:** miuchins (Svetozar Miuchin) • **Koautor:** SINET AI  
 **Tip:** Public demo (offline‑friendly / PWA)
 
@@ -151,6 +151,8 @@ Backup treba da sačuva:
 - ⭐ Favoriti
 - 🎵 Lista (Queue)
 - 🧩 Moji protokoli
+- 🩺 Anamneza (lista pacijenata + poslednji izabrani)
+- DS-Generator istorija (lokalno)
 - Moji simptomi / overrides (ako ih koristiš)
 - Podešavanja (koliko je primenljivo)
 
@@ -196,5 +198,50 @@ Na iOS browserima (Safari/Chrome) zvuk iz WebAudio/oscillator-a **nije pouzdano 
 - **Nema zvuka:** klikni **AKTIVIRAJ** pa tek onda ▶.
 - **Katalog se ne učitava:** proveri konzolu (F12). Ako postoji greška u `app.js` — prepiši najnoviji ZIP.
 - **PWA čudno kešira:** koristi `index-nosw.html` za test ili obriši site data / unregister service worker.
+
+---
+
+## 12) Anamneza (Dijagnostički vodič)
+Anamneza je zasebna stranica (`anamneza.html`) koja pomaže da zabeležiš stanje pacijenta i radiš MKB-10 pretragu.
+
+Osnovni tok:
+1. Otvori **Anamneza**.
+2. Kreiraj novu anamnezu ili izaberi pacijenta iz liste.
+3. Desno koristi **MKB-10 pretragu** (šifra/naziv).
+4. Klik na šifru → panel **Povezano u SINET** (predlozi iz `data/sinet_dx_index.json` i kataloga).
+5. Akcije: **🎵 Ubaci u SINET** ili **📦 Preuzmi SharePack**.
+
+## 13) Integrativni vodič (generator)
+Generator pravi strukturisan “Vera-style” dokument na osnovu MKB-10 + (opciono) anamneze + izabranih SINET stavki.
+
+- Iz Anamneze klikni **🧾 Pregled vodiča**, ili otvori generator iz menija.
+- Izvoz (unifikovan template): **TXT / HTML / .md (kopiraj)**.
+- SharePack i ubacivanje u SINET rade samo kad vodič ima bar jednu frekvenciju (protokol nije prazan).
+
+## 14) Admin alati (održavanje kataloga)
+Admin alati služe da katalog bude “čist” i dosledan:
+- **Inspektor**: audit praznih polja i ručne dopune.
+- **DeDuplikator**: spajanje duplikata (unija frekvencija).
+- **MKB-10 Linker**: automatsko povezivanje kataloga sa MKB-10 šiframa.
+
+### 14.1) MKB-10 Linker: masovno popunjavanje (Auto + AI)
+
+U praksi, deo kataloga **nije dijagnoza** (npr. protokoli, brza pomoć, duhovna/psihološka podrška). Za takve stavke koristi oznaku **`NON_ICD`** (u Linkeru dugme 🟣 NON_ICD).
+
+**Preporučeni tok rada:**
+
+1. Otvori **Admin → MKB-10 Linker**
+2. Učitaj `data/SINET_STL.json` (ili svoj STL)
+3. Klikni **⚡ Auto-link (sigurni match)** (popunjava samo “sigurne” pogodke)
+4. Za ostatak klikni **⬇️ Export (missing) za AI** → dobiješ `SINET_MKB_missing.jsonl`
+5. Pusti AI da dopuni mapiranje (jedinstveni template u README / docs)
+6. Klikni **⬆️ Import AI mapiranja** i učitaj rezultat
+7. Klikni **⬇️ Preuzmi STL (linked)** i zameni kanonski katalog
+
+> Napomena: AI predloge uvek ručno proveri pre finalne verzije kataloga.
+
+## 15) Napomena o MKB-10
+MKB-10/ICD-10 je standard za šifre bolesti. Za EN browser WHO link je javno dostupan (npr. ICD-10 browse).
+Ako koristiš lokalne prevode/izvedene dokumente, vodi računa o redistribuciji u javnom repozitorijumu.
 
 ---

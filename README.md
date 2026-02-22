@@ -1,10 +1,10 @@
 # SINET Audio Lekar + NUTRI Pro (Public Demo)
 
-**Version:** 15.5.1.1
+**Version:** 15.7.6.2
 
-**Authors:** miuchins (Svetozar Miuchin) • **Co-author:** SINET AI  
+**Authors:** miuchins (Svetozar Miuchin) • **Co-author:** SINET AI (ChatGPT)  
 **Status:** Public demo + ongoing development  
-**Date:** 2026-02-15
+**Date:** 2026-02-21
 
 > ⚠️ Medical disclaimer: This project is **educational/informational** and **not a medical device**. It does not provide diagnosis or treatment. Always consult qualified medical professionals.
 
@@ -50,6 +50,12 @@ SINET is an offline‑friendly web app (PWA) that includes:
 
 # Features (Detaljno / Detailed)
 
+
+## Quick links (Brza pomoć)
+- 🦠 Antiparazitski (Prva pomoć): `pages/antiparazitski.html` (ili eksterni link)
+- 🔊 Speaker Clean + Test + Proof: `pages/speaker_clean_proof.html`
+- 🩺 Anamneza: `anamneza.html` (human-readable + JSON view)
+
 ## 1) Audio Lekar (App)
 - Loads catalog from `/data/` (STL canon)
 - Search by name/description/MKB-10
@@ -66,6 +72,34 @@ SINET is an offline‑friendly web app (PWA) that includes:
 - DeDuplicator: duplicate detection + merge checklist
 - Runtime generator: `SINET_STL.json` → runtime JSON
 - NUTRI Studio (Preview): batch engine + prompt generator + import NOTES + merge + export canon
+
+### 2.1) MKB-10 Linker (Katalog ↔ ICD-10)
+Linker služi da katalog dobije polja `mkb10.sifra` i `mkb10.naziv` (gde ima smisla).
+
+**Važno:** deo kataloga nije dijagnoza (protokoli, brza pomoć, duhovna/psihološka podrška). Takve stavke označi kao **`NON_ICD`**.
+
+**Masovno popunjavanje (Auto + AI):**
+1) Admin → **MKB-10 Linker**
+2) Učitaj STL (`data/SINET_STL.json`)
+3) ⚡ Auto-link (sigurni match)
+4) ⬇️ Export (missing) za AI → `SINET_MKB_missing.jsonl`
+5) U AI modelu popuni mapiranja i vrati JSONL (jedan red po stavci) po šemi:
+
+```json
+{"id":"<SINET id>","mkb10_sifra":"<ICD10 code or NONE>","mkb10_naziv":"<title>","kind":"DX|SYMPTOM|INJURY|FACTOR|NON_ICD","confidence":0.0,"note":""}
+```
+
+6) ⬆️ Import AI mapiranja (učitaj JSONL)
+7) ⬇️ Preuzmi STL (linked)
+
+**Preporučeni prompt za AI (kopiraj):**
+
+> Dobićeš JSONL listu SINET stavki (id, naziv, oblast, opis + kandidati iz ICD-10). Za svaku stavku vrati TAČNO jedan JSON objekat (jedan red) sa poljima: id, mkb10_sifra, mkb10_naziv, kind, confidence, note.
+>
+> - Ako postoji jasna ICD-10 šifra: upiši je u mkb10_sifra (npr. "K29.7") i naziv u mkb10_naziv.
+> - Ako nije dijagnoza (protokol, brza pomoć, duhovno/podrška): stavi mkb10_sifra="NONE" i kind="NON_ICD".
+> - Ne izmišljaj medicinske činjenice. confidence je 0–1.
+> - Ne dodaj objašnjenja van JSONL.
 
 ## 3) NUTRI Pro (Preview) — workflow
 1) Load canon: `data/NUTRI_STL.json`

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Anamneza · Dijagnostički vodič (srpski)</title>
+    <link rel="icon" href="favicon.ico">
     <!-- Bootstrap 5 + Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -49,9 +50,10 @@
         <button class="btn btn-outline-primary btn-sm export-btn" onclick="window.print()"><i class="fas fa-print"></i> Štampaj</button>
         <button class="btn btn-outline-primary btn-sm export-btn" onclick="sendMail()"><i class="fas fa-envelope"></i> E-mail</button>
         <input type="file" id="jsonUpload" accept=".json" style="display: none;" onchange="importJSON(event)">
+        <button class="btn btn-outline-secondary btn-sm me-2" onclick="goBackToSinet()"><i class="fas fa-arrow-left"></i> Nazad u SINET</button>
         <button class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('jsonUpload').click()"><i class="fas fa-upload"></i> Uvezi JSON</button>
         <button class="btn btn-outline-success btn-sm ms-auto" onclick="kopirajMarkdown()"><i class="fas fa-copy"></i> Kopiraj Rekapitulaciju (md)</button>
-        <span id="anam-badge" class="badge bg-info text-dark d-flex align-items-center ms-2">anamneza</span>
+        <span class="badge bg-info text-dark d-flex align-items-center ms-2">lokalno · /data/anamneza.json</span>
     </div>
 
     <!-- Glavni red -->
@@ -71,6 +73,32 @@
                     </div>
                 </div>
             </div>
+<div class="card shadow-sm border-0 mb-3" id="sinet-link-card">
+    <div class="card-header bg-white fw-bold"><i class="fas fa-link me-2 text-success"></i>Povezano u SINET</div>
+    <div class="card-body small">
+        <div class="text-muted mb-2">Klikni MKB-10 šifru (desno) da vidiš predloge iz <code>/data/sinet_dx_index.json</code> i/ili SINET kataloga.</div>
+        <div id="sinetSelectedIcd" class="mb-2"></div>
+        <div id="sinetCandidates" style="max-height: 160px; overflow:auto;"></div>
+        <div class="d-flex gap-2 mt-2 flex-wrap">
+            <button class="btn btn-sm btn-success" type="button" onclick="sinetCreateProtocolAndInsert()">🎵 Ubaci u SINET</button>
+            <button class="btn btn-sm btn-outline-success" type="button" onclick="sinetDownloadSharePack()">📦 Preuzmi SharePack</button>
+            <button class="btn btn-sm btn-outline-secondary" type="button" onclick="sinetOpenGuidePreview()">🧾 Pregled vodiča</button>
+        </div>
+        <div id="sinetLinkStatus" class="mt-2 text-muted"></div>
+    </div>
+</div>
+
+            <!-- SINET Quick Help (Brza pomoć + Hitno/Akutno) -->
+            <div class="card shadow-sm border-0 mb-3" id="sinet-quick-card">
+                <div class="card-header bg-white fw-bold"><i class="fas fa-kit-medical me-2 text-danger"></i>Brza pomoć (Hitno + SOS + Akutno)</div>
+                <div class="card-body small">
+                    <div class="text-muted mb-2">Prečice iz SINET kataloga (npr. <code>*-sos</code>, <code>sys-hitno-*</code>, <code>akutne-povrede-*</code>). Klik = instant “Ubaci u SINET”.</div>
+                    <div id="sinetQuickList" style="max-height: 220px; overflow:auto;"></div>
+                    <div id="sinetQuickStatus" class="mt-2 text-muted"></div>
+                </div>
+            </div>
+
+
 
             <div class="card shadow-sm border-0 mb-3">
                 <div class="card-header bg-white fw-bold"><i class="fas fa-flask me-2 text-danger"></i>Preporučene pretrage (uz hipertenziju i dr.)</div>
@@ -102,36 +130,28 @@
 </div>
 
 <!-- FOOTER -->
-<div class="footer text-center no-print mt-4">© Dijagnostički vodič — sinhronizacija sa <code>/data/anamneza.json</code> (server :8011) i localStorage.</div>
+<div class="footer text-center no-print mt-4">© Dijagnostički vodič — sinhronizacija sa <code>/data/anamneza.json</code> (server :8000) i localStorage.</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    //
-// ================== KONFIG ==================
-// Default: pokušaj statički fajl (Netlify/GitHub Pages), pa tek onda lokalni server :8011.
-// Možeš forsirati server: ?src=server
-const QS = new URLSearchParams(location.search);
-const FORCE_SERVER = QS.get('src') === 'server';
-const STATIC_URL = './data/anamneza.json';
-const LOCAL_SERVER_URL = '/data/anamneza.json';
-
-// U praksi: na hostingu radi localStorage + export; lokalno (sa json-server) radi i snimanje u fajl.
-const SERVER_URL = FORCE_SERVER ? LOCAL_SERVER_URL : STATIC_URL;
-
-function setBadge(text){
-    const el = document.getElementById('anam-badge');
-    if (el) el.textContent = text;
-}
-
-// ================== GLOBALNI PODACI ==================
-    // Pokušaj učitavanja sa servera :8011, inače localStorage
+    function goBackToSinet(){
+      try{
+        const p = new URLSearchParams(location.search);
+        const back = p.get('back');
+        if (back) { location.href = back; return; }
+      }catch(_){}
+      location.href = 'index.html';
+    }
+</script>
+<script>
+    // ================== GLOBALNI PODACI ==================
+    // Pokušaj učitavanja sa servera (/data/anamneza.json), inače localStorage
     let pacijenti = [];
 
     // Inicijalno učitavanje
-    setBadge('učitavam…');
     ucitajPacijenteSaServera();
 
-    // MKB-10 prošireni pregled (sva poglavlja sa karakterističnim šiframa)
+    // MKB-10 — mini fallback + opcioni full MKB ako postoji data/mkb10_sr.json
     const mkbPoglavlja = [
         { poglavlje: 'I. Zarazne i parazitarne bolesti (A00–B99)', sifre: ['A09 (dijareja)', 'A15 (tuberkuloza)', 'B18 (hronični hepatitis)', 'B20 (HIV)'] },
         { poglavlje: 'II. Neoplazme (C00–D48)', sifre: ['C34 (karcinom pluća)', 'C50 (karcinom dojke)', 'C61 (karcinom prostate)', 'C18 (karcinom debelog creva)'] },
@@ -149,7 +169,79 @@ function setBadge(text){
         { poglavlje: 'XIV. Genitourinarne bolesti (N00–N99)', sifre: ['N18 (HBI)', 'N40 (hiperplazija prostate)', 'N39 (UTI)'] }
     ];
 
-    function prikaziMKB() {
+    // Full MKB (ako je dostupan)
+    let mkbFull = null; // array: [{code,title},...]
+
+    function normStr(s){
+        return String(s||'')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g,'')
+          .replace(/\s+/g,' ')
+          .trim();
+    }
+
+    function codeKey(code){
+        const m = String(code||'').toUpperCase().match(/^([A-Z])(\d{2})/);
+        if(!m) return null;
+        return { L: m[1].charCodeAt(0), N: parseInt(m[2],10) };
+    }
+    function inRange(code, start, end){
+        const c = codeKey(code);
+        const a = codeKey(start);
+        const b = codeKey(end);
+        if(!c||!a||!b) return false;
+        const v = c.L*100 + c.N;
+        const va = a.L*100 + a.N;
+        const vb = b.L*100 + b.N;
+        return v>=va && v<=vb;
+    }
+
+    const mkbChapters = [
+        { title:'I. Zarazne i parazitarne bolesti (A00–B99)', start:'A00', end:'B99' },
+        { title:'II. Neoplazme (C00–D48)', start:'C00', end:'D48' },
+        { title:'III. Bolesti krvi i imunog sistema (D50–D89)', start:'D50', end:'D89' },
+        { title:'IV. Endokrine bolesti (E00–E90)', start:'E00', end:'E90' },
+        { title:'V. Mentalni poremećaji (F00–F99)', start:'F00', end:'F99' },
+        { title:'VI. Bolesti nervnog sistema (G00–G99)', start:'G00', end:'G99' },
+        { title:'VII. Bolesti oka (H00–H59)', start:'H00', end:'H59' },
+        { title:'VIII. Bolesti uva (H60–H95)', start:'H60', end:'H95' },
+        { title:'IX. Cirkulacijski sistem (I00–I99)', start:'I00', end:'I99' },
+        { title:'X. Respiratorne bolesti (J00–J99)', start:'J00', end:'J99' },
+        { title:'XI. Digestivne bolesti (K00–K93)', start:'K00', end:'K93' },
+        { title:'XII. Koža (L00–L99)', start:'L00', end:'L99' },
+        { title:'XIII. Mišićno-koštani sistem (M00–M99)', start:'M00', end:'M99' },
+        { title:'XIV. Genitourinarne bolesti (N00–N99)', start:'N00', end:'N99' },
+        { title:'XV. Trudnoća, porođaj i babinje (O00–O99)', start:'O00', end:'O99' },
+        { title:'XVI. Perinatalni period (P00–P96)', start:'P00', end:'P96' },
+        { title:'XVII. Kongenitalne malformacije (Q00–Q99)', start:'Q00', end:'Q99' },
+        { title:'XVIII. Simptomi i abnormalni nalazi (R00–R99)', start:'R00', end:'R99' },
+        { title:'XIX. Povrede i posledice (S00–T98)', start:'S00', end:'T98' },
+        { title:'XX. Spoljni uzroci (V01–Y98)', start:'V01', end:'Y98' },
+        { title:'XXI. Faktori i kontakti (Z00–Z99)', start:'Z00', end:'Z99' },
+        { title:'XXII. Posebne šifre (U00–U99)', start:'U00', end:'U99' },
+    ];
+
+    async function tryLoadMKB10(){
+        const urls = ['/data/mkb10_sr.json','./data/mkb10_sr.json','../data/mkb10_sr.json'];
+        for(const u of urls){
+            try{
+                const r = await fetch(u, { cache:'no-store' });
+                if(!r.ok) continue;
+                const j = await r.json();
+                const arr = Array.isArray(j) ? j : (Array.isArray(j?.entries) ? j.entries : null);
+                if(arr && arr.length){
+                    mkbFull = arr
+                      .filter(x => x && (x.code || x.sifra) )
+                      .map(x => ({ code: String(x.code || x.sifra).trim(), title: String(x.title || x.naziv || x.opis || '').trim() }))
+                      .filter(x => x.code);
+                    break;
+                }
+            }catch(_){ }
+        }
+    }
+
+    function renderMkbFallback(){
         let html = '';
         mkbPoglavlja.forEach(p => {
             html += `<div class="mb-2"><strong>${p.poglavlje}</strong><br>`;
@@ -158,12 +250,63 @@ function setBadge(text){
         });
         document.getElementById('icdList').innerHTML = html;
     }
+
+    function renderMkbFull(){
+        const MAX_PER_CH = 80;
+        let html = `<div class="text-muted mb-2">Učitana je puna MKB-10 baza (${mkbFull.length} šifri). Klik na šifru ➜ SINET predlog.</div>`;
+        for(const ch of mkbChapters){
+            const list = mkbFull.filter(e => inRange(e.code, ch.start, ch.end));
+            if(!list.length) continue;
+            list.sort((a,b)=>a.code.localeCompare(b.code));
+            const shown = list.slice(0, MAX_PER_CH);
+            html += `<details class="mb-2"><summary><strong>${ch.title}</strong> <span class="text-muted">(${list.length})</span></summary>`;
+            html += `<div class="mt-2">`;
+            for(const e of shown){
+                const t = e.title ? ` — ${e.title}` : '';
+                html += `<div><span class="icd-badge">${e.code}</span> ${e.code}${t}</div>`;
+            }
+            if(list.length > MAX_PER_CH){
+                html += `<div class="text-muted mt-1">Prikazano ${MAX_PER_CH} od ${list.length}. Koristi pretragu za ostale.</div>`;
+            }
+            html += `</div></details>`;
+        }
+        document.getElementById('icdList').innerHTML = html;
+    }
+
+    function prikaziMKB(){
+        if(mkbFull && mkbFull.length){
+            renderMkbFull();
+        }else{
+            renderMkbFallback();
+        }
+    }
+
     window.pretraziMKB = function() {
-        let filter = document.getElementById('searchICD').value.toLowerCase();
+        const q = normStr(document.getElementById('searchICD').value);
+        if(!q){ prikaziMKB(); return; }
+
+        // Full search
+        if(mkbFull && mkbFull.length){
+            const out = mkbFull.filter(e => (normStr(e.code).includes(q) || normStr(e.title).includes(q))).slice(0, 200);
+            if(!out.length){
+                document.getElementById('icdList').innerHTML = '<p class="text-muted">Nema rezultata.</p>';
+                return;
+            }
+            let html = `<div class="text-muted mb-2">Rezultati (prvih ${out.length}):</div>`;
+            out.forEach(e => {
+                const t = e.title ? ` — ${e.title}` : '';
+                html += `<div><span class="icd-badge">${e.code}</span> ${e.code}${t}</div>`;
+            });
+            document.getElementById('icdList').innerHTML = html;
+            return;
+        }
+
+        // Fallback mini search
         let filtered = mkbPoglavlja.map(p => {
-            let sifreF = p.sifre.filter(s => s.toLowerCase().includes(filter) || p.poglavlje.toLowerCase().includes(filter));
+            let sifreF = p.sifre.filter(s => s.toLowerCase().includes(q) || p.poglavlje.toLowerCase().includes(q));
             return { ...p, sifre: sifreF };
-        }).filter(p => p.sifre.length > 0 || p.poglavlje.toLowerCase().includes(filter));
+        }).filter(p => p.sifre.length > 0 || p.poglavlje.toLowerCase().includes(q));
+
         let html = '';
         filtered.forEach(p => {
             html += `<div class="mb-2"><strong>${p.poglavlje}</strong><br>`;
@@ -174,47 +317,20 @@ function setBadge(text){
         document.getElementById('icdList').innerHTML = html;
     };
 
-    // ========== Server operacije (port 8000) ==========
+    // ========== Server operacije (/data/anamneza.json na localhost serveru) ==========
+    const SERVER_URL = '/data/anamneza.json';
+
     async function ucitajPacijenteSaServera() {
-    const tryUrls = FORCE_SERVER ? [LOCAL_SERVER_URL] : [STATIC_URL, LOCAL_SERVER_URL];
-    let loaded = false;
-
-    for (const url of tryUrls) {
         try {
-            const response = await fetch(url, { cache: 'no-store' });
-            if (!response.ok) continue;
-
-            const data = await response.json();
-            // podrži i: []  ili  { pacijenti: [] }
-            if (Array.isArray(data)) {
-                pacijenti = data;
-            } else if (data && Array.isArray(data.pacijenti)) {
-                pacijenti = data.pacijenti;
+            let response = await fetch(SERVER_URL);
+            if (response.ok) {
+                pacijenti = await response.json();
+                if (!Array.isArray(pacijenti)) pacijenti = [];
             } else {
-                pacijenti = [];
+                // fallback na localStorage
+                let local = localStorage.getItem('anamneza_pacijenti');
+                pacijenti = local ? JSON.parse(local) : [];
             }
-            loaded = true;
-            setBadge(url.includes('8011') ? 'port 8000 · /data/anamneza.json (server)' : '/data/anamneza.json (static)');
-            break;
-        } catch (e) {
-            // probaj sledeći URL
-        }
-    }
-
-    if (!loaded) {
-        console.warn('Server/fajl nije dostupan, koristi localStorage.');
-        let local = localStorage.getItem('anamneza_pacijenti');
-        pacijenti = local ? JSON.parse(local) : [];
-        setBadge('localStorage (offline)');
-    }
-
-    // osiguraj bar jednog primera ako je prazno
-    if (pacijenti.length === 0) pacijenti = [kreirajPrimerPacijenta()];
-    localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti)); // sync
-    prikaziListu();
-    prikaziMKB();
-}
-
         } catch (e) {
             console.warn('Server nije dostupan, koristi localStorage.');
             let local = localStorage.getItem('anamneza_pacijenti');
@@ -223,30 +339,24 @@ function setBadge(text){
         // osiguraj bar jednog primera ako je prazno
         if (pacijenti.length === 0) pacijenti = [kreirajPrimerPacijenta()];
         localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti)); // sync
+        // pokušaj full MKB učitavanja (ako postoji)
+        await tryLoadMKB10();
         prikaziListu();
         prikaziMKB();
     }
 
     async function snimiNaServer() {
-    // Uvek čuvamo lokalno
-    localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti));
-
-    // Na statičkom hostingu ne postoji upis u fajl.
-    if (!SERVER_URL.includes('localhost:8000')) return;
-
-    let podaci = JSON.stringify(pacijenti, null, 2);
-    try {
-        let response = await fetch(SERVER_URL, {
-            method: 'PUT', // json-server: PUT cele kolekcije
-            headers: { 'Content-Type': 'application/json' },
-            body: podaci
-        });
-        if (!response.ok) throw new Error('Server nije dozvolio upis');
-    } catch (e) {
-        console.warn('Ne mogu da snimim na server, čuvam samo u localStorage.');
-    }
-}
-
+        let podaci = JSON.stringify(pacijenti, null, 2);
+        try {
+            let response = await fetch(SERVER_URL, {
+                method: 'PUT', // ili POST, ali json-server koristi PUT za celu kolekciju
+                headers: { 'Content-Type': 'application/json' },
+                body: podaci
+            });
+            if (!response.ok) throw new Error('Server nije dozvolio upis');
+        } catch (e) {
+            console.warn('Ne mogu da snimim na server, čuvam samo u localStorage.');
+        }
         localStorage.setItem('anamneza_pacijenti', JSON.stringify(pacijenti));
     }
 
@@ -394,24 +504,132 @@ function setBadge(text){
         document.getElementById('mainView').innerHTML = html;
     }
 
-    function prikaziDetalj(index) {
-        let p = pacijenti[index];
-        let sadrzaj = `
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-info text-white"><i class="fas fa-file-medical me-2"></i>Detalji anamneze</div>
-                <div class="card-body" style="max-height:70vh; overflow-y:auto; background:#fafbfe;">
-                    <pre style="white-space: pre-wrap; font-family: 'Segoe UI', Roboto; font-size:1rem;">${JSON.stringify(p, null, 2)}</pre>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-sm btn-warning" onclick="prikaziFormu()">Nova anamneza</button>
-                    <button class="btn btn-sm btn-danger" onclick="obrisi(${index})">Obriši</button>
-                </div>
+    
+function prikaziDetalj(index) {
+    const p = pacijenti[index];
+
+    function escHtml(v){
+        return String(v ?? '').replace(/[&<>"']/g, (c) => ({
+            '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+        }[c]));
+    }
+    function showVal(v){
+        const s = String(v ?? '').trim();
+        return s ? escHtml(s) : '<span class="text-muted">—</span>';
+    }
+    function row(label, value){
+        return `
+          <div class="col-12 col-lg-6">
+            <div class="p-2 rounded-3 border bg-white">
+              <div class="small text-muted fw-bold" style="letter-spacing:.2px;">${escHtml(label)}</div>
+              <div>${showVal(value)}</div>
             </div>
-        `;
-        document.getElementById('mainView').innerHTML = sadrzaj;
+          </div>`;
+    }
+    function block(title, rowsHtml){
+        if(!rowsHtml) return '';
+        return `
+          <div class="mb-3">
+            <div class="fw-bold mb-2" style="color:#0b3b5c;">${escHtml(title)}</div>
+            <div class="row g-2">${rowsHtml}</div>
+          </div>`;
     }
 
-    function spisiPacijenta(e) {
+    const o = p?.osobni || {};
+    const os = p?.osobna || {};
+    const st = p?.status || {};
+
+    const human =
+      block('1) Osnovni podaci', [
+        row('Ime', o.ime),
+        row('Prezime', o.prezime),
+        row('Godina rođenja', o.godina),
+        row('Mesto', o.mjesto),
+        row('Adresa', o.adresa),
+        row('Zanimanje', o.zanimanje),
+        row('Bračno stanje', o.bracno),
+        row('Deca', o.djeca),
+      ].join('')) +
+
+      block('2) Razlog dolaska', row('Razlog', p?.razlog).replace('col-12 col-lg-6','col-12')) +
+
+      block('3) Porodična anamneza', row('Porodična', p?.obiteljska).replace('col-12 col-lg-6','col-12')) +
+
+      block('4) Lična anamneza', [
+        row('Dečje bolesti', os['dječje'] || os['djecije'] || os['djecje']),
+        row('Dosadašnje bolesti', os.dosadasnje),
+        row('Sadašnja bolest', os.sadasnja),
+      ].join('')) +
+
+      block('5) Socijalna / radna / epidemiološka', [
+        row('Seksualna', p?.seksualna),
+        row('Socijalna', p?.socijalna),
+        row('Radna', p?.radna),
+        row('Epidemiološka', p?.epidemioloska),
+      ].join('')) +
+
+      block('6) Funkcije / navike / alergije / lekovi', [
+        row('Funkcije', p?.funkcije),
+        row('Navike', p?.navike),
+        row('Alergije', p?.alergije),
+        row('Lekovi', p?.lijekovi),
+      ].join('')) +
+
+      block('7) Status praesens', [
+        row('Opšti status', st.opci),
+        row('Glava / oči / uši / usna duplja', st.glava),
+        row('Vrat / grudni koš / pluća', st.vratPrsni),
+        row('Srce / trbuh / kičma / ekstremiteti', st.srceOstalo),
+        row('Zaključak (klinički utisak)', st.zakljucak),
+      ].join(''));
+
+    let sadrzaj = `
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-info text-white d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div><i class="fas fa-file-medical me-2"></i>Detalji anamneze</div>
+              <div class="btn-group btn-group-sm" role="group" aria-label="Prikaz">
+                <button id="btnHuman" class="btn btn-light" type="button" onclick="setDetailMode('human')">👁 Čitljivo</button>
+                <button id="btnJson" class="btn btn-outline-light" type="button" onclick="setDetailMode('json')">{ } JSON</button>
+              </div>
+            </div>
+            <div class="card-body" style="max-height:70vh; overflow-y:auto; background:#fafbfe;">
+                <div id="detailHuman">${human}</div>
+                <pre id="detailJson" class="mt-2" style="display:none; white-space: pre-wrap; font-family: ui-monospace, Menlo, monospace; font-size:0.95rem;">${escHtml(JSON.stringify(p, null, 2))}</pre>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm btn-warning" onclick="prikaziFormu()">Nova anamneza</button>
+                <button class="btn btn-sm btn-danger" onclick="obrisi(${index})">Obriši</button>
+            </div>
+        </div>
+    `;
+    document.getElementById('mainView').innerHTML = sadrzaj;
+
+    // zapamti poslednje izabranog pacijenta (za integrativni vodič)
+    try{ localStorage.setItem('ANAMNEZA_LAST_PATIENT', JSON.stringify(p)); }catch(_){ }
+
+    // default: human view
+    setDetailMode('human');
+}
+
+function setDetailMode(mode){
+    const h = document.getElementById('detailHuman');
+    const j = document.getElementById('detailJson');
+    const bh = document.getElementById('btnHuman');
+    const bj = document.getElementById('btnJson');
+    if(!h || !j) return;
+    if(mode === 'json'){
+      h.style.display = 'none';
+      j.style.display = 'block';
+      if(bh) bh.className = 'btn btn-outline-light';
+      if(bj) bj.className = 'btn btn-light';
+    } else {
+      h.style.display = 'block';
+      j.style.display = 'none';
+      if(bh) bh.className = 'btn btn-light';
+      if(bj) bj.className = 'btn btn-outline-light';
+    }
+}
+function spisiPacijenta(e) {
         e.preventDefault();
         const novi = {
             id: 'p' + Date.now(),
@@ -472,17 +690,8 @@ function setBadge(text){
     function exportHTML() {
         let html = `<html><head><meta charset="UTF-8"><title>Anamneze</title></head><body>`;
         pacijenti.forEach(p => { html += `<pre>${JSON.stringify(p,null,2)}</pre><hr>`; });
-        html += `<script>
-  function goBackAnamneza(){
-    try{
-      const p = new URLSearchParams(location.search);
-      const back = p.get('back');
-      if (back) { location.href = back; return; }
-    }catch(_){}
-    location.href = 'index.html';
-  }
-</script>
-</body></html>`;
+        // VAŽNO: u ovom <script> bloku ne sme da se pojavi literalni ZATVARAJUĆI SCRIPT tag (inače browser prekida parsiranje).
+        html += '\n' + '<scr' + 'ipt src="js/anamneza-sinet-bridge.js?v=15.7.6.7"></scr' + 'ipt>\n</body></html>';
         downloadFile(html, 'anamneza.html', 'text/html');
     }
     function downloadFile(content, fileName, mime) {
@@ -519,22 +728,13 @@ function setBadge(text){
             md += `### ${i+1}. ${p.osobni?.ime || ''} ${p.osobni?.prezime || ''} (${p.osobni?.godina || '?'})\n`;
             md += `- Razlog: ${p.razlog || '/'}\n- Sadašnja bolest: ${p.osobna?.sadasnja || '/'}\n- Status (zaključak): ${p.status?.zakljucak || '/'}\n- Lekovi: ${p.lijekovi || '/'}\n- Preporučene pretrage: KKS, EKG, chokardiografija, troponin, UZV abdomen, Holter krvnog pritiska, lipidogram, kreatinin, TSH\n\n`;
         });
-        md += `## Plan daljnjeg rada\n- Za svakog pacijenta potrebno je uzeti ciljanu anamnezu, fizikalni pregled, osnovne laboratorijske pretrage, EKG, chokardiografiju kod srčanih simptoma, UZV abdomena kod sumnje na patologiju probavnog sustava, RTG pluća kod respiratornih tegoba. Pratiti vrednosti krvnog pritiska, šećera, prema MKB-10 grupama razmotriti specijalističke konzilije. Svu dokumentaciju arhivirati u JSON formatu na serveru :8011.\n`;
+        md += `## Plan daljnjeg rada\n- Za svakog pacijenta potrebno je uzeti ciljanu anamnezu, fizikalni pregled, osnovne laboratorijske pretrage, EKG, chokardiografiju kod srčanih simptoma, UZV abdomena kod sumnje na patologiju probavnog sustava, RTG pluća kod respiratornih tegoba. Pratiti vrednosti krvnog pritiska, šećera, prema MKB-10 grupama razmotriti specijalističke konzilije. Svu dokumentaciju arhivirati u JSON formatu (data/anamneza.json).\n`;
         navigator.clipboard.writeText(md).then(() => alert('Markdown rekapitulacija kopirana u međuspremnik!'));
     }
 
     window.onload = () => { /* ucitavanje se vrši u ucitajPacijenteSaServera() */ };
-
-t>
-<script>
-  function goBackAnamneza(){
-    try{
-      const p = new URLSearchParams(location.search);
-      const back = p.get('back');
-      if (back) { location.href = back; return; }
-    }catch(_){}
-    location.href = 'index.html';
-  }
 </script>
+
+<script src="js/anamneza-sinet-bridge.js?v=15.7.6.7"></script>
 </body>
 </html>

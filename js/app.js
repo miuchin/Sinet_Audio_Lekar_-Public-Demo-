@@ -10,7 +10,7 @@ import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.3.0';
 import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.3.0';
 import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.3.0';
 
-const SINET_APP_VERSION = "15.7.3.0";
+const SINET_APP_VERSION = "15.7.6.7";
 
 
 
@@ -3115,13 +3115,22 @@ async importData(fileInput) {
     // 1) DB restore
     await this.db.importAll(payload);
 
-    // 2) LocalStorage restore (user symptoms / overrides / settings)
-    try {
-      const loc = payload?.local || {};
-      if (typeof loc.userSymptoms === "string") localStorage.setItem("sinet_user_symptoms_v1", loc.userSymptoms);
-      if (typeof loc.overrides === "string") localStorage.setItem("sinet_overrides_v1", loc.overrides);
-      if (typeof loc.iosBgExperimental === "string") localStorage.setItem("sinet_ios_bg_experimental", loc.iosBgExperimental);
-    } catch(_) {}
+	    // 2) LocalStorage restore (sve što je korisnik popunjavao)
+	    try {
+	      const loc = payload?.local || {};
+	      if (typeof loc.userSymptoms === "string") localStorage.setItem("sinet_user_symptoms_v1", loc.userSymptoms);
+	      if (typeof loc.overrides === "string") localStorage.setItem("sinet_overrides_v1", loc.overrides);
+	      if (typeof loc.iosBgExperimental === "string") localStorage.setItem("sinet_ios_bg_experimental", loc.iosBgExperimental);
+	
+	      // New: bulk localStorage restore (prefix-based)
+	      const kv = payload?.localStorage || loc?.kv || loc?.localStorage || {};
+	      if (kv && typeof kv === 'object') {
+	        for (const [k, v] of Object.entries(kv)) {
+	          if (!k) continue;
+	          try { localStorage.setItem(String(k), String(v ?? '')); } catch(_) {}
+	        }
+	      }
+	    } catch(_) {}
 
     // 3) Reload in-memory state + UI
     await this.refreshFavoritesSet();
@@ -3151,11 +3160,26 @@ async importData(fileInput) {
   try {
     const payload = await this.db.exportAll();
 
-    // Include local-only user data (not in IndexedDB)
-    payload.local = {};
-    try { payload.local.userSymptoms = localStorage.getItem("sinet_user_symptoms_v1") || ""; } catch(_) {}
-    try { payload.local.overrides = localStorage.getItem("sinet_overrides_v1") || ""; } catch(_) {}
-    try { payload.local.iosBgExperimental = localStorage.getItem("sinet_ios_bg_experimental") || "0"; } catch(_) {}
+	    // Include local-only user data (not in IndexedDB)
+	    payload.local = {};
+	    try { payload.local.userSymptoms = localStorage.getItem("sinet_user_symptoms_v1") || ""; } catch(_) {}
+	    try { payload.local.overrides = localStorage.getItem("sinet_overrides_v1") || ""; } catch(_) {}
+	    try { payload.local.iosBgExperimental = localStorage.getItem("sinet_ios_bg_experimental") || "0"; } catch(_) {}
+
+	    // New: save ALL relevant localStorage keys (da backup stvarno bude "sve")
+	    payload.localStorage = {};
+	    try {
+	      const keep = (k) => {
+	        if (!k) return false;
+	        if (k === 'sinetNotes' || k === 'sinetHistory') return true;
+	        return /^(sinet_|SINET_|anamneza_|ANAMNEZA_)/.test(k);
+	      };
+	      for (let i=0; i<localStorage.length; i++) {
+	        const k = localStorage.key(i);
+	        if (!keep(k)) continue;
+	        payload.localStorage[k] = localStorage.getItem(k) || '';
+	      }
+	    } catch(_) {}
 
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
@@ -3773,6 +3797,59 @@ if (!Array.isArray(this.catalogItems) || this.catalogItems.length === 0) {
     }
   }
 
+
+  /* ===================== v15.7.6.7 — STL export for user-generated content ===================== */
+
+  exportUserSymptomsSTL() {
+    try {
+      const items = Array.isArray(this.userSymptoms) ? this.userSymptoms : [];
+      if (!items.length) return alert("Nema stavki u 'Moji simptomi'.");
+
+      const now = new Date();
+      const date = now.toISOString().slice(0, 10);
+      const stl = this._buildSTLPayload(items, {
+        mode: "user",
+        scopeLabel: "MOJI SIMPTOMI (user-generated)",
+        sourceFile: "SINET_USER_SYMPTOMS"
+      });
+
+      const filename = `SINET_USER_SYMPTOMS_STL_${date}.json`;
+      this._downloadJson(stl, filename);
+      this.showToast("⬇️ Izvezen STL (Moji simptomi)", { actionLabel: "Moji simptomi", actionNav: "mysymptoms" });
+      this.log("USER", "UserSymptoms STL Export", String(items.length));
+    } catch (e) {
+      alert("Izvoz nije uspeo: " + (e?.message || e));
+      this.log("ERROR", "UserSymptoms STL Export Failed", e?.message || "unknown");
+    }
+  }
+
+  exportCurrentAsSTL() {
+    try {
+      const id = this.currentModalId;
+      if (!id) return alert("Nije izabrana stavka.");
+      const it = (this.catalogItems || []).find(x => String(x?.id) === String(id));
+      if (!it) return alert("Ne mogu da nađem stavku.");
+
+      const now = new Date();
+      const date = now.toISOString().slice(0, 10);
+      const title = (it.simptom || it.naziv || "Stavka").toString().trim();
+      const stl = this._buildSTLPayload([it], {
+        mode: "single",
+        scopeLabel: `SINGLE • ${title}`,
+        sourceFile: "SINET_SINGLE_ITEM"
+      });
+
+      const safeId = String(it.id || "item").replace(/[^a-z0-9\-_.]/gi, "_");
+      const filename = `SINET_ITEM_${safeId}_${date}.json`;
+      this._downloadJson(stl, filename);
+      this.showToast("💾 Preuzet STL (standard)", { actionLabel: "Moji simptomi", actionNav: "mysymptoms" });
+      this.log("USER", "Single Item STL Export", safeId);
+    } catch (e) {
+      alert("Izvoz nije uspeo: " + (e?.message || e));
+      this.log("ERROR", "Single Item STL Export Failed", e?.message || "unknown");
+    }
+  }
+
   _downloadJson(obj, filename) {
     const text = JSON.stringify(obj, null, 2);
     const blob = new Blob([text], { type: "application/json;charset=utf-8" });
@@ -3796,16 +3873,16 @@ if (!Array.isArray(this.catalogItems) || this.catalogItems.length === 0) {
 
     const simptomi = items.map(it => this._runtimeItemToSTL(it)).filter(Boolean);
 
-    const meta = {
+	    const meta = {
       schema: "SINET_STL",
       version: "1.1",
       generatedAt: ts,
-      sourceFile: (ctx.mode === "all") ? "SINET_CATALOG (ALL)" : "SINET_CATALOG (VIEW)",
+	      sourceFile: ctx.sourceFile || ((ctx.mode === "all") ? "SINET_CATALOG (ALL)" : "SINET_CATALOG (VIEW)"),
       notes: ctx.scopeLabel || "",
       audit: [{
         ts,
         tool: "SINET Audio Lekar",
-        toolVersion: "15.4.7.4",
+	        toolVersion: SINET_APP_VERSION,
         mode: "manual",
         providers: [],
         summary: { simptomi: simptomi.length, freqTotal }
@@ -5083,11 +5160,11 @@ window.openDSGenerator = function(){
     const a = window.app;
     const itemId = (a && a.selectedItem && a.selectedItem.id) ? a.selectedItem.id : '';
     const back = encodeURIComponent(window.location.href);
-    const url = `DS-Generator.html?catalog=/data/SINET_STL.json${itemId ? `&freqId=${encodeURIComponent(itemId)}` : ''}&back=${back}`;
+    const url = `DS-Generator.html?catalog=./data/SINET_STL.json${itemId ? `&freqId=${encodeURIComponent(itemId)}` : ''}&back=${back}`;
     window.open(url, '_blank');
   }catch(e){
     console.warn('openDSGenerator failed', e);
-    window.open('DS-Generator.html?catalog=/data/SINET_STL.json', '_blank');
+    window.open('DS-Generator.html?catalog=./data/SINET_STL.json', '_blank');
   }
 };
 
@@ -5097,9 +5174,32 @@ async function __importDsBridgeIfAny(){
     if(!raw) return false;
 
     const payload = JSON.parse(raw);
-    if(!payload || payload.format !== 'SINET_DS_TO_PROTOCOL_v1' || !payload.protocol) return false;
+    if(!payload) return false;
+let p0 = null;
+let bridgeGuide = null;
+let bridgeMeta = null;
 
-    const p0 = payload.protocol;
+// Accept:
+// - SINET_DS_TO_PROTOCOL_v1 (from DS/Anamneza "Ubaci u SINET")
+// - SINET_SHAREPACK_v1 (downloaded share pack)
+if(payload.format === 'SINET_DS_TO_PROTOCOL_v1' && payload.protocol){
+  p0 = payload.protocol;
+  bridgeGuide = payload.guideHtml || payload.guide || (payload.protocol && payload.protocol._guideHtml) || null;
+  bridgeMeta = payload.meta || payload._meta || (payload.protocol && (payload.protocol._meta || payload.protocol.meta)) || null;
+} else if(payload.format === 'SINET_SHAREPACK_v1' && payload.protocol){
+  p0 = payload.protocol;
+  bridgeGuide = payload.guideHtml || payload.guide || (payload.protocol && payload.protocol._guideHtml) || null;
+  bridgeMeta = payload.meta || payload._meta || (payload.protocol && (payload.protocol._meta || payload.protocol.meta)) || null;
+} else if(payload.protocol){
+  // backward compat: plain {protocol: {...}}
+  p0 = payload.protocol;
+  bridgeGuide = payload.guideHtml || payload.guide || (payload.protocol && payload.protocol._guideHtml) || null;
+  bridgeMeta = payload.meta || payload._meta || (payload.protocol && (payload.protocol._meta || payload.protocol.meta)) || null;
+} else {
+  return false;
+}
+
+
     if(!p0 || typeof p0 !== 'object' || !Array.isArray(p0.steps) || p0.steps.length===0){
       localStorage.removeItem('SINET_DS_BRIDGE');
       window.app?.showToast?.('⚠️ DS Generator: protokol je prazan ili neispravan.', {timeoutMs: 9000});
@@ -5113,6 +5213,9 @@ async function __importDsBridgeIfAny(){
     if(!a.db && window.db) a.db = window.db;
 
     const p = JSON.parse(JSON.stringify(p0));
+    if(bridgeGuide && !p._guideHtml) p._guideHtml = String(bridgeGuide);
+    if(bridgeMeta && !p._meta) p._meta = bridgeMeta;
+
     if(!p.id) p.id = a._newProtoId?.() || (`DS_${Date.now()}`);
     if(!p.name) p.name = 'DS protokol';
 

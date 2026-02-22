@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SINET – MKB-10 Linker (Katalog ↔ MKB)</title>
+  <link rel="stylesheet" href="css/main.css"/>
+  <style>
+    :root{color-scheme: light;}
+    body{background:#ffffff;color:#0f172a;}
+    .wrap{max-width:1200px;margin:0 auto;padding:16px;}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+    .card{background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+    .muted{color:#475569;font-size:13px;line-height:1.35}
+    .grid{display:grid;grid-template-columns:360px 1fr;gap:12px;}
+    @media (max-width: 980px){.grid{grid-template-columns:1fr;}}
+    .btn{padding:10px 12px;border-radius:10px;border:1px solid transparent;cursor:pointer;font-weight:700}
+    .btn.primary{background:#2b74ff;color:#fff;border-color:#2b74ff}
+    .btn.good{background:#25a05a;color:#fff;border-color:#25a05a}
+    .btn.warn{background:#c2571a;color:#fff;border-color:#c2571a}
+    .btn.ghost{background:#eef2f7;color:#0f172a;border-color:#cbd5e1}
+    .btn.ghost:hover{background:#e2e8f0}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .log{white-space:pre-wrap;background:#f8fafc;color:#0f172a;padding:10px;border-radius:10px;border:1px solid #e2e8f0;min-height:64px}
+    .list{max-height:62vh;overflow:auto;border:1px solid #e2e8f0;border-radius:12px;background:#fff;}
+    .item{padding:10px 12px;border-bottom:1px solid #e2e8f0;cursor:pointer}
+    .item:hover{background:#eff6ff}
+    .item.sel{background:#dbeafe}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;font-size:12px;color:#1d4ed8}
+    .danger{color:#b91c1c}
+    .ok{color:#166534}
+    input,select,textarea{padding:10px;border-radius:10px;border:1px solid #cbd5e1;background:#ffffff;color:#0f172a}
+    textarea{width:100%;min-height:84px}
+    table{width:100%;border-collapse:collapse}
+    td,th{padding:8px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+    th{text-align:left;color:#334155;font-size:12px}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    .stickyTop{position:sticky;top:0;background:#fff;z-index:5;padding-bottom:8px;}
+    </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 style="margin:4px 0 10px 0;">🧬 SINET – MKB-10 Linker <span class="pill">STL ↔ MKB</span> <span class="pill" style="opacity:.75">v15.7.6.9</span></h1>
+    <p class="muted">
+      Cilj: da uvek imaš <b>čist katalog</b> – popunjena <code>mkb10.sifra</code> i <code>mkb10.naziv</code> polja.
+      Radi offline: učita <code>data/SINET_STL.json</code> i <code>data/mkb10_sr.json</code>, predloži šifre na osnovu teksta (naziv/opis/oblast).
+      <br><br>
+      Ovo je prirodni nastavak postojeće tool-chain logike:
+      <b>Converter</b> (Old → STL), <b>DeDuplikator</b> (spajanje duplikata), i <b>Inspektor</b> (ručno uređivanje i brze dopune).
+    </p>
+
+    <div class="card">
+      <div class="row stickyTop">
+        <input id="file" type="file" accept=".json" />
+        <button class="btn primary" id="btnUseData">Učitaj data/SINET_STL.json</button>
+        <button class="btn ghost" id="btnLoadMkb">Učitaj data/mkb10_sr.json</button>
+        <button class="btn warn" id="btnAuto" disabled>⚡ Auto-link (sigurni match)</button>
+        <button class="btn ghost" id="btnExportAI" disabled>⬇️ Export (missing) za AI</button>
+        <input id="fileAI" type="file" accept=".json,.jsonl" style="display:none" />
+        <button class="btn ghost" id="btnImportAI" disabled>⬆️ Import AI mapiranja</button>
+        <button class="btn good" id="btnDownload" disabled>⬇️ Preuzmi STL (linked)</button>
+        <a class="btn ghost" href="admin.html" style="text-decoration:none;display:inline-flex;align-items:center;">↩ Admin</a>
+      </div>
+      
+      <div class="card" style="margin-top:10px">
+        <div class="muted" style="font-weight:900;margin-bottom:6px">🚀 Automatsko mapiranje (bez ručnog rada)</div>
+        <div class="row stickyTop">
+          <button class="btn ghost" id="btnBulkNonIcdQuick" disabled title="Označi tipične protokole (brza pomoć / hitno / SOS / akutne povrede) kao NON_ICD.">🟣 Bulk NON_ICD (preporučeno)</button>
+          <button class="btn primary" id="btnExportAI2" disabled>⬇️ Export preostalo za AI (JSONL)</button>
+          <button class="btn ghost" id="btnImportAI2" disabled>⬆️ Import AI mapiranja</button>
+          <button class="btn ghost" id="btnCopyPrompt" disabled>📋 Kopiraj prompt</button>
+        
+          
+<input id="batchSize" type="number" min="10" max="400" value="60" style="width:92px" title="Batch veličina (linija po fajlu)"/>
+<button class="btn ghost" id="btnExportBatches" disabled title="Export za AI u više manjih fajlova (batch)">⬇️ Export AI (batch)</button>
+<button class="btn warn" id="btnGenDx" disabled title="Generiši sinet_dx_index.json iz popunjenih MKB polja">⚙️ Generiši dx_index</button>
+<button class="btn ghost" id="btnApplyDxLocal" disabled title="Sačuvaj dx_index u localStorage (Anamneza će ga koristiti bez zamene fajla)">💾 Primeni dx_index (local)</button>
+<button class="btn good" id="btnDownloadDx" disabled title="Preuzmi sinet_dx_index.json">⬇️ Preuzmi dx_index</button>
+<button class="btn ghost" id="btnApplyStlLocal" disabled title="Sačuvaj LINKED katalog u localStorage (opciono)">💾 Sačuvaj STL (local)</button>
+<button class="btn primary" id="btnDoAll" disabled title="Auto-link → Bulk NON_ICD → Export batch → Generate dx_index → Apply local">🚀 Uradi sve</button>
+
+<textarea id="aiPromptBox" class="mono" style="margin-top:8px;display:none"></textarea>
+      </div>
+    <div style="margin-top:10px" class="log" id="log">Spremno. ✅ Linker radi u 3 koraka: 1) Učitaj STL 2) Učitaj MKB 3) Auto-link / ručno.
+
+Status:
+  STL: ⏳
+  MKB: ⏳
+
+Tip: za stavke koje nisu dijagnoze (protokoli, brza pomoć, duhovno/podrška), ne forsiramo MKB šifru — koristimo "NON_ICD" + tagove. Za brzo mapiranje ostatka koristi "Export za AI" → popuni → "Import AI".</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="row" style="justify-content:space-between;align-items:flex-end;">
+          <div>
+            <div class="muted">Stavke</div>
+            <div>
+              <span class="pill">Ukupno: <span id="sTotal">0</span></span>
+              <span class="pill">Mapirano: <span id="sMapped" class="ok">0</span></span>
+              <span class="pill">Bez MKB: <span id="sMissing" class="danger">0</span></span>
+              <span class="pill">NON_ICD: <span id="sNonIcd">0</span></span>
+            </div>
+          </div>
+          <div>
+            <label class="muted" for="filter">Filter</label><br>
+            <select id="filter">
+              <option value="missing">⚠️ Fali MKB</option>
+              <option value="nonicd">🟣 NON_ICD</option>
+              <option value="all">Prikaži sve</option>
+              <option value="low">🟠 Nisko poverenje (posle auto-link)</option>
+            </select>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <input id="q" style="width:100%" placeholder="Pretraga (naziv/opis/id)…" />
+        <div style="height:10px"></div>
+<div class="card" style="margin:10px 0;background:#ffffff">
+          <div class="muted" style="font-weight:900;margin-bottom:6px">Bulk 🟣 NON_ICD (brzo sređivanje)</div>
+          <div class="row">
+            <input id="bulkPrefixes" placeholder="ID prefiksi (npr. akutne-povrede-, sys-hitno-, sys-sos-)" style="flex:1;min-width:280px"/>
+            <button class="btn ghost" id="btnBulkPrefix" disabled>🟣 NON_ICD (prefiksi)</button>
+          </div>
+          <div style="height:8px"></div>
+          <div class="row">
+            <input id="bulkGroups" placeholder="Oblasti/Tagovi (grupe iz ID-a, npr. akutne-povrede, sys-hitno)" list="groupList" style="flex:1;min-width:280px"/>
+            <datalist id="groupList"></datalist>
+            <button class="btn ghost" id="btnBulkGroup" disabled>🟣 NON_ICD (oblasti)</button>
+            <button class="btn ghost" id="btnCopyGroups" disabled title="Kopiraj listu grupa (iz ID-a) sa brojem stavki">📋 Grupe</button>
+          </div>
+          <div style="height:6px"></div>
+          <label class="muted" style="display:flex;gap:8px;align-items:center">
+            <input type="checkbox" id="bulkOverride"/>
+            Prepiši postojeće MKB (oprez)
+          </label>
+          <div class="muted" style="margin-top:6px">Napomena: “Oblasti/Tagovi” se izvode iz <code>id</code> prefiksa (npr. <code>akutne-povrede-*</code> → oblast <code>akutne-povrede</code>).</div>
+        </div>
+                <div class="list" id="list"></div>
+      </div>
+
+      <div class="card">
+        <div id="empty" class="muted">Izaberi stavku levo da vidiš predloge.</div>
+        <div id="panel" style="display:none;">
+          <div class="row" style="justify-content:space-between;">
+            <div>
+              <div class="muted">Selektovana stavka</div>
+              <div style="font-weight:800;" id="title">—</div>
+              <div class="muted mono" id="sid">—</div>
+            </div>
+            <div>
+              <div class="muted">Trenutno</div>
+              <div><span class="pill">MKB: <span id="curMkb">—</span></span></div>
+              <div class="muted" id="curMkbName" style="margin-top:4px">—</div>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+          <div class="row" style="gap:10px;">
+            <input id="mkbCode" placeholder="MKB-10 šifra (npr. I10)" style="min-width:180px"/>
+            <input id="mkbName" placeholder="Naziv" style="flex:1"/>
+            <button class="btn good" id="btnApply" type="button">✅ Primeni na stavku</button>
+            <button class="btn ghost" id="btnNonIcd" type="button" title="Označi stavku kao van MKB (protokol / brza pomoć / duhovno / opšte)">🟣 NON_ICD</button>
+          </div>
+          <div class="muted" style="margin-top:6px">Možeš ručno uneti šifru ili prihvatiti predlog ispod.</div>
+
+          <div style="height:14px"></div>
+          <div class="muted" style="margin-bottom:6px">Predlozi (top 10)</div>
+          <table>
+            <thead><tr><th style="width:12%">Score</th><th style="width:14%">Code</th><th>Title</th><th style="width:14%">Akcija</th></tr></thead>
+            <tbody id="cand"></tbody>
+          </table>
+
+          <div style="height:14px"></div>
+          <details>
+            <summary class="muted">Debug (tekst za match)</summary>
+            <textarea id="debug" class="mono" readonly></textarea>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id)=>document.getElementById(id);
+    function setStatus(){
+      const stlOk = !!stl;
+      const mkbOk = !!(mkb && idxTok);
+      const lines = [
+        'Spremno. ✅ Linker radi u 3 koraka: 1) Učitaj STL 2) Učitaj MKB 3) Auto-link / ručno.',
+        '',
+        'Status:',
+        `  STL: ${stlOk ? '✅ učitan' : '⏳'}`,
+        `  MKB: ${mkbOk ? '✅ učitan' : '⏳'}`,
+        '',
+        'Tip: za stavke koje nisu dijagnoze (protokoli, brza pomoć, duhovno/podrška), ne forsiramo MKB šifru — koristimo "NON_ICD" + tagove. Za brzo mapiranje ostatka koristi "Export za AI" → popuni → "Import AI".'
+      ];
+      const history = Array.isArray(window.__LOG_HISTORY) ? window.__LOG_HISTORY : [];
+      window.__LOG_HISTORY = history.slice(-12);
+      const extra = window.__LOG_HISTORY.length ? ('\n\nLog:\n' + window.__LOG_HISTORY.join('\n')) : '';
+      $('log').textContent = lines.join('\n') + extra;
+    }
+    const log = (m)=>{ window.__LOG_HISTORY = Array.isArray(window.__LOG_HISTORY) ? window.__LOG_HISTORY : []; window.__LOG_HISTORY.push(String(m)); console.log(m); setStatus(); };
+
+    function stripDiacritics(s){
+      return String(s||'').normalize('NFD').replace(/\p{Diacritic}/gu,'');
+    }
+    function norm(s){
+      return stripDiacritics(String(s||'').toLowerCase())
+        .replace(/[^a-z0-9\s]/g,' ')
+        .replace(/\s+/g,' ')
+        .trim();
+    }
+    function tokens(s){
+      const stop = new Set(['i','u','na','za','od','do','sa','bez','kod','ili','pa','te','je','su','se','a','o','po','pri','kao','to','što','sto','da','ne','ni','uz','iz']);
+      return norm(s).split(' ').filter(t=>t.length>=3 && !stop.has(t));
+    }
+    function bestName(it){
+      const n = String(it?.naziv||it?.simptom||'').trim();
+      const o = String(it?.opis||'').trim();
+      const isGeneric = /^Simptom\s*\d+$/i.test(n);
+      if(o && (isGeneric || !n)) return o;
+      if(n) return n;
+      return String(it?.id||'').trim();
+    }
+    function mkbCodeOf(it){
+      const m = it?.mkb10;
+      if(!m) return '';
+      if(typeof m==='string') return m;
+      return String(m.sifra||m.code||'').trim();
+    }
+    function mkbNameOf(it){
+      const m = it?.mkb10;
+      if(!m || typeof m==='string') return '';
+      return String(m.naziv||m.opis||m.title||'').trim();
+    }
+    function mkbKindOf(it){
+      const m = it?.mkb10;
+      if(!m || typeof m==='string') return '';
+      const k = String(m.kind||m.tip||'').trim();
+      if(k) return k;
+      const code = String(m.sifra||m.code||'').trim();
+      const name = String(m.naziv||m.opis||m.title||'').trim();
+      if(code.toUpperCase()==='NONE' || name.toUpperCase()==='NON_ICD') return 'NON_ICD';
+      return '';
+    }
+
+    function idGroup(id){
+      const parts = String(id||'').split('-').filter(Boolean);
+      if(parts.length>=2) return parts[0]+'-'+parts[1];
+      return parts[0]||'';
+    }
+    function setNonIcd(it, note){
+      if(!it.mkb10 || typeof it.mkb10!=='object') it.mkb10 = {};
+      delete it.mkb10.sifra;
+      delete it.mkb10.naziv;
+      it.mkb10.kind = 'NON_ICD';
+      it.mkb10.note = String(note||it.mkb10.note||'Van MKB: protokol / brza pomoć / opšta podrška.').trim();
+      it.mkb10.izvor = it.mkb10.izvor || { sistem:'SINET', url:'' };
+    }
+    function computeGroups(){
+      if(!stl) return [];
+      const map = new Map();
+      for(const it of stl.simptomi){
+        const g = idGroup(it.id);
+        if(!g) continue;
+        map.set(g, (map.get(g)||0)+1);
+      }
+      return Array.from(map.entries()).sort((a,b)=>b[1]-a[1]);
+    }
+    function refreshGroupDatalist(){
+      const dl = $('groupList');
+      if(!dl) return;
+      dl.innerHTML = '';
+      const groups = computeGroups();
+      for(const [g,c] of groups){
+        const opt = document.createElement('option');
+        opt.value = g;
+        opt.label = g + ' ('+c+')';
+        dl.appendChild(opt);
+      }
+      const pref = $('bulkPrefixes');
+      if(pref && !pref.value){
+        const known = groups.map(([g])=>g).filter(g=>['akutne-povrede','sys-hitno','sys-sos','brza-pomoc'].some(k=>g.startsWith(k)));
+        const sug = (known.length? known : groups.slice(0,4).map(([g])=>g)).map(g=>g+'-');
+        pref.value = sug.join(', ');
+      }
+    }
+
+    function bulkNonIcdByPrefixes(){
+      if(!stl) return;
+      const override = $('bulkOverride')?.checked;
+      const raw = String($('bulkPrefixes')?.value||'');
+      const prefixes = raw.split(',').map(s=>s.trim()).filter(Boolean);
+      if(!prefixes.length){ alert('Unesi bar jedan prefiks.'); return; }
+      let changed = 0;
+      for(const it of stl.simptomi){
+        const id = String(it.id||'');
+        const match = prefixes.find(p=>id.startsWith(p));
+        if(!match) continue;
+        const hasCode = !!mkbCodeOf(it);
+        const isNon = mkbKindOf(it)==='NON_ICD';
+        if(!override && (hasCode || isNon)) continue;
+        setNonIcd(it, `Bulk NON_ICD (prefiks): ${match}`);
+        changed++;
+      }
+      updateStats();
+      renderList();
+      $('btnDownload').disabled = false;
+      log(`🟣 Bulk NON_ICD (prefiksi): obeleženo ${changed} stavki.`);
+    }
+
+    function bulkNonIcdByGroups(){
+      if(!stl) return;
+      const override = $('bulkOverride')?.checked;
+      const raw = String($('bulkGroups')?.value||'');
+      const groups = raw.split(',').map(s=>s.trim()).filter(Boolean);
+      if(!groups.length){ alert('Unesi bar jednu oblast/grupu (npr. akutne-povrede, sys-hitno).'); return; }
+      const gset = new Set(groups);
+      let changed = 0;
+      for(const it of stl.simptomi){
+        const g = idGroup(it.id);
+        if(!gset.has(g)) continue;
+        const hasCode = !!mkbCodeOf(it);
+        const isNon = mkbKindOf(it)==='NON_ICD';
+        if(!override && (hasCode || isNon)) continue;
+        setNonIcd(it, `Bulk NON_ICD (oblast): ${g}`);
+        changed++;
+      }
+      updateStats();
+      renderList();
+      $('btnDownload').disabled = false;
+      log(`🟣 Bulk NON_ICD (oblasti): obeleženo ${changed} stavki.`);
+    }
+
+    async function copyGroups(){
+      const groups = computeGroups();
+      const text = groups.map(([g,c])=>`${g}\t${c}`).join('\n');
+      try{
+        await navigator.clipboard.writeText(text);
+        alert('Kopirano: lista grupa (oblast iz ID-a) je u clipboardu.');
+      }catch(_){
+        alert('Clipboard nije dostupan u ovom browseru — ispisao sam listu u Console.');
+        console.log(text);
+      }
+    }
+
+
+
+    // --- state ---
+    let stl = null;
+    let mkb = null; // { entries:[{code,title}] }
+    let idxTok = null; // token -> [entryIdx]
+    let scores = {}; // symptomId -> {picked:{code,title,score}, candidates:[...]}
+    let selId = null;
+    let dxIndexResult = null;
+
+    function isSTL(obj){
+      return obj && typeof obj==='object' && Array.isArray(obj.simptomi) && obj.meta;
+    }
+
+    async function loadJson(url){
+      try{
+        const r = await fetch(url, {cache:'no-store'});
+        if(!r.ok) return null;
+        return await r.json();
+      }catch(_){ return null; }
+    }
+
+    function buildMkbIndex(){
+      if(!mkb || !Array.isArray(mkb.entries)) throw new Error('MKB nije učitan (očekujem {entries:[...]})');
+      const map = new Map();
+      mkb.entries.forEach((e, i)=>{
+        const tt = tokens(e.title);
+        for(const t of tt){
+          if(!map.has(t)) map.set(t, []);
+          map.get(t).push(i);
+        }
+      });
+      idxTok = map;
+    }
+
+    function suggestFor(it){
+      if(!idxTok) return [];
+      const text = `${bestName(it)} ${it?.oblast||''} ${it?.opis||''}`;
+      const ts = tokens(text);
+      const counts = new Map(); // entryIdx -> score
+      for(const t of ts){
+        const arr = idxTok.get(t);
+        if(!arr) continue;
+        const w = Math.min(6, Math.max(1, t.length-2));
+        for(const ei of arr){
+          counts.set(ei, (counts.get(ei)||0) + w);
+        }
+      }
+      // take top by token score
+      const top = Array.from(counts.entries()).sort((a,b)=>b[1]-a[1]).slice(0, 80);
+      // refine with similarity
+      const q = norm(bestName(it));
+      function jw(a,b){
+        // tiny similarity approximation: prefix bonus + token overlap
+        a = norm(a); b = norm(b);
+        if(!a || !b) return 0;
+        if(a===b) return 1;
+        let l=0; for(;l<4 && l<a.length && l<b.length && a[l]===b[l]; l++);
+        const pref = l*0.08;
+        const at = new Set(a.split(' '));
+        const bt = new Set(b.split(' '));
+        let inter=0; for(const x of at) if(bt.has(x)) inter++;
+        const ov = inter / Math.max(1, Math.min(at.size, bt.size));
+        return Math.min(1, ov + pref);
+      }
+      const out = top.map(([ei, sc])=>{
+        const e = mkb.entries[ei];
+        const sim = jw(q, e.title);
+        const score = sc + Math.round(sim*10);
+        return { code: e.code, title: e.title, score };
+      }).sort((a,b)=>b.score-a.score).slice(0,10);
+      return out;
+    }
+
+    function updateStats(){
+      if(!stl) return;
+      const total = stl.simptomi.length;
+      const mapped = stl.simptomi.filter(s=>{ const c=mkbCodeOf(s); return !!c && c.toUpperCase()!=='NONE'; }).length;
+      const nonicd = stl.simptomi.filter(s=>mkbKindOf(s)==='NON_ICD').length;
+      const missing = stl.simptomi.filter(s=>{ const c=mkbCodeOf(s); return (!c || c.toUpperCase()==='NONE') && mkbKindOf(s)!=='NON_ICD'; }).length;
+      $('sTotal').textContent = total;
+      $('sMapped').textContent = mapped;
+      $('sMissing').textContent = missing;
+      $('sNonIcd').textContent = nonicd;
+      setStatus();
+    }
+
+    function currentList(){
+      if(!stl) return [];
+      const filter = $('filter').value;
+      const q = norm($('q').value);
+      let arr = stl.simptomi.slice();
+      if(filter==='missing') arr = arr.filter(s=>!mkbCodeOf(s) && mkbKindOf(s)!=='NON_ICD');
+      if(filter==='nonicd') arr = arr.filter(s=>mkbKindOf(s)==='NON_ICD');
+      if(filter==='low') arr = arr.filter(s=>{
+        const sId = String(s.id);
+        const p = scores[sId]?.picked;
+        return p && p.score < 10;
+      });
+      if(q) arr = arr.filter(s=>norm(`${s.id} ${bestName(s)} ${s.opis||''}`).includes(q));
+      return arr;
+    }
+
+    function escapeHtml(s){
+      return String(s??'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+    }
+
+    function renderList(){
+      const el = $('list');
+      el.innerHTML = '';
+      if(!stl){
+        el.innerHTML = `<div class="muted" style="padding:14px">Učitaj STL katalog.</div>`;
+        return;
+      }
+      const arr = currentList();
+      if(!arr.length){ el.innerHTML = `<div class="muted" style="padding:14px">Nema stavki za ovaj filter.</div>`; return; }
+      for(const s of arr){
+        const id = String(s.id);
+        const code = mkbCodeOf(s);
+        const kind = mkbKindOf(s);
+        const picked = scores[id]?.picked;
+        const line = document.createElement('div');
+        line.className = 'item' + (selId===id ? ' sel':'');
+        const badge = code
+          ? `<span class="pill">${escapeHtml(code)}</span>`
+          : (kind==='NON_ICD'
+              ? `<span class="pill" style="border-color:rgba(168,85,247,.65);background:rgba(168,85,247,.12)">NON_ICD</span>`
+              : `<span class="pill" style="border-color:rgba(255,107,107,.6);background:rgba(255,107,107,.12)">bez MKB</span>`);
+        const auto = picked ? `<span class="pill" title="auto score">auto:${picked.score}</span>` : '';
+        line.innerHTML = `<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;">
+          <div>
+            <div style="font-weight:700">${escapeHtml(bestName(s))}</div>
+            <div class="muted mono">${escapeHtml(id)}</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">${badge}${auto}</div>
+        </div>`;
+        line.onclick = ()=>selectSymptom(id);
+        el.appendChild(line);
+      }
+    }
+
+    function selectSymptom(id){
+      selId = String(id);
+      renderList();
+      const it = stl.simptomi.find(x=>String(x.id)===selId);
+      if(!it) return;
+      $('empty').style.display = 'none';
+      $('panel').style.display = 'block';
+
+      $('title').textContent = bestName(it);
+      $('sid').textContent = selId;
+
+      const cc = mkbCodeOf(it);
+      const cn = mkbNameOf(it);
+      const kind = mkbKindOf(it);
+      $('curMkb').textContent = cc || (kind==='NON_ICD' ? 'NON_ICD' : '—');
+      $('curMkbName').textContent = cn || (cc ? '(naziv nije unet)' : (kind==='NON_ICD' ? 'Označeno kao van MKB (protokol/pomoć/opšte).' : '(nema)'));
+
+      $('mkbCode').value = cc || '';
+      $('mkbName').value = cn || '';
+
+      const dbg = `${bestName(it)}\n\noblast: ${it?.oblast||''}\n\nopis: ${it?.opis||''}`;
+      $('debug').value = dbg;
+
+      const cands = suggestFor(it);
+      const tbody = $('cand');
+      tbody.innerHTML = '';
+      if(!mkb || !idxTok){
+        tbody.innerHTML = `<tr><td colspan="4" class="muted">Učitaj MKB index (dugme gore).</td></tr>`;
+        return;
+      }
+      if(!cands.length){
+        tbody.innerHTML = `<tr><td colspan="4" class="muted">Nema predloga (probaj precizniji naziv/opis).</td></tr>`;
+      } else {
+        for(const c of cands){
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td class="mono">${c.score}</td><td class="mono"><b>${escapeHtml(c.code)}</b></td><td>${escapeHtml(c.title)}</td>
+            <td><button class="btn ghost" type="button">Primeni</button></td>`;
+          tr.querySelector('button').onclick = ()=>{
+            $('mkbCode').value = c.code;
+            $('mkbName').value = c.title;
+          };
+          tbody.appendChild(tr);
+        }
+      }
+    }
+
+    function applyToSymptom(){
+      if(!stl || !selId) return;
+      const it = stl.simptomi.find(x=>String(x.id)===selId);
+      if(!it) return;
+      const code = String($('mkbCode').value||'').trim();
+      const name = String($('mkbName').value||'').trim();
+      if(!code){ alert('Unesi MKB šifru.'); return; }
+      if(!it.mkb10 || typeof it.mkb10!=='object') it.mkb10 = {};
+      it.mkb10.sifra = code;
+      if(name) it.mkb10.naziv = name;
+      // ako je ranije bilo NON_ICD, prelazimo u normalan DX/SYMPTOM mod
+      if(it.mkb10.kind) delete it.mkb10.kind;
+      if(!it.mkb10.izvor) it.mkb10.izvor = { sistem:'ICD-10 / MKB-10', url:'' };
+      scores[String(it.id)] = scores[String(it.id)] || {};
+      updateStats();
+      renderList();
+      selectSymptom(selId);
+      log('✅ Sačuvano: '+selId+' → '+code);
+      $('btnDownload').disabled = false;
+    }
+
+    function markNonIcd(){
+      if(!stl || !selId) return;
+      const it = stl.simptomi.find(x=>String(x.id)===selId);
+      if(!it) return;
+      if(!it.mkb10 || typeof it.mkb10!=='object') it.mkb10 = {};
+      delete it.mkb10.sifra;
+      delete it.mkb10.naziv;
+      it.mkb10.kind = 'NON_ICD';
+      it.mkb10.note = it.mkb10.note || 'Van MKB: protokol / brza pomoć / opšta podrška.';
+      it.mkb10.izvor = it.mkb10.izvor || { sistem:'SINET', url:'' };
+      updateStats();
+      renderList();
+      selectSymptom(selId);
+      $('btnDownload').disabled = false;
+      log('🟣 NON_ICD: '+selId);
+    }
+
+    function autoLink(){
+      if(!stl || !mkb || !idxTok) return;
+      let applied = 0;
+      let reviewed = 0;
+      for(const it of stl.simptomi){
+        const id = String(it.id);
+        if(mkbCodeOf(it)) continue;
+        const cands = suggestFor(it);
+        if(!cands.length) continue;
+        const top = cands[0];
+        const second = cands[1];
+        scores[id] = scores[id] || {};
+        scores[id].candidates = cands;
+        scores[id].picked = top;
+        reviewed++;
+        const gap = second ? (top.score - second.score) : top.score;
+        const confident = top.score >= 14 && gap >= 3;
+        if(confident){
+          if(!it.mkb10 || typeof it.mkb10!=='object') it.mkb10 = {};
+          it.mkb10.sifra = top.code;
+          it.mkb10.naziv = top.title;
+          if(!it.mkb10.izvor) it.mkb10.izvor = { sistem:'ICD-10 / MKB-10', url:'' };
+          applied++;
+        }
+      }
+      updateStats();
+      renderList();
+      $('btnDownload').disabled = false;
+      log(`⚡ Auto-link gotovo. Pregledano: ${reviewed} • automatski upisano (sigurno): ${applied} • ostatak pregledaj ručno.`);
+    }
+
+    function downloadLinked(){
+      if(!stl) return;
+      stl.meta = stl.meta || {};
+      stl.meta.audit = Array.isArray(stl.meta.audit) ? stl.meta.audit : [];
+      stl.meta.audit.push({
+        ts: new Date().toISOString(),
+        tool: 'sinet-mkb-linker',
+        toolVersion: '0.1.0',
+        mode: 'mkb_link',
+        summary: { total: stl.simptomi.length, missing: stl.simptomi.filter(s=>{ const c=mkbCodeOf(s); return (!c || c.toUpperCase()==='NONE') && mkbKindOf(s)!=='NON_ICD'; }).length }
+      });
+      const blob = new Blob([JSON.stringify(stl,null,2)], {type:'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'SINET_STL.linked.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>{ try{ URL.revokeObjectURL(a.href);}catch(_){ } }, 500);
+    }
+
+    function downloadText(filename, text, mime='text/plain'){
+      const blob = new Blob([text], {type:mime});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>{ try{ URL.revokeObjectURL(a.href);}catch(_){ } }, 500);
+    }
+
+    function exportMissingForAI(){
+      if(!stl){ alert('Učitaj STL prvo.'); return; }
+      const rows = [];
+      for(const it of stl.simptomi){
+        if(mkbCodeOf(it)) continue;
+        if(mkbKindOf(it)==='NON_ICD') continue;
+        const cands = (mkb && idxTok) ? suggestFor(it) : [];
+        rows.push({
+          id: String(it.id),
+          naziv: bestName(it),
+          oblast: String(it.oblast||''),
+          opis: String(it.opis||''),
+          candidates: cands
+        });
+      }
+      const jsonl = rows.map(r=>JSON.stringify(r)).join('\n');
+      downloadText('SINET_MKB_missing.jsonl', jsonl, 'application/json');
+      log(`⬇️ Export za AI: ${rows.length} stavki (bez MKB i bez NON_ICD). Fajl: SINET_MKB_missing.jsonl`);
+    }
+
+    
+
+
+    function exportMissingForAIBatches(){
+      if(!stl){ alert('Učitaj STL prvo.'); return; }
+      const bsEl = $('batchSize');
+      const batch = Math.max(10, Math.min(400, parseInt((bsEl?bsEl.value:'60')||'60',10)||60));
+      const rows = [];
+      for(const it of stl.simptomi){
+        if(mkbCodeOf(it)) continue;
+        if(mkbKindOf(it)==='NON_ICD') continue;
+        const cands = (mkb && idxTok) ? suggestFor(it) : [];
+        rows.push({
+          id: String(it.id),
+          naziv: bestName(it),
+          oblast: String(it.oblast||''),
+          opis: String(it.opis||''),
+          candidates: cands
+        });
+      }
+      if(!rows.length){ alert('Nema stavki bez MKB (bez NON_ICD).'); return; }
+      const total = rows.length;
+      const parts = Math.ceil(total / batch);
+      for(let p=0; p<parts; p++){
+        const slice = rows.slice(p*batch, (p+1)*batch);
+        const jsonl = slice.map(r=>JSON.stringify(r)).join('
+');
+        const fname = `SINET_MKB_missing_part${String(p+1).padStart(2,'0')}-of-${String(parts).padStart(2,'0')}.jsonl`;
+        setTimeout(()=>downloadText(fname, jsonl, 'application/json'), p*180);
+      }
+      log(`⬇️ Export za AI (batch): ${total} stavki • batch=${batch} • fajlova=${parts}`);
+    }
+
+    function keywordify2(s){
+      return tokens(s).filter(Boolean).slice(0, 32);
+    }
+
+    function buildMkbByCode(){
+      const m = new Map();
+      if(mkb && Array.isArray(mkb.entries))
+        for(const e of mkb.entries) m.set(String(e.code).toUpperCase(), String(e.title||''));
+      return m;
+    }
+
+    function addDx(map, code, title, keywords, refId, maxRefs=24){
+      const c = String(code||'').toUpperCase();
+      if(!c) return;
+      if(!map[c]) map[c] = { title: String(title||'').trim(), keywords: [], sinet_refs: [] };
+      const rec = map[c];
+      if(!rec.title) rec.title = String(title||'').trim();
+      const kwSet = new Set(rec.keywords||[]);
+      for(const k of (keywords||[])){
+        if(!k) continue;
+        if(kwSet.size>=24) break;
+        kwSet.add(k);
+      }
+      rec.keywords = Array.from(kwSet);
+      if(refId && !rec.sinet_refs.includes(refId)){
+        rec.sinet_refs.push(refId);
+        if(rec.sinet_refs.length>maxRefs) rec.sinet_refs = rec.sinet_refs.slice(0, maxRefs);
+      }
+    }
+
+    function generateDxIndex(){
+      if(!stl){ alert('Učitaj STL prvo.'); return; }
+      const mkbByCode = buildMkbByCode();
+      const map = {};
+      let mapped=0, non=0;
+      for(const it of (stl.simptomi||[])){
+        const kind = mkbKindOf(it);
+        const code = mkbCodeOf(it);
+        if(kind==='NON_ICD' || !code || String(code).toUpperCase()==='NONE'){
+          if(kind==='NON_ICD') non++;
+          continue;
+        }
+        const id = String(it.id||'').trim();
+        if(!id) continue;
+        mapped++;
+        const title = mkbNameOf(it) || mkbByCode.get(String(code).toUpperCase()) || String(code);
+        const kw = keywordify2(title+' '+bestName(it)+' '+(it.opis||'')+' '+(it.oblast||''));
+        addDx(map, code, title, kw, id);
+        if(String(code).includes('.')){
+          const parent = String(code).split('.')[0];
+          const pt = mkbByCode.get(parent) || parent;
+          addDx(map, parent, pt, keywordify2(pt), id);
+        }
+      }
+      dxIndexResult = map;
+      const codes = Object.keys(map).length;
+      log(`✅ dx_index generisan: šifre=${codes} • refs=${mapped} • NON_ICD=${non}`);
+      $('btnDownloadDx').disabled = codes==0;
+      $('btnApplyDxLocal').disabled = codes==0;
+      return map;
+    }
+
+    function downloadDxIndex(){
+      if(!dxIndexResult) generateDxIndex();
+      if(!dxIndexResult) return;
+      downloadText('sinet_dx_index.json', JSON.stringify(dxIndexResult, null, 2), 'application/json');
+    }
+
+    function applyDxIndexLocal(){
+      if(!dxIndexResult) generateDxIndex();
+      if(!dxIndexResult) return;
+      try{
+        localStorage.setItem('SINET_DX_INDEX_OVERRIDE', JSON.stringify(dxIndexResult));
+        localStorage.setItem('SINET_DX_INDEX_OVERRIDE_TS', new Date().toISOString());
+        log('💾 dx_index sačuvan u localStorage (SINET_DX_INDEX_OVERRIDE). Anamneza će koristiti ovaj override.');
+      }catch(e){
+        alert('Ne mogu da sačuvam u localStorage (preveliko ili blokirano).');
+      }
+    }
+
+    function applyStlLocal(){
+      if(!stl) return;
+      try{
+        localStorage.setItem('SINET_STL_OVERRIDE', JSON.stringify(stl));
+        localStorage.setItem('SINET_STL_OVERRIDE_TS', new Date().toISOString());
+        log('💾 LINKED katalog sačuvan u localStorage (SINET_STL_OVERRIDE).');
+      }catch(e){
+        alert('Ne mogu da sačuvam u localStorage (preveliko ili blokirano).');
+      }
+    }
+    function parseJsonOrJsonl(text){
+      let t = String(text||'').trim();
+      if(!t) return [];
+
+      // Strip markdown code fences if present
+      t = t.replace(/^```(?:json|jsonl)?\s*/i,'').replace(/```$/,'').trim();
+
+      // Heuristic: JSONL often starts with '{' but has multiple objects separated by newlines.
+      const looksLikeJsonl = /}\s*[\r\n]+\s*{/.test(t);
+
+      // Try JSON (array/object) first, but fall back to JSONL on parse errors.
+      if(t.startsWith('[')){
+        try{
+          const j = JSON.parse(t);
+          if(Array.isArray(j)) return j;
+          if(j && typeof j==='object' && Array.isArray(j.items)) return j.items;
+          return [j];
+        }catch(_){ /* fallthrough */ }
+      }else if(t.startsWith('{') && !looksLikeJsonl){
+        try{
+          const j = JSON.parse(t);
+          if(Array.isArray(j)) return j;
+          if(j && typeof j==='object' && Array.isArray(j.items)) return j.items;
+          return [j];
+        }catch(_){ /* fallthrough */ }
+      }
+
+      // JSONL: parse one JSON object per line.
+      const out = [];
+      const lines = t.split(/\r?\n/);
+      for(const line of lines){
+        const l = String(line||'').trim();
+        if(!l) continue;
+        if(l.startsWith('```')) continue;
+        // accept only JSON-object-like lines; ignore Gemini/DeepSeek chatter
+        if(!(l.startsWith('{') && l.endsWith('}'))) continue;
+        try{ out.push(JSON.parse(l)); }catch(_){ }
+      }
+      if(!out.length){
+        throw new Error('Ne mogu da prepoznam format. Očekujem JSONL (jedan JSON po liniji) ili JSON array.');
+      }
+      return out;
+    }
+
+    function applyAiMappings(items){
+      if(!stl) return;
+      let applied = 0;
+      let nonicd = 0;
+      for(const row of items){
+        const id = String(row.id||row.symptom_id||row.sinet_id||'').trim();
+        if(!id) continue;
+        const it = stl.simptomi.find(x=>String(x.id)===id);
+        if(!it) continue;
+        const codeRaw = String(row.mkb10_sifra||row.code||row.mkb||row.icd10||'').trim();
+        const kind = String(row.kind||row.tip||'').trim();
+        const title = String(row.mkb10_naziv||row.title||row.naziv||'').trim();
+        const conf = row.confidence ?? row.score ?? null;
+
+        if(!it.mkb10 || typeof it.mkb10!=='object') it.mkb10 = {};
+
+        if(kind==='NON_ICD' || codeRaw.toUpperCase()==='NONE'){
+          delete it.mkb10.sifra;
+          delete it.mkb10.naziv;
+          it.mkb10.kind = 'NON_ICD';
+          it.mkb10.note = String(row.note||row.reason||it.mkb10.note||'Van MKB: protokol / brza pomoć / opšta podrška.').trim();
+          it.mkb10.izvor = it.mkb10.izvor || { sistem:'SINET', url:'' };
+          it.mkb10.ai = { ts: new Date().toISOString(), confidence: conf };
+          nonicd++;
+          continue;
+        }
+
+        if(codeRaw){
+          it.mkb10.sifra = codeRaw;
+          if(title) it.mkb10.naziv = title;
+          if(kind) it.mkb10.kind = kind;
+          it.mkb10.izvor = it.mkb10.izvor || { sistem:'AI suggestion (verify)', url:'' };
+          it.mkb10.ai = { ts: new Date().toISOString(), confidence: conf };
+          applied++;
+        }
+      }
+      updateStats();
+      renderList();
+      $('btnDownload').disabled = false;
+      log(`⬆️ Import AI: upisano ${applied} šifri • NON_ICD ${nonicd}. (Napomena: AI mapiranja uvek ručno proveri.)`);
+    }
+
+    async function loadSTLFromFile(file){
+      const txt = await file.text();
+      const j = JSON.parse(txt);
+      if(!isSTL(j)) throw new Error('Fajl nije STL format (očekujem {meta, simptomi[]}).');
+      stl = j;
+      selId = null;
+      scores = {};
+      updateStats();
+      renderList();
+      refreshGroupDatalist();
+      // UX: Download može odmah (i bez auto-link), a Auto-link tek kad MKB bude učitan.
+      $('btnAuto').disabled = !(mkb && idxTok);
+      $('btnExportAI').disabled = false;
+      $('btnImportAI').disabled = false;
+      $('btnDownload').disabled = false;
+      // mirror buttons
+      try{ $('btnExportAI2').disabled = false; $('btnImportAI2').disabled = false; $('btnCopyPrompt').disabled = false; $('btnBulkNonIcdQuick').disabled = false; $('btnExportBatches').disabled = false; $('btnGenDx').disabled = false; $('btnApplyStlLocal').disabled = false; const da=$('btnDoAll'); if(da) da.disabled = !(mkb && idxTok); }catch(_){ }
+      $('btnBulkPrefix').disabled = false;
+      $('btnBulkGroup').disabled = false;
+      $('btnCopyGroups').disabled = false;
+      log('✅ Učitano: '+(file.name||'STL')+' • '+stl.simptomi.length+' stavki.');
+    }
+
+    async function loadSTLFromData(){
+      const j = await loadJson('./data/SINET_STL.json');
+      if(!isSTL(j)) throw new Error('data/SINET_STL.json nije STL format.');
+      stl = j;
+      selId = null;
+      scores = {};
+      updateStats();
+      renderList();
+      $('btnAuto').disabled = !(mkb && idxTok);
+      $('btnExportAI').disabled = false;
+      $('btnImportAI').disabled = false;
+      $('btnDownload').disabled = false;
+      // mirror buttons
+      try{ $('btnExportAI2').disabled = false; $('btnImportAI2').disabled = false; $('btnCopyPrompt').disabled = false; $('btnBulkNonIcdQuick').disabled = false; $('btnExportBatches').disabled = false; $('btnGenDx').disabled = false; $('btnApplyStlLocal').disabled = false; const da=$('btnDoAll'); if(da) da.disabled = !(mkb && idxTok); }catch(_){ }
+      $('btnBulkPrefix').disabled = false;
+      $('btnBulkGroup').disabled = false;
+      $('btnCopyGroups').disabled = false;
+      refreshGroupDatalist();
+      $('btnBulkPrefix').disabled = false;
+      $('btnBulkGroup').disabled = false;
+      $('btnCopyGroups').disabled = false;
+      log('✅ Učitano: data/SINET_STL.json • '+stl.simptomi.length+' stavki.');
+    }
+
+    async function loadMkbFromData(){
+      // pokušaj više putanja (različiti server root-ovi)
+      const j = (await loadJson('./data/mkb10_sr.json')) || (await loadJson('/data/mkb10_sr.json')) || (await loadJson('../data/mkb10_sr.json'));
+      if(!j || !Array.isArray(j.entries)) throw new Error('data/mkb10_sr.json nije format {entries:[...]}.');
+      mkb = j;
+      buildMkbIndex();
+      $('btnAuto').disabled = !(stl && mkb && idxTok);
+      const da=$('btnDoAll'); if(da) da.disabled = !(stl && mkb && idxTok);
+      // Download je dozvoljen čim STL postoji
+      $('btnDownload').disabled = !stl;
+      if(stl){ $('btnExportAI').disabled = false; $('btnImportAI').disabled = false; }
+      log('✅ Učitano: data/mkb10_sr.json • '+mkb.entries.length+' šifri.');
+    }
+
+    // Auto-load MKB odmah (da Auto-link ne bude "ništa se ne dešava")
+    (async ()=>{
+      try{ await loadMkbFromData(); }
+      catch(e){ log('ℹ️ MKB još nije učitan. Klikni "Učitaj data/mkb10_sr.json" ako auto-load ne uspe. ('+(e?.message||e)+')'); }
+    })();
+
+    // wiring
+    $('file').addEventListener('change', async (ev)=>{
+      const f = ev.target.files && ev.target.files[0];
+      if(!f) return;
+      try{ await loadSTLFromFile(f); } catch(e){ log('GREŠKA: '+e.message); }
+    });
+    $('btnUseData').addEventListener('click', async ()=>{
+      try{ await loadSTLFromData(); } catch(e){ log('GREŠKA: '+e.message); }
+    });
+    $('btnLoadMkb').addEventListener('click', async ()=>{
+      try{ await loadMkbFromData(); } catch(e){ log('GREŠKA: '+e.message); }
+    });
+    $('btnAuto').addEventListener('click', ()=>{ try{ autoLink(); } catch(e){ log('GREŠKA: '+e.message); } });
+    $('btnNonIcd').addEventListener('click', ()=>{ try{ markNonIcd(); } catch(e){ log('GREŠKA: '+e.message); } });
+    $('btnExportAI').addEventListener('click', ()=>{ try{ exportMissingForAI(); } catch(e){ log('GREŠKA: '+e.message); } });
+    $('btnImportAI').addEventListener('click', ()=>{ if(!$('fileAI')) return; $('fileAI').click(); });
+    $('fileAI').addEventListener('change', async (ev)=>{
+      const f = ev.target.files && ev.target.files[0];
+      if(!f) return;
+      try{
+        const txt = await f.text();
+        const rows = parseJsonOrJsonl(txt);
+        applyAiMappings(rows);
+      }catch(e){ log('GREŠKA: '+(e?.message||e)); }
+      ev.target.value='';
+    });
+    $('btnDownload').addEventListener('click', downloadLinked);
+    $('btnApply').addEventListener('click', applyToSymptom);
+    $('btnBulkPrefix').addEventListener('click', bulkNonIcdByPrefixes);
+    $('btnBulkGroup').addEventListener('click', bulkNonIcdByGroups);
+    $('btnCopyGroups').addEventListener('click', copyGroups);
+    $('filter').addEventListener('change', renderList);
+    $('q').addEventListener('input', renderList);
+
+    // init status once
+    setStatus();
+  
+    // === EXTRA UI (v15.7.6.9) ===
+    function getDefaultAIPrompt(){
+      return [
+        "Dobijaš JSONL listu SINET stavki (svaka linija je jedan JSON): {id,naziv,oblast,opis,candidates:[{code,title,score}...]}",
+        "Za SVAKU ulaznu stavku vrati TAČNO jedan JSON objekat (jedna linija), bez dodatnog teksta, po šemi:",
+        '{"id":"...","mkb10_sifra":"<ICD10 code or NONE>","mkb10_naziv":"...","kind":"DX|SYMPTOM|INJURY|FACTOR|NON_ICD","confidence":0.0,"note":""}',
+        "",
+        "Pravila:",
+        "- Ako je stavka dijagnoza/sindrom → koristi ICD-10 šifru, kind=DX.",
+        "- Ako je stavka simptom → preferiraj R-kodove, kind=SYMPTOM.",
+        "- Ako je povreda/akutno → S/T kodovi, kind=INJURY.",
+        '- Ako nije dijagnoza (protokol, brza pomoć, duhovno/podrška) → mkb10_sifra="NONE", kind=NON_ICD.',
+        "- Ne izmišljaj. confidence 0–1. note kratko (opciono).",
+        "",
+        "Vrati ISKLJUČIVO JSONL (jedan JSON po liniji)."
+      ].join("\n");
+    }
+
+    function setPromptBoxVisible(show){
+      const box = $('aiPromptBox');
+      if(!box) return;
+      box.style.display = show ? 'block' : 'none';
+      if(show && !box.value) box.value = getDefaultAIPrompt();
+    }
+
+    // mirror to extra buttons
+    try{
+      const bx = $('btnExportAI2'); if(bx) bx.addEventListener('click', ()=>exportMissingForAI());
+      const bi = $('btnImportAI2'); if(bi) bi.addEventListener('click', ()=> $('fileAI') && $('fileAI').click());
+      const bp = $('btnCopyPrompt'); if(bp) bp.addEventListener('click', async ()=>{
+        setPromptBoxVisible(true);
+        const t = $('aiPromptBox').value || getDefaultAIPrompt();
+        try{ await navigator.clipboard.writeText(t); log("📋 Prompt kopiran u clipboard."); }
+        catch(e){ alert("Clipboard nije dostupan. Kopiraj ručno iz polja ispod."); }
+      });
+      const eb = $('btnExportBatches'); if(eb) eb.addEventListener('click', ()=>exportMissingForAIBatches());
+      const gd = $('btnGenDx'); if(gd) gd.addEventListener('click', ()=>{ try{ generateDxIndex(); }catch(e){ log('GREŠKA dx_index: '+e.message);} });
+      const ad = $('btnApplyDxLocal'); if(ad) ad.addEventListener('click', ()=>applyDxIndexLocal());
+      const dd = $('btnDownloadDx'); if(dd) dd.addEventListener('click', ()=>downloadDxIndex());
+      const as = $('btnApplyStlLocal'); if(as) as.addEventListener('click', ()=>applyStlLocal());
+
+      
+      const doAllBtn = $('btnDoAll');
+      async function doAllPipeline(){
+        if(!stl){ alert('Učitaj STL prvo (data/SINET_STL.json).'); return; }
+        if(!(mkb && idxTok)){
+          try{ await loadMkbFromData(); }catch(e){ log('GREŠKA: '+e.message); return; }
+        }
+        if(!(mkb && idxTok)){ alert('MKB nije učitan.'); return; }
+        if(doAllBtn){ doAllBtn.disabled = true; doAllBtn.textContent = '⏳ Radim…'; }
+        try{
+          autoLink();
+          $('bulkPrefixes').value = "akutne-povrede-, sys-hitno-, sys-sos-";
+          bulkNonIcdByPrefixes();
+          try{ exportMissingForAIBatches(); }catch(e){ log('Napomena: Export batch nije uspeo: '+e.message); }
+          try{ generateDxIndex(); }catch(e){ log('GREŠKA dx_index: '+e.message); }
+          try{ applyDxIndexLocal(); }catch(e){ log('Napomena: apply dx local: '+e.message); }
+          try{ applyStlLocal(); }catch(e){ /* ignore */ }
+          log('🚀 Pipeline: završeno. (Auto-link + NON_ICD + batch export + dx_index + local apply)');
+        } finally {
+          if(doAllBtn){ doAllBtn.textContent = '🚀 Uradi sve'; doAllBtn.disabled = !(stl && mkb && idxTok); }
+        }
+      }
+      if(doAllBtn) doAllBtn.addEventListener('click', ()=>{ doAllPipeline(); });
+const bn = $('btnBulkNonIcdQuick'); if(bn) bn.addEventListener('click', ()=>{
+        // recommended prefixes (safe)
+        const s = "akutne-povrede-, sys-hitno-, sys-sos-";
+        $('bulkPrefixes').value = s;
+        bulkNonIcdByPrefixes();
+      });
+      // show prompt box once data is loaded (helps users)
+      setTimeout(()=>{ try{ setPromptBoxVisible(false); }catch(_){} }, 0);
+    }catch(_){}
+</script>
+</body>
+</html>

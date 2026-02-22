@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SINET — dx_index generator (MKB → SINET)</title>
+  <link rel="stylesheet" href="css/main.css"/>
+  <style>
+    :root{color-scheme: light;}
+    body{background:#ffffff;color:#0f172a;}
+    .wrap{max-width:1200px;margin:0 auto;padding:16px;}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+    .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;}
+    .muted{color:#475569;}
+    .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid #cbd5e1;border-radius:999px;padding:4px 10px;font-size:12px;background:#f8fafc;}
+    .btn{border:1px solid #0f172a;background:#0f172a;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:600;}
+    .btn.ghost{background:#fff;color:#0f172a;}
+    .btn.warn{background:#b45309;border-color:#b45309;}
+    .btn.ok{background:#15803d;border-color:#15803d;}
+    .btn:disabled{opacity:.55;cursor:not-allowed;}
+    input[type="number"], input[type="text"]{border:1px solid #cbd5e1;border-radius:10px;padding:8px 10px;min-width:120px;}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr;}}
+    pre{white-space:pre-wrap;background:#0b1220;color:#e2e8f0;border-radius:12px;padding:12px;max-height:260px;overflow:auto;}
+    code{background:#f1f5f9;border-radius:8px;padding:2px 6px;}
+    label{display:inline-flex;align-items:center;gap:8px;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="row" style="justify-content:space-between;">
+      <div>
+        <h1 style="margin:0">SINET — dx_index generator <span class="pill">MKB → SINET</span> <span class="pill" style="opacity:.8">v15.7.6.7</span></h1>
+        <p class="muted" style="margin:.35rem 0 0 0">
+          Pravi <code>data/sinet_dx_index.json</code> direktno iz <b>popunjenog</b> <code>SINET_STL.json</code> (polja <code>mkb10.sifra</code>/<code>mkb10.naziv</code>).
+          Cilj: Anamneza uvek ima predloge bez ručnog editovanja dx_index-a.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn ghost" id="btnBack">← Nazad u SINET</button>
+        <button class="btn ghost" id="btnAdmin">🛠️ Admin</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="row">
+        <input type="file" id="fileStl" accept=".json" />
+        <button class="btn" id="btnLoadStl">Učitaj data/SINET_STL.json</button>
+        <button class="btn ghost" id="btnLoadMkb">Učitaj data/mkb10_sr.json</button>
+        <span class="pill" id="stStatus">STL: ✗</span>
+        <span class="pill" id="mkbStatus">MKB: ✗</span>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <label><input type="checkbox" id="optParent" checked/> Dodaj i parent kod (pre tačke)</label>
+        <label><input type="checkbox" id="optKeywords" checked/> Keywords iz naziva + SINET naziva</label>
+        <label>Max refs po šifri: <input type="number" id="optMaxRefs" value="24" min="6" max="200"/></label>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <button class="btn ok" id="btnGenerate" disabled>⚙️ Generiši dx_index</button>
+        <button class="btn ghost" id="btnDownload" disabled>⬇️ Preuzmi sinet_dx_index.json</button>
+        <button class="btn ghost" id="btnCopy" disabled>📋 Kopiraj JSON</button>
+      </div>
+
+      <div class="row" style="margin-top:8px">
+        <span class="pill" id="statItems">Stavke: –</span>
+        <span class="pill" id="statMapped">Mapirano: –</span>
+        <span class="pill" id="statNon">NON_ICD: –</span>
+        <span class="pill" id="statCodes">Šifre u dx_index: –</span>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:12px">
+      <div class="card">
+        <h3 style="margin:0 0 8px 0">Kako radi</h3>
+        <ol style="margin:0;padding-left:18px">
+          <li>U Linkeru popuni <code>mkb10.sifra</code>/<code>mkb10.naziv</code> i označi protokole kao <code>mkb10.kind=NON_ICD</code>.</li>
+          <li>Ovde učitaj taj “linked” STL (ili <code>data/SINET_STL.json</code> ako si ga već zamenio).</li>
+          <li>Klikni <b>Generiši dx_index</b>, zatim preuzmi fajl i ubaci u <code>data/</code>.</li>
+        </ol>
+        <p class="muted" style="margin:.6rem 0 0 0">Napomena: ako u katalogu nema popunjenih MKB polja, generator će napraviti prazan dx_index (to je očekivano).</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0 0 8px 0">Log</h3>
+        <pre id="log"></pre>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const $ = (id)=>document.getElementById(id);
+  const logEl = $('log');
+  function log(msg){
+    const t = new Date().toLocaleTimeString('sr-RS');
+    logEl.textContent += `[${t}] ${msg}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+  function dl(name, text){
+    const blob = new Blob([text], {type:'application/json;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 800);
+  }
+  function normalize(s){
+    return String(s||'')
+      .toLowerCase()
+      .replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9čćžšđ\.\s-]/gi,' ')
+      .replace(/\s+/g,' ')
+      .trim();
+  }
+  function keywordify(text){
+    const stop = new Set(['i','ili','na','u','uz','od','do','za','sa','bez','te','je','su','se','koji','koja','koje','što','to','kao','kod','nad','pod','pri','a','o','po','per','et','non','sine','status','akutna','akutni','hronicna','hronicni','nespecificiran','nespecificirana','nespecificirano']);
+    const words = normalize(text).split(' ').filter(w=>w.length>=4 && !stop.has(w));
+    const out = [];
+    const seen = new Set();
+    for(const w of words){
+      if(seen.has(w)) continue;
+      seen.add(w);
+      out.push(w);
+      if(out.length>=12) break;
+    }
+    return out;
+  }
+
+  let stl=null;
+  let mkb=null;
+  let mkbByCode = {};
+  let result=null;
+
+  function updateFlags(){
+    $('stStatus').textContent = `STL: ${stl?'✓':'✗'}`;
+    $('mkbStatus').textContent = `MKB: ${mkb?'✓':'✗'}`;
+    $('btnGenerate').disabled = !(stl);
+  }
+
+  async function loadJson(url){
+    const r = await fetch(url, {cache:'no-store'});
+    if(!r.ok) throw new Error(`${url} → ${r.status}`);
+    return await r.json();
+  }
+
+  async function tryLoadMkb(){
+    try{
+      mkb = await loadJson('./data/mkb10_sr.json');
+      mkbByCode = {};
+      if(Array.isArray(mkb)){
+        for(const it of mkb){
+          if(it && it.code) mkbByCode[String(it.code)] = it;
+        }
+      }
+      log(`✅ Učitano: data/mkb10_sr.json • ${Array.isArray(mkb)?mkb.length:0} šifri.`);
+    }catch(e){
+      log(`⚠️ Ne mogu da učitam mkb10_sr.json (nije obavezno): ${e.message}`);
+      mkb = null;
+      mkbByCode = {};
+    }
+    updateFlags();
+  }
+
+  function parseStl(obj){
+    if(!obj) return null;
+    // očekujemo { meta, simptomi } ali prihvatamo i direktan niz
+    if(Array.isArray(obj)) return {meta:{}, simptomi: obj};
+    if(Array.isArray(obj.simptomi)) return obj;
+    return null;
+  }
+
+  function extractMkb(it){
+    const m = (it && typeof it.mkb10==='object') ? it.mkb10 : {};
+    const code = (m.sifra||m.šifra||m.code||'');
+    const title = (m.naziv||m.title||'');
+    const kind = (m.kind||'');
+    return {code:String(code||'').trim(), title:String(title||'').trim(), kind:String(kind||'').trim()};
+  }
+
+  function addRef(map, code, title, kw, id, maxRefs){
+    if(!code) return;
+    if(!map[code]) map[code] = { title: title||'', keywords: [], sinet_refs: [] };
+    const rec = map[code];
+    if(!rec.title && title) rec.title = title;
+    // merge keywords
+    for(const k of (kw||[])){
+      if(!rec.keywords.includes(k)) rec.keywords.push(k);
+      if(rec.keywords.length>=18) break;
+    }
+    if(rec.sinet_refs.length < maxRefs && !rec.sinet_refs.includes(id)) rec.sinet_refs.push(id);
+  }
+
+  function generate(){
+    if(!stl) return;
+    const maxRefs = Math.max(6, Math.min(200, parseInt($('optMaxRefs').value||'24',10)||24));
+    const addParent = $('optParent').checked;
+    const doKw = $('optKeywords').checked;
+
+    const map = {};
+    let total = 0, mapped=0, non=0;
+
+    const items = stl.simptomi || [];
+    total = items.length;
+
+    for(const it of items){
+      const id = String(it.id||'').trim();
+      if(!id) continue;
+      const mk = extractMkb(it);
+
+      if(mk.kind === 'NON_ICD' || mk.code === 'NONE' || mk.code === 'NON_ICD'){
+        non++;
+        continue;
+      }
+      if(!mk.code){
+        continue;
+      }
+      mapped++;
+
+      const mkbRec = mkbByCode[mk.code] || null;
+      const title = mk.title || (mkbRec ? (mkbRec.title_sr||mkbRec.title||'') : '');
+      const baseTitle = title || mk.code;
+
+      const kw = doKw ? [...keywordify(baseTitle), ...keywordify(it.naziv||''), ...keywordify(it.opis||'')] : keywordify(baseTitle);
+
+      addRef(map, mk.code, baseTitle, kw, id, maxRefs);
+
+      if(addParent && mk.code.includes('.')){
+        const parent = mk.code.split('.')[0];
+        const parentRec = mkbByCode[parent] || null;
+        const parentTitle = parentRec ? (parentRec.title_sr||parentRec.title||'') : '';
+        addRef(map, parent, parentTitle, keywordify(parentTitle||parent), id, maxRefs);
+      }
+    }
+
+    // cleanup keywords small
+    for(const code of Object.keys(map)){
+      const rec = map[code];
+      rec.keywords = (rec.keywords||[]).filter(Boolean).slice(0,18);
+      rec.sinet_refs = (rec.sinet_refs||[]).filter(Boolean);
+      if(!rec.title){
+        const mkbRec = mkbByCode[code];
+        if(mkbRec) rec.title = mkbRec.title_sr||mkbRec.title||'';
+      }
+    }
+
+    result = map;
+
+    $('statItems').textContent = `Stavke: ${total}`;
+    $('statMapped').textContent = `Mapirano: ${mapped}`;
+    $('statNon').textContent = `NON_ICD: ${non}`;
+    $('statCodes').textContent = `Šifre u dx_index: ${Object.keys(map).length}`;
+
+    $('btnDownload').disabled = Object.keys(map).length===0;
+    $('btnCopy').disabled = Object.keys(map).length===0;
+
+    log(`✅ Generisano dx_index: ${Object.keys(map).length} šifri • refs: ${mapped} (stavki sa šifrom) • NON_ICD: ${non}`);
+  }
+
+  // Buttons
+  $('btnBack').onclick = ()=>{
+    const u = new URL(location.href);
+    const back = u.searchParams.get('back');
+    location.href = back || 'index.html';
+  };
+  $('btnAdmin').onclick = ()=>location.href='admin.html';
+
+  $('btnLoadStl').onclick = async ()=>{
+    try{
+      const obj = await loadJson('./data/SINET_STL.json');
+      stl = parseStl(obj);
+      if(!stl) throw new Error('Ne prepoznajem STL format.');
+      log(`✅ Učitano: data/SINET_STL.json • ${stl.simptomi.length} stavki.`);
+      updateFlags();
+      $('btnDownload').disabled = true;
+      $('btnCopy').disabled = true;
+      result=null;
+      $('statItems').textContent = `Stavke: ${stl.simptomi.length}`;
+    }catch(e){
+      log(`❌ STL load fail: ${e.message}`);
+      alert('Ne mogu da učitam data/SINET_STL.json. Pokreni server ili izaberi fajl ručno.');
+    }
+  };
+
+  $('fileStl').addEventListener('change', async (ev)=>{
+    const file = ev.target.files && ev.target.files[0];
+    if(!file) return;
+    try{
+      const text = await file.text();
+      const obj = JSON.parse(text);
+      stl = parseStl(obj);
+      if(!stl) throw new Error('Ne prepoznajem STL format.');
+      log(`✅ Učitano iz fajla: ${file.name} • ${stl.simptomi.length} stavki.`);
+      updateFlags();
+      $('btnDownload').disabled = true;
+      $('btnCopy').disabled = true;
+      result=null;
+      $('statItems').textContent = `Stavke: ${stl.simptomi.length}`;
+    }catch(e){
+      log(`❌ STL file error: ${e.message}`);
+      alert('Ne mogu da parsiram JSON. Proveri fajl.');
+    }
+  });
+
+  $('btnLoadMkb').onclick = ()=>tryLoadMkb();
+
+  $('btnGenerate').onclick = ()=>generate();
+
+  $('btnDownload').onclick = ()=>{
+    if(!result) return;
+    dl('sinet_dx_index.json', JSON.stringify(result, null, 2));
+  };
+
+  $('btnCopy').onclick = async ()=>{
+    if(!result) return;
+    const txt = JSON.stringify(result, null, 2);
+    try{
+      await navigator.clipboard.writeText(txt);
+      log('📋 Kopirano u clipboard.');
+    }catch(_){
+      dl('sinet_dx_index.json', txt);
+      log('⚠️ Clipboard blokiran — preuzimam fajl umesto toga.');
+    }
+  };
+
+  // init
+  log('Spremno. Učitaj STL (linked) pa generiši dx_index.');
+  tryLoadMkb();
+</script>
+</body>
+</html>

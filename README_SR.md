@@ -1,60 +1,48 @@
-# SINET Audio Lekar (Public Demo) — GitHub paket
+# SINET Audio Lekar — Public Demo (SR)
 
-Ovo je **GitHub-ready paket** za javnu objavu SINET Audio Lekar demo aplikacije (PWA / offline-first), sa dokumentacijom i osnovnim open-source fajlovima.
+SINET Audio Lekar je edukativno-informativna web/PWA aplikacija za:
+- rad sa simptomima i protokolima,
+- organizaciju reprodukcije kroz Queue / Liste / Favorite / Moje protokole,
+- tutor vodiče (korak-po-korak),
+- izveštaje i export (TXT/MD/HTML/JSON).
 
-## ✅ Šta je u paketu
-- Glavna aplikacija (`index.html`)
-- Test režim bez Service Worker-a (`index-nosw.html`)
-- Audio lekar (katalog, lista, favoriti, protokoli, ⚡ brzo)
-- Anamneza + MKB alati
-- SINET Admin Tools (converter, deduplicator, linker, dx_index generator, inspector)
-- Tutor / Vodiči (HTML + MD)
-- Korisničko uputstvo (SR, HTML + MD)
-- Open-source priprema (LICENSE, CHANGELOG, CONTRIBUTING, SECURITY…)
+## Demo i projekat
+- **GitHub:** https://github.com/miuchin/Sinet_Audio_Lekar_-Public-Demo-/tree/main
+- **Netlify demo:** https://sinet-audio-lekar-nutri-pro-demo.netlify.app/
 
-## 🚀 Brz start (lokalno)
-### Opcija A — direktno
-Otvorite `index.html` u browseru.
+## Šta je novo u poslednjem talasu izmena (v15.7.9.x)
+- Mobile UI hotfix-evi (Huawei / manji ekrani)
+- Stabilniji meni, skrol i raspored kartica
+- iPhone/iOS poboljšanja za reprodukciju i ponašanje tokom navigacije
+- Tutor / Vodiči HUB + Use-case tutor stranice
+- Quick Start tutor (3 klika do reprodukcije)
+- AI Upitnik → Moji simptomi → Queue → Protokol tutor tok
 
-### Opcija B — lokalni server (preporučeno zbog PWA/testiranja)
-```bash
-python3 -m http.server 8000
-```
-Zatim otvorite:
-- `http://localhost:8000/index.html`
-- ili `http://localhost:8000/index-nosw.html` (debug bez SW)
-
-## 📚 Tutor / Vodiči (SR)
-- Hub / indeks: `docs/protokoli/00_TUTOR_VODICI_INDEX_v1.0_SR.html`
-- Quick Start (3 klika): `docs/protokoli/09_QUICK_START_3_KLIKA_v1.0_SR.html`
-- AI Upitnik → Protokol: `docs/protokoli/17_USECASE_AI_UPITNIK_DO_PROTOKOLA_v1.0_SR.html`
-- Backup / Restore: `docs/protokoli/14_USECASE_BACKUP_RESTORE_v1.0_SR.html`
-- Moj protokol iz Queue: `docs/protokoli/15_USECASE_MOJ_PROTOKOL_IZ_QUEUE_v1.0_SR.html`
-- MKB Linker → dx_index → Anamneza: `docs/protokoli/16_USECASE_MKB_LINKER_DXINDEX_ANAMNEZA_v1.0_SR.html`
-
-## 🧩 Struktura projekta (glavno)
+## Struktura (ukratko)
 - `index.html` — glavna aplikacija
-- `index-nosw.html` — test bez service worker-a
-- `js/` — logika aplikacije
-- `css/` — stilovi
-- `data/` — katalog, STL, MKB, preset-i, pomoćni fajlovi
-- `pages/` — posebni alati/stranice (antiparazitski, integrativni vodič, speaker clean…)
-- `docs/` — dokumentacija i protokoli
-- `service-worker.js` / `manifest.json` — PWA
+- `index-nosw.html` — verzija za test bez service worker-a
+- `service-worker.js` — offline/PWA cache
+- `docs/` — priručnici, release, deploy napomene
+- `docs/protokoli/` — Tutor / Vodiči i use-case protokoli
 
-## 🌐 GitHub + Netlify preporuka
-Preporučen tok:
-1. Push na GitHub (branch `main`)
-2. Povezivanje repo-a sa Netlify
-3. Auto deploy sa `main`
-4. Preview deploy sa `dev` / `rc` branch-a
+## Open Source napomena
+Preporučen start: **MIT** licenca (brza i jednostavna adopcija). Ako želiš strožu OSS strukturu, može se preći na Apache-2.0.
 
-Detalji: `docs/NETLIFY_DEPLOY_SR_EN.md`
+## Bezbednosne i pravne napomene
+Pogledaj:
+- `DISCLAIMER_MEDICAL_SR_EN.md`
+- `PRIVACY_LOCAL_STORAGE_SR_EN.md`
 
-## ⚠️ Napomena
-SINET Audio Lekar je informativno-edukativni alat. Nije zamena za lekara, dijagnozu ili terapiju.  
-Pogledati: `DISCLAIMER_MEDICAL_SR_EN.md`
+## Brzi start (korisnik)
+1. Otvori demo link
+2. Klikni **⚡ Brzi linkovi** ili pretraži katalog
+3. Klikni **▶ PUSTI**
+4. Po potrebi sačuvaj u Favorite / Moj protokol
+5. Za detalje koristi **🎓 Tutor / Vodiči**
 
-## 📄 Verzija
-- Paket aplikacije: **v15.7.9.6**
-- GitHub paket priprema: **v15.7.9.6-github**
+## Za develop/test (preporuka)
+Ako ne vidiš promene zbog cache-a:
+1. Unregister Service Worker
+2. Clear site data
+3. Hard refresh
+4. Testiraj `index-nosw.html`

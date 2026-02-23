@@ -1,49 +1,48 @@
-# SINET Audio Lekar (Public Demo) — GitHub Package
+# SINET Audio Lekar — Public Demo (EN)
 
-This is a **GitHub-ready package** for publishing the SINET Audio Lekar public demo (PWA / offline-first), including documentation and open-source project files.
+SINET Audio Lekar is an educational/informational web/PWA app for:
+- symptom-oriented audio routines,
+- organizing playback via Queue / Favorites / My Protocols,
+- guided Tutor / Guide workflows,
+- report/export flows (TXT/MD/HTML/JSON).
 
-## ✅ What's included
-- Main app (`index.html`)
-- No-Service-Worker test mode (`index-nosw.html`)
-- Audio doctor workflow (catalog, queue/list, favorites, protocols, ⚡ quick actions)
-- Anamneza + MKB-related tools
-- SINET Admin Tools (converter, deduplicator, linker, dx_index generator, inspector)
-- Tutor / Guides (HTML + MD, Serbian)
-- User manuals (Serbian, HTML + MD)
-- Open-source prep files (LICENSE, CHANGELOG, CONTRIBUTING, SECURITY, etc.)
+## Project links
+- **GitHub:** https://github.com/miuchin/Sinet_Audio_Lekar_-Public-Demo-/tree/main
+- **Netlify demo:** https://sinet-audio-lekar-nutri-pro-demo.netlify.app/
 
-## 🚀 Quick start (local)
-### Option A — direct
-Open `index.html` in your browser.
+## Recent highlights (v15.7.9.x)
+- Mobile UI hotfixes (Huawei / smaller screens)
+- More stable menu, scrolling, and card layout
+- iPhone/iOS playback/navigation behavior improvements
+- Tutor / Guides hub + use-case tutor pages
+- Quick Start tutor (3 clicks to playback)
+- AI Questionnaire → My Symptoms → Queue → Protocol tutor workflow
 
-### Option B — local server (recommended for PWA/testing)
-```bash
-python3 -m http.server 8000
-```
-Then open:
-- `http://localhost:8000/index.html`
-- or `http://localhost:8000/index-nosw.html` (debug without SW)
+## Project structure (short)
+- `index.html` — main app
+- `index-nosw.html` — no-service-worker test page
+- `service-worker.js` — offline/PWA caching
+- `docs/` — manuals, release and deploy notes
+- `docs/protokoli/` — Tutor/Guides and use-case protocols
 
-## 📚 Tutor / Guides (SR)
-- Tutor hub: `docs/protokoli/00_TUTOR_VODICI_INDEX_v1.0_SR.html`
-- Quick Start (3 clicks): `docs/protokoli/09_QUICK_START_3_KLIKA_v1.0_SR.html`
-- AI Questionnaire → Protocol: `docs/protokoli/17_USECASE_AI_UPITNIK_DO_PROTOKOLA_v1.0_SR.html`
-- Backup / Restore: `docs/protokoli/14_USECASE_BACKUP_RESTORE_v1.0_SR.html`
-- My protocol from Queue: `docs/protokoli/15_USECASE_MOJ_PROTOKOL_IZ_QUEUE_v1.0_SR.html`
-- MKB Linker → dx_index → Anamneza: `docs/protokoli/16_USECASE_MKB_LINKER_DXINDEX_ANAMNEZA_v1.0_SR.html`
+## Open Source note
+Recommended starting point: **MIT** license (simple adoption). Can be changed to Apache-2.0 later.
 
-## 🌐 GitHub + Netlify recommended workflow
-1. Push to GitHub (`main`)
-2. Connect repo to Netlify
-3. Auto deploy from `main`
-4. Use `dev` / `rc` for preview builds
+## Safety / legal notes
+See:
+- `DISCLAIMER_MEDICAL_SR_EN.md`
+- `PRIVACY_LOCAL_STORAGE_SR_EN.md`
 
-Details: `docs/NETLIFY_DEPLOY_SR_EN.md`
+## Quick user start
+1. Open the demo
+2. Use **⚡ Quick links** or catalog search
+3. Press **▶ PLAY**
+4. Optionally save to Favorites / My Protocol
+5. Use **🎓 Tutor / Guides** for step-by-step help
 
-## ⚠️ Important note
-SINET Audio Lekar is an informational/educational tool and **not** a substitute for professional medical care.  
-See: `DISCLAIMER_MEDICAL_SR_EN.md`
-
-## 📄 Version
-- App package: **v15.7.9.6**
-- GitHub package prep: **v15.7.9.6-github**
+## Dev/test recommendation
+If changes are not visible due to cache:
+1. Unregister Service Worker
+2. Clear site data
+3. Hard refresh
+4. Test `index-nosw.html`

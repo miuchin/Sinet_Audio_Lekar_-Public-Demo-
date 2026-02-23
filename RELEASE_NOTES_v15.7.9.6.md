@@ -1,11 +1,6 @@
-# RELEASE NOTES v15.7.9.6
+# Release Notes — v15.7.9.6
 
-## New
-- Tutor / Vodiči central hub
-- Quick Start (3 klika) tutor
-- AI Upitnik → Protokol tutor
-- Direct Tutor/Vodiči entry from Menu and Settings
+- Repo: https://github.com/miuchin/Sinet_Audio_Lekar_-Public-Demo-/tree/main
+- Demo: https://sinet-audio-lekar-nutri-pro-demo.netlify.app/
 
-## Improvements
-- Better discoverability of educational content for end users
-- Help/Tutor workflow orientation for non-technical users
+This release consolidates mobile hotfixes (Huawei/iPhone) and expands Tutor/Guides.

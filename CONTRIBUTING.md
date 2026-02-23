@@ -1,26 +1,15 @@
 # Contributing
 
-Thank you for considering contributing to SINET Audio Lekar (Public Demo). 🙏
+Thank you for helping improve SINET Audio Lekar.
 
 ## How to contribute
-1. Fork the repository
-2. Create a branch from `main`
-   - `feat/...` for features
-   - `fix/...` for bug fixes
-   - `docs/...` for documentation
-3. Test locally (`index.html` and `index-nosw.html`)
-4. Open a Pull Request with:
-   - what changed
-   - why it changed
-   - device/browser tested (especially mobile)
-   - screenshots if UI changes are included
+1. Open an issue (bug / improvement / tutor suggestion)
+2. Describe device + browser + app version
+3. Include reproduction steps and screenshots
+4. Keep changes focused
 
-## Contribution priorities
-- Mobile UX (Android/iPhone)
-- Accessibility/readability for older users
-- Tutor / protocol documentation
-- PWA stability and offline behavior
-- Admin toolchain usability
-
-## Language
-Issues/PRs are welcome in **Serbian or English**.
+## Priority areas
+- Mobile usability (Android/Huawei/iPhone)
+- Tutor / Guide improvements
+- Accessibility / readability
+- Stability during audio playback navigation

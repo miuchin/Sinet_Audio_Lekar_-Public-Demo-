@@ -1,16 +1,16 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.7.9.4 (Hotfix: Quickbar Help no-reload on index; keep audio + session)
+  Version: 15.7.9.6 (Hotfix: Quickbar Help no-reload on index; keep audio + session)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.9.4';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.9.4';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.9.4';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.9.6';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.9.6';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.9.6';
 
-const SINET_APP_VERSION = "15.7.9.4";
+const SINET_APP_VERSION = "15.7.9.6";
 
 
 

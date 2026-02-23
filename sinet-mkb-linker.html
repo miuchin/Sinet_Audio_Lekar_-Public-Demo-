@@ -37,10 +37,11 @@
     .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
     .stickyTop{position:sticky;top:0;background:#fff;z-index:5;padding-bottom:8px;}
     </style>
+  <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.7.8">
 </head>
 <body>
   <div class="wrap">
-    <h1 style="margin:4px 0 10px 0;">🧬 SINET – MKB-10 Linker <span class="pill">STL ↔ MKB</span> <span class="pill" style="opacity:.75">v15.7.6.9</span></h1>
+    <h1 style="margin:4px 0 10px 0;">🧬 SINET – MKB-10 Linker <span class="pill">STL ↔ MKB</span> <span class="pill" style="opacity:.75">v15.7.7.8</span></h1>
     <p class="muted">
       Cilj: da uvek imaš <b>čist katalog</b> – popunjena <code>mkb10.sifra</code> i <code>mkb10.naziv</code> polja.
       Radi offline: učita <code>data/SINET_STL.json</code> i <code>data/mkb10_sr.json</code>, predloži šifre na osnovu teksta (naziv/opis/oblast).
@@ -59,6 +60,7 @@
         <input id="fileAI" type="file" accept=".json,.jsonl" style="display:none" />
         <button class="btn ghost" id="btnImportAI" disabled>⬆️ Import AI mapiranja</button>
         <button class="btn good" id="btnDownload" disabled>⬇️ Preuzmi STL (linked)</button>
+        <button class="btn ghost" id="btnReport" disabled>🧾 Izveštaj (HTML)</button>
         <a class="btn ghost" href="admin.html" style="text-decoration:none;display:inline-flex;align-items:center;">↩ Admin</a>
       </div>
       
@@ -673,8 +675,7 @@ Tip: za stavke koje nisu dijagnoze (protokoli, brza pomoć, duhovno/podrška), n
       const parts = Math.ceil(total / batch);
       for(let p=0; p<parts; p++){
         const slice = rows.slice(p*batch, (p+1)*batch);
-        const jsonl = slice.map(r=>JSON.stringify(r)).join('
-');
+        const jsonl = slice.map(r=>JSON.stringify(r)).join("\n");
         const fname = `SINET_MKB_missing_part${String(p+1).padStart(2,'0')}-of-${String(parts).padStart(2,'0')}.jsonl`;
         setTimeout(()=>downloadText(fname, jsonl, 'application/json'), p*180);
       }
@@ -872,6 +873,7 @@ Tip: za stavke koje nisu dijagnoze (protokoli, brza pomoć, duhovno/podrška), n
       $('btnExportAI').disabled = false;
       $('btnImportAI').disabled = false;
       $('btnDownload').disabled = false;
+      try{ $('btnReport').disabled = false; }catch(_){ }
       // mirror buttons
       try{ $('btnExportAI2').disabled = false; $('btnImportAI2').disabled = false; $('btnCopyPrompt').disabled = false; $('btnBulkNonIcdQuick').disabled = false; $('btnExportBatches').disabled = false; $('btnGenDx').disabled = false; $('btnApplyStlLocal').disabled = false; const da=$('btnDoAll'); if(da) da.disabled = !(mkb && idxTok); }catch(_){ }
       $('btnBulkPrefix').disabled = false;
@@ -892,6 +894,7 @@ Tip: za stavke koje nisu dijagnoze (protokoli, brza pomoć, duhovno/podrška), n
       $('btnExportAI').disabled = false;
       $('btnImportAI').disabled = false;
       $('btnDownload').disabled = false;
+      try{ $('btnReport').disabled = false; }catch(_){ }
       // mirror buttons
       try{ $('btnExportAI2').disabled = false; $('btnImportAI2').disabled = false; $('btnCopyPrompt').disabled = false; $('btnBulkNonIcdQuick').disabled = false; $('btnExportBatches').disabled = false; $('btnGenDx').disabled = false; $('btnApplyStlLocal').disabled = false; const da=$('btnDoAll'); if(da) da.disabled = !(mkb && idxTok); }catch(_){ }
       $('btnBulkPrefix').disabled = false;
@@ -961,7 +964,7 @@ Tip: za stavke koje nisu dijagnoze (protokoli, brza pomoć, duhovno/podrška), n
     // init status once
     setStatus();
   
-    // === EXTRA UI (v15.7.6.9) ===
+    // === EXTRA UI (v15.7.7.8) ===
     function getDefaultAIPrompt(){
       return [
         "Dobijaš JSONL listu SINET stavki (svaka linija je jedan JSON): {id,naziv,oblast,opis,candidates:[{code,title,score}...]}",
@@ -986,6 +989,150 @@ Tip: za stavke koje nisu dijagnoze (protokoli, brza pomoć, duhovno/podrška), n
       if(show && !box.value) box.value = getDefaultAIPrompt();
     }
 
+    // === Template v2 report (MKB Linker) ===
+    function _openHtmlDoc(html){
+      const w = window.open('', '_blank');
+      if(!w){ alert('Popup je blokiran. Dozvoli pop-up za ovaj sajt (ili otvori u novom tabu).'); return; }
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+    }
+    function openLinkerReport(){
+      if(!stl) return alert('Učitaj STL prvo (data/SINET_STL.json).');
+      if(!window.SINET_TemplateV2 || typeof window.SINET_TemplateV2.buildDoc !== 'function'){
+        return alert('Template v2 nije učitan (nedostaje js/sinet-template-v2.js).');
+      }
+
+      const items = Array.isArray(stl.simptomi) ? stl.simptomi : [];
+      const total = items.length;
+      const mappedArr = items.filter(s=>{ const c=mkbCodeOf(s); return !!c && c.toUpperCase()!=='NONE'; });
+      const nonicdArr = items.filter(s=>mkbKindOf(s)==='NON_ICD');
+      const missingArr = items.filter(s=>{ const c=mkbCodeOf(s); return (!c || c.toUpperCase()==='NONE') && mkbKindOf(s)!=='NON_ICD'; });
+      const lowArr = items.filter(s=>{
+        const id = String(s.id||'');
+        const p = scores[id]?.picked;
+        return !!(p && p.score < 10);
+      });
+
+      const ts = new Date().toLocaleString('sr-RS');
+      const mkbLoaded = !!(mkb && idxTok);
+      const mkbCount = (mkb && Array.isArray(mkb.entries)) ? mkb.entries.length : 0;
+
+      const MAX_LIST = 220;
+      function listBlock(arr){
+        if(!arr.length) return `<div class="card"><div class="small">Nema stavki.</div></div>`;
+        const show = arr.slice(0, MAX_LIST);
+        const more = arr.length>MAX_LIST ? `<div class="small" style="margin-bottom:10px">Prikazano prvih <b>${MAX_LIST}</b> od <b>${arr.length}</b> stavki.</div>` : '';
+        const rows = show.map(s=>{
+          const id = escapeHtml(String(s.id||''));
+          const name = escapeHtml(bestName(s));
+          const code = escapeHtml(mkbCodeOf(s)||'');
+          const kind = escapeHtml(mkbKindOf(s)||'');
+          const p = scores[String(s.id||'')]?.picked;
+          const auto = p ? ` • auto:${p.score}` : '';
+          const badge = (kind==='NON_ICD') ? `<span class="badge">NON_ICD</span>` : (code ? `<span class="badge">${code}</span>` : `<span class="badge">bez MKB</span>`);
+          return `<li style="margin:8px 0">
+            <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap">
+              <div><b>${name}</b><div class="small"><code>${id}</code>${auto}</div></div>
+              <div>${badge}</div>
+            </div>
+          </li>`;
+        }).join('');
+        return `<div class="card">${more}<ol style="margin:0;padding-left:18px">${rows}</ol></div>`;
+      }
+
+      const summaryHtml = `
+        <div class="card">
+          <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between">
+            <div>
+              <div><b>Ukupno stavki:</b> ${total}</div>
+              <div><b>Mapirano (MKB):</b> ${mappedArr.length}</div>
+              <div><b>Bez MKB:</b> ${missingArr.length}</div>
+              <div><b>NON_ICD:</b> ${nonicdArr.length}</div>
+              <div><b>Nisko poverenje (auto&lt;10):</b> ${lowArr.length}</div>
+            </div>
+            <div class="small">
+              <div><b>Datum:</b> ${escapeHtml(ts)}</div>
+              <div><b>MKB učitan:</b> ${mkbLoaded ? 'DA' : 'NE'}${mkbLoaded ? ` • ${mkbCount} šifri` : ''}</div>
+              <div><b>Napomena:</b> Ovo je tehnički izveštaj (linkovanje kataloga), nije medicinski savet.</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const pipelineHtml = `
+        <div class="info-box">
+          <b>Preporučeni tok:</b> 1) Auto-link (sigurni) → 2) Bulk NON_ICD (protokoli) → 3) Export preostalo za AI → 4) Import AI → 5) Generiši dx_index → 6) Primeni (local) ili preuzmi fajlove.
+        </div>
+      `;
+
+      let logTail = '';
+      try{
+        const h = Array.isArray(window.__LOG_HISTORY) ? window.__LOG_HISTORY.slice(-18) : [];
+        if(h.length){
+          logTail = `<details class="card" style="margin-top:18px"><summary style="cursor:pointer;font-weight:900">🧾 Log (poslednje poruke)</summary><pre>${escapeHtml(h.join('\n'))}</pre></details>`;
+        }
+      }catch(_){ }
+
+      let dxDetails = '';
+      try{
+        if(dxIndexResult){
+          const raw = JSON.stringify(dxIndexResult, null, 2);
+          const snippet = raw.length>60000 ? (raw.slice(0,60000) + "\n\n… (skraćeno u prikazu; koristi dugme za preuzimanje)") : raw;
+          dxDetails = `<details class="card" style="margin-top:18px"><summary style="cursor:pointer;font-weight:900">🧾 RAW dx_index (preview)</summary><pre>${escapeHtml(snippet)}</pre></details>`;
+        }
+      }catch(_){ }
+
+      const contentHtml = [
+        summaryHtml,
+        pipelineHtml,
+        `<h2>⚠️ Bez MKB (prioritet)</h2>`,
+        listBlock(missingArr),
+        `<h2>🟣 NON_ICD</h2>`,
+        listBlock(nonicdArr),
+        `<h2>🟠 Nisko poverenje (auto-link)</h2>`,
+        listBlock(lowArr),
+        dxDetails,
+        logTail
+      ].join('\n');
+
+      const extraHeadHtml = `
+        <script>
+          const __DX_INDEX__ = ${dxIndexResult ? JSON.stringify(dxIndexResult) : 'null'};
+          function __dl(name, text, mime){
+            const blob = new Blob([text], {type: mime||'application/json;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = name;
+            document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(()=>{ try{ URL.revokeObjectURL(url); }catch(_){} }, 2000);
+          }
+          function downloadDxIndex(){
+            if(!__DX_INDEX__) return alert('dx_index nije generisan. Klikni "⚙️ Generiši dx_index" pa ponovo.');
+            __dl('sinet_dx_index.json', JSON.stringify(__DX_INDEX__, null, 2), 'application/json;charset=utf-8');
+          }
+        <\/script>
+      `;
+      const extraButtonsHtml = dxIndexResult ? `<button class="btn" onclick="downloadDxIndex()">⬇️ dx_index</button>` : '';
+
+      const doc = window.SINET_TemplateV2.buildDoc({
+        title: 'MKB Linker izveštaj',
+        subtitle: `STL ↔ MKB • ${ts}`,
+        templateName: 'SINET_TEMPLATE_v2',
+        coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+        backUrl: (location.href||'').split('#')[0] || null,
+        contentHtml,
+        badgesHtml: `<span class="badge">MKB Linker</span><span class="badge">Mapirano: ${mappedArr.length}/${total}</span>${mkbLoaded ? `<span class="badge">MKB: ${mkbCount}</span>` : ''}`,
+        payloadJson: stl,
+        payloadSectionTitle: '🧾 LINKED SINET_STL.json',
+        payloadHelpText: 'Ovo je SINET STL katalog sa popunjenim <code>mkb10</code> poljima (sifra/naziv/kind). Možeš da ga preuzmeš i postaviš kao <code>data/SINET_STL.json</code>, ili koristiš lokalnu primenu (localStorage) iz Linker-a.',
+        payloadFilename: 'SINET_STL_linked.json',
+        extraButtonsHtml,
+        extraHeadHtml
+      });
+      _openHtmlDoc(doc);
+    }
+
     // mirror to extra buttons
     try{
       const bx = $('btnExportAI2'); if(bx) bx.addEventListener('click', ()=>exportMissingForAI());
@@ -1001,6 +1148,7 @@ Tip: za stavke koje nisu dijagnoze (protokoli, brza pomoć, duhovno/podrška), n
       const ad = $('btnApplyDxLocal'); if(ad) ad.addEventListener('click', ()=>applyDxIndexLocal());
       const dd = $('btnDownloadDx'); if(dd) dd.addEventListener('click', ()=>downloadDxIndex());
       const as = $('btnApplyStlLocal'); if(as) as.addEventListener('click', ()=>applyStlLocal());
+      const br = $('btnReport'); if(br) br.addEventListener('click', ()=>{ try{ openLinkerReport(); }catch(e){ log('GREŠKA report: '+(e?.message||e)); } });
 
       
       const doAllBtn = $('btnDoAll');
@@ -1035,5 +1183,7 @@ const bn = $('btnBulkNonIcdQuick'); if(bn) bn.addEventListener('click', ()=>{
       setTimeout(()=>{ try{ setPromptBoxVisible(false); }catch(_){} }, 0);
     }catch(_){}
 </script>
+  <script src="js/sinet-template-v2.js?v=15.7.7.8"></script>
+  <script src="js/sinet-quickbar.js?v=15.7.7.8" defer></script>
 </body>
 </html>

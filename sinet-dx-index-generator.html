@@ -25,12 +25,13 @@
     code{background:#f1f5f9;border-radius:8px;padding:2px 6px;}
     label{display:inline-flex;align-items:center;gap:8px;}
   </style>
+  <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.7.8">
 </head>
 <body>
   <div class="wrap">
     <div class="row" style="justify-content:space-between;">
       <div>
-        <h1 style="margin:0">SINET — dx_index generator <span class="pill">MKB → SINET</span> <span class="pill" style="opacity:.8">v15.7.6.7</span></h1>
+        <h1 style="margin:0">SINET — dx_index generator <span class="pill">MKB → SINET</span> <span class="pill" style="opacity:.8">v15.7.7.8</span></h1>
         <p class="muted" style="margin:.35rem 0 0 0">
           Pravi <code>data/sinet_dx_index.json</code> direktno iz <b>popunjenog</b> <code>SINET_STL.json</code> (polja <code>mkb10.sifra</code>/<code>mkb10.naziv</code>).
           Cilj: Anamneza uvek ima predloge bez ručnog editovanja dx_index-a.
@@ -61,6 +62,7 @@
         <button class="btn ok" id="btnGenerate" disabled>⚙️ Generiši dx_index</button>
         <button class="btn ghost" id="btnDownload" disabled>⬇️ Preuzmi sinet_dx_index.json</button>
         <button class="btn ghost" id="btnCopy" disabled>📋 Kopiraj JSON</button>
+        <button class="btn ghost" id="btnReport" disabled>🧾 Izveštaj (HTML)</button>
       </div>
 
       <div class="row" style="margin-top:8px">
@@ -89,6 +91,7 @@
     </div>
   </div>
 
+  <script src="js/sinet-template-v2.js?v=15.7.7.8"></script>
 <script>
   const $ = (id)=>document.getElementById(id);
   const logEl = $('log');
@@ -253,6 +256,7 @@
 
     $('btnDownload').disabled = Object.keys(map).length===0;
     $('btnCopy').disabled = Object.keys(map).length===0;
+    $('btnReport').disabled = Object.keys(map).length===0;
 
     log(`✅ Generisano dx_index: ${Object.keys(map).length} šifri • refs: ${mapped} (stavki sa šifrom) • NON_ICD: ${non}`);
   }
@@ -274,6 +278,7 @@
       updateFlags();
       $('btnDownload').disabled = true;
       $('btnCopy').disabled = true;
+      $('btnReport').disabled = true;
       result=null;
       $('statItems').textContent = `Stavke: ${stl.simptomi.length}`;
     }catch(e){
@@ -294,6 +299,7 @@
       updateFlags();
       $('btnDownload').disabled = true;
       $('btnCopy').disabled = true;
+      $('btnReport').disabled = true;
       result=null;
       $('statItems').textContent = `Stavke: ${stl.simptomi.length}`;
     }catch(e){
@@ -323,9 +329,74 @@
     }
   };
 
+  function openDxReport(){
+    if(!result) return alert('Prvo generiši dx_index.');
+    if(!window.SINET_TemplateV2 || typeof window.SINET_TemplateV2.buildDoc !== 'function'){
+      return alert('Template v2 nije učitan (nedostaje js/sinet-template-v2.js).');
+    }
+    const esc = (s)=>String(s??'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+    const ts = new Date().toLocaleString('sr-RS');
+    const codes = Object.keys(result);
+    const top = codes
+      .map(code=>({
+        code,
+        title: (result[code] && result[code].title) ? String(result[code].title) : '',
+        refs: (result[code] && Array.isArray(result[code].sinet_refs)) ? result[code].sinet_refs.length : 0,
+        kw: (result[code] && Array.isArray(result[code].keywords)) ? result[code].keywords.slice(0,6) : []
+      }))
+      .sort((a,b)=>b.refs-a.refs)
+      .slice(0, 40);
+
+    const rows = top.map(r=>`<tr><td style="padding:8px;border-bottom:1px solid #eef2f7"><code>${esc(r.code)}</code></td><td style="padding:8px;border-bottom:1px solid #eef2f7">${esc(r.title||'')}</td><td style="padding:8px;border-bottom:1px solid #eef2f7">${r.refs}</td><td style="padding:8px;border-bottom:1px solid #eef2f7" class="small">${r.kw.map(k=>`<code>${esc(k)}</code>`).join(' ')}</td></tr>`).join('');
+    const table = `
+      <div class="card">
+        <div class="small" style="margin-bottom:10px">Prikaz top 40 šifri po broju referenci (sinet_refs).</div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead><tr><th style="text-align:left;border-bottom:1px solid #d0deeb;padding:8px">Šifra</th><th style="text-align:left;border-bottom:1px solid #d0deeb;padding:8px">Naziv</th><th style="text-align:left;border-bottom:1px solid #d0deeb;padding:8px">Refs</th><th style="text-align:left;border-bottom:1px solid #d0deeb;padding:8px">Keywords (primer)</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    `;
+
+    const note = `
+      <div class="info-box">
+        <b>Gde ide fajl:</b> sačuvaj kao <code>data/sinet_dx_index.json</code> (ili prepiši postojeći).<br/>
+        Anamneza koristi dx_index da ponudi relevantne MKB predloge.
+      </div>
+    `;
+
+    const contentHtml = [
+      `<div class="card"><b>Datum:</b> ${ts}<br/><b>Šifre:</b> ${codes.length}<br/><b>Napomena:</b> Tehnički izveštaj (nije medicinski savet).</div>`,
+      note,
+      `<h2>📌 Top šifre</h2>`,
+      table
+    ].join('\n');
+
+    const doc = window.SINET_TemplateV2.buildDoc({
+      title: 'dx_index izveštaj',
+      subtitle: `MKB → SINET • ${ts}`,
+      templateName: 'SINET_TEMPLATE_v2',
+      coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+      backUrl: (location.href||'').split('#')[0] || null,
+      contentHtml,
+      badgesHtml: `<span class="badge">dx_index generator</span><span class="badge">Šifre: ${codes.length}</span>`,
+      payloadJson: result,
+      payloadSectionTitle: '🧾 sinet_dx_index.json',
+      payloadHelpText: 'Ovo je generisani <code>dx_index</code> (MKB → SINET). Preuzmi i postavi u <code>data/</code>.',
+      payloadFilename: 'sinet_dx_index.json'
+    });
+
+    const w = window.open('', '_blank');
+    if(!w){ alert('Popup je blokiran. Dozvoli pop-up za ovaj sajt.'); return; }
+    w.document.open(); w.document.write(doc); w.document.close();
+  }
+
+  $('btnReport').onclick = ()=>{ try{ openDxReport(); }catch(e){ log('❌ Report error: '+(e?.message||e)); } };
+
   // init
   log('Spremno. Učitaj STL (linked) pa generiši dx_index.');
   tryLoadMkb();
 </script>
+  <script src="js/sinet-quickbar.js?v=15.7.7.8" defer></script>
 </body>
 </html>

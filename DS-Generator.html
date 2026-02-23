@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌿 SINET Generator (sa eksternim katalogom) · v15.7.5.5</title>
+    <title>🌿 SINET Generator (sa eksternim katalogom) · v15.7.7.7</title>
+    <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.7.7">
+    <script defer src="js/sinet-quickbar.js?v=15.7.7.7"></script>
+    <script defer src="js/sinet-template-v2.js?v=15.7.7.7"></script>
+
     <style>
         /* Isti CSS kao pre – nije menjan */
         :root {
@@ -1158,96 +1162,110 @@
             `;
         }
 
-        return `<!DOCTYPE html>
-<html lang="sr">
-<head><meta charset="UTF-8"><title>Integrativni vodič za ${ime}</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',sans-serif;background:#faf9f7;padding:30px;color:#1e4660;}
-.container{max-width:1400px;margin:0 auto;}
-.header-box{background:linear-gradient(135deg,#1e4660,#2d5a7a);color:white;padding:40px 50px;border-radius:40px;margin-bottom:30px;position:relative;overflow:hidden;}
-.header-box::before{content:"🌿";font-size:180px;position:absolute;right:20px;bottom:-30px;opacity:0.15;transform:rotate(15deg);}
-.header-box h1{font-size:2.8rem;margin-bottom:15px;position:relative;z-index:2;}
-.mkb-row{display:flex;gap:30px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);padding:18px 28px;border-radius:60px;font-size:1.2rem;border:1px solid rgba(255,255,255,0.3);position:relative;z-index:2;}
-.warning-box{background:#fff3cd;border-left:10px solid #ffc107;padding:25px;border-radius:24px;margin:30px 0;font-weight:500;}
-h2{font-size:2.2rem;color:#1e4660;margin:50px 0 25px;border-bottom:4px solid #e8f0e0;display:flex;gap:15px;}
-h2 span{background:#1e4660;color:#f3e9de;border-radius:60px;padding:8px 24px;font-size:1.4rem;}
-.section-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;margin:25px 0;}
-.card{background:white;border-radius:28px;padding:25px;box-shadow:0 8px 25px rgba(0,0,0,0.06);border:1px solid #e8dfd3;transition:0.3s;}
-.card:hover{transform:translateY(-8px);box-shadow:0 20px 35px rgba(30,70,96,0.15);}
-.card h4{font-size:1.4rem;color:#1e4660;margin-bottom:15px;border-left:8px solid #e8f0e0;padding-left:18px;}
-.soul-box{background:#f3e9de;border-left:10px solid #9b6b43;padding:30px;border-radius:28px;margin:30px 0;}
-.folk-box{background:#e8f0e0;border-left:10px solid #2d6a4f;padding:30px;border-radius:28px;margin:30px 0;}
-.protocol-box{background:#f7f1e9;border-left:6px solid #6f4e37;padding:18px;margin:15px 0;border-radius:18px;}
-.badge{background:#d9c8b2;color:#3d2b1c;font-weight:700;padding:6px 18px;border-radius:40px;display:inline-block;margin-bottom:15px;}
-.prayer-box{background:#fff4e6;border:2px solid #e2c7b0;padding:25px;border-radius:28px;font-style:italic;text-align:center;margin:15px 0;}
-.timeline{background:#e8f0e0;border-radius:40px;padding:30px;margin:25px 0;}
-.timeline-item{display:flex;border-bottom:2px dashed #9ab0a5;padding:18px 0;}
-.time{font-weight:700;width:120px;font-size:1.3rem;}
-.btn-group{display:flex;gap:18px;justify-content:flex-end;margin:30px 0;}
-.btn{background:#6f4e37;color:white;border:none;padding:16px 32px;border-radius:60px;font-weight:600;cursor:pointer;box-shadow:0 8px 0 #4d3626;transition:0.1s;display:inline-flex;align-items:center;gap:10px;}
-.btn:active{transform:translateY(5px);box-shadow:0 3px 0 #4d3626;}
-.btn-secondary{background:#e8f0e0;color:#1e4660;box-shadow:0 8px 0 #b3c2a4;}
-.footer-note{text-align:center;margin-top:60px;border-top:3px solid #e8f0e0;padding-top:30px;color:#5d6d7e;}
-.freq-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));gap:10px;margin-top:15px;}
-.freq-item{background:var(--card-bg, white);border:1px solid var(--border-color, #d9d0b5);border-radius:30px;padding:10px 12px;text-align:center;font-weight:600;color:var(--text-color, #1e4660);line-height:1.4;}
-.freq-item span{display:block;font-size:0.8rem;font-weight:normal;color:var(--info-text, #666);}
-@media print{.btn-group{display:none;}}
-</style>
-</head>
-<body><div class="container" id="vodicSadrzaj">
-<div class="btn-group"><button class="btn" onclick="kopirajPlan()">📋 Kopiraj plan</button><button class="btn btn-secondary" onclick="window.print()">🖨️ Sačuvaj kao PDF</button></div>
-<div class="header-box"><h1>🧩 Integrativni vodič za ${ime}</h1><div class="mkb-row"><span><strong>📌 MKB-10:</strong> ${mkb}</span><span><strong>🩺 Dijagnoza:</strong> ${bolest}</span><span><strong>📅 Datum:</strong> ${danas}</span></div></div>
-<div style="background:#f0f7fa;padding:20px;border-radius:30px;margin-bottom:30px;"><strong>📋 Opis:</strong> ${data.opisBolesti || "Nije unet opis"}</div>
-<div class="warning-box">⚠️ <strong>OBAVEZNO UPOZORENJE:</strong> Informativni materijal – nije zamena za lekarski savet.</div>
+        // Template v2 wrapper (unified export)
+        const esc = (s)=>String(s??'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+        const title = (data.naslovVodica || '').toString().trim() || `Integrativni vodič za ${ime}`;
+        const subtitle = 'DS-Generator · standardna medicina + psihosomatika + duhovnost + narodni recepti + SINET frekvencije (informativno)';
+        const patientLine = `<strong>Pacijent:</strong> ${esc(ime)} · <strong>MKB-10:</strong> ${esc(mkb)} · <strong>Dijagnoza:</strong> ${esc(bolest)} · <strong>Datum:</strong> ${esc(danas)}`;
+        const warningsHtml = `<div class="warning-box">⚠️ <strong>Upozorenje:</strong> Informativni materijal — nije zamena za lekarski savet. Kod naglog pogoršanja, jakog bola, gušenja, slabosti jedne strane tela, krvarenja, visoke temperature ili sumnje na hitno stanje — odmah potraži urgentnu pomoć.</div>`;
 
-<h2><span>💊</span> 1. Konvencionalna medicina</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:30px;">
-<div class="card"><span class="badge">📋 Vaša terapija</span><ul style="list-style:none;padding-left:0;">
-<li style="padding-left:25px;margin-bottom:12px;background:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2218%22 height=%2218%22 viewBox=%220 0 24 24%22 fill=%22%231e4660%22><circle cx=%2212%22 cy=%2212%22 r=%226%22/></svg>') left no-repeat;">${data.lek1 || "Nije navedeno"}</li>
-<li style="padding-left:25px;margin-bottom:12px;background:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2218%22 height=%2218%22 viewBox=%220 0 24 24%22 fill=%22%231e4660%22><circle cx=%2212%22 cy=%2212%22 r=%226%22/></svg>') left no-repeat;">${data.lek2 || "Nije navedeno"}</li>
-<li style="padding-left:25px;margin-bottom:12px;background:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2218%22 height=%2218%22 viewBox=%220 0 24 24%22 fill=%22%231e4660%22><circle cx=%2212%22 cy=%2212%22 r=%226%22/></svg>') left no-repeat;">${data.lek3 || "Nije navedeno"}</li>
-<li style="padding-left:25px;background:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2218%22 height=%2218%22 viewBox=%220 0 24 24%22 fill=%22%231e4660%22><circle cx=%2212%22 cy=%2212%22 r=%226%22/></svg>') left no-repeat;">Suplementi: ${data.suplementi || "Nema"}</li>
-</ul></div>
-<div class="card"><span class="badge">🔬 Saveti</span><p>Redovno uzimajte terapiju. Pratite simptome. Pijte dovoljno vode.</p></div></div>
+        const contentHtml = `
+<div class="header-box">
+  <h1>🧩 ${esc(title)}</h1>
+  <div class="mkb-row">
+    <span><strong>📌 MKB-10:</strong> ${esc(mkb)}</span>
+    <span><strong>🩺 Dijagnoza:</strong> ${esc(bolest)}</span>
+    <span><strong>📅 Datum:</strong> ${esc(danas)}</span>
+  </div>
+</div>
 
-<h2><span>🧠</span> 2. Psihosomatika</h2>
-<div class="soul-box"><div class="section-grid">
-${psihosomatikaKartice}
-</div></div>
+<div class="card" style="margin:18px 0;">
+  <strong>📋 Opis:</strong> ${esc(data.opisBolesti || 'Nije unet opis')}
+</div>
 
-<h2><span>🕯️</span> 3. Duhovnost</h2>
+<h2>💊 1. Konvencionalna medicina</h2>
+<div class="two-col">
+  <div class="card">
+    <span class="badge">📋 Vaša terapija</span>
+    <ul style="margin:10px 0 0 18px;">
+      <li>${esc(data.lek1 || 'Nije navedeno')}</li>
+      <li>${esc(data.lek2 || 'Nije navedeno')}</li>
+      <li>${esc(data.lek3 || 'Nije navedeno')}</li>
+      <li>Suplementi: ${esc(data.suplementi || 'Nema')}</li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="badge">🔬 Saveti</span>
+    <p>Redovno uzimajte terapiju kako je propisano. Pratite simptome. Pijte dovoljno vode. Ako se stanje pogorša — javite se lekaru.</p>
+    ${data.alergije ? `<p class="small"><b>Alergije:</b> ${esc(data.alergije)}</p>` : ''}
+    ${data.hronika ? `<p class="small"><b>Hronične bolesti:</b> ${esc(data.hronika)}</p>` : ''}
+  </div>
+</div>
+
+<h2>🧠 2. Psihosomatika</h2>
+<div class="soul-box"><div class="section-grid">${psihosomatikaKartice}</div></div>
+
+<h2>🕯️ 3. Duhovnost</h2>
 <div class="section-grid">
-<div class="card"><span class="badge">🙏 Molitva</span><div class="prayer-box">"Gospode, predajem Ti svoj bol. Smiri me i isceli."</div></div>
-<div class="card"><span class="badge">🕉 Univerzalna</span><div class="prayer-box">"Neka moje telo bude mirno i zdravo."</div></div>
-<div class="card"><span class="badge">✨ Afirmacija</span><div class="prayer-box">"Svakog dana, moj bol se smanjuje."</div></div>
+  <div class="card"><span class="badge">🙏 Molitva</span><div class="prayer-box">"Gospode, predajem Ti svoj bol. Smiri me i isceli."</div></div>
+  <div class="card"><span class="badge">🕉 Univerzalna</span><div class="prayer-box">"Neka moje telo bude mirno i zdravo."</div></div>
+  <div class="card"><span class="badge">✨ Afirmacija</span><div class="prayer-box">"Svakog dana, moje stanje se poboljšava."</div></div>
 </div>
 
-<h2><span>🌿</span> 4. Narodni recepti</h2>
-<div class="folk-box"><div class="section-grid">
-${receptiKartice}
-</div></div>
+<h2>🌿 4. Narodni recepti</h2>
+<div class="folk-box"><div class="section-grid">${receptiKartice}</div></div>
 
-<h2><span>⏰</span> 5. Dnevni protokol</h2>
+<h2>⏰ 5. Dnevni protokol</h2>
 <div class="timeline">
-<div class="timeline-item"><span class="time">07:00</span><span class="desc">Buđenje, voda, disanje</span></div>
-<div class="timeline-item"><span class="time">08:00</span><span class="desc">Doručak + terapija</span></div>
-<div class="timeline-item"><span class="time">10:00</span><span class="desc">Čaj, odmor</span></div>
-${dodatneStavke}
-<div class="timeline-item"><span class="time">14:00</span><span class="desc">Ručak</span></div>
-<div class="timeline-item"><span class="time">16:00</span><span class="desc">Meditacija, disanje</span></div>
-<div class="timeline-item"><span class="time">18:00</span><span class="desc">Šetnja, istezanje</span></div>
-<div class="timeline-item"><span class="time">20:00</span><span class="desc">Večernji čaj</span></div>
-<div class="timeline-item"><span class="time">21:00</span><span class="desc">Molitva, dnevnik</span></div>
-<div class="timeline-item"><span class="time">22:00</span><span class="desc">San</span></div>
+  <div class="timeline-item"><span class="time">07:00</span><span>Buđenje, voda, disanje</span></div>
+  <div class="timeline-item"><span class="time">08:00</span><span>Doručak + terapija</span></div>
+  <div class="timeline-item"><span class="time">10:00</span><span>Čaj, odmor</span></div>
+  ${dodatneStavke}
+  <div class="timeline-item"><span class="time">14:00</span><span>Ručak</span></div>
+  <div class="timeline-item"><span class="time">16:00</span><span>Meditacija, disanje</span></div>
+  <div class="timeline-item"><span class="time">18:00</span><span>Šetnja, istezanje</span></div>
+  <div class="timeline-item"><span class="time">20:00</span><span>Večernji čaj</span></div>
+  <div class="timeline-item"><span class="time">21:00</span><span>Molitva, dnevnik</span></div>
+  <div class="timeline-item"><span class="time">22:00</span><span>San</span></div>
 </div>
 
-${frekvencijeHTML}
+${frekvencijeHTML || ''}
 
-<div class="footer-note">🌱 Personalizovano za ${ime} • MKB-10: ${mkb} • ${bolest}</div>
-</div>
-<script>function kopirajPlan(){const t=document.getElementById('vodicSadrzaj').innerText;navigator.clipboard.writeText(t).then(()=>alert('Plan kopiran!'));}${'<'+'/script>'}
-</body></html>`;
+<div class="footer-note">🌱 Personalizovano za ${esc(ime)} • MKB-10: ${esc(mkb)} • ${esc(bolest)}</div>`;
+
+        const extraHeadHtml = `<style>
+.header-box{background:linear-gradient(135deg,#1e4660,#2d5a7a);color:#fff;padding:34px 34px;border-radius:28px;margin:18px 0;position:relative;overflow:hidden;}
+.header-box::before{content:'🌿';font-size:160px;position:absolute;right:10px;bottom:-30px;opacity:.12;transform:rotate(15deg);}
+.header-box h1{color:#fff;border-bottom:none;margin:0 0 12px 0;}
+.mkb-row{display:flex;gap:18px;flex-wrap:wrap;background:rgba(255,255,255,0.15);backdrop-filter:blur(6px);padding:12px 16px;border-radius:999px;border:1px solid rgba(255,255,255,0.28);}
+.section-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin:12px 0;}
+.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin:12px 0;}
+.timeline{background:#e8f0e0;border-radius:20px;padding:16px 18px;margin:14px 0;}
+.timeline-item{display:flex;gap:12px;align-items:flex-start;border-bottom:1px dashed #9ab0a5;padding:10px 0;}
+.timeline-item:last-child{border-bottom:none;}
+.time{font-weight:900;width:90px;white-space:nowrap;}
+</style>`;
+
+        const backUrl = (location.href || '').split('#')[0] || null;
+
+        if(window.SINET_TemplateV2 && typeof window.SINET_TemplateV2.buildDoc === 'function'){
+            const mkbBadge = (mkb||'').toString().match(/[A-Z][0-9]{2}(?:\.[0-9])?/i);
+            return window.SINET_TemplateV2.buildDoc({
+                title: `SINET vodič · ${ime} · ${mkb}`.trim(),
+                subtitle,
+                templateName: 'SINET_TEMPLATE_v2',
+                coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+                backUrl,
+                patientLine,
+                warningsHtml,
+                contentHtml,
+                extraHeadHtml,
+                badgesHtml: `<span class="badge">DS-Generator</span>${mkbBadge?`<span class="badge">MKB: ${esc(mkbBadge[0])}</span>`:''}`
+            });
+        }
+
+        // Fallback minimal
+        return `<!doctype html><html lang="sr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title></head><body>${warningsHtml}${contentHtml}</body></html>`;
     }
 
     // ---------- Prikupljanje podataka ----------

@@ -30,6 +30,7 @@
     select{padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.2);color:#fff}
     input[type="checkbox"]{transform:scale(1.15)}
   </style>
+  <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.8.6">
 </head>
 <body>
 <div class="wrap">
@@ -45,7 +46,7 @@
       <button class="btn primary" id="btnUseData">Učitaj data/SINET_STL.json</button>
       <button class="btn ghost" id="btnFind" disabled>Nađi duplikate</button>
       <button class="btn good" id="btnApply" disabled>Primeni odluke + preuzmi čist STL</button>
-      <button class="btn warn" id="btnReport" disabled>Preuzmi report</button>
+      <button class="btn warn" id="btnReport" disabled>🧾 Izveštaj (HTML)</button>
       <a class="btn ghost" href="admin.html" style="text-decoration:none;display:inline-flex;align-items:center;">↩ Admin</a>
     </div>
     <div style="margin-top:10px" class="log" id="log">Spremno.</div>
@@ -445,17 +446,109 @@
   });
 
   $('btnReport').addEventListener('click', ()=>{
-    const out = {
+    if(!stl || !duplicates.length) return;
+    if(!window.SINET_TemplateV2 || !window.SINET_TemplateV2.buildDoc){
+      return alert('Template v2 nije učitan (nedostaje js/sinet-template-v2.js).');
+    }
+
+    // Build decisions snapshot (including current UI state)
+    const considered = duplicates.slice(0,200).map((p, localIdx)=>{
+      const a = stl.simptomi[p.aIdx];
+      const b = stl.simptomi[p.bIdx];
+      const groupEl = document.querySelector('[data-decision="'+localIdx+'"]')?.closest('.group');
+      const chk = groupEl?.querySelector('[data-check="'+localIdx+'"]');
+      const enabled = chk ? chk.checked : true;
+      return {
+        aId: a ? a.id : null,
+        bId: b ? b.id : null,
+        aName: a ? a.naziv : '',
+        bName: b ? b.naziv : '',
+        score: p.score,
+        reason: p.reason,
+        decision: p.decision,
+        enabled
+      };
+    });
+
+    const summary = {
+      totalPairs: duplicates.length,
+      shownPairs: Math.min(duplicates.length, 200),
+      enabledPairs: considered.filter(x=>x.enabled).length,
+      decidedPairs: considered.filter(x=>x.enabled && x.decision && x.decision!=='skip').length
+    };
+
+    // Optional: compute clean STL based on current decisions (for topbar download)
+    let cleanSTL = null;
+    try{
+      const prevReport = report.slice();
+      const out = applyDecisions();
+      cleanSTL = out;
+      report = prevReport;
+    }catch(e){
+      cleanSTL = null;
+    }
+
+    const payload = {
       ts: new Date().toISOString(),
       tool: 'sinet-deduplicator',
-      decisions: report
+      summary,
+      decisions: considered
     };
-    downloadJson('SINET_DEDUPE_REPORT.json', out);
-    log('OK: preuzet report ('+report.length+' odluka).');
+
+    const extraButtonsHtml = cleanSTL ? '<button class="btn" onclick="downloadCleanSTL()">⬇️ Čist STL</button>' : '';
+    const finalExtraHead = cleanSTL ? `<script>
+        const CLEAN_STL = ${JSON.stringify(cleanSTL)};
+        function downloadCleanSTL(){
+          if(!CLEAN_STL) return alert('Nema izlaznog STL-a.');
+          download(JSON.stringify(CLEAN_STL, null, 2), 'SINET_STL.deduped.json', 'application/json;charset=utf-8');
+        }
+      </script>` : '';
+
+    const contentHtml = `
+      <div class="card">
+        <h2>Sažetak</h2>
+        <ul>
+          <li><b>Ukupno parova:</b> ${summary.totalPairs}</li>
+          <li><b>Prikazano (UI limit):</b> ${summary.shownPairs}</li>
+          <li><b>Uključeno:</b> ${summary.enabledPairs}</li>
+          <li><b>Sa odlukom (≠ skip):</b> ${summary.decidedPairs}</li>
+        </ul>
+        <p class="small">Preporuka: posle DeDuplikacije pokreni <b>MKB-10 Linker</b> i generiši <code>dx_index</code>.</p>
+      </div>
+    `;
+
+    const warningsHtml = (summary.decidedPairs===0)
+      ? `<div class="warning-box">Nema izabranih odluka (sve je "skip"). Izaberi "keep/merge" pa probaj ponovo.</div>`
+      : `<div class="info-box">Izveštaj sadrži trenutne odluke (uključujući checkbox enable/disable).</div>`;
+
+    const html = window.SINET_TemplateV2.buildDoc({
+      title: 'DeDuplikator — Izveštaj',
+      subtitle: 'STL duplikati (keep/merge) + audit',
+      backUrl: 'admin.html',
+      contentHtml,
+      warningsHtml,
+      payloadJson: payload,
+      payloadFilename: 'SINET_DEDUPE_REPORT.json',
+      payloadSectionTitle: '🧾 Dedupe report (JSON)',
+      payloadHelpText: 'Ovaj report čuva odluke. (Opcija: preuzmi i Čist STL iz topbar-a.)',
+      badgesHtml: '<span class="badge">Tool: DeDuplikator</span>',
+      extraButtonsHtml: extraButtonsHtml,
+      extraHeadHtml: finalExtraHead,
+      coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+      templateName: 'SINET_TEMPLATE_v2'
+    });
+
+    const w = window.open('', '_blank');
+    if(!w) return alert('Popup je blokiran. Dozvoli popups za ovaj sajt.');
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
   });
 
   // initial
   log('Spremno. Učitaj STL fajl pa klikni "Nađi duplikate".');
 </script>
+  <script src="js/sinet-template-v2.js?v=15.7.8.0"></script>
+  <script src="js/sinet-quickbar.js?v=15.7.8.6" defer></script>
 </body>
 </html>

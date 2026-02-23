@@ -27,6 +27,7 @@
         body, input, textarea, select, button { font-size: 1rem; }
         .lead { font-size: 1.1rem; }
     </style>
+  <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.7.7">
 </head>
 <body>
 
@@ -73,6 +74,25 @@
                     </div>
                 </div>
             </div>
+
+<div class="card shadow-sm border-0 mb-3" id="sinet-quicklinks-card" style="position: sticky; top: 10px; z-index: 20;">
+  <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
+    <span><i class="fas fa-bolt me-2 text-warning"></i>Brzo (Prva pomoć)</span>
+    <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#sinetQuickLinksBody" aria-expanded="true" aria-controls="sinetQuickLinksBody">Sakrij / Prikaži</button>
+  </div>
+  <div class="card-body small collapse show" id="sinetQuickLinksBody" data-qb-container="1" data-qb-empty="Nema izabranih prečica. Klikni ⚙️ u “⚡ Brzo” (gore) da izabereš šta želiš.">
+    <div class="d-flex flex-wrap gap-2">
+      <a class="btn btn-sm btn-warning" data-qb-id="anti" data-sinet-back href="pages/antiparazitski.html"><i class="fas fa-bug me-1"></i>Antiparazitski</a>
+      <a class="btn btn-sm btn-outline-primary" data-qb-id="guide" data-sinet-back href="pages/integrativni_vodic.html"><i class="fas fa-file-lines me-1"></i>Integrativni vodič</a>
+      <a class="btn btn-sm btn-outline-secondary" data-qb-id="ra" data-sinet-back href="pages/integrativni_vodic_RA_sake.html"><i class="fas fa-hand me-1"></i>RA šake</a>
+      <a class="btn btn-sm btn-outline-dark" data-qb-id="spk" data-sinet-back href="pages/speaker_clean_proof.html"><i class="fas fa-volume-high me-1"></i>Čišćenje zvučnika</a>
+      <a class="btn btn-sm btn-outline-success" data-qb-id="ds" data-sinet-back href="DS-Generator.html"><i class="fas fa-wand-magic-sparkles me-1"></i>DS Generator</a>
+      <a class="btn btn-sm btn-outline-success" data-qb-id="home" data-sinet-back href="index.html"><i class="fas fa-house me-1"></i>Početna</a>
+    </div>
+    <div class="mt-2 text-muted">Prečice za najčešće “brze” potrebe. Sve se vraća nazad u Anamnezu preko <code>?back=</code>.</div>
+  </div>
+</div>
+
 <div class="card shadow-sm border-0 mb-3" id="sinet-link-card">
     <div class="card-header bg-white fw-bold"><i class="fas fa-link me-2 text-success"></i>Povezano u SINET</div>
     <div class="card-body small">
@@ -142,6 +162,21 @@
       }catch(_){}
       location.href = 'index.html';
     }
+
+    function sinetApplyBackLinks(){
+      try{
+        const here = location.href;
+        document.querySelectorAll('a[data-sinet-back]').forEach(a=>{
+          try{
+            const u = new URL(a.getAttribute('href'), here);
+            if (!u.searchParams.get('back')) u.searchParams.set('back', here);
+            a.setAttribute('href', u.toString());
+          }catch(_){}
+        });
+      }catch(_){}
+    }
+    document.addEventListener('DOMContentLoaded', sinetApplyBackLinks);
+
 </script>
 <script>
     // ================== GLOBALNI PODACI ==================
@@ -688,11 +723,56 @@ function spisiPacijenta(e) {
         downloadFile(txt, 'anamneza.txt', 'text/plain');
     }
     function exportHTML() {
-        let html = `<html><head><meta charset="UTF-8"><title>Anamneze</title></head><body>`;
-        pacijenti.forEach(p => { html += `<pre>${JSON.stringify(p,null,2)}</pre><hr>`; });
-        // VAŽNO: u ovom <script> bloku ne sme da se pojavi literalni ZATVARAJUĆI SCRIPT tag (inače browser prekida parsiranje).
-        html += '\n' + '<scr' + 'ipt src="js/anamneza-sinet-bridge.js?v=15.7.6.7"></scr' + 'ipt>\n</body></html>';
-        downloadFile(html, 'anamneza.html', 'text/html');
+        try{
+            const escH = (s)=>String(s??'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+            const escH = (s)=>String(s??'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+            const blocks = (pacijenti||[]).map((p, idx) => {
+                const ime = (p?.osobni?.ime||'') + (p?.osobni?.prezime ? (' ' + p.osobni.prezime) : '');
+                const nick = p?.osobni?.nick ? ` (${p.osobni.nick})` : '';
+                const pol = p?.osobni?.pol ? ` · ${p.osobni.pol}` : '';
+                const dr = p?.osobni?.datum_rodjenja ? ` · rođen ${p.osobni.datum_rodjenja}` : '';
+                const razlog = p?.razlog ? String(p.razlog) : '';
+                const created = p?.created_at ? ` · ${p.created_at}` : '';
+                const head = `${ime || ('Pacijent #' + (idx+1))}${nick}${pol}${dr}${created}`;
+                const json = escH(JSON.stringify(p, null, 2));
+                return `
+                  <div class="card" style="margin:14px 0;">
+                    <h2 style="margin-top:0;">🩺 ${escH(head)}</h2>
+                    ${razlog ? `<div class="info-box"><strong>Razlog dolaska:</strong> ${escH(razlog)}</div>` : ''}
+                    <details style="margin-top:10px;">
+                      <summary>Prikaži JSON (sirovi zapis)</summary>
+                      <pre>${json}</pre>
+                    </details>
+                  </div>
+                `;
+            }).join('');
+
+            const title = 'Anamneza · Izvoz (Template v2)';
+            const subtitle = 'Human-friendly izveštaj (svaki pacijent kao kartica) + opcioni JSON';
+            const warningsHtml = `<div class="warning-box">⚠️ Ovaj izvoz je informativan i služi za pregled/razmenu zapisa. Ne postavlja dijagnozu.</div>`;
+
+            let doc = '';
+            if(window.SINET_TemplateV2 && typeof window.SINET_TemplateV2.buildDoc === 'function'){
+                doc = window.SINET_TemplateV2.buildDoc({
+                    title,
+                    subtitle,
+                    templateName: 'SINET_TEMPLATE_v2',
+                    coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+                    backUrl: null,
+                    patientLine: '',
+                    warningsHtml,
+                    contentHtml: blocks || '<div class="card">Nema zapisa.</div>',
+                    anamnezaJson: null,
+                    badgesHtml: `<span class="badge">Zapisa: ${(pacijenti||[]).length}</span>`
+                });
+            } else {
+                // Minimal fallback
+                doc = `<!doctype html><html lang="sr"><head><meta charset="utf-8"><title>${title}</title></head><body>${warningsHtml}${blocks}</body></html>`;
+            }
+            downloadFile(doc, 'anamneza_template_v2.html', 'text/html;charset=utf-8');
+        }catch(e){
+            alert(e?.message || 'Ne mogu da izvezem HTML.');
+        }
     }
     function downloadFile(content, fileName, mime) {
         const blob = new Blob([content], {type: mime});
@@ -735,6 +815,8 @@ function spisiPacijenta(e) {
     window.onload = () => { /* ucitavanje se vrši u ucitajPacijenteSaServera() */ };
 </script>
 
-<script src="js/anamneza-sinet-bridge.js?v=15.7.6.7"></script>
+<script src="js/anamneza-sinet-bridge.js?v=15.7.7.6"></script>
+  <script src="js/sinet-quickbar.js?v=15.7.7.7" defer></script>
+<script src="js/sinet-template-v2.js?v=15.7.7.7" defer></script>
 </body>
 </html>

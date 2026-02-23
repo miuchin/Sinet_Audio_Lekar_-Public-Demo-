@@ -30,6 +30,7 @@
     .kpi{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .kpi span{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.15);font-weight:800;font-size:12px}
   </style>
+  <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.8.6">
 </head>
 <body>
 <header>
@@ -53,6 +54,7 @@
       <button class="btn" id="btnConvert" disabled>➡️ Konvertuj</button>
       <button class="btnG" id="btnDownload" disabled>💾 Preuzmi STL JSON</button>
       <button class="btn2" id="btnCopy" disabled>📋 Kopiraj STL</button>
+      <button class="btn2" id="btnReport" disabled>🧾 Izveštaj (HTML)</button>
       <a class="btn2" href="admin.html">↩ Admin</a>
     </div>
   </div>
@@ -78,6 +80,7 @@
   const btnConvert = $("btnConvert");
   const btnDownload = $("btnDownload");
   const btnCopy = $("btnCopy");
+  const btnReport = $("btnReport");
   const status = $("status");
   const kpiItems = $("kpiItems");
   const kpiOut = $("kpiOut");
@@ -250,6 +253,7 @@
     btnConvert.disabled = !(inputItems && inputItems.length);
     btnDownload.disabled = true;
     btnCopy.disabled = true;
+    if(btnReport) btnReport.disabled = true;
     outBox.value = "";
     outputSTL = null;
   }
@@ -287,6 +291,7 @@
     kpiWarn.textContent = String(res._warn || 0);
     btnDownload.disabled = false;
     btnCopy.disabled = false;
+    if(btnReport) btnReport.disabled = false;
     setStatus("Konverzija završena ✅", "ok");
   });
 
@@ -313,6 +318,57 @@
     }
   });
 
+
+
+  function openHtmlReport(){
+    if(!outputSTL) return;
+    if(!window.SINET_TemplateV2 || !window.SINET_TemplateV2.buildDoc){
+      return alert('Template v2 nije učitan (nedostaje js/sinet-template-v2.js).');
+    }
+    const itemsN = Number(kpiItems.textContent||0)||0;
+    const outN = outputSTL.simptomi ? outputSTL.simptomi.length : 0;
+    const warnN = Number(kpiWarn.textContent||0)||0;
+
+    const warningsHtml = warnN ? `<div class=\"warning-box\">⚠️ ${warnN} stavki bez frekvencija (ili sa praznim poljima). Preporuka: dopuni u Inspektoru ili kroz AI workflow.</div>` : `<div class=\"info-box\">✅ Bez upozorenja (bar po kriterijumu frekvencija).</div>`;
+
+    const contentHtml = `
+      <div class=\"card\">
+        <h2>Sažetak konverzije</h2>
+        <ul>
+          <li><b>Ulaz (items):</b> ${itemsN}</li>
+          <li><b>Izlaz (STL simptomi):</b> ${outN}</li>
+          <li><b>Upozorenja:</b> ${warnN}</li>
+        </ul>
+        <p class=\"small\">Sledeći korak: (opciono) <b>DeDuplikator</b> → <b>MKB-10 Linker</b> → <b>dx_index</b>.</p>
+      </div>
+    `;
+
+    const html = window.SINET_TemplateV2.buildDoc({
+      title: 'Items → STL Converter — Izveštaj',
+      subtitle: 'ENRICHED items[] → STL v1.1',
+      backUrl: 'admin.html',
+      contentHtml,
+      warningsHtml,
+      payloadJson: outputSTL,
+      payloadFilename: 'SINET_STL_from_items.json',
+      payloadSectionTitle: '🧾 STL (SINET_STL) JSON',
+      payloadHelpText: 'Ovaj STL može direktno u data/SINET_STL.json (ili kroz tool-chain).',
+      badgesHtml: '<span class=\"badge\">Tool: Items→STL</span>',
+      coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+      templateName: 'SINET_TEMPLATE_v2'
+    });
+
+    const w = window.open('', '_blank');
+    if(!w) return alert('Popup je blokiran. Dozvoli popups za ovaj sajt.');
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  }
+
+  if(btnReport){
+    btnReport.addEventListener('click', openHtmlReport);
+  }
+
   // Allow paste JSON directly
   inBox.addEventListener("input", ()=>{
     const obj = tryParseJSON(inBox.value);
@@ -330,5 +386,7 @@
   });
 })();
 </script>
+  <script src="js/sinet-template-v2.js?v=15.7.8.0"></script>
+  <script src="js/sinet-quickbar.js?v=15.7.8.6" defer></script>
 </body>
 </html>

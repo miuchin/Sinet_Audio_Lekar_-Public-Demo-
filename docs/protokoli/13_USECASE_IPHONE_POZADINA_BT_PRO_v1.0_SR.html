@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang='sr'>
+<head>
+  <meta charset='utf-8'/>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+  <title>13 USECASE IPHONE POZADINA BT PRO v1.0 SR</title>
+  <script src='../../js/sinet-template-v2.js'></script>
+</head>
+<body>
+<script>
+(function(){
+  const opts = {
+    title: "🍏 Use‑case: iPhone — pozadina + Bluetooth (PRO)",
+    subtitle: "Use‑case protokol (HTML)",
+    backUrl: "../../index.html?nav=help",
+    coauthor: "miuchins (Svetozar Miučin) + SINET AI",
+    contentHtml: "\n<div class='card manual-hero'>\n  <p class='manual-sub'>Ovo je <b>čitljiva HTML</b> verzija “use‑case” protokola. ✅</p>\n  <div class='manual-actions no-print'>\n    <input id='docSearch' class='manual-search' placeholder='🔎 Pretraži ovaj protokol…' />\n    <button class='btn' onclick='window.find && window.find(document.getElementById(\"docSearch\").value)'>Nađi</button>\n    <a class='btn' style='text-decoration:none; display:inline-flex; align-items:center; justify-content:center;' href='./13_USECASE_IPHONE_POZADINA_BT_PRO_v1.0_SR.md' target='_blank' rel='noopener'>Otvori MD</a>\n  </div>\n  <p class='manual-tip'>Savet: u PRO režimu testiraj prvo kraću terapiju (10–40 min). 🙂</p>\n</div>\n<div class='card'>\n<h1>🍏 Use‑case: iPhone — pozadina + Bluetooth (PRO režim)</h1>\n<div style='height:10px'></div>\n<blockquote>Cilj: da na iPhone‑u dobiješ *najbolju moguću šansu* da zvuk nastavi u pozadini / na lock‑screen‑u, posebno preko Bluetooth slušalica.</blockquote>\n<div style='height:10px'></div>\n<hr/>\n<div style='height:10px'></div>\n<h2>0) 1‑min decision tree (izaberi put)</h2>\n<div style='height:10px'></div>\n<ul>\n<li>Želiš <b>pozadinu / lock‑screen</b> → uključi <b>🍏 iPhone PRO (Render u WAV / RAM)</b>.</li>\n<li>Ako ti treba <b>brz test</b> → pusti jednu kraću terapiju (10–40 min) i proveri lock‑screen.</li>\n<li>Ako ti treba <b>duže od 60–100 min</b> → očekuj da iOS može prekinuti; radi u sesijama (npr. 40 min + pauza).</li>\n</ul>\n<div style='height:10px'></div>\n<hr/>\n<div style='height:10px'></div>\n<h2>1) Koraci (tačno redosled)</h2>\n<div style='height:10px'></div>\n<ol>\n<li>Otvori SINET u <b>Safari</b> (preporuka: prvo test u tabu, tek posle PWA).</li>\n<li>Tapni <b>🔊 AKTIVIRAJ</b> (prvi put) da Safari “otključa” audio.</li>\n<li>Idi na <b>Podešavanja</b>:</li>\n</ol>\n<p>   - uključi <b>🍏 iPhone PRO (Render u WAV / RAM)</b> ✅</p>\n<p>   - (opciono) ne uključuj “eksperimentalno” ako ne znaš šta radi</p>\n<ol>\n<li>Spoji Bluetooth slušalice i proveri:</li>\n</ol>\n<p>   - iPhone nije na 🔇 silent switch</p>\n<p>   - Volume je pojačan</p>\n<p>   - Low Power Mode je isključen (test)</p>\n<ol>\n<li>Izaberi terapiju i tapni <b>▶</b>.</li>\n<li>Sačekaj ~10 sekundi da se stabilizuje.</li>\n<li>Zaključaj ekran (power), pa proveri da li se zvuk čuje i dalje.</li>\n</ol>\n<div style='height:10px'></div>\n<hr/>\n<div style='height:10px'></div>\n<h2>2) Kako da znaš da je PRO stvarno aktivan</h2>\n<div style='height:10px'></div>\n<ul>\n<li>Ako je PRO uključen, SINET renderuje u WAV i pušta preko <b><audio></b> elementa (to je stabilnije od WebAudio u pozadini).</li>\n<li>Ako vidiš poruku da je “Safari pauzirao zvuk u pozadini”, vrlo često znači da nisi u PRO režimu ili je iOS ipak suspendovao sesiju.</li>\n</ul>\n<div style='height:10px'></div>\n<hr/>\n<div style='height:10px'></div>\n<h2>3) Najčešći problemi (i rešenje)</h2>\n<div style='height:10px'></div>\n<ul>\n<li><b>Zvuči u app‑u, ali stane čim zaključaš ekran</b></li>\n</ul>\n<p>  → Uveri se da je <b>🍏 PRO uključen</b>, pa ponovi test na kraćoj terapiji (10–40 min).</p>\n<div style='height:10px'></div>\n<ul>\n<li><b>Ne čuje se na Bluetooth, a na zvučniku se čuje</b></li>\n</ul>\n<p>  → Uključi <b>🍏 PRO</b> (poboljšava routing) + proveri da BT nije na “Call” profilu.</p>\n<div style='height:10px'></div>\n<ul>\n<li><b>Terapija je predugačka (npr. 100 min)</b></li>\n</ul>\n<p>  → iOS može biti agresivan. Preporuka: koristi kraće sesije ili smanji trajanje po frekvenciji.</p>\n<div style='height:10px'></div>\n<hr/>\n<div style='height:10px'></div>\n<h2>4) Napomena (realnost iOS‑a)</h2>\n<div style='height:10px'></div>\n<p>iOS / Safari / PWA imaju sistemska ograničenja. SINET radi “best‑effort” (web‑only).  </p>\n<p>Za 100% background bez prekida — potreban je <b>native wrapper</b> (Capacitor/AVAudioSession).</p>\n</div>\n",
+    extraButtonsHtml: ""
+  };
+  document.write(window.SINET_TemplateV2.buildDoc(opts));
+})();
+</script>
+</body>
+</html>

@@ -55,6 +55,7 @@
         .btn-ai:hover { background: #71368a; }
 
     </style>
+  <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.8.6">
 </head>
 <body>
 
@@ -139,7 +140,10 @@
 
 <div class="bottom-bar">
     <div id="msgBar" style="color:#666;">Sistem spreman.</div>
-    <button class="btn-dl" onclick="downloadFile()">🚀 PREUZMI SREĐENI FAJL</button>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <button class="btn-dl" style="background:#6f4e37" onclick="openHtmlReport()">🧾 Izveštaj (HTML)</button>
+      <button class="btn-dl" onclick="downloadFile()">🚀 PREUZMI SREĐENI FAJL</button>
+    </div>
 </div>
 
 <script>
@@ -344,18 +348,81 @@
         alert("✅ Sačuvano!");
     }
 
-    function downloadFile() {
-        const finalObj = {
+    function buildFinalObj(){
+        return {
             meta: { version: "15.0", date: new Date().toISOString() },
             items: catalog
         };
+    }
+
+    function downloadFile() {
+        const finalObj = buildFinalObj();
         const blob = new Blob([JSON.stringify(finalObj, null, 2)], {type:"application/json"});
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
         a.download = "SINET_CATALOG_FULL.json";
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
     }
+
+    function openHtmlReport(){
+        if(!catalog || !catalog.length) return alert('Prvo učitaj katalog.');
+        if(!window.SINET_TemplateV2 || !window.SINET_TemplateV2.buildDoc){
+          return alert('Template v2 nije učitan (nedostaje js/sinet-template-v2.js).');
+        }
+
+        const total = catalog.length;
+        const missMkb = catalog.filter(i=>!i.mkb10).length;
+        const missPsy = catalog.filter(i=>!(i.holisticki && i.holisticki.psihosomatika && i.holisticki.psihosomatika.uzrok)).length;
+        const missPray = catalog.filter(i=>!(i.holisticki && i.holisticki.duhovnost && i.holisticki.duhovnost.tekst)).length;
+        const missAlt = catalog.filter(i=>!(i.holisticki && i.holisticki.saveti && i.holisticki.saveti.narodno)).length;
+
+        const warningsHtml = (missMkb||missPsy||missPray||missAlt)
+          ? `<div class="warning-box">⚠️ Nedostaju polja: MKB=${missMkb}, Psihosomatika=${missPsy}, Molitva/Afirmacija=${missPray}, Narodni lek=${missAlt}. (Ovo je normalno — Inspektor služi da dopuniš.)</div>`
+          : `<div class="info-box">✅ Sve ključne rubrike su popunjene (po kriterijumima Inspektora).</div>`;
+
+        const contentHtml = `
+          <div class="card">
+            <h2>Sažetak inspekcije</h2>
+            <ul>
+              <li><b>Ukupno stavki:</b> ${total}</li>
+              <li><b>Fali MKB-10:</b> ${missMkb}</li>
+              <li><b>Fali Psihosomatika (uzrok):</b> ${missPsy}</li>
+              <li><b>Fali Molitva/Afirmacija:</b> ${missPray}</li>
+              <li><b>Fali Narodni lek:</b> ${missAlt}</li>
+            </ul>
+            <p class="small">Sledeći korak (zavisi od formata):
+              <br>• Ako je ovo <code>items[]</code> format → pokreni <b>Items → STL Converter</b>.
+              <br>• Ako je već STL → koristi <b>MKB-10 Linker</b> i generiši <code>dx_index</code>.
+            </p>
+          </div>
+        `;
+
+        const finalObj = buildFinalObj();
+        const html = window.SINET_TemplateV2.buildDoc({
+          title: 'SINET Inspektor — Izveštaj',
+          subtitle: 'Universal Fix (items) — polja po rubrikama',
+          backUrl: 'admin.html',
+          contentHtml,
+          warningsHtml,
+          payloadJson: finalObj,
+          payloadFilename: 'SINET_CATALOG_FULL.json',
+          payloadSectionTitle: '🧾 Izlazni katalog (JSON)',
+          payloadHelpText: 'Ovaj fajl je “sređen” i može dalje u tool-chain (Items→STL / Linker).',
+          badgesHtml: '<span class="badge">Tool: Inspektor</span>',
+          coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+          templateName: 'SINET_TEMPLATE_v2'
+        });
+
+        const w = window.open('', '_blank');
+        if(!w) return alert('Popup je blokiran. Dozvoli popups za ovaj sajt.');
+        w.document.open();
+        w.document.write(html);
+        w.document.close();
+    }
 </script>
 
+  <script src="js/sinet-template-v2.js?v=15.7.8.0"></script>
+
+  <script src="js/sinet-quickbar.js?v=15.7.8.6" defer></script>
 </body>
 </html>

@@ -24,6 +24,7 @@
     code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:8px}
     .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.15);font-size:12px;opacity:.9}
   </style>
+  <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.8.6">
 </head>
 <body>
 <header>
@@ -45,6 +46,7 @@
       <button class="btn" id="btnConvert" disabled>🔁 Convert to STL</button>
       <button class="btn2" id="btnDownload" disabled>⬇️ Download STL JSON</button>
       <button class="btn2" id="btnCopy" disabled>📋 Copy JSON</button>
+      <button class="btn2" id="btnReport" disabled>🧾 Izveštaj (HTML)</button>
       <button class="btn2" id="btnClear">🧹 Clear</button>
     </div>
     <div class="small" style="margin-top:10px">
@@ -88,10 +90,13 @@
   const btnConvert = $("btnConvert");
   const btnDownload= $("btnDownload");
   const btnCopy    = $("btnCopy");
+  const btnReport  = $("btnReport");
   const btnClear   = $("btnClear");
 
   let rawObj = null;
   let stlObj = null;
+  let lastWarnings = [];
+  let lastDetect = null;
   let loadedFileName = "";
 
   function setStatus(text, cls){
@@ -315,6 +320,7 @@
       }
       rawObj = obj;
       const det = detectOldShape(obj);
+      lastDetect = det;
       if(!det.ok){
         setStatus("JSON učitan, ali format nije prepoznat: " + det.reason, "bad");
         btnConvert.disabled = false; // ipak dozvoli pokušaj (nekad heuristika omane)
@@ -324,6 +330,7 @@
       }
       btnDownload.disabled = true;
       btnCopy.disabled = true;
+      if(btnReport) btnReport.disabled = true;
       outEl.value = "";
       warnEl.textContent = "—";
     };
@@ -363,10 +370,12 @@
       setStatus("Konvertujem…", "warn");
       const { stl, warnings } = convertOldToSTL(rawObj);
       stlObj = stl;
+      lastWarnings = Array.isArray(warnings) ? warnings : [];
 
       outEl.value = JSON.stringify(stlObj, null, 2);
       btnDownload.disabled = false;
       btnCopy.disabled = false;
+      if(btnReport) btnReport.disabled = false;
 
       if(warnings.length){
         warnEl.innerHTML = warnings.map(w => `<div>${w}</div>`).join("");
@@ -380,6 +389,7 @@
       outEl.value = "";
       btnDownload.disabled = true;
       btnCopy.disabled = true;
+      if(btnReport) btnReport.disabled = true;
       warnEl.textContent = "—";
       setStatus("Greška konverzije: " + (err && err.message ? err.message : String(err)), "bad");
     }
@@ -403,6 +413,61 @@
     }
   });
 
+
+
+  function openHtmlReport(){
+    if(!stlObj) return;
+    if(!window.SINET_TemplateV2 || !window.SINET_TemplateV2.buildDoc){
+      return alert('Template v2 nije učitan (nedostaje js/sinet-template-v2.js).');
+    }
+    const total = (stlObj && stlObj.simptomi && stlObj.simptomi.length) ? stlObj.simptomi.length : 0;
+    const wCount = (lastWarnings||[]).length;
+    const base = loadedFileName ? loadedFileName.replace(/\.json$/i,'') : 'catalog';
+    const payloadFn = `${base}_STL.json`;
+
+    const warnList = (lastWarnings||[]).slice(0, 80).map(w=>`<li>${String(w).replace(/</g,'&lt;').replace(/>/g,'&gt;')}</li>`).join('');
+    const warningsHtml = wCount ? `<div class=\"warning-box\"><b>Upozorenja:</b> ${wCount} (prikaz prvih ${Math.min(wCount,80)})<ul>${warnList}</ul></div>` : `<div class=\"info-box\">✅ Nema upozorenja.</div>`;
+
+    const det = lastDetect && lastDetect.ok ? `root=\"${lastDetect.rootKey}\", stavki=${lastDetect.count}` : 'format nije prepoznat heuristikom';
+
+    const contentHtml = `
+      <div class=\"card\">
+        <h2>Sažetak konverzije</h2>
+        <ul>
+          <li><b>Izvorni fajl:</b> ${loadedFileName || '—'}</li>
+          <li><b>Detekcija:</b> ${det}</li>
+          <li><b>Izlaz (STL):</b> ${total} stavki</li>
+          <li><b>Upozorenja:</b> ${wCount}</li>
+        </ul>
+        <p class=\"small\">Preporuka: posle konverzije pokreni <b>DeDuplikator</b> → <b>MKB-10 Linker</b> → <b>dx_index generator</b>.</p>
+      </div>
+    `;
+
+    const html = window.SINET_TemplateV2.buildDoc({
+      title: 'SINET Catalog Converter — Izveštaj',
+      subtitle: 'Old → STL (konverzija kataloga)',
+      backUrl: 'admin.html',
+      contentHtml: contentHtml,
+      warningsHtml: warningsHtml,
+      payloadJson: stlObj,
+      payloadFilename: payloadFn,
+      payloadSectionTitle: '🧾 STL (SINET_STL) JSON',
+      payloadHelpText: 'Ovaj JSON je spreman za dalju obradu: DeDuplikator → MKB-10 Linker → dx_index.',
+      badgesHtml: '<span class=\"badge\">Tool: Converter</span>',
+      coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+      templateName: 'SINET_TEMPLATE_v2'
+    });
+
+    const w = window.open('', '_blank');
+    if(!w) return alert('Popup je blokiran. Dozvoli popups za ovaj sajt.');
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  }
+
+  if(btnReport){
+    btnReport.addEventListener('click', openHtmlReport);
+  }
   btnClear.addEventListener("click", () => {
     rawObj = null; stlObj = null; loadedFileName = "";
     fileInput.value = "";
@@ -412,9 +477,12 @@
     btnConvert.disabled = true;
     btnDownload.disabled = true;
     btnCopy.disabled = true;
+    if(btnReport) btnReport.disabled = true;
     setStatus("čekam katalog…", "warn");
   });
 })();
 </script>
+  <script src="js/sinet-template-v2.js?v=15.7.8.0"></script>
+  <script src="js/sinet-quickbar.js?v=15.7.8.6" defer></script>
 </body>
 </html>

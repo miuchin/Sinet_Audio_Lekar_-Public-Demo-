@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SINET · Integrativni vodič (generator)</title>
+    <link rel="stylesheet" href="../css/sinet-quickbar.css?v=15.7.7.7">
+    <script defer src="../js/sinet-quickbar.js?v=15.7.7.7"></script>
+    <script defer src="../js/sinet-template-v2.js?v=15.7.7.7"></script>
+
   <style>
     *{ box-sizing:border-box; }
     body{
@@ -60,7 +64,7 @@
       <button class="btn btn-danger" id="btnInsert">🎵 Ubaci u SINET</button>
     </div>
     <div class="row">
-      <div class="pill small"><span id="tplBadge">Template: SINET_TEMPLATE_v1</span></div>
+      <div class="pill small"><span id="tplBadge">Template: SINET_TEMPLATE_v2</span></div>
       <div class="pill small"><span id="freqBadge">Frekvencije: 0</span></div>
       <div class="pill small"><span>miuchins</span><span class="muted">&</span><span>SINET AI</span></div>
     </div>
@@ -643,11 +647,32 @@
     }
 
     function buildGuideFullHtml(){
-      const bodyHtml = document.getElementById('contentToCopy')?.innerHTML || '';
-      const style = document.querySelector('style')?.innerHTML || '';
-      return `<!doctype html><html lang="sr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SINET vodič ${esc(selectedICD)}</title><style>${style}</style></head><body>${bodyHtml}</body></html>`;
+      const contentHtml = document.getElementById('contentToCopy')?.innerHTML || '';
+      const backUrl = qs.get('back') || '';
+      const patientLine = patient ? (
+        `<strong>Osoba:</strong> ${esc(patient?.osobni?.ime||'')} ${esc(patient?.osobni?.prezime||'')} (${esc(patient?.osobni?.nick||'')}) · ${esc(patient?.osobni?.pol||'')} · ${esc(patient?.osobni?.datum_rodjenja||'')}`
+      ) : '';
+      const title = `SINET vodič · ${selectedICD||'MKB'} ${selectedLabel||''}`.trim();
+      const subtitle = 'Standardna medicina + alternativne metode + duhovnost + SINET zvučna terapija (informativno)';
+      const warningsHtml = `<div class="warning-box">⚠️ <strong>Upozorenje:</strong> Ovo je informativni vodič i nije zamena za lekarski pregled. Kod naglog pogoršanja, jakog bola, gušenja, slabosti jedne strane tela, krvarenja, visoke temperature ili sumnje na hitno stanje — odmah potraži urgentnu pomoć.</div>`;
+      if(!window.SINET_TemplateV2 || typeof window.SINET_TemplateV2.buildDoc !== 'function'){
+        // Fallback minimal
+        const style = document.querySelector('style')?.innerHTML || '';
+        return `<!doctype html><html lang="sr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>${style}</style></head><body>${warningsHtml}<div id="contentToCopy">${contentHtml}</div></body></html>`;
+      }
+      return window.SINET_TemplateV2.buildDoc({
+        title,
+        subtitle,
+        templateName: 'SINET_TEMPLATE_v2',
+        coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+        backUrl: backUrl || null,
+        patientLine: patientLine || '',
+        warningsHtml,
+        contentHtml,
+        anamnezaJson: patient || null,
+        badgesHtml: `<span class="badge">MKB: ${esc(selectedICD||'')}</span><span class="badge">Frekvencije: ${String(getSelectedFrequencies().length)}</span>`
+      });
     }
-
     function downloadText(content, filename, mime){
       const blob = new Blob([content], {type: mime || 'text/plain;charset=utf-8'});
       const url = URL.createObjectURL(blob);

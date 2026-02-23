@@ -1,16 +1,16 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.7.3.2 (Hotfix: fix hideToast brace + Help modal methods)
+  Version: 15.7.9.4 (Hotfix: Quickbar Help no-reload on index; keep audio + session)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.3.0';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.3.0';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.3.0';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.9.4';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.9.4';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.9.4';
 
-const SINET_APP_VERSION = "15.7.6.7";
+const SINET_APP_VERSION = "15.7.9.4";
 
 
 
@@ -94,8 +94,27 @@ class App {
     this._iosBgExperimental = false;
     this._iosBgRendered = false;
     try {
-      this._iosBgExperimental = (localStorage.getItem("sinet_ios_bg_experimental") === "1");
-      this._iosBgRendered = (localStorage.getItem("sinet_ios_bg_rendered") === "1");
+      const expStored = localStorage.getItem("sinet_ios_bg_experimental");
+      const proStored = localStorage.getItem("sinet_ios_bg_rendered");
+
+      // ✅ iOS default: enable best-effort background + bluetooth path.
+      // Rationale:
+      //  - Updates often require clearing site data, which resets toggles.
+      //  - iOS/Safari tends to pause WebAudio in background; HTMLMediaElement is more reliable.
+      //  - PRO rendered mode uses <audio> and improves bluetooth routing consistency.
+      // Users can disable this in Settings.
+      if (this._isIOS && expStored === null && proStored === null) {
+        this._iosBgExperimental = false;
+        this._iosBgRendered = true;
+        try {
+          localStorage.setItem("sinet_ios_bg_experimental", "0");
+          localStorage.setItem("sinet_ios_bg_rendered", "1");
+          localStorage.setItem("sinet_ios_bg_defaulted", "1");
+        } catch (_) {}
+      } else {
+        this._iosBgExperimental = (expStored === "1");
+        this._iosBgRendered = (proStored === "1");
+      }
     } catch(_) {}
     // iOS: we use a silent HTMLAudio keep-alive to (a) unlock playback via user gesture and
     // (b) improve the chance that iOS keeps the session alive on lock-screen.
@@ -192,7 +211,7 @@ class App {
   }
 
   async init() {
-    console.log('SINET v15.7.1.5 Init');
+    console.log('SINET v15.7.9.6 Init');
     this.cacheUI();
 
     // v15.7.1.5 — restore Loop/Repeat settings (dock + playlist + modal)
@@ -205,6 +224,23 @@ class App {
       if (cb2) cb2.checked = this.isIosBgRenderedEnabled();
       const card = document.getElementById('ios-settings-card');
       if (card && !this._isIOS) card.style.display = 'none';
+
+      // Visual hint: iPhone MODE button active when PRO rendered is enabled.
+      const iphoneBtn = document.getElementById('iphone-mode-btn');
+      if (iphoneBtn) {
+        if (this._isIOS && this.isIosBgRenderedEnabled()) iphoneBtn.classList.add('active');
+        else iphoneBtn.classList.remove('active');
+      }
+
+      // One-time toast if we defaulted iOS mode after a cache/storage clear.
+      try {
+        const didDefault = localStorage.getItem('sinet_ios_bg_defaulted') === '1';
+        const shown = localStorage.getItem('sinet_ios_bg_default_toast') === '1';
+        if (this._isIOS && didDefault && !shown) {
+          localStorage.setItem('sinet_ios_bg_default_toast', '1');
+          this.showToast('🍏 iPhone: uključen je "iPhone MODE" (pozadina + bluetooth, best‑effort). Ako ne želiš, isključi u Podešavanjima.', { timeoutMs: 9000 });
+        }
+      } catch (_) {}
     } catch(_) {}
 
     // iOS / background / lock-screen best-effort helpers
@@ -534,7 +570,35 @@ _showIosDiag(detail) {
     if (!fullSeq.length || !fullTotalSec) throw new Error('Empty rendered track.');
 
     const segMin = Math.max(5, Number(params.segmentMin) || Number(this._renderSeg?.segMin) || DEFAULT_SEGMENT_MIN);
-    const segLenSec = segMin * 60;
+    let segLenSec = segMin * 60;
+
+    // 🍏 iOS PRO (Rendered): for lock-screen/background, JS timers can be throttled.
+    // If we render the whole remaining plan into a single WAV file, playback can
+    // continue without relying on JS to stitch segments.
+    try{
+      if (this.isIosBgRenderedEnabled && this.isIosBgRenderedEnabled()) {
+        const wantSingle = (localStorage.getItem('sinet_ios_bg_render_single') !== '0');
+        if (wantSingle) {
+          const HARD_MB = 160; // must match _startRenderedSegment safeguard
+          const estBytesFull = estimateWavBytes(fullTotalSec, 22050, 1, 16);
+          const estMBFull = estBytesFull / (1024 * 1024);
+          if (estMBFull <= HARD_MB) {
+            segLenSec = Math.max(segLenSec, fullTotalSec + 0.01);
+            if (!this._iosSingleRenderHinted) {
+              this._iosSingleRenderHinted = true;
+              this.showToast('🍏 iPhone PRO: renderujem ceo plan kao 1 fajl (bolje za pozadinu).', { timeoutMs: 6500 });
+            }
+          } else {
+            // Too large for a single buffer -> keep segmented render (foreground recommended).
+            if (!this._iosSingleRenderTooBigHinted) {
+              this._iosSingleRenderTooBigHinted = true;
+              this.showToast('🍏 iPhone PRO: plan je predugačak za 1 fajl. Radiće u segmentima (pozadina nije zagarantovana).', { timeoutMs: 9000 });
+            }
+          }
+        }
+      }
+    }catch(_){}
+
 
     try { this.audio?.stop?.(); } catch(_) {}
     try { this._teardownPlaybackSession('render_start'); } catch(_) {}
@@ -1166,6 +1230,12 @@ async loadAcupressureRegistry() {
 
   /* ===================== NAV ===================== */
   nav(pageId, opts = {}) {
+    try {
+      if (window.matchMedia && window.matchMedia('(max-width: 900px)').matches) {
+        const ae = document.activeElement;
+        if (ae && typeof ae.blur === 'function' && /^(INPUT|TEXTAREA|SELECT)$/i.test(ae.tagName || '')) ae.blur();
+      }
+    } catch (_) {}
     const prev = this.currentPageId || 'home';
     const replace = opts.replace === true;
     const stack = opts.stack !== false;
@@ -1186,6 +1256,18 @@ async loadAcupressureRegistry() {
     this.log("UI", "Nav", pageId);
 
     // Page-specific refresh
+    // HOTFIX v15.7.9.6: touch keyboard blur after nav (Huawei/Android + iPhone)
+    try {
+      if ((window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || window.innerWidth <= 900) {
+        setTimeout(() => {
+          ['menu-search','search-input'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && document.activeElement === el) el.blur();
+          });
+        }, 60);
+      }
+    } catch(_) {}
+
     if (pageId === 'favorites') this.updateFavorites();
     if (pageId === 'catalog') this.showCatalogHome();
     if (pageId === 'playlist') this.renderPlaylistUI();
@@ -1244,6 +1326,26 @@ async loadAcupressureRegistry() {
     const ov = document.getElementById("quick-help-modal");
     if (!ov) return;
     ov.style.display = "none";
+  }
+
+  _scrollPlayerDockIntoViewSafe() {
+    try {
+      const dock = this.ui && this.ui.playerDock;
+      if (!dock) return;
+      const mainEl = document.querySelector('main');
+      const headerEl = document.querySelector('header');
+      const quickbarEl = document.getElementById('sinet-quickbar');
+      const stickyTop = (quickbarEl ? quickbarEl.offsetHeight : 0) + (headerEl ? headerEl.offsetHeight : 0) + 10;
+      const dockRect = dock.getBoundingClientRect();
+      if (mainEl && getComputedStyle(mainEl).overflowY !== 'visible') {
+        const mainRect = mainEl.getBoundingClientRect();
+        const target = mainEl.scrollTop + (dockRect.top - mainRect.top) - stickyTop;
+        mainEl.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      } else {
+        const target = window.scrollY + dockRect.top - stickyTop;
+        window.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      }
+    } catch (_) {}
   }
 
   _createToast() {
@@ -2182,12 +2284,7 @@ closeAcupressureViewer(){
     this.closeModal();
     this.nav('playlist');
 
-    try {
-      requestAnimationFrame(() => {
-        const dock = this.ui.playerDock;
-        if (dock) dock.scrollIntoView({ block: 'end' });
-      });
-    } catch (_) {}
+    try { requestAnimationFrame(() => this._scrollPlayerDockIntoViewSafe()); } catch (_) {}
   }
 
   async addToPlaylistFromModal() {
@@ -3463,7 +3560,10 @@ if (!Array.isArray(this.catalogItems) || this.catalogItems.length === 0) {
   showCatalogHome() {
     this.activeOblast = null;
     const inp = document.getElementById('search-input');
-    if (inp) inp.value = "";
+    if (inp) {
+      inp.value = "";
+      try { if (document.activeElement === inp) inp.blur(); } catch(_) {}
+    }
 
     // FIX v15.4.4: if user previously opened an oblast, the grid may stay hidden.
     const grid = this.ui.catalogOblastGrid || document.getElementById('catalog-oblast-grid');
@@ -4473,6 +4573,309 @@ VAŽNO: samo JSON.`;
     alert("Prompt kopiran ✅");
   }
 
+
+
+  /* ===================== v15.7.7.7 — Text modal + AI result helpers ===================== */
+
+  openTextModal(title, text, linksHtml = "") {
+    const ov = document.getElementById('text-modal');
+    const tt = document.getElementById('tm-title');
+    const ta = document.getElementById('tm-text');
+    const links = document.getElementById('tm-links');
+    if (!ov || !tt || !ta) {
+      try { this.showToast("ℹ️ Tekst modal nije učitan."); } catch(_) {}
+      return;
+    }
+    tt.textContent = (title || 'Tekst').toString();
+    ta.value = (text ?? '').toString();
+    if (links) links.innerHTML = linksHtml || '';
+    ov.style.display = 'flex';
+    try { ta.scrollTop = 0; } catch(_) {}
+  }
+
+  closeTextModal() {
+    const ov = document.getElementById('text-modal');
+    if (ov) ov.style.display = 'none';
+  }
+
+
+  /* ===================== DOC VIEWER (Help/Protokoli bez prekida zvuka) ===================== */
+
+  openDoc(href, title = "Dokument") {
+    try {
+      // Resolve relative URL against current location (supports ./docs/...).
+      const url = new URL(String(href || ""), window.location.href).toString();
+      const ov = document.getElementById('doc-modal');
+      const fr = document.getElementById('doc-modal-frame');
+      const tt = document.getElementById('doc-modal-title');
+      if (!ov || !fr) {
+        // Fallback: open in new tab if modal missing
+        window.open(url, '_blank', 'noopener');
+        return false;
+      }
+
+      // Store last doc for "Novi tab"
+      this._lastDocUrl = url;
+
+      if (tt) tt.textContent = String(title || "Dokument");
+      // Important: set src AFTER showing to reduce iOS quirks
+      ov.style.display = 'flex';
+      fr.src = url;
+      // IMPORTANT (iOS): do NOT start the silent keep-alive here.
+      // Starting another HTMLAudioElement can steal audio focus and pause the main playback.
+      // If iOS paused playback due to UI interaction, we only try to resume the SAME element.
+      try {
+        if (this._isIOS) {
+          const el = this._iosRenderedEl;
+          if (this._rendered && this._rendered.active && el && el.paused && !el.ended) {
+            const pr = el.play();
+            if (pr && pr.catch) pr.catch(() => {});
+          } else if (this.audio && this.audio.isPlaying && this.audio.audioContext && this.audio.audioContext.resume) {
+            this.audio.audioContext.resume().catch(() => {});
+          }
+        }
+      } catch(_) {}
+
+      return false; // prevent default navigation
+    } catch (e) {
+      try { window.open(String(href || ""), '_blank', 'noopener'); } catch(_) {}
+      return false;
+    }
+  }
+
+  closeDocModal() {
+    const ov = document.getElementById('doc-modal');
+    const fr = document.getElementById('doc-modal-frame');
+    if (fr) fr.src = 'about:blank';
+    if (ov) ov.style.display = 'none';
+  }
+
+  openDocInNewTab() {
+    const url = this._lastDocUrl;
+    if (!url) return;
+    try { window.open(url, '_blank', 'noopener'); } catch(_) {}
+  }
+
+  copyTextModal() {
+    const ta = document.getElementById('tm-text');
+    if (!ta) return;
+    const txt = (ta.value || '').toString();
+    if (!txt) return alert('Nema teksta za kopiranje.');
+
+    // Prefer modern clipboard
+    try {
+      navigator.clipboard.writeText(txt).then(() => alert('Kopirano ✅'));
+      return;
+    } catch (_) {}
+
+    // Fallback
+    try {
+      ta.focus();
+      ta.select();
+      document.execCommand('copy');
+      alert('Kopirano ✅');
+    } catch (e) {
+      alert('Ne mogu da kopiram (dozvole).');
+    }
+  }
+
+  copyAIResult() {
+    const ta = document.getElementById('ai_result');
+    if (!ta) return;
+    const txt = (ta.value || '').trim();
+    if (!txt) return alert('Nema AI odgovora za kopiranje.');
+    try {
+      navigator.clipboard.writeText(txt).then(() => alert('AI odgovor kopiran ✅'));
+    } catch (_) {
+      try {
+        ta.focus();
+        ta.select();
+        document.execCommand('copy');
+        alert('AI odgovor kopiran ✅');
+      } catch (e) {
+        alert('Ne mogu da kopiram (dozvole).');
+      }
+    }
+  }
+
+  showAIResultModal() {
+    const raw = (document.getElementById('ai_result')?.value || '').trim();
+    if (!raw) return alert('Zalepi AI odgovor (JSON) u polje ispod.');
+
+    let pretty = raw;
+    try {
+      const obj = JSON.parse(raw);
+      pretty = JSON.stringify(obj, null, 2);
+    } catch (_) {}
+
+    const linksHtml = `
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <button class="btn-full" style="margin-top:0; padding:10px; background:#6f4e37;" onclick="window.app && window.app.exportAIReportHTML && window.app.exportAIReportHTML()">📄 AI izveštaj (HTML)</button>
+        <button class="btn-full" style="margin-top:0; padding:10px; background:#95a5a6;" onclick="window.app && window.app.closeTextModal && window.app.closeTextModal()">Zatvori</button>
+      </div>
+      <div style="margin-top:10px; font-size:0.9rem; color:#666;">
+        Savet: AI izveštaj pravi čitljiv plan u <b>Template v2</b> formatu.
+      </div>
+    `;
+
+    this.openTextModal('🤖 AI odgovor (JSON)', pretty, linksHtml);
+  }
+
+  exportAIReportHTML() {
+    const raw = (document.getElementById('ai_result')?.value || '').trim();
+    if (!raw) return alert('Nema AI odgovora (JSON).');
+
+    let obj;
+    try { obj = JSON.parse(raw); }
+    catch (e) { return alert('Ne mogu da pročitam JSON. Proveri da AI nije vratio markdown ili dodatni tekst.'); }
+
+    const html = this._buildAIReportHtml(obj);
+    const w = window.open('', '_blank');
+    if (!w) return alert('Pop-up je blokiran. Dozvoli otvaranje novih tabova.');
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  }
+
+  _buildAIReportHtml(obj) {
+    const esc = (s) => this.escapeHtml(String(s ?? ''));
+
+    const s = obj?.simptom || obj?.symptom || obj;
+    const naziv = (s?.naziv || s?.name || s?.simptom || 'AI rezultat').toString().trim();
+    const opis = (s?.opis || '').toString().trim();
+    const mkb = this._mkbToText(s?.mkb10 || s?.mkb || '');
+
+    const psih = s?.psihosomatika || null;
+    const afr = s?.afirmacija || null;
+    const mol = s?.molitva || null;
+    const nar = s?.narodni_lek || null;
+
+    let ak = s?.akupresura;
+    if (ak && !Array.isArray(ak) && typeof ak === 'object') ak = [ak];
+    if (!Array.isArray(ak)) ak = [];
+
+    const freqs = Array.isArray(s?.frekvencije) ? s.frekvencije : [];
+
+    const freqRows = freqs.map(f => {
+      const hz = Number(f?.hz ?? f?.value ?? f?.freq ?? 0) || 0;
+      if (!hz) return '';
+      const name = (f?.naziv || f?.name || '').toString().trim();
+      const desc = (f?.funkcija || f?.svrha || f?.opis || '').toString().trim();
+      const src = this._srcToText(f?.izvor || f?.source || '');
+      return `<tr>
+        <td style="padding:8px; border-bottom:1px solid #e8dfd3;"><b>${hz} Hz</b>${name ? `<div class="small">${esc(name)}</div>` : ''}</td>
+        <td style="padding:8px; border-bottom:1px solid #e8dfd3;">${esc(desc) || '<span class="small">(nema opisa)</span>'}</td>
+        <td style="padding:8px; border-bottom:1px solid #e8dfd3;" class="small">${esc(src)}</td>
+      </tr>`;
+    }).filter(Boolean).join('');
+
+    const freqTable = freqRows ? `
+      <h2>🎵 Frekvencije</h2>
+      <div class="card">
+        <table style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #e8dfd3;">Hz</th>
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #e8dfd3;">Opis / funkcija</th>
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #e8dfd3;">Izvor</th>
+            </tr>
+          </thead>
+          <tbody>${freqRows}</tbody>
+        </table>
+      </div>
+    ` : '';
+
+    const akHtml = ak.length ? `
+      <h2>👉 Akupresura</h2>
+      <div class="card">
+        ${ak.map((x, i) => {
+          const t = (x.tacka || x.point || `Tačka ${i+1}`).toString();
+          const nm = (x.naziv || '').toString();
+          const lok = (x.lokacija || '').toString();
+          const how = (x.uputstvo || x.how || '').toString();
+          const src = this._srcToText(x.izvor || x.source || '');
+          return `
+            <div style="margin-bottom:14px;">
+              <div><b>${esc(t)}</b>${nm ? ` — ${esc(nm)}` : ''}</div>
+              ${lok ? `<div class="small">📍 ${esc(lok)}</div>` : ''}
+              ${how ? `<div>${esc(how)}</div>` : ''}
+              ${src ? `<div class="small">📎 ${esc(src)}</div>` : ''}
+            </div>`;
+        }).join('')}
+      </div>
+    ` : '';
+
+    const blocks = [];
+
+    blocks.push(`<div class="card">
+      ${mkb ? `<div><b>📌 MKB-10:</b> ${esc(mkb)}</div>` : ''}
+      ${opis ? `<div style="margin-top:8px;"><b>ℹ️ Opis:</b> ${esc(opis)}</div>` : ''}
+      <div class="small" style="margin-top:10px;">Izveštaj je informativan i ne postavlja dijagnozu.</div>
+    </div>`);
+
+    if (psih && typeof psih === 'object') {
+      blocks.push(`<h2>🧠 Psihosomatika</h2><div class="card">
+        ${psih.uzrok ? `<div><b>Uzrok:</b> ${esc(psih.uzrok)}</div>` : ''}
+        ${psih.lek ? `<div style="margin-top:8px;"><b>Preporuka:</b> ${esc(psih.lek)}</div>` : ''}
+        ${(psih.izvor || psih.source) ? `<div class="small" style="margin-top:10px;">📎 ${esc(this._srcToText(psih.izvor || psih.source))}</div>` : ''}
+      </div>`);
+    }
+
+    if (afr && typeof afr === 'object') {
+      blocks.push(`<h2>✨ Afirmacija</h2><div class="card">
+        ${afr.tekst ? `<div style="font-size:1.1rem;"><b>“${esc(afr.tekst)}”</b></div>` : ''}
+        ${afr.autor ? `<div class="small" style="margin-top:8px;">Autor: ${esc(afr.autor)}</div>` : ''}
+        ${(afr.izvor || afr.source) ? `<div class="small" style="margin-top:10px;">📎 ${esc(this._srcToText(afr.izvor || afr.source))}</div>` : ''}
+      </div>`);
+    }
+
+    if (mol && typeof mol === 'object') {
+      blocks.push(`<h2>🙏 Molitva</h2><div class="card">
+        ${mol.tekst ? `<div style="font-style:italic;">${esc(mol.tekst)}</div>` : ''}
+        ${(mol.izvor || mol.source) ? `<div class="small" style="margin-top:10px;">📎 ${esc(this._srcToText(mol.izvor || mol.source))}</div>` : ''}
+      </div>`);
+    }
+
+    if (nar && typeof nar === 'object') {
+      const txt = (nar.opis || nar.tekst || '').toString();
+      blocks.push(`<h2>🌿 Narodni lek</h2><div class="card">
+        ${txt ? `<div>${esc(txt)}</div>` : ''}
+        ${nar.napomena ? `<div class="small" style="margin-top:8px;">Napomena: ${esc(nar.napomena)}</div>` : ''}
+        ${(nar.izvor || nar.source) ? `<div class="small" style="margin-top:10px;">📎 ${esc(this._srcToText(nar.izvor || nar.source))}</div>` : ''}
+      </div>`);
+    }
+
+    if (akHtml) blocks.push(akHtml);
+    if (freqTable) blocks.push(freqTable);
+
+    // RAW JSON in details
+    try {
+      blocks.push(`<details class="card" style="margin-top:18px;"><summary style="cursor:pointer; font-weight:900;">🧾 RAW JSON (AI odgovor)</summary><pre>${esc(JSON.stringify(obj, null, 2))}</pre></details>`);
+    } catch(_) {}
+
+    const contentHtml = blocks.join('\n');
+
+    const title = `AI izveštaj · ${naziv}`.trim();
+    const subtitle = 'AI odgovor pretvoren u čitljiv plan (Template v2).';
+    const warningsHtml = `<div class="warning-box">⚠️ <strong>Upozorenje:</strong> Ovo je informativan sadržaj i nije zamena za lekarski pregled. Kod naglog pogoršanja, jakog bola, gušenja, slabosti jedne strane tela, krvarenja, visoke temperature ili sumnje na hitno stanje — odmah potraži urgentnu pomoć.</div>`;
+
+    if (window.SINET_TemplateV2 && typeof window.SINET_TemplateV2.buildDoc === 'function') {
+      return window.SINET_TemplateV2.buildDoc({
+        title,
+        subtitle,
+        templateName: 'SINET_TEMPLATE_v2',
+        coauthor: 'miuchins (Svetozar Miučin) + SINET AI',
+        backUrl: (location.href || '').split('#')[0] || null,
+        warningsHtml,
+        contentHtml,
+        badgesHtml: `<span class="badge">AI Upitnik</span>${mkb ? `<span class="badge">MKB: ${esc(mkb.split('—')[0].trim())}</span>` : ''}`
+      });
+    }
+
+    // fallback minimal
+    return `<!doctype html><html lang="sr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title></head><body>${warningsHtml}${contentHtml}</body></html>`;
+  }
+
   /* ===== v15.4 — AI JSON import into My Symptoms ===== */
   _mkbToText(mkb) {
     if (!mkb) return "";
@@ -4894,7 +5297,7 @@ VAŽNO: samo JSON.`;
 
     this.showToast(val
       ? "🍏 iOS: pozadinski zvuk uključen (eksperimentalno). Ako čuješ pulsiranje, isključi opciju."
-      : "🍏 iOS: pozadinski zvuk isključen (stabilno). U pozadini će se pauzirati.",
+      : "🍏 iOS: pozadinski zvuk isključen (stabilno). U pozadini može stati (Safari ograničenje).",
       { timeoutMs: 6500 }
     );
   }
@@ -5074,20 +5477,45 @@ try {
     const kick = () => this._resumeAudioContextBestEffort();
 
     document.addEventListener("visibilitychange", () => {
-      // iOS stable policy: pause on background to avoid glitches/pulsing and forced stop after a few seconds.
+      // iOS note:
+      // - We do NOT force-pause on background anymore (some iOS builds can actually keep <audio> playing).
+      // - If Safari still suspends audio, we will notify the user AFTER they return to the app.
       if (document.hidden) {
         try {
-          if (this._isIOS && (this.audio?.isPlaying || this._rendered?.active) && !this.isIosBgExperimentalEnabled() && !this.isIosBgRenderedEnabled()) {
-            this.togglePlayPause(); // pause
-            this.showToast("🍏 iOS: zvuk je pauziran u pozadini (Safari ograničenje). Vrati se u aplikaciju i tapni ▶ za nastavak.", { timeoutMs: 9000 });
+          if (this._isIOS && (this.audio?.isPlaying || this._rendered?.active || this._isRenderedPlaying?.())) {
+            this._iosBgWasPlaying = true;
           }
         } catch(_) {}
         return;
       }
+
       kick();
+
+      try {
+        if (this._isIOS && this._iosBgWasPlaying) {
+          this._iosBgWasPlaying = false;
+
+          const playingNow = !!(this.audio?.isPlaying || this._rendered?.active || this._isRenderedPlaying?.());
+          if (!playingNow) {
+            const proOn = !!(this.isIosBgRenderedEnabled && this.isIosBgRenderedEnabled());
+            const msg = proOn
+              ? "🍏 iOS: Safari je pauzirao zvuk u pozadini. Tapni ▶ za nastavak."
+              : "🍏 iOS: Safari je pauzirao zvuk u pozadini. Preporuka: uključi 🍏 iPhone PRO (Render) u Podešavanjima, pa ▶.";
+
+            this.showToast(msg, {
+              timeoutMs: 12000,
+              actionLabel: "Podešavanja",
+              actionNav: "settings",
+              action2Label: proOn ? "" : "Uključi PRO",
+              action2Onclick: proOn ? "" : "window.app && window.app.setIosBgRendered(true)"
+            });
+          }
+        }
+      } catch(_) {}
     });
 
-    window.addEventListener("pageshow", kick);
+
+window.addEventListener("pageshow", kick);
     window.addEventListener("focus", kick);
     window.addEventListener("resume", kick);
   }
@@ -5256,8 +5684,32 @@ if(payload.format === 'SINET_DS_TO_PROTOCOL_v1' && payload.protocol){
     return false;
   }
 }
+
+function setupMobileHeaderCompact(){
+  try{
+    if (!(window.matchMedia && window.matchMedia('(max-width: 520px)').matches)) return;
+    const header = document.querySelector('header');
+    const main = document.querySelector('main');
+    if (!header || !main) return;
+    let ticking = false;
+    const apply = () => {
+      const y = main.scrollTop || 0;
+      if (y > 24) document.body.classList.add('header-compact');
+      else document.body.classList.remove('header-compact');
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { ticking = false; apply(); });
+    };
+    main.addEventListener('scroll', onScroll, { passive:true });
+    apply();
+  }catch(_){}
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
   await app.init();
+  setupMobileHeaderCompact();
   try { await __importDsBridgeIfAny(); } catch(e) { console.warn('DS import call failed', e); }
 });
 window.app = app;

@@ -100,6 +100,14 @@
 .help-details p{ margin:8px 0 0; color:#3f4b57; }
 
 
+/* Help — Protokoli list */
+.help-protocols{ margin-top:12px; padding:12px; border-radius:14px; background:#fbfdff; border:1px solid #e6f0ff; }
+.help-protocols-title{ margin:0 0 8px; color:#1f4f86; letter-spacing:0.2px; }
+.help-protocol-list{ margin:0; padding-left:18px; color:#3f4b57; }
+.help-protocol-list li{ margin:8px 0; line-height:1.3; }
+.help-protocol-list a{ font-weight:900; }
+
+
 
 
 /* ============================
@@ -109,7 +117,8 @@
 /* Preset chips grid (compact, elder-friendly) */
 .preset-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  /* Responsive: avoid fixed 2-column overflow on Huawei / small WebViews */
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap:10px;
   margin-bottom:14px;
 }
@@ -170,7 +179,8 @@
 /* Catalog "Oblasti" cards */
 .oblast-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  /* Responsive: collapse to 1 column on narrow screens */
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap:10px;
 }
 .oblast-card{
@@ -296,6 +306,11 @@
     padding:0;
   }
   .btn-label{ display:none; }
+}
+
+@media (max-width:420px){
+  .preset-grid, .oblast-grid{ grid-template-columns:1fr; }
+  .preset-chip, .oblast-card{ min-width:0; }
 }
 
 
@@ -482,3 +497,9 @@
 
 .btn-mini.gray{ background:#7f8c8d; }
 .btn-mini.green{ background:#2ecc71; }
+
+
+/* v15.7.9.3 mobile safety */
+@media (max-width:640px){
+  .preset-grid, .oblast-grid{ grid-template-columns: 1fr; }
+}

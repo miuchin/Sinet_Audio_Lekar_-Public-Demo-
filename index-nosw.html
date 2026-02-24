@@ -451,6 +451,7 @@
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:10px;">
                 <h2 style="margin:0;">🧩 Moji protokoli</h2>
                 <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="btn-mini" onclick="nav('home')">🏠 Početni ekran</button>
                     <button class="btn-mini" onclick="newProtocol()">➕ Novi</button>
                     <button class="btn-mini" onclick="createProtocolFromFavorites()">⭐ Iz Favorita</button>
                     <button class="btn-mini" onclick="createProtocolFromQueue()">🎵 Iz Liste</button>
@@ -464,13 +465,19 @@
         </div>
 
         <div id="page-favorites" class="section">
-            <h2>⭐ Moji Favoriti</h2>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px; flex-wrap:wrap;">
+                <h2 style="margin:0;">⭐ Moji Favoriti</h2>
+                <button class="btn-mini" onclick="nav('home')">🏠 Početni ekran</button>
+            </div>
             <div id="favorites-list"></div>
         </div>
 
 
         <div id="page-mysymptoms" class="section">
-            <h2>➕ Moji Simptomi</h2>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px; flex-wrap:wrap;">
+                <h2 style="margin:0;">➕ Moji Simptomi</h2>
+                <button class="btn-mini" onclick="nav('home')">🏠 Početni ekran</button>
+            </div>
             <div class="welcome-card" style="text-align:left;">
                 <p style="color:#666; margin-top:0;">Dodajte svoje lične simptome i frekvencije. Podaci ostaju samo na ovom uređaju (offline) 🙂</p>
 	                <div style="display:flex; gap:10px; flex-wrap:wrap;">
@@ -483,7 +490,10 @@
         </div>
 
         <div id="page-ai" class="section">
-            <h2>🤖 AI Upitnik</h2>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px; flex-wrap:wrap;">
+                <h2 style="margin:0;">🤖 AI Upitnik</h2>
+                <button class="btn-mini" onclick="nav('home')">🏠 Početni ekran</button>
+            </div>
             <div class="welcome-card" style="text-align:left;">
                 <p style="color:#666; margin-top:0;">
                     Ako ne nalazite simptom u katalogu, popunite kratki upitnik i kopirajte prompt u AI chat.

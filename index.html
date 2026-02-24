@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.9.6">
+    <link rel="stylesheet" href="css/sinet-quickbar.css?v=15.7.9.4">
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3063/3063822.png">
 
     <style>
@@ -376,9 +376,10 @@
 
             <div id="frequent-actions" style="background:white; padding:16px; border-radius:12px; margin-bottom:15px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
               <h3 style="margin:0 0 10px 0; color:var(--primary);">⭐ Često korišćeno</h3>
-              <p style="margin:0 0 12px 0; color:#666;">Favoriti, Moji simptomi i AI upitnik — na dohvat ruke.</p>
+              <p style="margin:0 0 12px 0; color:#666;">Favoriti, Moji protokoli, Moji simptomi i AI upitnik — na dohvat ruke.</p>
               <div style="display:flex; flex-wrap:wrap; gap:10px;">
                 <button class="btn-full" style="flex:1; min-width:220px; padding:12px; background:#f1c40f; color:#2c3e50;" onclick="nav('favorites')">⭐ Moji favoriti</button>
+                <button class="btn-full" style="flex:1; min-width:220px; padding:12px; background:#1abc9c;" onclick="nav('protocols')">🧩 Moji protokoli</button>
                 <button class="btn-full" style="flex:1; min-width:220px; padding:12px; background:#2ecc71;" onclick="nav('mysymptoms')">➕ Moji simptomi</button>
                 <button class="btn-full" style="flex:1; min-width:220px; padding:12px; background:#8e44ad;" onclick="nav('ai')">🤖 AI Upitnik</button>
               </div>
@@ -605,7 +606,7 @@
                   <a href="./SINET_User_Manual_v1.1_SR.html" onclick="return window.app && window.app.openDoc && window.app.openDoc(this.getAttribute('href'), this.textContent)">SINET_User_Manual_v1.1_SR.html</a>
                   <span style="margin-left:10px;">📄 MD (GitHub/štampa):</span>
                   <a href="./SINET_User_Manual_v1.1_SR.md" onclick="return window.app && window.app.openDoc && window.app.openDoc(this.getAttribute('href'), this.textContent)">SINET_User_Manual_v1.1_SR.md</a>
-                  <span class="muted">(verzija aplikacije 15.7.9.6)</span>
+                  <span class="muted">(verzija aplikacije 15.7.9.4)</span>
                 </div>
 
 
@@ -1123,9 +1124,9 @@
   }
 </script>
 
-    <script src="js/sinet-quickbar.js?v=15.7.9.6" defer></script>
-    <script src="js/sinet-template-v2.js?v=15.7.9.6" defer></script>
-    <script type="module" src="js/app.js?v=15.7.9.6"></script>
+    <script src="js/sinet-quickbar.js?v=15.7.9.4" defer></script>
+    <script src="js/sinet-template-v2.js?v=15.7.9.4" defer></script>
+    <script type="module" src="js/app.js?v=15.7.9.4"></script>
 
     <script>
         // PWA & WORKER

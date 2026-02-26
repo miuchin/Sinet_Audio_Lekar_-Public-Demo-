@@ -18,6 +18,15 @@
 .np-row .muted{ opacity:0.8; font-size:12px; }
 .nowplaying-hint{ margin-top:8px; font-size:12px; opacity:0.85; }
 
+/* iOS SAFE: fullscreen sheet for NOW PLAYING (skip list) — avoids fixed/scroll issues */
+.np-sheet-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:9999; display:none; align-items:flex-end; justify-content:center; }
+.np-sheet{ width:min(720px, 100%); background:#fff; border-top-left-radius:18px; border-top-right-radius:18px; box-shadow:0 -10px 30px rgba(0,0,0,0.25); overflow:hidden; max-height:min(82vh, calc(100vh - 90px)); max-height:min(82svh, calc(100svh - 90px)); }
+.np-sheet-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border-bottom:1px solid #eee; font-weight:900; }
+.np-sheet-close{ border:none; background:rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:8px 10px; font-weight:900; cursor:pointer; }
+.np-sheet-body{ padding:12px 14px; overflow:auto; -webkit-overflow-scrolling:touch; max-height:calc(82vh - 56px); max-height:calc(82svh - 56px); }
+.np-sheet-body .np-row{ background:#f7f9fc; border:1px solid #eef2f7; }
+.np-sheet-hint{ padding:0 14px 12px 14px; font-size:12px; color:#444; opacity:0.85; }
+
 /* Modal frequency checkbox */
 .freq-row .freq-toggle{ margin-right:10px; }
 

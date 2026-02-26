@@ -1,16 +1,16 @@
 /*
   SINET Audio Lekar — App Core
   File: js/app.js
-  Version: 15.7.9.6 (Hotfix: Quickbar Help no-reload on index; keep audio + session)
+  Version: 15.7.9.4 (Hotfix: Quickbar Help no-reload on index; keep audio + session)
   Author: miuchins | Co-author: SINET AI
 */
 
 // Cache-bust audio engine updates (NO-SW mode relies on browser cache)
-import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.9.6';
-import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.9.6';
-import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.9.6';
+import { SinetAudioEngine } from './audio/audio-engine.js?v=15.7.9.4';
+import { renderProtocolToWavBlobURL, estimateWavBytes } from './audio/ios-rendered-track.js?v=15.7.9.4';
+import { normalizeCatalogPayload } from './catalog/stl-adapter.js?v=15.7.9.4';
 
-const SINET_APP_VERSION = "15.7.9.6";
+const SINET_APP_VERSION = "15.7.9.4";
 
 
 
@@ -665,7 +665,23 @@ _showIosDiag(detail) {
       if (segTotal >= segLenSec && i > startIdx) break;
     }
 
-    const segSeq = fullSeq.slice(startIdx, endIdx + 1);
+    let segSeq = fullSeq.slice(startIdx, endIdx + 1);
+    // 🍏 iOS PRO: apply skip selections by zeroing frequency values for the next rendered segments.
+    // (Current segment is already rendered; skip becomes effective from next segment render.)
+    try {
+      const skips = this._renderedSkipSet;
+      if (skips && skips.size && Array.isArray(segSeq) && segSeq.length) {
+        segSeq = segSeq.map((it, j) => {
+          const gi = startIdx + j;
+          if (!skips.has(gi)) return it;
+          // create a shallow clone and force silence
+          const o = Object.assign({}, it);
+          o.value = 0;
+          o.hz = 0;
+          return o;
+        });
+      }
+    } catch(_) {}
     const segDurs = fullDurs ? fullDurs.slice(startIdx, endIdx + 1) : null;
 
     const resumeInSeg = Math.max(0, resumeTrackSec - startOffset);
@@ -5083,6 +5099,15 @@ VAŽNO: samo JSON.`;
 
   toggleNowList(){
     if(!this.ui.nowPlayingPanel) return;
+
+    // 🍏 iOS PRO (Rendered): WebKit has unreliable touch/scroll for checkboxes inside fixed dock.
+    // Always open a fullscreen modal for skipping in this mode.
+    try {
+      if (this._isIOS && this.isIosBgRenderedEnabled && this.isIosBgRenderedEnabled()) {
+        this.openRenderedFreqModal();
+        return;
+      }
+    } catch(_) {}
     const open = this.ui.nowPlayingPanel.style.display !== "none";
     this.ui.nowPlayingPanel.style.display = open ? "none" : "block";
 
@@ -5095,6 +5120,108 @@ VAŽNO: samo JSON.`;
 
     // Render list when opening (esp. iOS PRO Render mode uses fullSequence)
     if(!open) this.renderNowPlayingList();
+  }
+
+
+  /* ===================== iOS PRO: Frequency skip modal ===================== */
+
+  _ensureRenderedFreqModal(){
+    if (this._renderedFreqModal) return this._renderedFreqModal;
+    const wrap = document.createElement('div');
+    wrap.id = 'ios-pro-freq-modal';
+    wrap.style.cssText = [
+      'position:fixed','inset:0','z-index:99999','display:none',
+      'background:rgba(0,0,0,0.35)','backdrop-filter:saturate(120%) blur(2px)'
+    ].join(';');
+    wrap.innerHTML = `
+      <div style="position:absolute; left:0; right:0; bottom:0; max-height:86vh; background:#fff; border-top-left-radius:18px; border-top-right-radius:18px; box-shadow:0 -8px 24px rgba(0,0,0,.25); overflow:hidden;">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 14px 10px; border-bottom:1px solid rgba(0,0,0,.08);">
+          <div style="font-size:20px; font-weight:800; color:#1f4e79;">🎵 Frekvencije (preskakanje)</div>
+          <button id="ios-pro-freq-close" style="border:0; background:#f2f4f7; border-radius:12px; width:44px; height:36px; font-size:20px;">✕</button>
+        </div>
+        <div id="ios-pro-freq-hint" style="padding:10px 14px; font-size:14px; color:#334;">Odčekiraj da preskočiš (važi od sledećeg segmenta u PRO režimu).</div>
+        <div id="ios-pro-freq-list" style="overflow:auto; -webkit-overflow-scrolling:touch; padding:6px 10px 12px; max-height:56vh;"></div>
+        <div style="padding:12px 14px 16px; border-top:1px solid rgba(0,0,0,.08);">
+          <button id="ios-pro-freq-done" style="width:100%; border:0; background:#22a34a; color:#fff; font-weight:800; border-radius:14px; padding:14px 12px; font-size:18px;">ZATVORI</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(wrap);
+
+    const close = () => { wrap.style.display = 'none'; };
+    wrap.addEventListener('click', (e)=>{ if(e.target === wrap) close(); });
+    const b1 = wrap.querySelector('#ios-pro-freq-close');
+    const b2 = wrap.querySelector('#ios-pro-freq-done');
+    if (b1) b1.addEventListener('click', close);
+    if (b2) b2.addEventListener('click', close);
+
+    this._renderedFreqModal = wrap;
+    return wrap;
+  }
+
+  openRenderedFreqModal(){
+    // only meaningful in iOS PRO rendered mode
+    if (!this._rendered || !this._rendered.active) {
+      this.showToast('ℹ️ Lista frekvencija nije dostupna (nema aktivne liste).', { timeoutMs: 4000 });
+      return;
+    }
+    if (!this._renderedSkipSet) this._renderedSkipSet = new Set();
+
+    const wrap = this._ensureRenderedFreqModal();
+    const listEl = wrap.querySelector('#ios-pro-freq-list');
+    const hintEl = wrap.querySelector('#ios-pro-freq-hint');
+    if (hintEl) hintEl.textContent = 'Odčekiraj da preskočiš (važi od sledećeg segmenta u PRO režimu).';
+
+    const seqFull = this._rendered.fullSequence || this._rendered.sequence || [];
+    const cur = Number(this._lastStats?.currentIndex ?? this._rendered.lastIndex ?? this._rendered.segStartIndex ?? 0);
+    const start = Math.max(0, Math.min(seqFull.length, cur));
+
+    let html = '';
+    for (let i = start; i < seqFull.length; i++) {
+      const f = seqFull[i] || {};
+      const hz = (f.hz ?? f.value ?? '').toString();
+      const desc = (f.svrha || f.funkcija || f.desc || f.note || '').toString();
+      const src = (f.izvor || f.src || '').toString();
+      const enabled = !this._renderedSkipSet.has(i);
+      html += `
+        <div style="padding:10px 8px; border-bottom:1px solid rgba(0,0,0,.06);">
+          <label style="display:flex; gap:10px; align-items:flex-start;">
+            <input data-idx="${i}" type="checkbox" ${enabled ? 'checked' : ''} style="transform:scale(1.25); margin-top:3px;">
+            <div>
+              <div style="font-weight:800; font-size:16px;">${this.escapeHtml(hz)} Hz</div>
+              ${desc ? `<div style="color:#556; font-size:13px; margin-top:2px;">${this.escapeHtml(desc)}</div>` : ''}
+              ${src ? `<div style="color:#778; font-size:12px; margin-top:2px;">Izvor: ${this.escapeHtml(src)}</div>` : ''}
+            </div>
+          </label>
+        </div>`;
+    }
+    if (!html) html = '<div style="padding:12px; color:#667;">Nema preostalih frekvencija.</div>';
+    if (listEl) listEl.innerHTML = html;
+
+    // bind events
+    if (listEl) {
+      listEl.querySelectorAll('input[type="checkbox"][data-idx]').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const idx = Number(e.target.getAttribute('data-idx'));
+          const on = !!e.target.checked;
+          this.setRenderedFreqEnabled(idx, on);
+        });
+      });
+    }
+
+    wrap.style.display = 'block';
+  }
+
+  setRenderedFreqEnabled(globalIndex, enabled){
+    const i = Number(globalIndex);
+    if (!Number.isFinite(i)) return;
+    if (!this._renderedSkipSet) this._renderedSkipSet = new Set();
+    if (enabled) this._renderedSkipSet.delete(i);
+    else this._renderedSkipSet.add(i);
+
+    // Update dock preview (still disabled there, but reflects state visually)
+    try { this.renderNowPlayingList({ currentIndex: Number(this._lastStats?.currentIndex ?? this._rendered?.segStartIndex ?? 0) }); } catch(_) {}
+    try { this.showToast('🍏 PRO: preskakanje važi od sledećeg segmenta.', { timeoutMs: 3500 }); } catch(_) {}
   }
 
 

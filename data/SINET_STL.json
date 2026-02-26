@@ -12,10 +12,10 @@
       "naziv": "Simptom 1",
       "opis": "anafilaksa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -1632,10 +1632,10 @@
       "naziv": "Simptom 7",
       "opis": "detoksikacija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -2442,8 +2442,8 @@
       "naziv": "Simptom 10",
       "opis": "hitna respiratorna podrška",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -2705,7 +2705,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "pain-toothache-sos",
@@ -2717,11 +2721,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -2827,11 +2826,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -3037,8 +3031,8 @@
       "naziv": "Simptom 14",
       "opis": "Ubrzanje zarastanja hirurških rezova i smanjenje traume tkiva.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D84.9",
+        "naziv": "IMMUNODEFICIENTIA, NON SPECIFICATA SMANJENJE IMUNITETA ,NEOZNACENO SARCOIDOSIS SARKOIDOZA - CVORICI VEZIVNOG TKIVA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -3135,7 +3129,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "pain-earache-infection",
@@ -3147,11 +3145,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -3346,10 +3339,10 @@
       "naziv": "Simptom 17",
       "opis": "Frekvencije za podršku fibroblastima u proizvodnji esencijalnih proteina za čvrstinu i elastičnost kože.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -3451,10 +3444,10 @@
       "naziv": "Simptom 18",
       "opis": "Mikro-strujna stimulacija mišića lica kroz zvuk za zatezanje opuštene kože i mišića.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -3539,11 +3532,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -3682,11 +3670,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -4437,11 +4420,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -4712,11 +4690,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -4987,11 +4960,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -5257,16 +5225,11 @@
       "naziv": "Simptom 27",
       "opis": "podrška nervnom sistemu",
       "mkb10": {
-        "sifra": "G35",
-        "naziv": "Multipla skleroza",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -5537,11 +5500,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -5812,11 +5770,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -6352,10 +6305,10 @@
       "naziv": "Simptom 31",
       "opis": "ublažavanje inflamacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -6627,11 +6580,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -6721,10 +6669,10 @@
       "naziv": "Simptom 33",
       "opis": "Najdublji nivo spavanja za ekstremnu fizičku reparaciju i mentalni reset.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -6809,11 +6757,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -7084,11 +7027,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -7359,11 +7297,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -7634,11 +7567,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -7904,16 +7832,11 @@
       "naziv": "Simptom 38",
       "opis": "hronični mišićni bolovi",
       "mkb10": {
-        "sifra": "M79.7",
-        "naziv": "Fibromialgija",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -8184,11 +8107,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -8729,11 +8647,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -9004,11 +8917,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -9549,11 +9457,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -9824,11 +9727,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -10099,11 +9997,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -10644,11 +10537,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -10919,11 +10807,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -11194,11 +11077,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -11464,10 +11342,10 @@
       "naziv": "Simptom 51",
       "opis": "Delta talasi za uvođenje u stanje dubokog sna bez snova. Neophodno za fizički oporavak.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -11569,10 +11447,10 @@
       "naziv": "Simptom 52",
       "opis": "Visoko kognitivno stanje povezano sa 'aha' momentima i brzim procesuiranjem informacija.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -11779,8 +11657,8 @@
       "naziv": "Simptom 54",
       "opis": "Opuštena budnost, smanjenje stresa, pamćenje. (Slušalice!)",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O68.9",
+        "naziv": "PARTUS PROPTER VIOLENTIAM (STRESS) FETALEM COMPLICATUS,NON SPECIFICATUS POROĐ.KOMPL.ZBOG STRESA PLODA,NEOZNACEN PARTUS PROPTER COMPLICATIONES CHORDAE UMBILICALIS COMPLICATUS POROĐ.KOMPL.ZBOG KOMPLIK.SA PUPCANIKOM",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -11855,17 +11733,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "brainwave-binaural-beta-fokus-i-logika",
       "naziv": "Simptom 55",
       "opis": "Rešavanje problema, visoka koncentracija, budnost. (Slušalice!)",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -11945,10 +11827,10 @@
       "naziv": "Simptom 56",
       "opis": "Dubok san bez snova, regeneracija tela, isceljenje. (Slušalice!)",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -12028,10 +11910,10 @@
       "naziv": "Simptom 57",
       "opis": "Visoka kognitivna obrada, peak performance. (Slušalice!)",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -12111,10 +11993,10 @@
       "naziv": "Simptom 58",
       "opis": "Kreativnost, REM faza sna, pristup podsvesnom. (Slušalice!)",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -12469,11 +12351,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -13014,11 +12891,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -13907,10 +13779,10 @@
       "naziv": "Simptom 66",
       "opis": "Blaga stimulacija timusa i limfe za decu u vrtićkom i školskom uzrastu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -13990,8 +13862,8 @@
       "naziv": "Simptom 67",
       "opis": "Stabilizacija pažnje i smanjenje mentalnog umora tokom izrade domaćih zadataka.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F90.0",
+        "naziv": "DISORDO ACTIVITATIS ET DISORDO ATTENTIONIS POREMECAJ AKTIVNOSTI I POR. PAŽNJE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -14066,7 +13938,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "child-night-terrors",
@@ -14078,11 +13954,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -14166,11 +14037,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -14260,10 +14126,10 @@
       "naziv": "Simptom 70",
       "opis": "Umirivanje amigdale i stvaranje osećaja bezbednosti kroz Schumannovu rezonancu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -14348,11 +14214,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -14436,11 +14297,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -14524,11 +14380,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -14728,11 +14579,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -15097,11 +14943,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -15642,11 +15483,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -15917,11 +15753,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -16192,11 +16023,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -16737,11 +16563,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -17007,16 +16828,11 @@
       "naziv": "Simptom 84",
       "opis": "podrška razvoju",
       "mkb10": {
-        "sifra": "F89",
-        "naziv": "Poremećaj psihološkog razvoja, neoznačen",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -17287,11 +17103,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:14.517Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -17557,8 +17368,8 @@
       "naziv": "Simptom 86",
       "opis": "Frekvencije namenjene mobilizaciji i eliminaciji depozita teških metala iz tkiva i jetre.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R78.7",
+        "naziv": "HYPERMETALLAEMIA POVECANJE KOLICINE TEŠKIH METALA U KRVI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -17666,17 +17477,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.5783521743326759,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "organ-liver-flush",
       "naziv": "Simptom 87",
       "opis": "Sveobuhvatan set za stimulaciju protoka žuči, regeneraciju hepatocita i eliminaciju toksina.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -17800,10 +17615,10 @@
       "naziv": "Simptom 88",
       "opis": "Neutralizacija efekata elektromagnetnog zračenja (Wi-Fi, 5G) i oporavak bio-polja.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -17999,10 +17814,10 @@
       "naziv": "Simptom 90",
       "opis": "Ojačavanje nervnog praga za osobe koje 'upijaju' tuđe emocije i buku.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -18093,10 +17908,10 @@
       "naziv": "Simptom 91",
       "opis": "Podsticanje socijalne radoznalosti i smanjenje straha od interakcije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -18187,8 +18002,8 @@
       "naziv": "Simptom 92",
       "opis": "Resetovanje dopaminskih receptora i smanjenje digitalne prenadraženosti mozga.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Y50.1",
+        "naziv": "ANTAGONISTI RECEPTORA OPIOIDA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -18274,7 +18089,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "dijabetes-hipoglikemija",
@@ -18286,11 +18105,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.761Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -18556,16 +18370,11 @@
       "naziv": "Simptom 94",
       "opis": "oštećenje bubrega",
       "mkb10": {
-        "sifra": "E14.2",
-        "naziv": "Dijabetes melitus, neoznačen, sa bubrežnim komplikacijama",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.761Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -19376,11 +19185,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.761Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -19651,11 +19455,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -19926,11 +19725,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -20196,16 +19990,11 @@
       "naziv": "Simptom 100",
       "opis": "smanjenje upale",
       "mkb10": {
-        "sifra": "J40",
-        "naziv": "Bronhitis, neoznačen (nije označen kao akutan ili hroničan)",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -20476,11 +20265,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -20751,11 +20535,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -21021,16 +20800,11 @@
       "naziv": "Simptom 103",
       "opis": "ublažavanje kašlja",
       "mkb10": {
-        "sifra": "R05",
-        "naziv": "Kašalj",
+        "sifra": "T48.3",
+        "naziv": "ANTITUSSIVA (REMEDIA) LEKOVI PROTIV KAŠLJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -21289,7 +21063,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "disanje-sinusi-kihanje",
@@ -21301,11 +21079,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -21576,11 +21349,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -22386,16 +22154,11 @@
       "naziv": "Simptom 108",
       "opis": "otvaranje nosa",
       "mkb10": {
-        "sifra": "J34.9",
-        "naziv": "Poremećaj nosa i nosnih sinusa, neoznačen (začepljen nos)",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -22666,11 +22429,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -22936,10 +22694,10 @@
       "naziv": "Simptom 110",
       "opis": "Frekvencije namenjene 'buđenju' pinealne žlezde i čišćenju od naslaga kalcijuma.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -23041,8 +22799,8 @@
       "naziv": "Simptom 111",
       "opis": "Specifičan set za odvajanje svesti od fizičkog tela kroz sinhronizaciju hemisfera.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T13.6",
+        "naziv": "POSLEDEICE ULASKA STRANOG TELA KROZ PRIRODNI OTVOR TELA (T15-T19) Strano telo u kornei Corpus alienum corneae Strano telo u rožnjaci",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -23128,17 +22886,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "eq-empathy-connection",
       "naziv": "Simptom 112",
       "opis": "Frekvencije koje podstiču rad ogledalnih neurona i otvaraju srčani centar.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -23334,10 +23096,10 @@
       "naziv": "Simptom 114",
       "opis": "Frekvencije za povezivanje sa dečijom nevinošću i isceljenje ranih razvojnih trauma.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -23433,11 +23195,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -23543,11 +23300,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -23764,10 +23516,10 @@
       "naziv": "Simptom 118",
       "opis": "Hitna stabilizacija energetskih tokova kod prebrzo podignute energije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -23941,10 +23693,10 @@
       "naziv": "Simptom 120",
       "opis": "Duboka aktivacija centra volje, identiteta i unutrašnje vatre.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -24024,10 +23776,10 @@
       "naziv": "Simptom 121",
       "opis": "Povezivanje svesti sa fizičkim telom i energijom Zemlje. Zaustavljanje osećaja 'lebdenja'.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -24295,8 +24047,8 @@
       "naziv": "Simptom 124",
       "opis": "Stimulacija mitohondrija za bržu proizvodnju ćelijske energije (Adenozin trifosfata).",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N98.1",
+        "naziv": "HYPERSTIMULATIO OVARII POVECANA STIMULACIJA JAJNIKA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -24382,7 +24134,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "physical-recovery-bone",
@@ -24499,11 +24255,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -24769,16 +24520,11 @@
       "naziv": "Simptom 127",
       "opis": "povećanje aktivnosti",
       "mkb10": {
-        "sifra": "R53",
-        "naziv": "Slabost i malaksalost (malaise/fatigue)",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -25049,11 +24795,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -25594,11 +25335,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -26139,11 +25875,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -26409,10 +26140,10 @@
       "naziv": "Simptom 133",
       "opis": "podsticanje kreativnosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -26684,11 +26415,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -26954,16 +26680,11 @@
       "naziv": "Simptom 135",
       "opis": "povećanje energije",
       "mkb10": {
-        "sifra": "R53",
-        "naziv": "Slabost i malaksalost (malaise/fatigue)",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -27229,16 +26950,11 @@
       "naziv": "Simptom 136",
       "opis": "podrška tokom monitoringa",
       "mkb10": {
-        "sifra": "Z15.0",
-        "naziv": "Genetska predispozicija za malignu neoplazmu",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -27497,7 +27213,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "genetika-nasledne-bolesti-cisticna-fibroza",
@@ -27779,11 +27499,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -28054,11 +27769,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -28599,11 +28309,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -29414,11 +29119,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.762Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -29689,11 +29389,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -30234,11 +29929,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -30779,11 +30469,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -31324,11 +31009,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -31599,11 +31279,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -32144,11 +31819,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -32419,11 +32089,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -32689,10 +32354,10 @@
       "naziv": "Simptom 156",
       "opis": "Ubrzanje metabolizma, štitna žlezda i kontrola apetita.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -32821,11 +32486,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -32948,16 +32608,11 @@
       "naziv": "Simptom 158",
       "opis": "Zdravlje prostate, smanjenje otoka i urinarnog trakta.",
       "mkb10": {
-        "sifra": "N40",
-        "naziv": "Hiperplazija prostate",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -33080,16 +32735,11 @@
       "naziv": "Simptom 159",
       "opis": "Za hronični umor, buđenje i fokus.",
       "mkb10": {
-        "sifra": "R53",
-        "naziv": "Slabost i malaksalost (malaise/fatigue)",
+        "sifra": "R52.9",
+        "naziv": "DOLOR,NON SPECIFICATUS BOL, NEOZNACEN LANGUOR ET LASSITUDO KLONULOST I UMOR",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -33216,7 +32866,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "hormone-dopamine-drive",
@@ -33317,10 +32971,10 @@
       "naziv": "Simptom 161",
       "opis": "Stimulacija epifize (pinealne žlezde) za prirodno lučenje melatonina.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -33411,10 +33065,10 @@
       "naziv": "Simptom 162",
       "opis": "Podsticanje osećaja bliskosti, empatije i socijalne povezanosti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -33892,10 +33546,10 @@
       "naziv": "Simptom 167",
       "opis": "Poboljšanje filtracije krvi i podrška slezini u borbi protiv infekcija.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -33986,8 +33640,8 @@
       "naziv": "Simptom 168",
       "opis": "Podrška stvaranju novih matičnih ćelija i krvnih loza.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -34073,23 +33727,22 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "imunitet-alergije-alergije-polen-prasina",
       "naziv": "Simptom 169",
       "opis": "smanjenje alergijske reakcije",
       "mkb10": {
-        "sifra": "J30.9",
-        "naziv": "Alergijski rinitis, neoznačen",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -34355,16 +34008,11 @@
       "naziv": "Simptom 170",
       "opis": "preterana reakcija imuniteta",
       "mkb10": {
-        "sifra": "D89.9",
-        "naziv": "Poremećaj mehanizma imuniteta, neoznačen",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -34905,11 +34553,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -35059,11 +34702,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -36001,11 +35639,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -36546,11 +36179,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -36821,11 +36449,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:22.763Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -37091,10 +36714,10 @@
       "naziv": "Simptom 181",
       "opis": "normalizacija enzima",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -37636,11 +37259,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.562Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -37906,10 +37524,10 @@
       "naziv": "Simptom 184",
       "opis": "energetska podrška",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -38176,10 +37794,10 @@
       "naziv": "Simptom 185",
       "opis": "podrška jetri i žuči",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -38451,11 +38069,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.562Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -38991,10 +38604,10 @@
       "naziv": "Simptom 188",
       "opis": "normalizacija pritiska",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -39531,10 +39144,10 @@
       "naziv": "Simptom 190",
       "opis": "smanjenje lupanja srca",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -39806,11 +39419,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.562Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -40076,10 +39684,10 @@
       "naziv": "Simptom 192",
       "opis": "slabost venoznih zidova",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -40346,10 +39954,10 @@
       "naziv": "Simptom 193",
       "opis": "smanjenje pritiska",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -40886,10 +40494,10 @@
       "naziv": "Simptom 195",
       "opis": "degeneracija kičmenih pršljenova",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -41161,11 +40769,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.562Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -41976,11 +41579,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.562Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -42340,10 +41938,10 @@
       "naziv": "Simptom 201",
       "opis": "Frekvencije za visoku vizuelnu retenciju i sinhronizaciju vizuelnog korteksa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -42434,10 +42032,10 @@
       "naziv": "Simptom 202",
       "opis": "Stimulacija gama talasa od 40Hz za smanjenje nakupljanja beta-amiloidnog plaka i poboljšanje memorije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -42539,10 +42137,10 @@
       "naziv": "Simptom 203",
       "opis": "smanjenje osetljivosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -42809,10 +42407,10 @@
       "naziv": "Simptom 204",
       "opis": "detoksikacija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -43079,10 +42677,10 @@
       "naziv": "Simptom 205",
       "opis": "gastrointestinalna zaštita",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -43349,10 +42947,10 @@
       "naziv": "Simptom 206",
       "opis": "hormonski poremećaji",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -43619,10 +43217,10 @@
       "naziv": "Simptom 207",
       "opis": "zaštita od radijacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -44159,10 +43757,10 @@
       "naziv": "Simptom 209",
       "opis": "bubrežna oštećenja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -44429,10 +44027,10 @@
       "naziv": "Simptom 210",
       "opis": "neurološki efekti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -44969,10 +44567,10 @@
       "naziv": "Simptom 212",
       "opis": "čišćenje pluća",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -45244,11 +44842,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.562Z",
-          "confidence": 0.9
         }
       },
       "psihosomatika": {
@@ -45519,11 +45112,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.562Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -45789,10 +45377,10 @@
       "naziv": "Simptom 215",
       "opis": "upala folikula kose",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -46329,10 +45917,10 @@
       "naziv": "Simptom 217",
       "opis": "telogeni efluvijum",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -46599,10 +46187,10 @@
       "naziv": "Simptom 218",
       "opis": "suva ili masna perut",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -46869,10 +46457,10 @@
       "naziv": "Simptom 219",
       "opis": "kožna bolest na vlasištu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -47409,10 +46997,10 @@
       "naziv": "Simptom 221",
       "opis": "vlaženje i ishrana",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -48148,10 +47736,10 @@
       "naziv": "Simptom 225",
       "opis": "Frekvencije za smanjenje kompresije nerva i stimulaciju rehidratacije intervertebralnog diska.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -48264,8 +47852,8 @@
       "naziv": "Simptom 226",
       "opis": "Harmonizacija mišićnog tonusa leve i desne strane tela radi podrške ispravljanju kičme.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G23.9",
+        "naziv": "DEGENORATIO GANGLII BASALIS, NON SPECIFICATA DEGEN. BAZALNE GANGLIJE, NEOZNACENA DYSTONIA DISTONIJA-POREMECAJ MIŠICNOG TONUSA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -48351,17 +47939,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.5850977547771156,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "sys-kost-ledja",
       "naziv": "Simptom 227",
       "opis": "Za diskus herniju, išijas i ukočenost.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -48507,10 +48099,10 @@
       "naziv": "Simptom 228",
       "opis": "Regeneracija hrskavice, smanjenje vode i bola.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -48866,10 +48458,10 @@
       "naziv": "Simptom 231",
       "opis": "Intenzivan set za stimulaciju sinovijalne tečnosti i regeneraciju hrskavice zgloba kuka.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -48982,10 +48574,10 @@
       "naziv": "Simptom 232",
       "opis": "Povećanje opsega pokreta i smanjenje fibroznih adhezija u ramenoj kapsuli.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -49357,10 +48949,10 @@
       "naziv": "Simptom 234",
       "opis": "smanjenje alergije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -49627,10 +49219,10 @@
       "naziv": "Simptom 235",
       "opis": "zarastanje čireva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -50167,10 +49759,10 @@
       "naziv": "Simptom 237",
       "opis": "smanjenje upale",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -50707,10 +50299,10 @@
       "naziv": "Simptom 239",
       "opis": "suzbijanje virusa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -51247,10 +50839,10 @@
       "naziv": "Simptom 241",
       "opis": "ublažavanje simptoma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -51787,10 +51379,10 @@
       "naziv": "Simptom 243",
       "opis": "umirenje iritacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -52057,10 +51649,10 @@
       "naziv": "Simptom 244",
       "opis": "smanjenje svraba i otekline",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -52602,11 +52194,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.563Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -52872,10 +52459,10 @@
       "naziv": "Simptom 247",
       "opis": "kancer krvi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -53600,10 +53187,10 @@
       "naziv": "Simptom 251",
       "opis": "Zvučno čišćenje prostora od ustajale energije i 'statičkog' emocionalnog naboja.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -53694,10 +53281,10 @@
       "naziv": "Simptom 252",
       "opis": "Neutralizacija negativnih uticaja podzemnih voda i zemljinih energetskih mreža na organizam.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -53793,11 +53380,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.563Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -54063,8 +53645,8 @@
       "naziv": "Simptom 254",
       "opis": "nakupina limfe i otoci",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D17.9",
+        "naziv": "NEOPLASMA BENIGNUM LIPOMATOSUM,NON SPECIFICATUM DOBROCUDNI TUMOR MASNOG TKIVA,NEOZNACEN HAEMANGIOMA ET LYMPHANGIOMA,LOCI NON SPECIFICATI TUMOR KRVNIH SUD.I LIMFE,NEOZN.LOKALIZAC",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -54326,7 +53908,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "limfni-sistem-limfoma",
@@ -54338,11 +53924,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:30.563Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -54608,10 +54189,10 @@
       "naziv": "Simptom 256",
       "opis": "Duboka regeneracija nervnog sistema kod ekstremne iscrpljenosti poslom.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -54713,10 +54294,10 @@
       "naziv": "Simptom 257",
       "opis": "Desenzitizacija amigdale i jačanje osećaja bezbednosti u telu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -54807,10 +54388,10 @@
       "naziv": "Simptom 258",
       "opis": "Podrška plućima u detoksikaciji i smanjenje psihičke napetosti tokom apstinencije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -54912,8 +54493,8 @@
       "naziv": "Simptom 259",
       "opis": "Frekvencije za stabilizaciju dopaminskog odgovora i smanjenje kompulzivne potrebe za slatkišima.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F52.2",
+        "naziv": "INSUFFICIENTIA CUPIDINIS GENITALIS NEUSPEŠNOST POLNOG ODGOVORA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -55010,17 +54591,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "hack-decision-making",
       "naziv": "Simptom 260",
       "opis": "Stabilizacija Beta talasa radi eliminacije 'zamrzavanja' u stresnim situacijama.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -55100,10 +54685,10 @@
       "naziv": "Simptom 261",
       "opis": "Stimulacija Brokine i Vernikeove oblasti u mozgu za lakše usvajanje gramatike i akcenta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -55277,10 +54862,10 @@
       "naziv": "Simptom 263",
       "opis": "Sinhronizacija desne hemisfere za umetničku inspiraciju i rešavanje problema.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -55371,8 +54956,8 @@
       "naziv": "Simptom 264",
       "opis": "Podizanje logičkih procesa na nivo visoke Beta frekvencije za duboku analizu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D56.1",
+        "naziv": "THALASSANAEMIA BETA BETA TALASANEMIJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -55447,15 +55032,19 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "mentalno-zdravlje-alzheimer",
       "naziv": "Simptom 265",
       "opis": "podrška kognitivnim funkcijama",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -55717,17 +55306,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "mentalno-zdravlje-demencija",
       "naziv": "Simptom 266",
       "opis": "očuvanje pamćenja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -55999,11 +55592,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.280Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -56274,11 +55862,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.280Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -57089,11 +56672,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.280Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -57364,11 +56942,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -58036,11 +57609,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -58141,16 +57709,11 @@
       "naziv": "Simptom 276",
       "opis": "Modulacija centralne senzibilizacije na bol i opuštanje mekih tkiva (fascija).",
       "mkb10": {
-        "sifra": "M79.7",
-        "naziv": "Fibromialgija",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -58361,11 +57924,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -58526,11 +58084,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -58691,11 +58244,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -58818,16 +58366,11 @@
       "naziv": "Simptom 281",
       "opis": "uvećana prostata",
       "mkb10": {
-        "sifra": "N40",
-        "naziv": "Benigna hiperplazija prostate",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -59638,11 +59181,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -59913,11 +59451,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -60188,11 +59721,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -60458,10 +59986,10 @@
       "naziv": "Simptom 287",
       "opis": "Podrška neuroplasticitetu i stimulacija oštećenih motornih puteva.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -60695,11 +60223,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -61026,11 +60549,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -61230,11 +60748,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -61340,11 +60853,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -61428,11 +60936,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -61627,16 +61130,11 @@
       "naziv": "Simptom 298",
       "opis": "Stabilizacija vestibularnog aparata u unutrašnjem uhu i smanjenje mučnine.",
       "mkb10": {
-        "sifra": "R42",
-        "naziv": "Vrtoglavica i ošamućenost",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -61731,11 +61229,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -62006,11 +61499,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.281Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -62281,11 +61769,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -62556,11 +62039,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -62831,11 +62309,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -63101,16 +62574,11 @@
       "naziv": "Simptom 304",
       "opis": "povećanje energije",
       "mkb10": {
-        "sifra": "R53",
-        "naziv": "Slabost i malaksalost (umor)",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -63921,11 +63389,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -64196,11 +63659,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -64471,11 +63929,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -64746,11 +64199,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -65021,11 +64469,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -65291,10 +64734,10 @@
       "naziv": "Simptom 312",
       "opis": "Sinhronizacija hormona sreće i motivacije. Idealno za stanja apatije i anhedonije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -65396,10 +64839,10 @@
       "naziv": "Simptom 313",
       "opis": "Podsticanje proizvodnje gama-aminokiselinske kiseline (GABA) za prirodno smirenje nervnog sistema i prekid 'vrtenja misli'.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -65517,11 +64960,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.282Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -66062,11 +65500,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -66607,11 +66040,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -66882,11 +66310,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -67157,11 +66580,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -67432,11 +66850,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -67707,11 +67120,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -67982,11 +67390,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -68357,10 +67760,10 @@
       "naziv": "Simptom 325",
       "opis": "Pomoćne frekvencije za detoksikaciju i podršku telu kod neoplastičnih procesa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -68594,11 +67997,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -68864,16 +68262,11 @@
       "naziv": "Simptom 328",
       "opis": "podsticanje apetita",
       "mkb10": {
-        "sifra": "R64",
-        "naziv": "Kaheksija",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -69144,11 +68537,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -69414,16 +68802,11 @@
       "naziv": "Simptom 330",
       "opis": "ublažavanje mučnine",
       "mkb10": {
-        "sifra": "R11",
-        "naziv": "Mučnina i povraćanje",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -69694,11 +69077,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.283Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -69964,10 +69342,10 @@
       "naziv": "Simptom 332",
       "opis": "holistički pristup",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -70234,10 +69612,10 @@
       "naziv": "Simptom 333",
       "opis": "emocionalna ravnoteža",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -71314,10 +70692,10 @@
       "naziv": "Simptom 337",
       "opis": "Složen set za eliminaciju mikotoksina (Ohratoxin, Aflatoxin) iz nervnog sistema i jetre.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -71540,11 +70918,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.284Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -72085,11 +71458,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.284Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -72355,16 +71723,11 @@
       "naziv": "Simptom 342",
       "opis": "smanjenje mučnine",
       "mkb10": {
-        "sifra": "R11",
-        "naziv": "Mučnina i povraćanje",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.284Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -72635,11 +71998,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.284Z",
-          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -73175,16 +72533,11 @@
       "naziv": "Simptom 345",
       "opis": "oporavak energije",
       "mkb10": {
-        "sifra": "R53",
-        "naziv": "Slabost i malaksalost (umor)",
+        "sifra": "",
+        "naziv": "",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.284Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -73725,11 +73078,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.284Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -74265,8 +73613,8 @@
       "naziv": "Simptom 349",
       "opis": "Osnovna frekvencija elektromagnetnog polja Zemlje i njene harmonike. Idealna za uzemljenje.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C47.9",
+        "naziv": "NEOPLASMA MALIGNUM NERVI PERIPHERICI ET SYSTEMATIS NERVOSI AUTONOMI, NON ZL. TU. PER. ŽI. I AU. NER. SISTEMA NEOZ NEOPLASMA MALIGNUM PERITONAEI ET RETROPERITONAEI ZLO. TUM. POTRBUŠNICE I NJENE POZADINE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -74363,7 +73711,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "prirodno-stimovanje-univerzalni-sklad-432-hz-",
@@ -74436,11 +73788,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.284Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -74552,16 +73899,11 @@
       "naziv": "Simptom 352",
       "opis": "Umirivanje akutne ili hronične upale pankreasa i balansiranje digestivnih enzima.",
       "mkb10": {
-        "sifra": "K85.9",
-        "naziv": "Akutni pankreatitis, neoznačen",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.285Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -74678,11 +74020,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:01:40.285Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -74948,10 +74285,10 @@
       "naziv": "Simptom 354",
       "opis": "emocionalna i duhovna priprema",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -75218,10 +74555,10 @@
       "naziv": "Simptom 355",
       "opis": "samostalnost i domaća nostalgia",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -75488,10 +74825,10 @@
       "naziv": "Simptom 356",
       "opis": "pronalaženje nove svrhe",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -75763,11 +75100,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.369Z",
-          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -76033,10 +75365,10 @@
       "naziv": "Simptom 358",
       "opis": "adaptacija na nove zahteve",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -76303,8 +75635,8 @@
       "naziv": "Simptom 359",
       "opis": "emocionalna i fizička adaptacija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T74.1",
+        "naziv": "ABUSUS PHYSICUS FIZICKA ZLOUPOTREBA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -76566,7 +75898,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "promene-zivotnih-faza-prvi-posao",
@@ -76578,11 +75914,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.369Z",
-          "confidence": 0.52
         }
       },
       "psihosomatika": {
@@ -76848,10 +76179,10 @@
       "naziv": "Simptom 361",
       "opis": "novi stresori i radosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -77118,10 +76449,10 @@
       "naziv": "Simptom 362",
       "opis": "emocionalna posvećenost",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -77482,10 +76813,10 @@
       "naziv": "Simptom 364",
       "opis": "Intenzivan set za neutralizaciju patogena u digestivnom traktu i smirivanje grčeva.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -77863,8 +77194,8 @@
       "naziv": "Simptom 367",
       "opis": "Ubrzana regeneracija kože i prevencija ožiljaka.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O34.2",
+        "naziv": "CURATIO MATRIS AD CICATRICEM UTERINAM OPERATIONE PRAECEDENTI FACTAM BRIGA O MAJCI KOD OŽILJAKA MATER.OD R.O.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -77983,7 +77314,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.5572887584950902,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "sys-hitno-zubi",
@@ -78177,11 +77512,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.369Z",
-          "confidence": 0.42
         }
       },
       "psihosomatika": {
@@ -78282,10 +77612,10 @@
       "naziv": "Simptom 370",
       "opis": "Smanjenje 'scenske treme' i jačanje osećaja sigurnosti u društvenim situacijama.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -78481,10 +77811,10 @@
       "naziv": "Simptom 372",
       "opis": "Otpuštanje tenzije u lumbalnom i ramenom delu uzrokovane prevelikom odgovornošću.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -78674,11 +78004,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.369Z",
-          "confidence": 0.81
         }
       },
       "psihosomatika": {
@@ -78768,10 +78093,10 @@
       "naziv": "Simptom 375",
       "opis": "Prekid neželjenih mišićnih kontrakcija uzrokovanih akumuliranim stresom.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -78862,10 +78187,10 @@
       "naziv": "Simptom 376",
       "opis": "Smirivanje solarnog pleksusa i opuštanje grča želuca uzrokovanog tremom ili strahom.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -78956,10 +78281,10 @@
       "naziv": "Simptom 377",
       "opis": "Smanjenje nivoa kortizola u folikulima i stimulacija mikrocirkulacije vlasišta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -79050,10 +78375,10 @@
       "naziv": "Simptom 378",
       "opis": "Opuštanje dijafragme i prekid osećaja nemogućnosti dubokog udaha.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -79144,10 +78469,10 @@
       "naziv": "Simptom 379",
       "opis": "Regulacija znojnih žlezda putem balansiranja simpatičkog nervnog sistema.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -79227,10 +78552,10 @@
       "naziv": "Simptom 380",
       "opis": "Prekid petlje 'stres-svrab' kroz smirivanje kožnih receptora i nervnog sistema.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -79321,10 +78646,10 @@
       "naziv": "Simptom 381",
       "opis": "Opuštanje maseteričnih mišića vilice i smanjenje noćne tenzije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -79415,10 +78740,10 @@
       "naziv": "Simptom 382",
       "opis": "Regulacija rada srca kada je uzrok anksioznost, a ne organsko oštećenje.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -79514,11 +78839,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.369Z",
-          "confidence": 0.58
         }
       },
       "psihosomatika": {
@@ -79597,10 +78917,10 @@
       "naziv": "Simptom 384",
       "opis": "vlaženje organizma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -80137,10 +79457,10 @@
       "naziv": "Simptom 386",
       "opis": "kinetoza",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -80677,10 +79997,10 @@
       "naziv": "Simptom 388",
       "opis": "putnički proljev",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -80952,11 +80272,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.370Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -81227,11 +80542,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.370Z",
-          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -81497,10 +80807,10 @@
       "naziv": "Simptom 391",
       "opis": "smanjenje anksioznosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -81767,10 +81077,10 @@
       "naziv": "Simptom 392",
       "opis": "oporavak",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -82037,10 +81347,10 @@
       "naziv": "Simptom 393",
       "opis": "resetovanje cirkadijuma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -82307,10 +81617,10 @@
       "naziv": "Simptom 394",
       "opis": "loš položaj",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -82577,10 +81887,10 @@
       "naziv": "Simptom 395",
       "opis": "zaštita sluha",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -82847,10 +82157,10 @@
       "naziv": "Simptom 396",
       "opis": "sindrom izgaranja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -83122,11 +82432,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.370Z",
-          "confidence": 0.23
         }
       },
       "psihosomatika": {
@@ -83392,10 +82697,10 @@
       "naziv": "Simptom 398",
       "opis": "rad na pokretnoj traci",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -83662,10 +82967,10 @@
       "naziv": "Simptom 399",
       "opis": "podsticanje kretanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -83932,10 +83237,10 @@
       "naziv": "Simptom 400",
       "opis": "rad na računaru",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -84202,10 +83507,10 @@
       "naziv": "Simptom 401",
       "opis": "psihičko opterećenje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -84742,10 +84047,10 @@
       "naziv": "Simptom 403",
       "opis": "digitalni zamor očiju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -85012,10 +84317,10 @@
       "naziv": "Simptom 404",
       "opis": "Niskofrekventna sonična drenaža za olakšavanje eliminacije peska iz bubrežnih čašica.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -85117,10 +84422,10 @@
       "naziv": "Simptom 405",
       "opis": "Prošireni set za regeneraciju limfocita i energetsku podršku slezini.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -85227,11 +84532,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.370Z",
-          "confidence": 0.42
         }
       },
       "psihosomatika": {
@@ -85326,11 +84626,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.370Z",
-          "confidence": 0.81
         }
       },
       "psihosomatika": {
@@ -85442,10 +84737,10 @@
       "naziv": "Simptom 408",
       "opis": "Napredni protokol za desenzitizaciju slušnog nerva i smanjenje fantomskih zvukova.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -85558,10 +84853,10 @@
       "naziv": "Simptom 409",
       "opis": "Brzo ublažavanje menstrualnih bolova i emocionalne labilnosti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -86094,8 +85389,8 @@
       "naziv": "Simptom 414",
       "opis": "Razbijanje zastoja u sinusnim šupljinama i drenaža frontalnih i maksilarnih kanala.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K71.0",
+        "naziv": "MORBUS HEPATIS TOXICUS CHOLESTATICUS TOKSICKA BOLEST JETRE ZBOG ZASTOJA ŽUCI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -86203,7 +85498,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "resp-sleep-apnea",
@@ -86309,11 +85608,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:45.370Z",
-          "confidence": 0.68
         }
       },
       "psihosomatika": {
@@ -86425,10 +85719,10 @@
       "naziv": "Simptom 417",
       "opis": "Interventni set za hitno opuštanje bronhijalnih mišića i olakšavanje prolaza vazduha.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -86519,10 +85813,10 @@
       "naziv": "Simptom 418",
       "opis": "Desenzitizacija receptora za kašalj i vlaženje sluzokože kroz soničnu stimulaciju.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -86613,10 +85907,10 @@
       "naziv": "Simptom 419",
       "opis": "Set za olakšavanje razmene gasova i smanjenje hroničnog spazma bronhija.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -86729,8 +86023,8 @@
       "naziv": "Simptom 420",
       "opis": "Smanjenje otpora u plućnim arterijama i poboljšanje desne strane srca.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Q20.1",
+        "naziv": "ORIFICIUM VENTRICULI DEXTRI DUPLEX DVOSTRUKI OTVOR DESNE KOMORE SRCA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -86816,17 +86110,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "resp-post-covid-lung",
       "naziv": "Simptom 421",
       "opis": "Set za smanjenje fibroze i vraćanje punog kapaciteta pluća nakon virusne upale.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -87198,10 +86496,10 @@
       "naziv": "Simptom 423",
       "opis": "umor specifičan za RA",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -87468,10 +86766,10 @@
       "naziv": "Simptom 424",
       "opis": "upala i otok",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -87738,10 +87036,10 @@
       "naziv": "Simptom 425",
       "opis": "intenzivni bolovi ruku i nogu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -88372,10 +87670,10 @@
       "naziv": "Simptom 428",
       "opis": "Ciljane Rife frekvencije za suzbijanje rezistentnih sojeva stafilokoka.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -88477,10 +87775,10 @@
       "naziv": "Simptom 429",
       "opis": "Vibracije namenjene olakšavanju izbacivanja mikrolita iz bubrega.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -88582,8 +87880,8 @@
       "naziv": "Simptom 430",
       "opis": "Ciljani Rife set za suzbijanje prekomernog rasta kandide i balansiranje crevne flore.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Q87.3",
+        "naziv": "SYNDROMAE MALFORMATIONIS INCERMENTI ENORMIS PRAECOCIS CONGENITAE SIND.UROĐ.ANOM.RANOG PREKOMERNOG RASTA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -88680,17 +87978,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.5668906394944764,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "rife-parasite-cleanse",
       "naziv": "Simptom 431",
       "opis": "Široki spektar frekvencija za eliminaciju unutrašnjih parazita.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -88792,10 +88094,10 @@
       "naziv": "Simptom 432",
       "opis": "Specifične frekvencije za suzbijanje infekcija urinarnog trakta uzrokovanih E. coli.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -88897,10 +88199,10 @@
       "naziv": "Simptom 433",
       "opis": "Univerzalni set za olakšavanje simptoma sezonskih virusa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -89002,10 +88304,10 @@
       "naziv": "Simptom 434",
       "opis": "Pomaže u ublažavanju simptoma herpesa na usnama i telu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -89317,8 +88619,8 @@
       "naziv": "Simptom 437",
       "opis": "Pomaže u smanjenju bakterijskog opterećenja kod paradentoze i apscesa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N45.0",
+        "naziv": "Orhitis, epidimitis i epiidimitis bez pomena apscesa Orchitis,epididymitis et epididymoorchitis sine abscessu Zapaljenje semenika,pasemenika i pasemenika sa semenicima bez zagnoja",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -89415,17 +88717,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "rife-lyme-disease",
       "naziv": "Simptom 438",
       "opis": "Složeni set frekvencija za podršku organizmu u borbi protiv Borelije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -89527,10 +88833,10 @@
       "naziv": "Simptom 439",
       "opis": "Frekvencije za stimulaciju peristaltike i smanjenje gasova u crevima.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -89632,10 +88938,10 @@
       "naziv": "Simptom 440",
       "opis": "Skup Rife frekvencija namenjen stimulaciji limfnog sistema i belih krvnih zrnaca.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -89842,8 +89148,8 @@
       "naziv": "Simptom 442",
       "opis": "Stabilizacija mastocita i smanjenje histaminskog odgovora organizma.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F52.2",
+        "naziv": "INSUFFICIENTIA CUPIDINIS GENITALIS NEUSPEŠNOST POLNOG ODGOVORA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -89940,17 +89246,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "rife-staph-aureus",
       "naziv": "Simptom 443",
       "opis": "Frekvencije namenjene neutralizaciji stafilokoknih bakterija.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -90052,8 +89362,8 @@
       "naziv": "Simptom 444",
       "opis": "Pomaže kod gnojne angine i upalnih procesa u ždrelu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T17.2",
+        "naziv": "CORPUS ALIENUM PHARYNGIS STRANO TELO U ŽDRELU",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -90150,15 +89460,19 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "rife-sinusitis",
       "naziv": "Simptom 445",
       "opis": "Kombinacija frekvencija za drenažu i suzbijanje lokalnih infekcija u sinusima.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z98.2",
+        "naziv": "PRISUSTVO NAPRAVE ZA DRENAŽU MOŽDANO-KICMENE TECNOSTI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -90255,17 +89569,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "ronjenje-pritisak-azotna-narkoza",
       "naziv": "Simptom 446",
       "opis": "zbunjenost na dubini",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -91072,10 +90390,10 @@
       "naziv": "Simptom 449",
       "opis": "eliminacija azota",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -91347,11 +90665,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:01:55.508Z",
-          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -91617,10 +90930,10 @@
       "naziv": "Simptom 451",
       "opis": "relaksacija mišića",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -91887,10 +91200,10 @@
       "naziv": "Simptom 452",
       "opis": "olakšavanje sinusa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -92157,10 +91470,10 @@
       "naziv": "Simptom 453",
       "opis": "smanjenje anksioznosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -92427,10 +91740,10 @@
       "naziv": "Simptom 454",
       "opis": "zaštita očiju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -92972,11 +92285,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:01:55.508Z",
-          "confidence": 0.43
         }
       },
       "psihosomatika": {
@@ -93242,10 +92550,10 @@
       "naziv": "Simptom 457",
       "opis": "umirenje pre spavanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -93512,10 +92820,10 @@
       "naziv": "Simptom 458",
       "opis": "podrška dubokom snu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -93782,8 +93090,8 @@
       "naziv": "Simptom 459",
       "opis": "smanjenje noćnih mora",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T60.9",
+        "naziv": "PESTICIDUM, NON SPECIFICATUM PESTICID, NEOZNACEN EFFECTUS SUBSTANTIARUM NOCIVARUM, UT ALIMENTUM MARITIMUM INGESTARUM TOXICUS TOK.DEJ.ŠTET.SUPS.UNET.KAO HRA.IZ MORA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -94045,17 +93353,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "san-relaksacija-opustanje-pre-spavanja",
       "naziv": "Simptom 460",
       "opis": "priprema za san",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -94322,8 +93634,8 @@
       "naziv": "Simptom 461",
       "opis": "regulisanje sna",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z91.3",
+        "naziv": "LICNA ANAMNEZA O NEZDRAVOM RASPOREDU SNA I BUDNOG STANJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -94585,15 +93897,19 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "san-relaksacija-povrsan-san",
       "naziv": "Simptom 462",
       "opis": "produbljivanje sna",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z91.3",
+        "naziv": "LICNA ANAMNEZA O NEZDRAVOM RASPOREDU SNA I BUDNOG STANJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -94855,17 +94171,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "san-relaksacija-preterano-sanjarenje",
       "naziv": "Simptom 463",
       "opis": "smanjenje sanjarenja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -95132,10 +94452,10 @@
       "naziv": "Simptom 464",
       "opis": "smanjenje nemira",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -95402,10 +94722,10 @@
       "naziv": "Simptom 465",
       "opis": "lakše budenje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -95777,10 +95097,10 @@
       "naziv": "Simptom 467",
       "opis": "Frekvencije koje održavaju nivo svesti tokom REM faze sna.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -96059,10 +95379,10 @@
       "naziv": "Simptom 470",
       "opis": "prolećne alergije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -96329,10 +95649,10 @@
       "naziv": "Simptom 471",
       "opis": "povećana osetljivost",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -96599,10 +95919,10 @@
       "naziv": "Simptom 472",
       "opis": "sezonski pad energije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -96869,10 +96189,10 @@
       "naziv": "Simptom 473",
       "opis": "pregrevavanje organizma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -97139,10 +96459,10 @@
       "naziv": "Simptom 474",
       "opis": "adaptacija na novu sezonu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -97409,10 +96729,10 @@
       "naziv": "Simptom 475",
       "opis": "meteoropatija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -97679,10 +96999,10 @@
       "naziv": "Simptom 476",
       "opis": "nedostatak sunca",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -98219,8 +97539,8 @@
       "naziv": "Simptom 478",
       "opis": "nedostatak dnevne svetlosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H52.6",
+        "naziv": "ANOMALIAE REFRACTIONIS ALIAE DRUGE NEPRAVILNOSTI PRELAMANJA SVETLOSTI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -98482,7 +97802,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "sezonski-poremecaji-zimske-infekcije-grip",
@@ -98759,10 +98083,10 @@
       "naziv": "Simptom 480",
       "opis": "Frekvencije za eliminaciju toksina iz krvotoka i poboljšanje transporta kiseonika.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -99096,10 +98420,10 @@
       "naziv": "Simptom 483",
       "opis": "Frekvencije namenjene podršci održivosti motornih neurona i smanjenju oksidativnog stresa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -99190,10 +98514,10 @@
       "naziv": "Simptom 484",
       "opis": "Umirivanje senzornog preopterećenja i sinhronizacija hemisfera mozga.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -99284,10 +98608,10 @@
       "naziv": "Simptom 485",
       "opis": "VEOMA NEŽAN set za povećanje praga za napade kroz stabilizaciju neuronskih membrana. BEZ GAMA TALASA.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -99472,10 +98796,10 @@
       "naziv": "Simptom 487",
       "opis": "Napredni set fokusiran na podršku obnovi mijelinskog omotača i smanjenje autoimune agresije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -99588,10 +98912,10 @@
       "naziv": "Simptom 488",
       "opis": "Centralna Solfeggio frekvencija za povratak organizma u balans i podsticanje vitalnosti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -99693,8 +99017,8 @@
       "naziv": "Simptom 489",
       "opis": "Aktivacija epifize, jedinstvo, povratak izvornoj energiji.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C75.3",
+        "naziv": "NEOPLASMA MALIGNUM CORPORIS PINEALIS ZLOCUDNI TUMOR EPIFIZE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -99747,17 +99071,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "solfeggio-harmonija-budjenje-intuicije-741-hz-",
       "naziv": "Simptom 490",
       "opis": "Detoksikacija ćelija, rešavanje problema, kreativni izraz.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -99815,8 +99143,8 @@
       "naziv": "Simptom 491",
       "opis": "Povezivanje sa drugima, tolerancija, ljubav i komunikacija.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Q26.6",
+        "naziv": "COMMUNICATIO ARTERIOVENOSA HEPATICOPORTA ARTERIOVENSKA KOMUNIKACIJA U JETRI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -99869,15 +99197,19 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "solfeggio-harmonija-miracle-dnk-popravka-528-hz-",
       "naziv": "Simptom 492",
       "opis": "Transformacija, čuda, popravka DNK lanca, bistrina uma.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G11.3",
+        "naziv": "ATAXIA CEREBELLARIS CUM DETECTU DNA MALOMOŽDANA ATAKSIJA SA DEFEKTOM DNK",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -99930,17 +99262,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "solfeggio-harmonija-oslobadjanje-straha-396-hz-",
       "naziv": "Simptom 493",
       "opis": "Korenska čakra, uklanjanje osećaja krivice i anksioznosti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -99998,10 +99334,10 @@
       "naziv": "Simptom 494",
       "opis": "Uvid u iluzije, buđenje unutrašnje snage i intuicije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -100059,10 +99395,10 @@
       "naziv": "Simptom 495",
       "opis": "Ublažavanje fizičkog bola, smanjenje napetosti i stresa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -100120,10 +99456,10 @@
       "naziv": "Simptom 496",
       "opis": "Olakšava promene, uklanja negativne uticaje i traume.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -100242,10 +99578,10 @@
       "naziv": "Simptom 498",
       "opis": "zaštita sluha i smanjenje stresa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -100512,8 +99848,8 @@
       "naziv": "Simptom 499",
       "opis": "smanjenje finansijskog stresa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O68.9",
+        "naziv": "PARTUS PROPTER VIOLENTIAM (STRESS) FETALEM COMPLICATUS,NON SPECIFICATUS POROĐ.KOMPL.ZBOG STRESA PLODA,NEOZNACEN PARTUS PROPTER COMPLICATIONES CHORDAE UMBILICALIS COMPLICATUS POROĐ.KOMPL.ZBOG KOMPLIK.SA PUPCANIKOM",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -100775,17 +100111,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "spoljni-faktor-stresa-elektromagnetno-zracenje",
       "naziv": "Simptom 500",
       "opis": "zaštita od EMF",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -101052,10 +100392,10 @@
       "naziv": "Simptom 501",
       "opis": "psihološka podrška",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -101322,10 +100662,10 @@
       "naziv": "Simptom 502",
       "opis": "zaštita od hladnoće",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -101592,10 +100932,10 @@
       "naziv": "Simptom 503",
       "opis": "termoregulacija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -102132,8 +101472,8 @@
       "naziv": "Simptom 505",
       "opis": "podrška mentalnom zdravlju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -102395,7 +101735,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "spoljni-faktor-stresa-svetlosno-zaga-enje",
@@ -103212,10 +102556,10 @@
       "naziv": "Simptom 509",
       "opis": "ubrzanje zarastanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -103752,8 +103096,8 @@
       "naziv": "Simptom 511",
       "opis": "nakon treninga",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z39.0",
+        "naziv": "NEGA I PREGLED NEPOSREDNO NAKON POROĐAJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -104015,17 +103359,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "sport-rehabilitacija-opekotine-od-trenja",
       "naziv": "Simptom 512",
       "opis": "čirave od trenja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -104292,10 +103640,10 @@
       "naziv": "Simptom 513",
       "opis": "regeneracija mišića",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -105647,11 +104995,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:02:01.153Z",
-          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -105774,10 +105117,10 @@
       "naziv": "Simptom 519",
       "opis": "Regulacija pritiska, pulsa i zdravlja krvnih sudova.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -105934,10 +105277,10 @@
       "naziv": "Simptom 520",
       "opis": "Ublažavanje ukočenosti i bola u malim zglobovima šake.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -106039,10 +105382,10 @@
       "naziv": "Simptom 521",
       "opis": "Jačanje mišića sfinktera i stabilizacija nervnih signala koji kontrolišu pražnjenje.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -106144,10 +105487,10 @@
       "naziv": "Simptom 522",
       "opis": "očuvanje mišića",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -106684,10 +106027,10 @@
       "naziv": "Simptom 524",
       "opis": "borba protiv slobodnih radikala",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -107103,10 +106446,10 @@
       "naziv": "Simptom 526",
       "opis": "Agresivno čišćenje gljivica i podrška imunitetu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -107263,10 +106606,10 @@
       "naziv": "Simptom 527",
       "opis": "Smanjenje gasova, grčeva i nervoze stomaka.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -107379,10 +106722,10 @@
       "naziv": "Simptom 528",
       "opis": "Pokretanje varenja, peristaltike i detoks.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K59.0",
+        "naziv": "OPSTIPATIO ZATVOR",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -107633,10 +106976,10 @@
       "naziv": "Simptom 530",
       "opis": "Set za jačanje vezivnog tkiva desni i eliminaciju bakterija u džepovima.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -107843,10 +107186,10 @@
       "naziv": "Simptom 532",
       "opis": "Ublažavanje bola izazvanog pomeranjem zuba i pritiska žice na desni.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -108031,8 +107374,8 @@
       "naziv": "Simptom 534",
       "opis": "Stimulacija osteointegracije titanijumskih implantata i prevencija peri-implantitisa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N98.1",
+        "naziv": "HYPERSTIMULATIO OVARII POVECANA STIMULACIJA JAJNIKA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -108129,17 +107472,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "dental-extraction-healing",
       "naziv": "Simptom 535",
       "opis": "Brže zatvaranje rane, formiranje koaguluma i prevencija 'suve alveole'.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -108335,10 +107682,10 @@
       "naziv": "Simptom 537",
       "opis": "bolest spavanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -108605,10 +107952,10 @@
       "naziv": "Simptom 538",
       "opis": "virusna groznica",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -108875,8 +108222,8 @@
       "naziv": "Simptom 539",
       "opis": "limfedem uzrokovan parazitima",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B81.8",
+        "naziv": "HELMINTHIASES INTESTINALES ALIAE, SPECIFICATAE DRUGE OZNACENE HILMINTIJAZE CREVA INFECTIO INTESTINALIS PARASITARIA,NON SPECIFICATA NEOZNACENA INFEKCIJA PARAZITIMA CREVA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -109138,15 +108485,19 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "tropske-bolesti-kolera",
       "naziv": "Simptom 540",
       "opis": "bakterijska infekcija creva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A48.8",
+        "naziv": "MORBI BACTERIALES ALII, SPECIFICATI DRUGE OZNACENE BAKTERIJSKE BOLESTI INFECTIO BACTERIALIS, LOCI NON SPECIFICATI BAKTERIJSKA INFEKCIJA NEOZNAC.LOKALIZAC.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -109408,17 +108759,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "tropske-bolesti-leishmanioza",
       "naziv": "Simptom 541",
       "opis": "parazitska kožna bolest",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B55.1",
+        "naziv": "LEISHMANIASIS CUTANEA LAJŠMANIJAZA KOŽE",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -110495,10 +109850,10 @@
       "naziv": "Simptom 545",
       "opis": "virusna infekcija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -110765,10 +110120,10 @@
       "naziv": "Simptom 546",
       "opis": "virusna groznica",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -111035,8 +110390,8 @@
       "naziv": "Simptom 547",
       "opis": "ublažavanje bola",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G54.7",
+        "naziv": "PHANTOMA -EXTREMITAS NON DOLOROSA FANTOMSKI UD BEZ BOLA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -111298,17 +110653,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "tumori-zracenja-limfomi",
       "naziv": "Simptom 548",
       "opis": "podrška limfnom sistemu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -111575,10 +110934,10 @@
       "naziv": "Simptom 549",
       "opis": "usporavanje širenja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -111845,10 +111204,10 @@
       "naziv": "Simptom 550",
       "opis": "holistička frekvencijska podrška",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -112115,10 +111474,10 @@
       "naziv": "Simptom 551",
       "opis": "obnova ćelija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -112655,10 +112014,10 @@
       "naziv": "Simptom 553",
       "opis": "zaštita od zračenja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -112930,11 +112289,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:02:01.155Z",
-          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -113475,11 +112829,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:02:01.155Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -114015,10 +113364,10 @@
       "naziv": "Simptom 558",
       "opis": "abnormalan rast kosti u uhu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -114285,10 +113634,10 @@
       "naziv": "Simptom 559",
       "opis": "suvišak ušnog voska",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -114555,10 +113904,10 @@
       "naziv": "Simptom 560",
       "opis": "smanjenje zujanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -115365,10 +114714,10 @@
       "naziv": "Simptom 563",
       "opis": "pozitivna slika o sebi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -115635,10 +114984,10 @@
       "naziv": "Simptom 564",
       "opis": "adaptacija na novu kulturu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -115905,10 +115254,10 @@
       "naziv": "Simptom 565",
       "opis": "izgradnja poverenja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -116175,10 +115524,10 @@
       "naziv": "Simptom 566",
       "opis": "razvoj sigurne veze",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -116985,10 +116334,10 @@
       "naziv": "Simptom 569",
       "opis": "smanjenje anksioznosti oko papira",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -117255,10 +116604,10 @@
       "naziv": "Simptom 570",
       "opis": "integracija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -117525,10 +116874,10 @@
       "naziv": "Simptom 571",
       "opis": "post-traumatski rast",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -117795,10 +117144,10 @@
       "naziv": "Simptom 572",
       "opis": "emocionalno zaceljivanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -118070,11 +117419,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:02:01.156Z",
-          "confidence": 0.35
         }
       },
       "psihosomatika": {
@@ -118340,10 +117684,10 @@
       "naziv": "Simptom 574",
       "opis": "intolerancija na gluten",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -118880,10 +118224,10 @@
       "naziv": "Simptom 576",
       "opis": "smanjenje upale",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K29.7",
+        "naziv": "Duodenitis Duodenitis Zapaljenje dvanaestopalačnog creva",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -119150,10 +118494,10 @@
       "naziv": "Simptom 577",
       "opis": "relaksacija mišića",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -119425,11 +118769,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:02:01.156Z",
-          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -119695,8 +119034,8 @@
       "naziv": "Simptom 579",
       "opis": "ublažavanje bola i upale",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G54.7",
+        "naziv": "PHANTOMA -EXTREMITAS NON DOLOROSA FANTOMSKI UD BEZ BOLA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -119958,17 +119297,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "varenje-mucnina",
       "naziv": "Simptom 580",
       "opis": "smanjenje mučnine",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -120775,10 +120118,10 @@
       "naziv": "Simptom 583",
       "opis": "smanjenje povraćanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -121315,10 +120658,10 @@
       "naziv": "Simptom 585",
       "opis": "smanjenje refluksa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K21.9",
+        "naziv": "REFLUUM GASTROOESOPHAGICUM ŽELUDACNO-JEDNJACKO POVRACANJE MORBI OESOPHAGI ALII DRUGE BOLESTI JEDNJAKA",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -121860,11 +121203,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:02:01.157Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -122400,8 +121738,8 @@
       "naziv": "Simptom 589",
       "opis": "smanjenje kiselosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E87.2",
+        "naziv": "ACIDOSIS POVECANJE KISELOSTI KRVI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -122663,17 +122001,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "varenje-zucni-kamenci",
       "naziv": "Simptom 590",
       "opis": "ublažavanje simptoma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -122945,11 +122287,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:02:01.157Z",
-          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -123485,10 +122822,10 @@
       "naziv": "Simptom 593",
       "opis": "ronjenje i visina",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -124025,10 +123362,10 @@
       "naziv": "Simptom 595",
       "opis": "resetovanje unutrašnjeg sata",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -124295,10 +123632,10 @@
       "naziv": "Simptom 596",
       "opis": "podrška krvotoku",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -124565,10 +123902,10 @@
       "naziv": "Simptom 597",
       "opis": "smanjenje aviofobije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -124835,10 +124172,10 @@
       "naziv": "Simptom 598",
       "opis": "vlaženje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -125110,11 +124447,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "INJURY",
-        "ai": {
-          "ts": "2026-02-26T17:02:01.157Z",
-          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -125380,10 +124712,10 @@
       "naziv": "Simptom 600",
       "opis": "prilagođavanje na visinu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -125650,10 +124982,10 @@
       "naziv": "Simptom 601",
       "opis": "imunitet i zarastanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -126190,8 +125522,8 @@
       "naziv": "Simptom 603",
       "opis": "štitna žlezda",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C71.9",
+        "naziv": "Maligna neoplazma tireoidne žlezde Neoplasma malignum glandulae thyreoideae Zloćudni tumor štitna žlezde Maligna neoplazma hipofize Neoplasma malignum hypophysis Zloćudni tumor hipofize",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -126453,7 +125785,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "vitamini-minerali-kalcijum-kosti",
@@ -126730,10 +126066,10 @@
       "naziv": "Simptom 605",
       "opis": "smanjenje grčeva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -127270,10 +126606,10 @@
       "naziv": "Simptom 607",
       "opis": "antioksidant",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -128080,10 +127416,10 @@
       "naziv": "Simptom 610",
       "opis": "Stimulacija iskoristljivosti cinka za imunitet i zdravlje kože.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -128362,10 +127698,10 @@
       "naziv": "Simptom 613",
       "opis": "Frekvencija za podršku apsorpciji magnezijuma. Pomaže kod grčeva i relaksacije mišića.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -128456,10 +127792,10 @@
       "naziv": "Simptom 614",
       "opis": "Frekvencijski potpis EPA/DHA kiselina za smanjenje upala u telu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -128550,10 +127886,10 @@
       "naziv": "Simptom 615",
       "opis": "Resonanca za selenium, ključan za rad štitne žlezde i detoksikaciju.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -128644,10 +127980,10 @@
       "naziv": "Simptom 616",
       "opis": "Zvučna frekvencija molekula askorbinske kiseline za bolju apsorpciju u ćelijama.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -128749,10 +128085,10 @@
       "naziv": "Simptom 617",
       "opis": "kožna ravnoteža",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -129019,8 +128355,8 @@
       "naziv": "Simptom 618",
       "opis": "podrška odluci za apstinenciju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -129282,17 +128618,21 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.7378681559508092,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "vrsnjacki-pritisak-adolescencija-identitetska-kriza",
       "naziv": "Simptom 619",
       "opis": "samosvest i prihvatanje sebe",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -129559,10 +128899,10 @@
       "naziv": "Simptom 620",
       "opis": "emocionalna regulacija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -129829,10 +129169,10 @@
       "naziv": "Simptom 621",
       "opis": "podrška zdravom odnosu prema hrani",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -130099,8 +129439,8 @@
       "naziv": "Simptom 622",
       "opis": "smanjenje stresa od performansi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O68.9",
+        "naziv": "PARTUS PROPTER VIOLENTIAM (STRESS) FETALEM COMPLICATUS,NON SPECIFICATUS POROĐ.KOMPL.ZBOG STRESA PLODA,NEOZNACEN PARTUS PROPTER COMPLICATIONES CHORDAE UMBILICALIS COMPLICATUS POROĐ.KOMPL.ZBOG KOMPLIK.SA PUPCANIKOM",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -130362,7 +129702,11 @@
             "licenca": ""
           }
         }
-      ]
+      ],
+      "_mkb_auto": {
+        "confidence": 0.55,
+        "method": "keyword_overlap"
+      }
     },
     {
       "id": "vrsnjacki-pritisak-adolescencija-rana-seksualnost",
@@ -130374,11 +129718,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:02:06.872Z",
-          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -130644,10 +129983,10 @@
       "naziv": "Simptom 624",
       "opis": "samopouzdanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -130914,10 +130253,10 @@
       "naziv": "Simptom 625",
       "opis": "digitalni detoks",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -131184,10 +130523,10 @@
       "naziv": "Simptom 626",
       "opis": "emocionalno zaceljivanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -131454,10 +130793,10 @@
       "naziv": "Simptom 627",
       "opis": "Niskofrekventna i visokofrekventna stimulacija za paralizu i eliminaciju crevnih parazita.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -131675,10 +131014,10 @@
       "naziv": "Simptom 629",
       "opis": "Targetiranje protozoe Giardia lamblia koja napada tanko crevo.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -131769,10 +131108,10 @@
       "naziv": "Simptom 630",
       "opis": "Ciljane Rife frekvencije za suzbijanje virusnog opterećenja u jetri.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -131885,10 +131224,10 @@
       "naziv": "Simptom 631",
       "opis": "Snažan set za suzbijanje virusa u nervnim korenima i ublažavanje post-herpetične neuralgije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -132487,10 +131826,10 @@
       "naziv": "Simptom 636",
       "opis": "Široki spektar frekvencija koji simulira rad Clark Zapper-a za eliminaciju parazita.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/protokol)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round3 (prioriteti)",
           "url": ""
         }
       },
@@ -132592,10 +131931,10 @@
       "naziv": "Simptom 637",
       "opis": "cistične formacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -133677,11 +133016,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "FACTOR",
-        "ai": {
-          "ts": "2026-02-26T17:02:06.873Z",
-          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -134217,10 +133551,10 @@
       "naziv": "Simptom 643",
       "opis": "Frekvencije za deblokadu energetskih kanala i povećanje ukupnog vitalnog tonusa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -134311,10 +133645,10 @@
       "naziv": "Simptom 644",
       "opis": "Frekvencije za sigurno podizanje i balansiranje Kundalini vatre duž kičmenog stuba.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -134438,10 +133772,10 @@
       "naziv": "Simptom 645",
       "opis": "gnojna infekcija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -134708,10 +134042,10 @@
       "naziv": "Simptom 646",
       "opis": "cistične formacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -134983,11 +134317,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:02:06.873Z",
-          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -135528,11 +134857,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "SYMPTOM",
-        "ai": {
-          "ts": "2026-02-26T17:02:06.873Z",
-          "confidence": 0.4
         }
       },
       "psihosomatika": {
@@ -135798,10 +135122,10 @@
       "naziv": "Simptom 650",
       "opis": "ozbiljna infekcija desni",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "NONE",
+        "naziv": "NON_ICD (wellness/podrška)",
         "izvor": {
-          "sistem": "ICD-10 / MKB-10",
+          "sistem": "SINET Round4 (auto/NON_ICD)",
           "url": ""
         }
       },
@@ -136613,11 +135937,6 @@
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        },
-        "kind": "DX",
-        "ai": {
-          "ts": "2026-02-26T17:02:06.873Z",
-          "confidence": 0.8
         }
       },
       "psihosomatika": {

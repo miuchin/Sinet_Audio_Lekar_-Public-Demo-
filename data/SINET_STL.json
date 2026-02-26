@@ -552,8 +552,8 @@
       "naziv": "Simptom 3",
       "opis": "hitna podrška",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -1092,8 +1092,8 @@
       "naziv": "Simptom 5",
       "opis": "regeneracija kože",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C44.3",
+        "naziv": "Melanom kože Melanoma malignum cutis Melanom-crni zloćudni tumor kože 172. C43.. Maligna neoplasma lojnih i znojnih žlezdi Nepolasma malignum cutis alius Drugi zloćudni tumor kože",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -1902,8 +1902,8 @@
       "naziv": "Simptom 8",
       "opis": "sprečavanje infekcije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -2172,8 +2172,8 @@
       "naziv": "Simptom 9",
       "opis": "posle udarca",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J94.9",
+        "naziv": "Plućna insuficijencija kao posledica traume i hiruške intervencije Insufficientia pulmonis acuta post operationem thoracalem Akutna nedovoljna funkcija pluća posle operacije grudnog koša Insuffitientia pulmonis acuta post operationem extrathoracalem Akutna nedovoljna funkcija pluća posle operacije van grudnog koša Insufficientia pulmonis postoperativa chronica Hronično popuštanje funkcije pluća posle operacije Syndroma distress respiratoria ad adultum Sindrom poremećenog disanja kod odraslih osoba",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -2712,11 +2712,16 @@
       "naziv": "Simptom 11",
       "opis": "Interventni set za blokadu bola u zubnom nervu i smanjenje otoka.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K08.8",
+        "naziv": "Odontalgija / drugi specificirani poremećaji zuba i potpornih struktura",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -2817,11 +2822,16 @@
       "naziv": "Simptom 12",
       "opis": "Smanjenje tenzije u mišićima dna karlice i ublažavanje dubokog bola.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R10.2",
+        "naziv": "Bol u karlici i perineumu",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -2922,8 +2932,8 @@
       "naziv": "Simptom 13",
       "opis": "Smirivanje nervnih vlakana oštećenih nakon Herpes Zostera.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B01.9",
+        "naziv": "Herpes zoster bez napomena o komplikacijama Herpes zoster sine complicatione Zonski-pojasasti herpes bez komplikacija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -3132,11 +3142,16 @@
       "naziv": "Simptom 15",
       "opis": "Smanjenje otoka u Eustahijevoj tubi i suzbijanje patogena u srednjem uhu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H66.9",
+        "naziv": "Otitis media, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -3237,8 +3252,8 @@
       "naziv": "Simptom 16",
       "opis": "Razbijanje masnih naslaga frekvencijama i stimulacija limfne drenaže u kritičnim zonama.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N98.1",
+        "naziv": "HYPERSTIMULATIO OVARII POVECANA STIMULACIJA JAJNIKA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -3519,11 +3534,16 @@
       "naziv": "Simptom 19",
       "opis": "Balans hormona, smanjenje antitela i metabolizam.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E06.3",
+        "naziv": "Autoimuni tireoiditis (Hashimoto)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -3657,11 +3677,16 @@
       "naziv": "Simptom 20",
       "opis": "Sistemska podrška organima i smanjenje autoimunog napada.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M32.9",
+        "naziv": "Sistemski eritemski lupus, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -3795,8 +3820,8 @@
       "naziv": "Simptom 21",
       "opis": "Sistemsko čišćenje: Creva, Jetra, Krv i Koža.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K56.6",
+        "naziv": "Divertikuli tankog creva Diverticulosis intestini tenuis non perforans sine abscessu Divertikuloza tankog creva bez proboja i zagnoja Diverticulosis intestini tenuis perforans cum abscessu Divertikuli tankog creva sa probojem i zagnojem",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -3955,8 +3980,8 @@
       "naziv": "Simptom 22",
       "opis": "Kompletan protokol: Upala, Bol, Autoimunitet, Regeneracija.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I44.2",
+        "naziv": "BLOCK ATRIOVENTRICULARIS COMPLETUS (TOTALIS) KOMPLETAN PRETKOMORSKO - KOMORSKI ZASTOJ",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -4137,8 +4162,8 @@
       "naziv": "Simptom 23",
       "opis": "upala kičme",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M43.1",
+        "naziv": "URODJENE NAKAZNOSTI, DEFORMACIJE I HROMOSOMSKE NENORMALNOSTI (Q00-Q99) Spina bifida bez napomene o hidrocefalusu Spina bifida cervicalis sine hydrocephalo Rascep vratnog dela kičme bez vodene glave Spina bifida thoracica sine hydrocephalo Rascep grudnog dela kičme bez vodene glave Spina bifida lumbalis sine hydrocephalo Rascep slabinskog dela kičme bez vodene glave Spina bifida sacralis sine hydrocephalo Rascep krsne kosti bez vodene glave",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -4407,11 +4432,16 @@
       "naziv": "Simptom 24",
       "opis": "autoimuna crevna bolest",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K50.9",
+        "naziv": "Crohnova bolest, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -4677,11 +4707,16 @@
       "naziv": "Simptom 25",
       "opis": "regulisanje štitne žlezde",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E06.3",
+        "naziv": "Autoimuni tireoiditis (Hashimoto)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -4947,11 +4982,16 @@
       "naziv": "Simptom 26",
       "opis": "ublažavanje simptoma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M32.9",
+        "naziv": "Sistemski eritemski lupus, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -5217,11 +5257,16 @@
       "naziv": "Simptom 27",
       "opis": "podrška nervnom sistemu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G35",
+        "naziv": "Multipla skleroza",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -5487,11 +5532,16 @@
       "naziv": "Simptom 28",
       "opis": "kožna autoimuna bolest",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "L40.9",
+        "naziv": "Psorijaza, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -5757,11 +5807,16 @@
       "naziv": "Simptom 29",
       "opis": "ublažavanje simptoma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M06.9",
+        "naziv": "Reumatoidni artritis, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -6027,8 +6082,8 @@
       "naziv": "Simptom 30",
       "opis": "suvoća očiju i usta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R68.2",
+        "naziv": "SICCITAS ORIS,NON SPECIFICATA SUVOCA USTA, NEOZNACENA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -6567,11 +6622,16 @@
       "naziv": "Simptom 32",
       "opis": "Brzo usklađivanje unutrašnjeg sata sa novom vremenskom zonom.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G47.2",
+        "naziv": "Poremećaji ciklusa spavanje–budnost (cirkadijanski)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -6744,11 +6804,16 @@
       "naziv": "Simptom 34",
       "opis": "ublažavanje artritisa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M13.9",
+        "naziv": "Artritis, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -7014,11 +7079,16 @@
       "naziv": "Simptom 35",
       "opis": "smanjenje bola u kukovima",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M25.5",
+        "naziv": "Bol u zglobu",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -7284,11 +7354,16 @@
       "naziv": "Simptom 36",
       "opis": "smanjenje bola u leđima",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M54.5",
+        "naziv": "Lumbago / bol u donjem delu leđa",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -7554,11 +7629,16 @@
       "naziv": "Simptom 37",
       "opis": "smanjenje bola u ramenu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M25.5",
+        "naziv": "Bol u zglobu",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -7824,11 +7904,16 @@
       "naziv": "Simptom 38",
       "opis": "hronični mišićni bolovi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M79.7",
+        "naziv": "Fibromialgija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -8094,11 +8179,16 @@
       "naziv": "Simptom 39",
       "opis": "bolovi od gihta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M10.9",
+        "naziv": "Giht, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -8364,8 +8454,8 @@
       "naziv": "Simptom 40",
       "opis": "bol u zglobu šake",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M25.0",
+        "naziv": "Bol u zglobu Arthralgia",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -8634,11 +8724,16 @@
       "naziv": "Simptom 41",
       "opis": "autoimuni zglobni bolovi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M32.9",
+        "naziv": "Sistemski eritemski lupus, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -8904,11 +8999,16 @@
       "naziv": "Simptom 42",
       "opis": "ublažavanje glavobolje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G43.9",
+        "naziv": "MIGRAENA, NON SPECIFICATA MIGRENA, NEOZNACENA CEPHALALGIAE ALIAE DRUGE GLAVOBOLJE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -9174,8 +9274,8 @@
       "naziv": "Simptom 43",
       "opis": "jačanje kostiju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S02.6",
+        "naziv": "Višestruki prelomi kostiju lobanje ili lica sa drugim kostima Fractura cranii et fractura ossis faciei multiplex Višestruki prelom lobanje i prelom kosti lica Fracturae cranii et fractura ossium faciei aliorum Prelomi lobanje i drugih kostiju lica Fractura partium ossium cranii et fractura ossium faciei NOS Prelom neoznačenog dela kostiju lobanje i prelom kostiju lica",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -9444,11 +9544,16 @@
       "naziv": "Simptom 44",
       "opis": "bol u peti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M72.2",
+        "naziv": "Plantarna fibromatoza / plantar fascitis",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -9714,11 +9819,16 @@
       "naziv": "Simptom 45",
       "opis": "ublažavanje reume",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M79.0",
+        "naziv": "Reumatizam, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -9984,11 +10094,16 @@
       "naziv": "Simptom 46",
       "opis": "upala tetiva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M65.9",
+        "naziv": "Sinovitis i tenosinovitis, neoznačeno",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -10254,8 +10369,8 @@
       "naziv": "Simptom 47",
       "opis": "upala lakta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S43.7",
+        "naziv": "POVREDE LAKTA I PODLAKTICE Kontuzija lakta i podlaktice Površna povreda lakta, podlakta i ručnog zgloba V.L.C.lakta i podlakta (nagnječenje) Laesio traumatica cubiti et antebrachi, superficialis Površinška povreda lakta i podlaktice S50.. Otvorena rana lakta, podlakta i ručnog zgloba Vulnus apertum cubiti Otvorena rana lakta Vulnus apertum partis antebrachi NOS Otvorena rana neoznačenog dela podlaktice",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -10524,11 +10639,16 @@
       "naziv": "Simptom 48",
       "opis": "zarastanje uganuća",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T14.3",
+        "naziv": "Uganuće i istegnuće, neoznačeno",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -10794,11 +10914,16 @@
       "naziv": "Simptom 49",
       "opis": "relaksacija mišića",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M54.2",
+        "naziv": "Cervikalgija (bol/ukočenost vrata)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -11064,11 +11189,16 @@
       "naziv": "Simptom 50",
       "opis": "smanjenje upale tetiva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M65.9",
+        "naziv": "Sinovitis i tenosinovitis, neoznačeno",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -11544,8 +11674,8 @@
       "naziv": "Simptom 53",
       "opis": "Ubrzava moždane talase iz sna u stanje visoke budnosti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z93.9",
+        "naziv": "STANJE DRUGOG VEŠTACKOG OTVORA, NEOZNACENO STANJE PRESAĐENOG ORGANA ILI TKIVA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -12064,8 +12194,8 @@
       "naziv": "Simptom 59",
       "opis": "visok pritisak zbog bubrega",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I11.9",
+        "naziv": "Hipertenzivno oboljenje bubrega Hypertensio renalis cum insufficiencia renis Povišen krvni pritisak bubrežnog porekla sa nedovoljnom funkcijom bubrega Hypertensio renalis sine insufficientia renalis Povišen krvni pritisak bubrežnog poekla bez nedovoljne funkcije bubrega",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -12334,11 +12464,16 @@
       "naziv": "Simptom 60",
       "opis": "postupno oštećenje bubrega",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N18.9",
+        "naziv": "Hronična bubrežna bolest, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -12604,8 +12739,8 @@
       "naziv": "Simptom 61",
       "opis": "cistitis, upala mokraćne bešike",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C62.9",
+        "naziv": "Maligna neoplazma mokraćne bešike ,NOS Neoplasma malignum vesicae urinariae,NOS Zloćudni tumor mokraćne bešike",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -12874,11 +13009,16 @@
       "naziv": "Simptom 62",
       "opis": "ublažavanje bola i rasturanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N20.0",
+        "naziv": "Kamen u bubregu",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -13144,8 +13284,8 @@
       "naziv": "Simptom 63",
       "opis": "zadržavanje tečnosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E56.1",
+        "naziv": "Poremećaji tečnosti, elektrolita i acido-bazne ravnoteze Dehydratio et hypovolaemia Smanjenje količine vode i zapremine krvi Disordines fluidi, electrolyti et aequilibrii acidobasis alii Drugi poremećaji tečnosti, elektrolita i kiselo-bazne ravnoteze 276..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -13414,8 +13554,8 @@
       "naziv": "Simptom 64",
       "opis": "protein u mokraći",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O12.1",
+        "naziv": "PROTEINURIA PER GRAVIDITATEM BELANCEVINA U MOKRACI TOKOM TRUDNOCE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -13684,8 +13824,8 @@
       "naziv": "Simptom 65",
       "opis": "Ublažavanje bolova u kostima i mišićima kod dece u fazama naglog rasta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M35.3",
+        "naziv": "POLYMYALGIA RHEUMATICA REUMATSKI BOLOVI U MIŠICIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -13933,11 +14073,16 @@
       "naziv": "Simptom 68",
       "opis": "Duboka Delta stabilizacija za sprečavanje naglih buđenja u strahu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F51.4",
+        "naziv": "Noćni strahovi (sleep terrors)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -14016,11 +14161,16 @@
       "naziv": "Simptom 69",
       "opis": "Stabilizacija veze između mozga i bešike tokom sna uz jačanje tonusa sfinktera.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F98.0",
+        "naziv": "Neorganska enureza",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -14193,11 +14343,16 @@
       "naziv": "Simptom 71",
       "opis": "Nežne frekvencije za opuštanje abdominalnih mišića i smirivanje nervnog sistema bebe.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R10.4",
+        "naziv": "Drugi i neoznačen bol u abdomenu (kolike)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -14276,11 +14431,16 @@
       "naziv": "Simptom 72",
       "opis": "Frekvencije za ublažavanje upale desni i smirivanje razdražljivosti kod dece.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K00.7",
+        "naziv": "Sindrom nicanja zuba",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -14359,11 +14519,16 @@
       "naziv": "Simptom 73",
       "opis": "Snažan Rife set za prodiranje kroz nokatnu ploču i neutralizaciju dermatofita.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B35.1",
+        "naziv": "Tinea unguium (gljivice nokta)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -14464,8 +14629,8 @@
       "naziv": "Simptom 74",
       "opis": "Brzo zaustavljanje replikacije virusa Herpes Simplex kod prvih znakova peckanja.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B01.9",
+        "naziv": "Herpes zoster bez napomena o komplikacijama Herpes zoster sine complicatione Zonski-pojasasti herpes bez komplikacija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -14558,11 +14723,16 @@
       "naziv": "Simptom 75",
       "opis": "Smanjenje toplotnog šoka u ćelijama kože i ubrzanje procesa reparacije DNK.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "L55.9",
+        "naziv": "Opekotina od sunca, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -14652,8 +14822,8 @@
       "naziv": "Simptom 76",
       "opis": "poboljšanje pažnje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z96.2",
+        "naziv": "PRISUSTVO IMPLANTATA ZA POBOLJŠANJE SLUHA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -14922,11 +15092,16 @@
       "naziv": "Simptom 77",
       "opis": "senzorna integracija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F84.9",
+        "naziv": "Pervazivni razvojni poremećaj, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -15192,8 +15367,8 @@
       "naziv": "Simptom 78",
       "opis": "jačanje imuniteta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D83.9",
+        "naziv": "IMMUNODEFICIENTIA VARIABILIS COMMUNIS, NON SPECIFICATA OPŠ.PROM.SMANJ.IMUNITETA ,NEOZNACENO IMMUNODEFICIENTIAE ALIAE DRUGA SMANJENJA IMUNITETA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -15462,11 +15637,16 @@
       "naziv": "Simptom 79",
       "opis": "umirenje beba",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R10.4",
+        "naziv": "Drugi i neoznačen bol u abdomenu (kolike)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -15732,11 +15912,16 @@
       "naziv": "Simptom 80",
       "opis": "noćna enureza",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F98.0",
+        "naziv": "Neorganska enureza",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -16002,11 +16187,16 @@
       "naziv": "Simptom 81",
       "opis": "smanjenje noćnih strahova",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F51.4",
+        "naziv": "Noćni strahovi (sleep terrors)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -16272,8 +16462,8 @@
       "naziv": "Simptom 82",
       "opis": "podrška apetitu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -16542,11 +16732,16 @@
       "naziv": "Simptom 83",
       "opis": "snižavanje temperature",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R50.9",
+        "naziv": "Groznica (povišena temperatura), neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -16812,11 +17007,16 @@
       "naziv": "Simptom 84",
       "opis": "podrška razvoju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F89",
+        "naziv": "Poremećaj psihološkog razvoja, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -17082,11 +17282,16 @@
       "naziv": "Simptom 85",
       "opis": "olakšavanje simptoma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J30.1",
+        "naziv": "Alergijski rinitis zbog polena (sezonski)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:14.517Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -17689,8 +17894,8 @@
       "naziv": "Simptom 89",
       "opis": "Mehanička stimulacija limfnih čvorova i kanala za uklanjanje viška tečnosti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E56.1",
+        "naziv": "Poremećaji tečnosti, elektrolita i acido-bazne ravnoteze Dehydratio et hypovolaemia Smanjenje količine vode i zapremine krvi Disordines fluidi, electrolyti et aequilibrii acidobasis alii Drugi poremećaji tečnosti, elektrolita i kiselo-bazne ravnoteze 276..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -18076,11 +18281,16 @@
       "naziv": "Simptom 93",
       "opis": "nizak šećer",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E16.2",
+        "naziv": "Hipoglikemija, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.761Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -18346,11 +18556,16 @@
       "naziv": "Simptom 94",
       "opis": "oštećenje bubrega",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E14.2",
+        "naziv": "Dijabetes melitus, neoznačen, sa bubrežnim komplikacijama",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.761Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -18616,8 +18831,8 @@
       "naziv": "Simptom 95",
       "opis": "oštećenje nerva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G51.0",
+        "naziv": "Oštećenje facijalisa, neoznačeno Disordo nervi facialis, NOS Poremećaj živca lica, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -18886,8 +19101,8 @@
       "naziv": "Simptom 96",
       "opis": "oštećenje očiju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G51.0",
+        "naziv": "Oštećenje facijalisa, neoznačeno Disordo nervi facialis, NOS Poremećaj živca lica, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -19156,11 +19371,16 @@
       "naziv": "Simptom 97",
       "opis": "loša cirkulacija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E14.5",
+        "naziv": "Dijabetes melitus, neoznačen, sa perifernim vaskularnim komplikacijama",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.761Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -19426,11 +19646,16 @@
       "naziv": "Simptom 98",
       "opis": "sezonske alergije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J30.1",
+        "naziv": "Alergijski rinitis zbog polena (sezonski)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -19696,11 +19921,16 @@
       "naziv": "Simptom 99",
       "opis": "olakšavanje disanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J45.9",
+        "naziv": "Astma, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -19966,11 +20196,16 @@
       "naziv": "Simptom 100",
       "opis": "smanjenje upale",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J40",
+        "naziv": "Bronhitis, neoznačen (nije označen kao akutan ili hroničan)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -20236,11 +20471,16 @@
       "naziv": "Simptom 101",
       "opis": "povratak mirisa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R43.0",
+        "naziv": "Anosmija (gubitak čula mirisa)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -20506,11 +20746,16 @@
       "naziv": "Simptom 102",
       "opis": "upala glasnih žica",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A37.9",
+        "naziv": "Hripavac (pertusis), neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -20776,11 +21021,16 @@
       "naziv": "Simptom 103",
       "opis": "ublažavanje kašlja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R05",
+        "naziv": "Kašalj",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -21046,11 +21296,16 @@
       "naziv": "Simptom 104",
       "opis": "smanjenje kijanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R06.7",
+        "naziv": "Kijanje",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -21316,11 +21571,16 @@
       "naziv": "Simptom 105",
       "opis": "umirenje grla",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R07.0",
+        "naziv": "Bol u grlu",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -21586,8 +21846,8 @@
       "naziv": "Simptom 106",
       "opis": "olakšano disanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J98.9",
+        "naziv": "MORBUS ORGANORUM RESPIRATORIORUM,NON SPECIFICATUS BOLESTI ORGANA ZA DISANJE,NEOZNACENA MORBI ORGANORUM RESPIRATORIORUM IN MORBIS ALIIS BOLESTI ORGANA ZA DISANJE U DRUG.BOLEST.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -21856,8 +22116,8 @@
       "naziv": "Simptom 107",
       "opis": "borba protiv infekcije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -22126,11 +22386,16 @@
       "naziv": "Simptom 108",
       "opis": "otvaranje nosa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J34.9",
+        "naziv": "Poremećaj nosa i nosnih sinusa, neoznačen (začepljen nos)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -22396,11 +22661,16 @@
       "naziv": "Simptom 109",
       "opis": "olakšavanje disanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R06.2",
+        "naziv": "Škripanje/šištanje u grudima (wheezing)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -22959,8 +23229,8 @@
       "naziv": "Simptom 113",
       "opis": "Neutralizacija 'bori se ili beži' odgovora i transformacija potisnutog besa u mir.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F52.2",
+        "naziv": "INSUFFICIENTIA CUPIDINIS GENITALIS NEUSPEŠNOST POLNOG ODGOVORA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -23158,11 +23428,16 @@
       "naziv": "Simptom 115",
       "opis": "Desenzitizacija traumatskih sećanja i smirivanje prenadraženog nervnog sistema.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F43.1",
+        "naziv": "Posttraumatski stresni poremećaj (PTSP)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -23263,11 +23538,16 @@
       "naziv": "Simptom 116",
       "opis": "Stimulacija rada štitne žlezde i poboljšanje konverzije T4 u T3 hormon.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E03.9",
+        "naziv": "Hipotireoidizam, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -23368,8 +23648,8 @@
       "naziv": "Simptom 117",
       "opis": "Napredni set za regulaciju ose kortizol-DHEA i oporavak nadbubrežnih žlezda nakon dugotrajnog stresa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A18.7+",
+        "naziv": "TUBERCUIOSIS GLANDULARUM SUPRARENALIUM TUBERKULOZA NADBUBREŽNIH ŽLEZDA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -23567,8 +23847,8 @@
       "naziv": "Simptom 119",
       "opis": "Sveobuhvatna stimulacija protoka životne energije kroz 12 glavnih meridijana.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N98.1",
+        "naziv": "HYPERSTIMULATIO OVARII POVECANA STIMULACIJA JAJNIKA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -23827,8 +24107,8 @@
       "naziv": "Simptom 122",
       "opis": "Popravka integriteta biopolja nakon bolesti, trauma ili emocionalnih šokova.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M73.8*",
+        "naziv": "MORBI TEXTUUM MOLLIUM IN MORBIS ALIIS DRUGE BOLESTI MEKIH TKIVA U DRUG.BOLESTI MORBI ARTICULL HUMERI BOLESTI ZGLOBA RAMENJACE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -23921,8 +24201,8 @@
       "naziv": "Simptom 123",
       "opis": "Podrška proteinskoj sintezi i stimulacija hormona rasta kroz duboke Delta i Beta talase.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D56.2",
+        "naziv": "THALASSANAEMIA DELTA-BETA DELTA-BETA TALASANEMIJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -24109,8 +24389,8 @@
       "naziv": "Simptom 125",
       "opis": "Frekvencije koje rezonuju sa gustinom kostiju i podstiču cirkulaciju u zglobovima.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S02.6",
+        "naziv": "Višestruki prelomi kostiju lobanje ili lica sa drugim kostima Fractura cranii et fractura ossis faciei multiplex Višestruki prelom lobanje i prelom kosti lica Fracturae cranii et fractura ossium faciei aliorum Prelomi lobanje i drugih kostiju lica Fractura partium ossium cranii et fractura ossium faciei NOS Prelom neoznačenog dela kostiju lobanje i prelom kostiju lica",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -24214,11 +24494,16 @@
       "naziv": "Simptom 126",
       "opis": "olakšavanje uma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z73.3",
+        "naziv": "Stres, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -24484,11 +24769,16 @@
       "naziv": "Simptom 127",
       "opis": "povećanje aktivnosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R53",
+        "naziv": "Slabost i malaksalost (malaise/fatigue)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -24754,11 +25044,16 @@
       "naziv": "Simptom 128",
       "opis": "čišćenje uma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R41.8",
+        "naziv": "Drugi i neoznačeni simptomi i znaci vezani za kognitivne funkcije i svest",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -25024,8 +25319,8 @@
       "naziv": "Simptom 129",
       "opis": "poboljšanje fokusa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z96.2",
+        "naziv": "PRISUSTVO IMPLANTATA ZA POBOLJŠANJE SLUHA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -25294,11 +25589,16 @@
       "naziv": "Simptom 130",
       "opis": "smanjenje pospanosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R40.0",
+        "naziv": "Somnolencija (pospanost)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -25564,8 +25864,8 @@
       "naziv": "Simptom 131",
       "opis": "poboljšanje produktivnosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z96.2",
+        "naziv": "PRISUSTVO IMPLANTATA ZA POBOLJŠANJE SLUHA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -25834,11 +26134,16 @@
       "naziv": "Simptom 132",
       "opis": "stabilizacija raspoloženja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R45.8",
+        "naziv": "Drugi simptomi i znaci koji se odnose na emocionalno stanje",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -26374,11 +26679,16 @@
       "naziv": "Simptom 134",
       "opis": "podsticanje motivacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R45.3",
+        "naziv": "Demoralizacija i apatija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -26644,11 +26954,16 @@
       "naziv": "Simptom 135",
       "opis": "povećanje energije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R53",
+        "naziv": "Slabost i malaksalost (malaise/fatigue)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -26914,11 +27229,16 @@
       "naziv": "Simptom 136",
       "opis": "podrška tokom monitoringa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z15.0",
+        "naziv": "Genetska predispozicija za malignu neoplazmu",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -27184,8 +27504,8 @@
       "naziv": "Simptom 137",
       "opis": "respiratorni i probavni simptomi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R45.8",
+        "naziv": "SYMPTOMATA ET SIGNA EMOTIONALIA ALIA DRUGI SIMPTOMI I ZNACI EMOCIJA SYMPTOMATA ET SIGNA ASPECTUS EXTERNI ET MORUM SIMPTOMI I ZNACI SPOLJAŠNJEG IZGL.I PONA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -27454,11 +27774,16 @@
       "naziv": "Simptom 138",
       "opis": "podrška opštem zdravlju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Q90.9",
+        "naziv": "Downov sindrom, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -27724,11 +28049,16 @@
       "naziv": "Simptom 139",
       "opis": "visok holesterol",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E78.0",
+        "naziv": "Čista hiperholesterolemija (uključuje porodičnu)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -27994,8 +28324,8 @@
       "naziv": "Simptom 140",
       "opis": "metabolički poremećaj",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I47.9",
+        "naziv": "Ekstrasistolije Extrasystolae atriales Extrasystolae supraventricularis Pretkomorni poremećaji ritma Extrasystolae nodalis Nodusni poremećaj ritma srca Extrasystolae ventricularis Komorni poremećaj ritma srca Extrasystolae alia, NOS Drugi poremećaj ritma srca, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -28264,11 +28594,16 @@
       "naziv": "Simptom 141",
       "opis": "previše gvožđa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E83.1",
+        "naziv": "Hemohromatoza",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -28534,8 +28869,8 @@
       "naziv": "Simptom 142",
       "opis": "neurodegenerativno stanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z93.9",
+        "naziv": "STANJE DRUGOG VEŠTACKOG OTVORA, NEOZNACENO STANJE PRESAĐENOG ORGANA ILI TKIVA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -28804,8 +29139,8 @@
       "naziv": "Simptom 143",
       "opis": "vezivno tkivo",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E83.9",
+        "naziv": "DISORDO METABOLISMI MINERALIUM,NON SPECIFICATUS POREMECAJ METABOL.MINERALNIH MATER.NEOZ. FIBROSIS CYSTICA CISTICNO VEZIVNO TKIVO",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -29074,11 +29409,16 @@
       "naziv": "Simptom 144",
       "opis": "srpastocelijska anemija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D57.1",
+        "naziv": "Srpastocelijska bolest bez krize",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.762Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -29344,11 +29684,16 @@
       "naziv": "Simptom 145",
       "opis": "retka neurološka bolest",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E75.0",
+        "naziv": "Gangliozidoza (uključuje Tay–Sachs)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -29614,8 +29959,8 @@
       "naziv": "Simptom 146",
       "opis": "iscrpljenost nadbubrežnih žlezda",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A18.7+",
+        "naziv": "TUBERCUIOSIS GLANDULARUM SUPRARENALIUM TUBERKULOZA NADBUBREŽNIH ŽLEZDA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -29884,11 +30229,16 @@
       "naziv": "Simptom 147",
       "opis": "bolovi i upala",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N80.9",
+        "naziv": "Endometrioza, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -30154,8 +30504,8 @@
       "naziv": "Simptom 148",
       "opis": "višak estrogena",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E28.0",
+        "naziv": "HYPERESTROGENOGENESIS POJACANO LUCENJE ESTROGENA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -30424,11 +30774,16 @@
       "naziv": "Simptom 149",
       "opis": "prekomerna štitnjača",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E05.9",
+        "naziv": "Tireotoksikoza (hipertireoidizam), neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -30694,8 +31049,8 @@
       "naziv": "Simptom 150",
       "opis": "nedovoljna štitnjača",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J94.9",
+        "naziv": "Plućna insuficijencija kao posledica traume i hiruške intervencije Insufficientia pulmonis acuta post operationem thoracalem Akutna nedovoljna funkcija pluća posle operacije grudnog koša Insuffitientia pulmonis acuta post operationem extrathoracalem Akutna nedovoljna funkcija pluća posle operacije van grudnog koša Insufficientia pulmonis postoperativa chronica Hronično popuštanje funkcije pluća posle operacije Syndroma distress respiratoria ad adultum Sindrom poremećenog disanja kod odraslih osoba",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -30964,11 +31319,16 @@
       "naziv": "Simptom 151",
       "opis": "preddijabetes",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R73.0",
+        "naziv": "Abnormalan test tolerancije glukoze",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -31234,11 +31594,16 @@
       "naziv": "Simptom 152",
       "opis": "ublažavanje simptoma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N95.1",
+        "naziv": "Menopauzalno i klimakterično stanje",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -31504,8 +31869,8 @@
       "naziv": "Simptom 153",
       "opis": "policistični jajnici",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A39.1",
+        "naziv": "Policistični jajnik Syndroma Stein-Leventhal(ovarii policystici) Sindroma višecističnog jajnika",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -31774,11 +32139,16 @@
       "naziv": "Simptom 154",
       "opis": "predmenstrualni sindrom",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N94.3",
+        "naziv": "Predmenstrualni tenzioni sindrom (PMS)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -32044,11 +32414,16 @@
       "naziv": "Simptom 155",
       "opis": "muški hormoni",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E29.1",
+        "naziv": "Hipofunkcija testisa",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -32441,11 +32816,16 @@
       "naziv": "Simptom 157",
       "opis": "Hormonalni balans, smanjenje valunga i bolova.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N94.3",
+        "naziv": "Predmenstrualni tenzioni sindrom (PMS)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -32568,11 +32948,16 @@
       "naziv": "Simptom 158",
       "opis": "Zdravlje prostate, smanjenje otoka i urinarnog trakta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N40",
+        "naziv": "Hiperplazija prostate",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -32695,11 +33080,16 @@
       "naziv": "Simptom 159",
       "opis": "Za hronični umor, buđenje i fokus.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R53",
+        "naziv": "Slabost i malaksalost (malaise/fatigue)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -32833,8 +33223,8 @@
       "naziv": "Simptom 160",
       "opis": "Poboljšanje kognitivnih funkcija, motivacije i fokusa kroz balansiranje dopamina.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J94.9",
+        "naziv": "Plućna insuficijencija kao posledica traume i hiruške intervencije Insufficientia pulmonis acuta post operationem thoracalem Akutna nedovoljna funkcija pluća posle operacije grudnog koša Insuffitientia pulmonis acuta post operationem extrathoracalem Akutna nedovoljna funkcija pluća posle operacije van grudnog koša Insufficientia pulmonis postoperativa chronica Hronično popuštanje funkcije pluća posle operacije Syndroma distress respiratoria ad adultum Sindrom poremećenog disanja kod odraslih osoba",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -33115,8 +33505,8 @@
       "naziv": "Simptom 163",
       "opis": "Stimulacija lučenja serotonina za stabilizaciju raspoloženja i osećaj unutrašnjeg zadovoljstva.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "L74.9",
+        "naziv": "DISORDO SUDORIS ECCRINIS,NON SPECIFICATUS SPOLJNI POREM.LUCENJA ZNOJA,NEOZNACEN DISORDINES SUDORIS APOCRINIS POREMECAJI LUCENJA ZNOJNIH ŽLEZDA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -33220,8 +33610,8 @@
       "naziv": "Simptom 164",
       "opis": "Stimulacija 'škole' za T-limfocite radi jačanja sistemskog imuniteta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D83.9",
+        "naziv": "IMMUNODEFICIENTIA VARIABILIS COMMUNIS, NON SPECIFICATA OPŠ.PROM.SMANJ.IMUNITETA ,NEOZNACENO IMMUNODEFICIENTIAE ALIAE DRUGA SMANJENJA IMUNITETA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -33314,8 +33704,8 @@
       "naziv": "Simptom 165",
       "opis": "Umirivanje agresivnog imunog odgovora kod autoimunih stanja kroz Alpha i Schumann talase.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F52.2",
+        "naziv": "INSUFFICIENTIA CUPIDINIS GENITALIS NEUSPEŠNOST POLNOG ODGOVORA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -33408,8 +33798,8 @@
       "naziv": "Simptom 166",
       "opis": "Set za otčepljivanje limfnih čvorova nakon infekcija ili dugotrajne bolesti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M73.8*",
+        "naziv": "MORBI TEXTUUM MOLLIUM IN MORBIS ALIIS DRUGE BOLESTI MEKIH TKIVA U DRUG.BOLESTI MORBI ARTICULL HUMERI BOLESTI ZGLOBA RAMENJACE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -33690,11 +34080,16 @@
       "naziv": "Simptom 169",
       "opis": "smanjenje alergijske reakcije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J30.9",
+        "naziv": "Alergijski rinitis, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -33960,11 +34355,16 @@
       "naziv": "Simptom 170",
       "opis": "preterana reakcija imuniteta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D89.9",
+        "naziv": "Poremećaj mehanizma imuniteta, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -34230,8 +34630,8 @@
       "naziv": "Simptom 171",
       "opis": "česta prehlada i infekcije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -34500,11 +34900,16 @@
       "naziv": "Simptom 172",
       "opis": "Snažna podrška imunitetu i borba protiv patogena.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J11.1",
+        "naziv": "Grip (influenza), virus nije identifikovan, sa drugim respiratornim manifestacijama",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -34649,11 +35054,16 @@
       "naziv": "Simptom 173",
       "opis": "Otpušavanje nosa, drenaža i smanjenje histamina.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J01.9",
+        "naziv": "Akutni sinusitis, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -34776,8 +35186,8 @@
       "naziv": "Simptom 174",
       "opis": "ozbiljno oštećenje jetre",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B06.9",
+        "naziv": "Hepatitis virusni Hepatitis acuta A Akutno zapaljenje jetre uzrokovano virusom A Hepatitis acuta B Akutno zapaljenje jetre uzrokovano virusom B Hepatitis viralis acuta alia Druga akutna zapaljenja jetre uzrokovana virusima Parotitis bez napomena o komplikacijama Parotitis epidemica sine complicatione Epidemijske zauške bez komplikacije Infektivna mononukleoza Mononucleosis infectiva Mononukleoza-oboljenje uzrokovano virusom praćeno povećanjem broja monocita u krvi",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -35046,8 +35456,8 @@
       "naziv": "Simptom 175",
       "opis": "upala jetre",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B06.9",
+        "naziv": "Hepatitis virusni Hepatitis acuta A Akutno zapaljenje jetre uzrokovano virusom A Hepatitis acuta B Akutno zapaljenje jetre uzrokovano virusom B Hepatitis viralis acuta alia Druga akutna zapaljenja jetre uzrokovana virusima Parotitis bez napomena o komplikacijama Parotitis epidemica sine complicatione Epidemijske zauške bez komplikacije Infektivna mononukleoza Mononucleosis infectiva Mononukleoza-oboljenje uzrokovano virusom praćeno povećanjem broja monocita u krvi",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -35316,8 +35726,8 @@
       "naziv": "Simptom 176",
       "opis": "oporavak jetre",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B06.9",
+        "naziv": "Hepatitis virusni Hepatitis acuta A Akutno zapaljenje jetre uzrokovano virusom A Hepatitis acuta B Akutno zapaljenje jetre uzrokovano virusom B Hepatitis viralis acuta alia Druga akutna zapaljenja jetre uzrokovana virusima Parotitis bez napomena o komplikacijama Parotitis epidemica sine complicatione Epidemijske zauške bez komplikacije Infektivna mononukleoza Mononucleosis infectiva Mononukleoza-oboljenje uzrokovano virusom praćeno povećanjem broja monocita u krvi",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -35586,11 +35996,16 @@
       "naziv": "Simptom 177",
       "opis": "smanjenje masnoće",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K76.0",
+        "naziv": "Masna jetra, nesvrstana na drugo mesto",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -35856,8 +36271,8 @@
       "naziv": "Simptom 178",
       "opis": "podrška jetri",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -36126,11 +36541,16 @@
       "naziv": "Simptom 179",
       "opis": "podsticanje žuči",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K83.1",
+        "naziv": "Opstrukcija žučnih puteva",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -36396,11 +36816,16 @@
       "naziv": "Simptom 180",
       "opis": "smanjenje oteklina",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R16.0",
+        "naziv": "Hepatomegalija, nesvrstana na drugo mesto",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:22.763Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -36936,8 +37361,8 @@
       "naziv": "Simptom 182",
       "opis": "regeneracija jetre",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B06.9",
+        "naziv": "Hepatitis virusni Hepatitis acuta A Akutno zapaljenje jetre uzrokovano virusom A Hepatitis acuta B Akutno zapaljenje jetre uzrokovano virusom B Hepatitis viralis acuta alia Druga akutna zapaljenja jetre uzrokovana virusima Parotitis bez napomena o komplikacijama Parotitis epidemica sine complicatione Epidemijske zauške bez komplikacije Infektivna mononukleoza Mononucleosis infectiva Mononukleoza-oboljenje uzrokovano virusom praćeno povećanjem broja monocita u krvi",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -37206,11 +37631,16 @@
       "naziv": "Simptom 183",
       "opis": "detoksikacija krvi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R78.9",
+        "naziv": "Supstanca u krvi, normalno neprisutna, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.562Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -38016,11 +38446,16 @@
       "naziv": "Simptom 186",
       "opis": "bol u grudima",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I20.9",
+        "naziv": "Angina pectoris, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.562Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -38286,8 +38721,8 @@
       "naziv": "Simptom 187",
       "opis": "regulisanje srčanog ritma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I47.9",
+        "naziv": "Ekstrasistolije Extrasystolae atriales Extrasystolae supraventricularis Pretkomorni poremećaji ritma Extrasystolae nodalis Nodusni poremećaj ritma srca Extrasystolae ventricularis Komorni poremećaj ritma srca Extrasystolae alia, NOS Drugi poremećaj ritma srca, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -38826,8 +39261,8 @@
       "naziv": "Simptom 189",
       "opis": "poboljšanje cirkulacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z96.2",
+        "naziv": "PRISUSTVO IMPLANTATA ZA POBOLJŠANJE SLUHA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -39366,11 +39801,16 @@
       "naziv": "Simptom 191",
       "opis": "proširene vene",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I83.1",
+        "naziv": "Variksi donjih ekstremiteta bez ulkusa ili zapaljenja",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.562Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -40176,8 +40616,8 @@
       "naziv": "Simptom 194",
       "opis": "pritisak na živce",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I11.9",
+        "naziv": "Hipertenzivno oboljenje bubrega Hypertensio renalis cum insufficiencia renis Povišen krvni pritisak bubrežnog porekla sa nedovoljnom funkcijom bubrega Hypertensio renalis sine insufficientia renalis Povišen krvni pritisak bubrežnog poekla bez nedovoljne funkcije bubrega",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -40716,11 +41156,16 @@
       "naziv": "Simptom 196",
       "opis": "bol duž sedalnog živca",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G57.0",
+        "naziv": "Oštećenje (lezija) n. ischiadicus",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.562Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -40986,8 +41431,8 @@
       "naziv": "Simptom 197",
       "opis": "kriva kičma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M40.5",
+        "naziv": "LORDOSIS, NON SPECIFICATA UNAPRED ISKRIVLJENA KICMA, NEOZNACENA SCOLIOSIS BOCNO ISKRIVLJENA KICMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -41256,8 +41701,8 @@
       "naziv": "Simptom 198",
       "opis": "pomeranje pršljenova",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M47.9",
+        "naziv": "Pomeranje torakalnog ili lumbalnog intervertebralnog diskusa bez mijelopatije Prolaps. disci interverteb. lumb. et disc.intervertebr. alior.+ radiculopath (Ischias discogen.) Ispadanje slabinskog i dr. medjupršljenskih diskusa sa oboljenjem korena živca Dislocatio disci intervertebralis alia, specificata (Lumbago discogen) Drugo označeno pomeranje medjupršljenskog diskusa Degeneracija torakalnog ili lumbalnog intervertebrajnog diskusa Degeneratio disci intervertebralis alia, specificata Druga degenerativna označena promena medjupršljenskog diskusa",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -41526,11 +41971,16 @@
       "naziv": "Simptom 199",
       "opis": "suženje kičmenog kanala",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M99.2",
+        "naziv": "Subluksaciona stenoza neuralnog kanala",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.562Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -41796,8 +42246,8 @@
       "naziv": "Simptom 200",
       "opis": "Visokoenergetsko stanje svesti koje koriste tibetanski monasi (Gama meditacija).",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z93.9",
+        "naziv": "STANJE DRUGOG VEŠTACKOG OTVORA, NEOZNACENO STANJE PRESAĐENOG ORGANA ILI TKIVA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -43439,8 +43889,8 @@
       "naziv": "Simptom 208",
       "opis": "gastrointestinalni simptomi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R45.8",
+        "naziv": "SYMPTOMATA ET SIGNA EMOTIONALIA ALIA DRUGI SIMPTOMI I ZNACI EMOCIJA SYMPTOMATA ET SIGNA ASPECTUS EXTERNI ET MORUM SIMPTOMI I ZNACI SPOLJAŠNJEG IZGL.I PONA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -44249,8 +44699,8 @@
       "naziv": "Simptom 211",
       "opis": "eliminacija teških metala",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R78.7",
+        "naziv": "HYPERMETALLAEMIA POVECANJE KOLICINE TEŠKIH METALA U KRVI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -44789,11 +45239,16 @@
       "naziv": "Simptom 213",
       "opis": "autoimuno opadanje kose",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "L63.9",
+        "naziv": "Alopecia areata, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.562Z",
+          "confidence": 0.9
         }
       },
       "psihosomatika": {
@@ -45059,11 +45514,16 @@
       "naziv": "Simptom 214",
       "opis": "podsticanje rasta kose",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "L64.9",
+        "naziv": "Androgena alopecija, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.562Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -45599,8 +46059,8 @@
       "naziv": "Simptom 216",
       "opis": "regulisanje lučenja sebuma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "L74.9",
+        "naziv": "DISORDO SUDORIS ECCRINIS,NON SPECIFICATUS SPOLJNI POREM.LUCENJA ZNOJA,NEOZNACEN DISORDINES SUDORIS APOCRINIS POREMECAJI LUCENJA ZNOJNIH ŽLEZDA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -46679,8 +47139,8 @@
       "naziv": "Simptom 220",
       "opis": "upala kože vlasišta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C44.3",
+        "naziv": "Melanom kože Melanoma malignum cutis Melanom-crni zloćudni tumor kože 172. C43.. Maligna neoplasma lojnih i znojnih žlezdi Nepolasma malignum cutis alius Drugi zloćudni tumor kože",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -47219,8 +47679,8 @@
       "naziv": "Simptom 222",
       "opis": "kompulzivno čupanje kose",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F63.3",
+        "naziv": "TRICHOTILLOMANIJA TRIHOTILOMANIJA-BOLESNO CUPANJE KOSE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -47489,8 +47949,8 @@
       "naziv": "Simptom 223",
       "opis": "Stimulacija mikrocirkulacije skalpa i buđenje uspavanih folikula dlake.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N98.1",
+        "naziv": "HYPERSTIMULATIO OVARII POVECANA STIMULACIJA JAJNIKA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -47594,8 +48054,8 @@
       "naziv": "Simptom 224",
       "opis": "Targetiranje gljivice Malassezia i balansiranje lučenja sebuma.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "L74.9",
+        "naziv": "DISORDO SUDORIS ECCRINIS,NON SPECIFICATUS SPOLJNI POREM.LUCENJA ZNOJA,NEOZNACEN DISORDINES SUDORIS APOCRINIS POREMECAJI LUCENJA ZNOJNIH ŽLEZDA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -48174,8 +48634,8 @@
       "naziv": "Simptom 229",
       "opis": "Podrška mineralizaciji i čvrstini kostiju.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S02.6",
+        "naziv": "Višestruki prelomi kostiju lobanje ili lica sa drugim kostima Fractura cranii et fractura ossis faciei multiplex Višestruki prelom lobanje i prelom kosti lica Fracturae cranii et fractura ossium faciei aliorum Prelomi lobanje i drugih kostiju lica Fractura partium ossium cranii et fractura ossium faciei NOS Prelom neoznačenog dela kostiju lobanje i prelom kostiju lica",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -48290,8 +48750,8 @@
       "naziv": "Simptom 230",
       "opis": "Kompletan tretman za zglob vilice, mišiće i nerve.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S02.7",
+        "naziv": "Dislokacija ( iščašenje ) vilice Luxatio mandibulae Ičšašenje donje vilice 830..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -48627,8 +49087,8 @@
       "naziv": "Simptom 233",
       "opis": "čišćenje kože",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C44.3",
+        "naziv": "Melanom kože Melanoma malignum cutis Melanom-crni zloćudni tumor kože 172. C43.. Maligna neoplasma lojnih i znojnih žlezdi Nepolasma malignum cutis alius Drugi zloćudni tumor kože",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -49437,8 +49897,8 @@
       "naziv": "Simptom 236",
       "opis": "upala kože",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C44.3",
+        "naziv": "Melanom kože Melanoma malignum cutis Melanom-crni zloćudni tumor kože 172. C43.. Maligna neoplasma lojnih i znojnih žlezdi Nepolasma malignum cutis alius Drugi zloćudni tumor kože",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -49977,8 +50437,8 @@
       "naziv": "Simptom 238",
       "opis": "suzbijanje gljivica",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T37.1",
+        "naziv": "MEDICAMENTA ANTIMYCOBACTERIALIA LEKOVI PROTIV GLJIVICA I BAKTERIJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -50517,8 +50977,8 @@
       "naziv": "Simptom 240",
       "opis": "regeneracija kože",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C44.3",
+        "naziv": "Melanom kože Melanoma malignum cutis Melanom-crni zloćudni tumor kože 172. C43.. Maligna neoplasma lojnih i znojnih žlezdi Nepolasma malignum cutis alius Drugi zloćudni tumor kože",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -51057,8 +51517,8 @@
       "naziv": "Simptom 242",
       "opis": "crvenilo lica",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S02.6",
+        "naziv": "Višestruki prelomi kostiju lobanje ili lica sa drugim kostima Fractura cranii et fractura ossis faciei multiplex Višestruki prelom lobanje i prelom kosti lica Fracturae cranii et fractura ossium faciei aliorum Prelomi lobanje i drugih kostiju lica Fractura partium ossium cranii et fractura ossium faciei NOS Prelom neoznačenog dela kostiju lobanje i prelom kostiju lica",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -51867,8 +52327,8 @@
       "naziv": "Simptom 245",
       "opis": "nedostatak crvenih krvnih zrnaca",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R70.1",
+        "naziv": "HYPERVISCOSITAS POVECANA VISKOZNOST PLAZME DISORDINES ERYTHOROCYTORUM POREMECAJI CRVENIH KRVNIH ZRNACA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -52137,11 +52597,16 @@
       "naziv": "Simptom 246",
       "opis": "poremećaj zgrušavanja krvi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D68.9",
+        "naziv": "Poremećaj koagulacije, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.563Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -52677,8 +53142,8 @@
       "naziv": "Simptom 248",
       "opis": "nizak broj trombocita",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Y44.4",
+        "naziv": "ANTITROMBOCITNI LEKOVI(INHIBITORI AGREGACIJE TROMBOCITA)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -52947,8 +53412,8 @@
       "naziv": "Simptom 249",
       "opis": "Uklanjanje nakupljenih energetskih blokada i 'smoga' iz suptilnih tela.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Y83.6",
+        "naziv": "UKLANJANJE DRUGIH ORGANA (DELIMICNO) (POTPUNO)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -53041,8 +53506,8 @@
       "naziv": "Simptom 250",
       "opis": "Ojačavanje spoljne granice bio-polja radi zaštite od tuđih emocija i zračenja.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F92.9",
+        "naziv": "DISORDO MORUM ET EMOTIONUM MIXTUS,NON SPECIFICATUS MEŠOV.POR.PONAŠ.I EMOCIJA,NEOZNACEN DISORDINES EMOTIONUM IN INFANTIA ORTI POREMECAJ EMOCIJA SA POC.U DETINJSTVU",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -53323,11 +53788,16 @@
       "naziv": "Simptom 253",
       "opis": "upala limfnih čvorova",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D75.1",
+        "naziv": "Hronični limfadenitis (osim mezenteričnog)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.563Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -53863,11 +54333,16 @@
       "naziv": "Simptom 255",
       "opis": "kancer limfnog sistema",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C85.1",
+        "naziv": "B-ćelijski limfom, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:30.563Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -54719,8 +55194,8 @@
       "naziv": "Simptom 262",
       "opis": "Otklanjanje blokade govora i jačanje verbalne tečnosti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E56.1",
+        "naziv": "Poremećaji tečnosti, elektrolita i acido-bazne ravnoteze Dehydratio et hypovolaemia Smanjenje količine vode i zapremine krvi Disordines fluidi, electrolyti et aequilibrii acidobasis alii Drugi poremećaji tečnosti, elektrolita i kiselo-bazne ravnoteze 276..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -55519,11 +55994,16 @@
       "naziv": "Simptom 267",
       "opis": "stabilizacija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F20.9",
+        "naziv": "Šizofrenija, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.280Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -55789,11 +56269,16 @@
       "naziv": "Simptom 268",
       "opis": "regulisanje šećera",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E11.9",
+        "naziv": "Dijabetes melitus tip 2 bez komplikacija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.280Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -56059,8 +56544,8 @@
       "naziv": "Simptom 269",
       "opis": "podrška mršavljenju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -56329,8 +56814,8 @@
       "naziv": "Simptom 270",
       "opis": "snižavanje holesterola",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E78.0",
+        "naziv": "HYPERCHOLESTEROLAEMIA VERA PRAVO POVECANJE HOLESTEROLA U KRVI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -56599,11 +57084,16 @@
       "naziv": "Simptom 271",
       "opis": "nealkoholna masna jetra",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K76.0",
+        "naziv": "Masna jetra (steatoza), nesvrstana na drugo mesto",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.280Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -56869,11 +57359,16 @@
       "naziv": "Simptom 272",
       "opis": "regulisanje masti u krvi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E78.1",
+        "naziv": "Čista hipertrigliceridemija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -57139,8 +57634,8 @@
       "naziv": "Simptom 273",
       "opis": "višak mokračne kiseline",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Y54.8",
+        "naziv": "SREDSTVA KOJA DELUJU NA METABOLIZAM MOKRACNE KISELINE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -57409,8 +57904,8 @@
       "naziv": "Simptom 274",
       "opis": "Frekvencije za stimulaciju beta ćelija pankreasa i poboljšanje insulinske osetljivosti tkiva.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N73.0",
+        "naziv": "Hronični ili nespec. parametritis i karlični celulitis (Absc. Douglas) Parametritis et phlegmona pelvis chronica Hronično zapaljenje i flegmona okomateričnog tkiva Parametritis et phlegmona pelvis, NOS Zapaljenje okomateričnog tkiva i vezivnog tkiva male karlice, neoznačeno",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -57536,11 +58031,16 @@
       "naziv": "Simptom 275",
       "opis": "Frekvencije za razgradnju lipida i podršku jetri u obradi masnoća.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E78.0",
+        "naziv": "Čista hiperholesterolemija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -57641,11 +58141,16 @@
       "naziv": "Simptom 276",
       "opis": "Modulacija centralne senzibilizacije na bol i opuštanje mekih tkiva (fascija).",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M79.7",
+        "naziv": "Fibromialgija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -57757,8 +58262,8 @@
       "naziv": "Simptom 277",
       "opis": "Targetiranje upaljenih tetiva podlakta i ubrzanje mikrocirkulacije u zglobu lakta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S43.7",
+        "naziv": "POVREDE LAKTA I PODLAKTICE Kontuzija lakta i podlaktice Površna povreda lakta, podlakta i ručnog zgloba V.L.C.lakta i podlakta (nagnječenje) Laesio traumatica cubiti et antebrachi, superficialis Površinška povreda lakta i podlaktice S50.. Otvorena rana lakta, podlakta i ručnog zgloba Vulnus apertum cubiti Otvorena rana lakta Vulnus apertum partis antebrachi NOS Otvorena rana neoznačenog dela podlaktice",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -57851,11 +58356,16 @@
       "naziv": "Simptom 278",
       "opis": "Dubinsko resetovanje nervnog sistema i hormona stresa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z73.3",
+        "naziv": "Stres, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -58011,11 +58521,16 @@
       "naziv": "Simptom 279",
       "opis": "Sekvenca za postepeni ulazak u najdublji san.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G47.0",
+        "naziv": "Poremećaji iniciranja i održavanja sna (nesanica)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -58171,11 +58686,16 @@
       "naziv": "Simptom 280",
       "opis": "Maskiranje i terapija zujanja u ušima.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H93.1",
+        "naziv": "Tinitus (zujanje u ušima)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -58298,11 +58818,16 @@
       "naziv": "Simptom 281",
       "opis": "uvećana prostata",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N40",
+        "naziv": "Benigna hiperplazija prostate",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -58568,8 +59093,8 @@
       "naziv": "Simptom 282",
       "opis": "podrška erekciji",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -58838,8 +59363,8 @@
       "naziv": "Simptom 283",
       "opis": "kontrola ejakulacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z34.9",
+        "naziv": "KONTROLA NORMALNE TRUDNOCE, NEOZNACENE KONTROLA TRUDNOCE SA VISOKIM RIZIKOM",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -59108,11 +59633,16 @@
       "naziv": "Simptom 284",
       "opis": "upala prostate",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N41.9",
+        "naziv": "Zapaljenska bolest prostate, neoznačena (prostatitis)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -59378,11 +59908,16 @@
       "naziv": "Simptom 285",
       "opis": "povećanje seksualnog nagona",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F52.0",
+        "naziv": "Nedostatak ili gubitak seksualne želje",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -59648,11 +60183,16 @@
       "naziv": "Simptom 286",
       "opis": "proširene vene u skrotumu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I86.1",
+        "naziv": "Variksi skrotuma (varikokela)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -60034,8 +60574,8 @@
       "naziv": "Simptom 288",
       "opis": "Smanjenje inflamacije mozga i stabilizacija kognitivnih funkcija nakon fizičke traume glave.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J94.9",
+        "naziv": "Plućna insuficijencija kao posledica traume i hiruške intervencije Insufficientia pulmonis acuta post operationem thoracalem Akutna nedovoljna funkcija pluća posle operacije grudnog koša Insuffitientia pulmonis acuta post operationem extrathoracalem Akutna nedovoljna funkcija pluća posle operacije van grudnog koša Insufficientia pulmonis postoperativa chronica Hronično popuštanje funkcije pluća posle operacije Syndroma distress respiratoria ad adultum Sindrom poremećenog disanja kod odraslih osoba",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -60150,11 +60690,16 @@
       "naziv": "Simptom 289",
       "opis": "Interventni set za prekid spazma mišića i smanjenje akutne upale nerava u krstima.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M54.5",
+        "naziv": "Bol u donjem delu leđa (lumbago)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -60255,8 +60800,8 @@
       "naziv": "Simptom 290",
       "opis": "Tretman vrtoglavice, ukočenosti vrata i trnjenja ruku uzrokovanog vratnom kičmom.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S06.6",
+        "naziv": "POVREDE VRATA Površna povreda vrata Laesio traumatica colli superficialis 910.. S10.. Kontuzja vrata Contusio juguli Nagnječenje grla 920..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -60360,8 +60905,8 @@
       "naziv": "Simptom 291",
       "opis": "Prošireni set za tretiranje nervusa ischiadicusa od korena do stopala.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S88.9",
+        "naziv": "POVREDE SKOčNOG ZGLOBA I STOPALA Kontuzija gležnja i stopala, isključujući prste na nozi Nagnječenje gležnja i stopala, isključujući samo prste na nozi Contusio regionis malleoli Nagnječenje u predelu skočnog zgloba Contusio partium pedis aliarum, NOS Nagnječenje drugih neoznačenih delova stopala",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -60476,11 +61021,16 @@
       "naziv": "Simptom 292",
       "opis": "Napredni set za stimulaciju osteoblasta u celom skeletu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M81.9",
+        "naziv": "Osteoporoza bez patološkog preloma, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -60570,8 +61120,8 @@
       "naziv": "Simptom 293",
       "opis": "Podrška eliminaciji aluminijumskih soli i drugih stabilizatora iz limfnog i nervnog sistema.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A17.9+",
+        "naziv": "TUBERCULOSIS SYSTEMATIS NERVOSI, NON SPECIFICATA TUBERKULOZA NERVNOG SISTEMA, NEOZNACENA TUBERCULOSIS ORGANORUM ALIORUM TUBERKULOZA DRUGIH ORGANA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -60675,11 +61225,16 @@
       "naziv": "Simptom 294",
       "opis": "Čišćenje organizma od ostataka glifosata i poljoprivrednih toksina iz hrane.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T60.3",
+        "naziv": "Otrovno dejstvo herbicida i fungicida",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -60780,11 +61335,16 @@
       "naziv": "Simptom 295",
       "opis": "Stimulacija Beta talasa radi sprečavanja iznenadnih upada u san tokom dana.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G47.4",
+        "naziv": "Narkolepsija i katapleksija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -60863,11 +61423,16 @@
       "naziv": "Simptom 296",
       "opis": "Umirivanje amigdale i stabilizacija Theta talasa radi sprečavanja intenzivnih negativnih snova.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F51.5",
+        "naziv": "Noćne more (noćni košmari), neorganski poremećaj spavanja",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -60957,8 +61522,8 @@
       "naziv": "Simptom 297",
       "opis": "Umirivanje petog kranijalnog nerva i blokada signala ekstremnog bola lica.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S02.6",
+        "naziv": "Višestruki prelomi kostiju lobanje ili lica sa drugim kostima Fractura cranii et fractura ossis faciei multiplex Višestruki prelom lobanje i prelom kosti lica Fracturae cranii et fractura ossium faciei aliorum Prelomi lobanje i drugih kostiju lica Fractura partium ossium cranii et fractura ossium faciei NOS Prelom neoznačenog dela kostiju lobanje i prelom kostiju lica",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -61062,11 +61627,16 @@
       "naziv": "Simptom 298",
       "opis": "Stabilizacija vestibularnog aparata u unutrašnjem uhu i smanjenje mučnine.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R42",
+        "naziv": "Vrtoglavica i ošamućenost",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -61156,11 +61726,16 @@
       "naziv": "Simptom 299",
       "opis": "poboljšanje koncentracije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F90.0",
+        "naziv": "Poremećaj aktivnosti i pažnje (ADHD)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -61426,11 +62001,16 @@
       "naziv": "Simptom 300",
       "opis": "smanjenje stresa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F41.9",
+        "naziv": "Anksiozni poremećaj, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.281Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -61696,11 +62276,16 @@
       "naziv": "Simptom 301",
       "opis": "stabilizacija raspoloženja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F31.9",
+        "naziv": "Bipolarni afektivni poremećaj, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -61966,11 +62551,16 @@
       "naziv": "Simptom 302",
       "opis": "podizanje raspoloženja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F32.9",
+        "naziv": "Depresivna epizoda, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -62236,11 +62826,16 @@
       "naziv": "Simptom 303",
       "opis": "ublažavanje glavobolje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G44.2",
+        "naziv": "Glavobolja tenzionog tipa",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -62506,11 +63101,16 @@
       "naziv": "Simptom 304",
       "opis": "povećanje energije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R53",
+        "naziv": "Slabost i malaksalost (umor)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -62776,8 +63376,8 @@
       "naziv": "Simptom 305",
       "opis": "podrška snu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -63046,8 +63646,8 @@
       "naziv": "Simptom 306",
       "opis": "kontrola besa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z34.9",
+        "naziv": "KONTROLA NORMALNE TRUDNOCE, NEOZNACENE KONTROLA TRUDNOCE SA VISOKIM RIZIKOM",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -63316,11 +63916,16 @@
       "naziv": "Simptom 307",
       "opis": "opuštanje nervnog sistema",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R45.0",
+        "naziv": "Nervoza",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -63586,11 +64191,16 @@
       "naziv": "Simptom 308",
       "opis": "smanjenje nervoze",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R45.0",
+        "naziv": "Nervoza",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -63856,11 +64466,16 @@
       "naziv": "Simptom 309",
       "opis": "smanjenje opsesivnih misli",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F42.9",
+        "naziv": "Opsesivno-kompulzivni poremećaj, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -64126,11 +64741,16 @@
       "naziv": "Simptom 310",
       "opis": "smanjenje panike",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F41.0",
+        "naziv": "Panični poremećaj (epizodna paroksizmalna anksioznost)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -64396,11 +65016,16 @@
       "naziv": "Simptom 311",
       "opis": "ublažavanje simptoma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F43.1",
+        "naziv": "Posttraumatski stresni poremećaj (PTSP)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -64887,11 +65512,16 @@
       "naziv": "Simptom 314",
       "opis": "nepravilan oblik rožnjače",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H52.2",
+        "naziv": "Astigmatizam",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.282Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -65157,8 +65787,8 @@
       "naziv": "Simptom 315",
       "opis": "dalekovidost",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H52.2",
+        "naziv": "Presbiopija Presbyopia Staračka dalekovidost",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -65427,11 +66057,16 @@
       "naziv": "Simptom 316",
       "opis": "kratkovidost",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H52.1",
+        "naziv": "Miopija (kratkovidost)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -65697,8 +66332,8 @@
       "naziv": "Simptom 317",
       "opis": "povišen pritisak u oku",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I11.9",
+        "naziv": "Hipertenzivno oboljenje bubrega Hypertensio renalis cum insufficiencia renis Povišen krvni pritisak bubrežnog porekla sa nedovoljnom funkcijom bubrega Hypertensio renalis sine insufficientia renalis Povišen krvni pritisak bubrežnog poekla bez nedovoljne funkcije bubrega",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -65967,11 +66602,16 @@
       "naziv": "Simptom 318",
       "opis": "zamućenje sočiva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H26.9",
+        "naziv": "Katarakta, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -66237,11 +66877,16 @@
       "naziv": "Simptom 319",
       "opis": "upala očne spojnice",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H10.9",
+        "naziv": "Konjunktivitis, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -66507,11 +67152,16 @@
       "naziv": "Simptom 320",
       "opis": "oštećenje mrežnjače",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H35.3",
+        "naziv": "Degeneracija makule i zadnjeg pola",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -66777,11 +67427,16 @@
       "naziv": "Simptom 321",
       "opis": "otežano noćno gledanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H53.6",
+        "naziv": "Noćno slepilo",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -67047,11 +67702,16 @@
       "naziv": "Simptom 322",
       "opis": "povećanje vlažnosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H04.1",
+        "naziv": "Sindrom suvog oka",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -67317,11 +67977,16 @@
       "naziv": "Simptom 323",
       "opis": "ukoliko dugo gledate ekran",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H53.1",
+        "naziv": "Astenopija (zamaranje očiju)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -67587,8 +68252,8 @@
       "naziv": "Simptom 324",
       "opis": "Frekvencije za poboljšanje metabolizma sočiva i regulaciju intraokularnog pritiska.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E71.3",
+        "naziv": "DISORDINES METABOLISMI ACIDORUM STEARICORUM POREMECAJI METABOLIZMA MASNIH KISELINA DISORDINES METABOLISMI AMINOACIDORUM, ALII DRUGI POREMECAJI METABOLIZMA AMINOKISEL.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -67819,8 +68484,8 @@
       "naziv": "Simptom 326",
       "opis": "Specifične frekvencije za podršku funkcije jetre i detoksikaciju.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B06.9",
+        "naziv": "Hepatitis virusni Hepatitis acuta A Akutno zapaljenje jetre uzrokovano virusom A Hepatitis acuta B Akutno zapaljenje jetre uzrokovano virusom B Hepatitis viralis acuta alia Druga akutna zapaljenja jetre uzrokovana virusima Parotitis bez napomena o komplikacijama Parotitis epidemica sine complicatione Epidemijske zauške bez komplikacije Infektivna mononukleoza Mononucleosis infectiva Mononukleoza-oboljenje uzrokovano virusom praćeno povećanjem broja monocita u krvi",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -67924,11 +68589,16 @@
       "naziv": "Simptom 327",
       "opis": "smanjenje straha",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F41.9",
+        "naziv": "Anksiozni poremećaj, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -68194,11 +68864,16 @@
       "naziv": "Simptom 328",
       "opis": "podsticanje apetita",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R64",
+        "naziv": "Kaheksija",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -68464,11 +69139,16 @@
       "naziv": "Simptom 329",
       "opis": "ublažavanje bola",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R52.2",
+        "naziv": "Drugi hronični bol",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -68734,11 +69414,16 @@
       "naziv": "Simptom 330",
       "opis": "ublažavanje mučnine",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R11",
+        "naziv": "Mučnina i povraćanje",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -69004,11 +69689,16 @@
       "naziv": "Simptom 331",
       "opis": "olakšavanje disanja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R06.0",
+        "naziv": "Dispneja (otežano disanje)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.283Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -69814,8 +70504,8 @@
       "naziv": "Simptom 334",
       "opis": "podrška vlažnosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -70084,8 +70774,8 @@
       "naziv": "Simptom 335",
       "opis": "podrška snazi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -70354,8 +71044,8 @@
       "naziv": "Simptom 336",
       "opis": "regulisanje creva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K56.6",
+        "naziv": "Divertikuli tankog creva Diverticulosis intestini tenuis non perforans sine abscessu Divertikuloza tankog creva bez proboja i zagnoja Diverticulosis intestini tenuis perforans cum abscessu Divertikuli tankog creva sa probojem i zagnojem",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -70740,8 +71430,8 @@
       "naziv": "Simptom 338",
       "opis": "Set za eliminaciju Candide Albicans iz krvi, creva i sluzokože.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K56.6",
+        "naziv": "Divertikuli tankog creva Diverticulosis intestini tenuis non perforans sine abscessu Divertikuloza tankog creva bez proboja i zagnoja Diverticulosis intestini tenuis perforans cum abscessu Divertikuli tankog creva sa probojem i zagnojem",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -70845,11 +71535,16 @@
       "naziv": "Simptom 339",
       "opis": "ublažavanje postoperativnog bola",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R52.0",
+        "naziv": "Akutni bol",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.284Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -71115,8 +71810,8 @@
       "naziv": "Simptom 340",
       "opis": "prevencija infekcije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -71385,11 +72080,16 @@
       "naziv": "Simptom 341",
       "opis": "jasnoća uma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R41.8",
+        "naziv": "Drugi i neoznačeni simptomi vezani za kognitivne funkcije i svest",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.284Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -71655,11 +72355,16 @@
       "naziv": "Simptom 342",
       "opis": "smanjenje mučnine",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R11",
+        "naziv": "Mučnina i povraćanje",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.284Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -71925,11 +72630,16 @@
       "naziv": "Simptom 343",
       "opis": "zarastanje kože",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T81.8",
+        "naziv": "Druge komplikacije postupaka, nesvrstane na drugo mesto",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.284Z",
+          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -72195,8 +72905,8 @@
       "naziv": "Simptom 344",
       "opis": "jačanje imuniteta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D83.9",
+        "naziv": "IMMUNODEFICIENTIA VARIABILIS COMMUNIS, NON SPECIFICATA OPŠ.PROM.SMANJ.IMUNITETA ,NEOZNACENO IMMUNODEFICIENTIAE ALIAE DRUGA SMANJENJA IMUNITETA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -72465,11 +73175,16 @@
       "naziv": "Simptom 345",
       "opis": "oporavak energije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R53",
+        "naziv": "Slabost i malaksalost (umor)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.284Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -72735,8 +73450,8 @@
       "naziv": "Simptom 346",
       "opis": "podsticanje creva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K56.6",
+        "naziv": "Divertikuli tankog creva Diverticulosis intestini tenuis non perforans sine abscessu Divertikuloza tankog creva bez proboja i zagnoja Diverticulosis intestini tenuis perforans cum abscessu Divertikuli tankog creva sa probojem i zagnojem",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -73005,11 +73720,16 @@
       "naziv": "Simptom 347",
       "opis": "smanjenje otoka",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R60.0",
+        "naziv": "Lokalizovan edem",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.284Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -73275,8 +73995,8 @@
       "naziv": "Simptom 348",
       "opis": "podrška rehabilitaciji",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -73650,8 +74370,8 @@
       "naziv": "Simptom 350",
       "opis": "Prirodna vibracija svemira, dubok mir i opuštenost.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Y44.6",
+        "naziv": "PRIRODNA KRV I PRODUKTI KRVI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -73711,11 +74431,16 @@
       "naziv": "Simptom 351",
       "opis": "Targetiranje Helicobacter Pylori i stimulacija zarastanja sluzokože želuca.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K25.9",
+        "naziv": "Ulcus ventriculi (čir na želucu), neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.284Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -73827,11 +74552,16 @@
       "naziv": "Simptom 352",
       "opis": "Umirivanje akutne ili hronične upale pankreasa i balansiranje digestivnih enzima.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K85.9",
+        "naziv": "Akutni pankreatitis, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.285Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -73943,11 +74673,16 @@
       "naziv": "Simptom 353",
       "opis": "prilagođavanje zajedničkom životu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z60.0",
+        "naziv": "Problemi prilagođavanja promenama životnog ciklusa",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:01:40.285Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -75023,11 +75758,16 @@
       "naziv": "Simptom 357",
       "opis": "prilagođavanje nakon odlaska dece",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z60.0",
+        "naziv": "PROBLEMI PRILAGOĐAVANJA ŽIVOTNIM CIKLICNIM PROMENAMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.369Z",
+          "confidence": 0.45
         }
       },
       "psihosomatika": {
@@ -75833,11 +76573,16 @@
       "naziv": "Simptom 360",
       "opis": "stres od profesionalnog početka",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z73.3",
+        "naziv": "STRES",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.369Z",
+          "confidence": 0.52
         }
       },
       "psihosomatika": {
@@ -76643,8 +77388,8 @@
       "naziv": "Simptom 363",
       "opis": "Ubrzanje metabolizma acetaldehida u jetri i ublažavanje vaskularne glavobolje.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E71.3",
+        "naziv": "DISORDINES METABOLISMI ACIDORUM STEARICORUM POREMECAJI METABOLIZMA MASNIH KISELINA DISORDINES METABOLISMI AMINOACIDORUM, ALII DRUGI POREMECAJI METABOLIZMA AMINOKISEL.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -76842,8 +77587,8 @@
       "naziv": "Simptom 365",
       "opis": "Duboko opuštanje spazma i relaksacija tkiva.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N73.0",
+        "naziv": "Hronični ili nespec. parametritis i karlični celulitis (Absc. Douglas) Parametritis et phlegmona pelvis chronica Hronično zapaljenje i flegmona okomateričnog tkiva Parametritis et phlegmona pelvis, NOS Zapaljenje okomateričnog tkiva i vezivnog tkiva male karlice, neoznačeno",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -77427,11 +78172,16 @@
       "naziv": "Simptom 369",
       "opis": "Frekvencije za stabilizaciju raspoloženja i ublažavanje ekstremnih amplituda između manije i depresije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F31.9",
+        "naziv": "Afektivna psihoza, NS; melanholija Disordo thymiacus (affectivus), NOS Poremećaj raspoloženja (afekta), neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.369Z",
+          "confidence": 0.42
         }
       },
       "psihosomatika": {
@@ -77626,8 +78376,8 @@
       "naziv": "Simptom 371",
       "opis": "Tonovi koji pomažu u procesuiranju teških emocija i gubitka.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F92.9",
+        "naziv": "DISORDO MORUM ET EMOTIONUM MIXTUS,NON SPECIFICATUS MEŠOV.POR.PONAŠ.I EMOCIJA,NEOZNACEN DISORDINES EMOTIONUM IN INFANTIA ORTI POREMECAJ EMOCIJA SA POC.U DETINJSTVU",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -77825,8 +78575,8 @@
       "naziv": "Simptom 373",
       "opis": "Deblokada govornog aparata uzrokovana emocionalnim šokom ili blokadom.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "L03.2",
+        "naziv": "Dermatitis izazvan sunčevim zracima Abustio solaris Opekotina uzrokovana sunčevim zracima Urticaria solaris Koprivnjača uzrokovana suncem",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -77919,11 +78669,16 @@
       "naziv": "Simptom 374",
       "opis": "Opuštanje spazma mišića jednjaka uzrokovanog stresom i potisnutim emocijama.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K22.9",
+        "naziv": "MORBUS OESOPHAGI, NON SPECIFICATUS BOLEST JEDNJAKA, NEOZNACENA MORBI OESOPHAGI IN MORBIS ALIIS BOLESTI JEDNJAKA U DRUGIM BOLESTIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.369Z",
+          "confidence": 0.81
         }
       },
       "psihosomatika": {
@@ -78754,11 +79509,16 @@
       "naziv": "Simptom 383",
       "opis": "Umirivanje hiperaktivne bešike uzrokovane psihološkom napetošću.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N32.9",
+        "naziv": "MORBUS VESICAE URINARIAE, NON SPECIFICATUS BOLESTI MOKRACNE BEŠIKE, NEOZNACENA MORBI VESICAE URINARIAE IN MORBIS ALIIS BOLESTI MOK. BEŠIKE U DRUG. BOLESTIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.369Z",
+          "confidence": 0.58
         }
       },
       "psihosomatika": {
@@ -79107,8 +79867,8 @@
       "naziv": "Simptom 385",
       "opis": "podrška snu",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -79647,8 +80407,8 @@
       "naziv": "Simptom 387",
       "opis": "poboljšanje cirkulacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z96.2",
+        "naziv": "PRISUSTVO IMPLANTATA ZA POBOLJŠANJE SLUHA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -80187,11 +80947,16 @@
       "naziv": "Simptom 389",
       "opis": "prilagođavanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z60.0",
+        "naziv": "PROBLEMI PRILAGOĐAVANJA ŽIVOTNIM CIKLICNIM PROMENAMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.370Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -80457,11 +81222,16 @@
       "naziv": "Simptom 390",
       "opis": "uravnoteženje pritiska",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T70.4",
+        "naziv": "EFFECTUS HYPERCOMPRESSIONIS IN FLUIDIS DEJSTVA VISOKOG PRITISKA U TECNOSTIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.370Z",
+          "confidence": 0.55
         }
       },
       "psihosomatika": {
@@ -82347,11 +83117,16 @@
       "naziv": "Simptom 397",
       "opis": "regulisanje sna",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z91.3",
+        "naziv": "LICNA ANAMNEZA O NEZDRAVOM RASPOREDU SNA I BUDNOG STANJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.370Z",
+          "confidence": 0.23
         }
       },
       "psihosomatika": {
@@ -83697,8 +84472,8 @@
       "naziv": "Simptom 402",
       "opis": "vlaženje disajnih puteva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C39.0",
+        "naziv": "NEOPLASMA MALIGNUM TRACTUS RESPIRATORII SUPERIORIS ZLOCUDNI TUMOR GORNJIH DISAJNIH PUTEVA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -84447,11 +85222,16 @@
       "naziv": "Simptom 406",
       "opis": "Stimulacija kontrakcija žučne kese i razređivanje žuči.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K80.1",
+        "naziv": "Kalkulus žučne kese bez spomena holecistita Calculus vesicae feleae Kamen u žučnoj kesi",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.370Z",
+          "confidence": 0.42
         }
       },
       "psihosomatika": {
@@ -84541,11 +85321,16 @@
       "naziv": "Simptom 407",
       "opis": "Stimulacija regeneracije ćelija mrežnjače i jačanje optičkog nerva.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H35.9",
+        "naziv": "MORBUS RETINAE, NON SPECIFICATUS BOLEST MREŽNJACE, NEOZNACENA MORBI RETINAE IN MORBIS BOLESTI MREŽNJACE U DRUGIM BOLESTIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.370Z",
+          "confidence": 0.81
         }
       },
       "psihosomatika": {
@@ -84878,8 +85663,8 @@
       "naziv": "Simptom 410",
       "opis": "Harmonizacija endokrinog sistema, regulacija insulina i podrška folikularnom razvoju.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R09.2",
+        "naziv": "BOLESTI SISTEMA ZA VARENJE (K00-K93) Poremećaj u razvoju i izbijanju zuba Disordines evolutionis et eruptionis dentijm 520.. K00.. Zubni karijes (kvar zuba) Caries dentium Erozija zuba Erosio dentium Nagrizanje zuba K02..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -84994,8 +85779,8 @@
       "naziv": "Simptom 411",
       "opis": "Set za smanjenje zastoja tečnosti i optimizaciju funkcije prostate.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E56.1",
+        "naziv": "Poremećaji tečnosti, elektrolita i acido-bazne ravnoteze Dehydratio et hypovolaemia Smanjenje količine vode i zapremine krvi Disordines fluidi, electrolyti et aequilibrii acidobasis alii Drugi poremećaji tečnosti, elektrolita i kiselo-bazne ravnoteze 276..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -85099,8 +85884,8 @@
       "naziv": "Simptom 412",
       "opis": "Stimulacija cirkulacije u karličnoj regiji i balansiranje testosterona.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N98.1",
+        "naziv": "HYPERSTIMULATIO OVARII POVECANA STIMULACIJA JAJNIKA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -85204,8 +85989,8 @@
       "naziv": "Simptom 413",
       "opis": "Energizacija jajnika i materice uz harmonizaciju menstrualnog ciklusa.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N81.6",
+        "naziv": "Prolaps uterusa bez spomena prolapsa vaginalnog zida Prolapsus uteri gradus primus et secundus Nepotpuno ispadanje materice Prolapsus uteri gradus tertius Potpuno ispadanje materice Prolapsus uteri NOS Ispadanje materice, neoznačeno",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -85425,8 +86210,8 @@
       "naziv": "Simptom 415",
       "opis": "Stimulacija tonusa mišića gornjih disajnih puteva i stabilizacija respiratornog centra u mozgu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C39.0",
+        "naziv": "NEOPLASMA MALIGNUM TRACTUS RESPIRATORII SUPERIORIS ZLOCUDNI TUMOR GORNJIH DISAJNIH PUTEVA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -85519,11 +86304,16 @@
       "naziv": "Simptom 416",
       "opis": "Frekvencije namenjene omekšavanju fibroznog tkiva i poboljšanju elastičnosti pluća.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J84.9",
+        "naziv": "PNEUMONIA INTERSTITIALIS,NON SPECIFICATA ZAPALJENE POTPORNOG TKIVA PLUCA,NEOZNAC. ABSCESSUS PULMONUS ET MEDIASTINI ZAGNOJ PLUCA I SREDOGRUĐA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:45.370Z",
+          "confidence": 0.68
         }
       },
       "psihosomatika": {
@@ -86138,8 +86928,8 @@
       "naziv": "Simptom 422",
       "opis": "kasni stadijum bolesti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M73.8*",
+        "naziv": "MORBI TEXTUUM MOLLIUM IN MORBIS ALIIS DRUGE BOLESTI MEKIH TKIVA U DRUG.BOLESTI MORBI ARTICULL HUMERI BOLESTI ZGLOBA RAMENJACE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -87218,8 +88008,8 @@
       "naziv": "Simptom 426",
       "opis": "jutarnja ukočenost zglobova",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Q65.1",
+        "naziv": "Arthrogryposis multiplex congenita Arthrogryposis multiplex congenita Urodjena ukočenost više zglobova u savijenom položaju",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -87488,8 +88278,8 @@
       "naziv": "Simptom 427",
       "opis": "Specifičan set za eliminaciju bakterije Klebsiella iz respiratornog i urinarnog trakta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B96.1",
+        "naziv": "KLEBSIELLA PNEUMONIAE UT CAUSA MORBORUM KLEBSIELLA PNEUMONIAE KAO UZROC. BOLESTI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -88317,8 +89107,8 @@
       "naziv": "Simptom 435",
       "opis": "Frekvencije za podršku imunom sistemu protiv virusnih izraslina.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z24.6",
+        "naziv": "POTREBA ZA IMUNIZACIJOM PROTIV VIRUSNOG HEPATITISA POTREBA ZA IMUNIZACIJOM PROTIV DRUGIH VIRUSNIH BOLESTI (POJEDINACNO)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -88422,8 +89212,8 @@
       "naziv": "Simptom 436",
       "opis": "Niz frekvencija za opšte smanjenje bola u telu.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D82.9",
+        "naziv": "IMMUNODEFICIENTIA CUM DEFECTIBUS MAJORIBUS ASSOCIATA, NON SPECIFICATA SMANJ.IM.UDR. SA VECIM DEFEKTIMA,NEOZNAC IMMUNODEFICIENTIA VARIABILIS COMMUNIS OPŠTE SMANJENJE IMUNITETA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -88947,8 +89737,8 @@
       "naziv": "Simptom 441",
       "opis": "Frekvencije namenjene optimizaciji metabolizma masti i energije.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E71.3",
+        "naziv": "DISORDINES METABOLISMI ACIDORUM STEARICORUM POREMECAJI METABOLIZMA MASNIH KISELINA DISORDINES METABOLISMI AMINOACIDORUM, ALII DRUGI POREMECAJI METABOLIZMA AMINOKISEL.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -89742,8 +90532,8 @@
       "naziv": "Simptom 447",
       "opis": "povrede usled pritiska",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S52.6",
+        "naziv": "POVREDE ZGLOBA ZBICE I [AKE I POVREDE [AKE Kontuzija prsta (nokta) Nagnječenje prsta (V.L.C. digiti mani) Contusio digiti (digitorum) manus sine laesione unguis Nagnječenje prsta (prstiju) šake bez povrede nokta Contusio digiti (digitorum) manus cum laesione unguis Nagnječenje prsta šake sa povredom nokta",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -90012,8 +90802,8 @@
       "naziv": "Simptom 448",
       "opis": "ravnoteža elektrolita",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E56.1",
+        "naziv": "Poremećaji tečnosti, elektrolita i acido-bazne ravnoteze Dehydratio et hypovolaemia Smanjenje količine vode i zapremine krvi Disordines fluidi, electrolyti et aequilibrii acidobasis alii Drugi poremećaji tečnosti, elektrolita i kiselo-bazne ravnoteze 276..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -90552,11 +91342,16 @@
       "naziv": "Simptom 450",
       "opis": "održavanje telesne temperature",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T69.8",
+        "naziv": "EFFECTUS REDUCTIONIS TEMPERATURAE ALII, SPECIFICATI DRUGA OZNAC.DEJSTVA SNIŽENJA TEMPERATURE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:01:55.508Z",
+          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -91902,8 +92697,8 @@
       "naziv": "Simptom 455",
       "opis": "sprečavanje infekcije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -92172,11 +92967,16 @@
       "naziv": "Simptom 456",
       "opis": "olakšavanje disanja tokom sna",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "G47.3",
+        "naziv": "APNOEA AD SOMNUM APNEJA-POVREMENI PREKID DISANJA PRI SP.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:01:55.508Z",
+          "confidence": 0.43
         }
       },
       "psihosomatika": {
@@ -94872,8 +95672,8 @@
       "naziv": "Simptom 466",
       "opis": "Postepeno spuštanje moždanih talasa iz Beta u duboko Delta stanje za regenerativni san.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D56.2",
+        "naziv": "THALASSANAEMIA DELTA-BETA DELTA-BETA TALASANEMIJA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -95049,8 +95849,8 @@
       "naziv": "Simptom 468",
       "opis": "Frekvencije za podršku plućima i jetri u eliminaciji čestica PM2.5 i teških metala iz vazduha.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R78.7",
+        "naziv": "HYPERMETALLAEMIA POVECANJE KOLICINE TEŠKIH METALA U KRVI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -95154,8 +95954,8 @@
       "naziv": "Simptom 469",
       "opis": "Ciljani Rife set za neutralizaciju histaminskog odgovora na polen drveća i trava.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F52.2",
+        "naziv": "INSUFFICIENTIA CUPIDINIS GENITALIS NEUSPEŠNOST POLNOG ODGOVORA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -97149,8 +97949,8 @@
       "naziv": "Simptom 477",
       "opis": "letnja nesanica",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "F51.0",
+        "naziv": "INSOMNIA NON ORGANICA NEORGANSKA NESANICA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -97689,8 +98489,8 @@
       "naziv": "Simptom 479",
       "opis": "jačanje imuniteta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D83.9",
+        "naziv": "IMMUNODEFICIENTIA VARIABILIS COMMUNIS, NON SPECIFICATA OPŠ.PROM.SMANJ.IMUNITETA ,NEOZNACENO IMMUNODEFICIENTIAE ALIAE DRUGA SMANJENJA IMUNITETA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -98064,8 +98864,8 @@
       "naziv": "Simptom 481",
       "opis": "Frekvencije za stimulaciju koštane srži i bolju asimilaciju gvožđa u eritrocite.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M81.9",
+        "naziv": "OSTEOPOROSIS, NON SPECIFICATA GUBITAK KOŠTANE MASE, NEOZNACEN OSTEOPOROSIS IN MORBIS ALIIS GUBITAK KOŠTANE MASE U DRUGIM BOLESTIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -98180,8 +98980,8 @@
       "naziv": "Simptom 482",
       "opis": "Set frekvencija za jačanje odbrambene moći krvi kod akutnih i hroničnih padova imuniteta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D83.9",
+        "naziv": "IMMUNODEFICIENTIA VARIABILIS COMMUNIS, NON SPECIFICATA OPŠ.PROM.SMANJ.IMUNITETA ,NEOZNACENO IMMUNODEFICIENTIAE ALIAE DRUGA SMANJENJA IMUNITETA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -98567,8 +99367,8 @@
       "naziv": "Simptom 486",
       "opis": "Smanjenje vazokonstrikcije i ublažavanje pulsirajućeg bola glave.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M43.1",
+        "naziv": "URODJENE NAKAZNOSTI, DEFORMACIJE I HROMOSOMSKE NENORMALNOSTI (Q00-Q99) Spina bifida bez napomene o hidrocefalusu Spina bifida cervicalis sine hydrocephalo Rascep vratnog dela kičme bez vodene glave Spina bifida thoracica sine hydrocephalo Rascep grudnog dela kičme bez vodene glave Spina bifida lumbalis sine hydrocephalo Rascep slabinskog dela kičme bez vodene glave Spina bifida sacralis sine hydrocephalo Rascep krsne kosti bez vodene glave",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -99381,8 +100181,8 @@
       "naziv": "Simptom 497",
       "opis": "Isceljenje organa, oporavak tkiva, ubrzanje zaceljivanja.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S32.8",
+        "naziv": "Povreda gastrointestinalnog trakta Povreda jetre Povreda slezine Laesio traumatica organorum intraabdominalium Povreda organa trbuha 863.. S36.. Povreda bubrega Povreda karličnih organa Laesio traumatica organorum pelvis Povreda organa karlice 867.. S37.. POVREDA RAMENA I NADLAKTICE Kontuzija ramena i nadlakta Contusio regionis deltoideae et brachi Nagnječenje u predelu ramena i nadlaktice",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -101062,8 +101862,8 @@
       "naziv": "Simptom 504",
       "opis": "post-traumatska podrška",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "M15.0",
+        "naziv": "Traumatska artropatija Arthrosis articulorum aliorum post traumaticam Degenerativna oboljenja drugih zglobova posle povrede",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -101602,8 +102402,8 @@
       "naziv": "Simptom 506",
       "opis": "poremećaj cirkadijuma",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I47.9",
+        "naziv": "Ekstrasistolije Extrasystolae atriales Extrasystolae supraventricularis Pretkomorni poremećaji ritma Extrasystolae nodalis Nodusni poremećaj ritma srca Extrasystolae ventricularis Komorni poremećaj ritma srca Extrasystolae alia, NOS Drugi poremećaj ritma srca, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -101872,8 +102672,8 @@
       "naziv": "Simptom 507",
       "opis": "smanjenje uticaja na nervni sistem",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Y51.9",
+        "naziv": "DRUGI I NEOZNACENI LEKOVI KOJI PRIMARNO DELUJU NA AUTONOMNI NERVNI SISTEM SREDSTVA KOJA PRIMARNO DELUJU NA SRCANO-SUDOVNI SISTEM",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -102142,8 +102942,8 @@
       "naziv": "Simptom 508",
       "opis": "ravnoteža elektrolita",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E56.1",
+        "naziv": "Poremećaji tečnosti, elektrolita i acido-bazne ravnoteze Dehydratio et hypovolaemia Smanjenje količine vode i zapremine krvi Disordines fluidi, electrolyti et aequilibrii acidobasis alii Drugi poremećaji tečnosti, elektrolita i kiselo-bazne ravnoteze 276..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -102682,8 +103482,8 @@
       "naziv": "Simptom 510",
       "opis": "pokretljivost zglobova",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A17.0+",
+        "naziv": "TBC kostiju i zglobova, neoznačena Tuberculosis ossium et articulorum Tuberkuloza kostiju i zglobova",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -103762,8 +104562,8 @@
       "naziv": "Simptom 514",
       "opis": "kolena, ramena",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S73.1",
+        "naziv": "POVREDE KOLENA I POVREDE PODKOLENICE Kontuzija kolena i donjeg dela noge Nagnječenje kolena i donjeg dela noge (V.L.C.) Contusio genus Contusio partium cruris aliarum, NOS Nagnječenje kolena i drugih neoznačenih delova podkolenice lLaesio traumatica cruris, superficialis, NOS Površinška povreda podkolenice, neoznačena",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -104032,8 +104832,8 @@
       "naziv": "Simptom 515",
       "opis": "kontuzije, modrice",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R23.3",
+        "naziv": "ECCHYMOSES SPONTANEAE SPONTANO NASTALE MODRICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -104302,8 +105102,8 @@
       "naziv": "Simptom 516",
       "opis": "toplotni udar",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T69.1",
+        "naziv": "Toplotni udar i sunčani udar (sunčanica) Ictus e calore et sole (Insolatio)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -104572,8 +105372,8 @@
       "naziv": "Simptom 517",
       "opis": "hronične sportske povrede",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S52.6",
+        "naziv": "POVREDE ZGLOBA ZBICE I [AKE I POVREDE [AKE Kontuzija prsta (nokta) Nagnječenje prsta (V.L.C. digiti mani) Contusio digiti (digitorum) manus sine laesione unguis Nagnječenje prsta (prstiju) šake bez povrede nokta Contusio digiti (digitorum) manus cum laesione unguis Nagnječenje prsta šake sa povredom nokta",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -104842,11 +105642,16 @@
       "naziv": "Simptom 518",
       "opis": "Za hladne noge, ruke i proširene vene.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I83.1",
+        "naziv": "Varices cruris neoznačeno Varices extremitatis inferioris sine ulcere sive inflammatione Proširene vene nogu bez grizlice ili zapaljenja okolnog tkiva",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:02:01.153Z",
+          "confidence": 0.7
         }
       },
       "psihosomatika": {
@@ -105609,8 +106414,8 @@
       "naziv": "Simptom 523",
       "opis": "podmlađivanje kože",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C44.3",
+        "naziv": "Melanom kože Melanoma malignum cutis Melanom-crni zloćudni tumor kože 172. C43.. Maligna neoplasma lojnih i znojnih žlezdi Nepolasma malignum cutis alius Drugi zloćudni tumor kože",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -106149,8 +106954,8 @@
       "naziv": "Simptom 525",
       "opis": "Regeneracija jetre, žuči i čišćenje krvi.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B06.9",
+        "naziv": "Hepatitis virusni Hepatitis acuta A Akutno zapaljenje jetre uzrokovano virusom A Hepatitis acuta B Akutno zapaljenje jetre uzrokovano virusom B Hepatitis viralis acuta alia Druga akutna zapaljenja jetre uzrokovana virusima Parotitis bez napomena o komplikacijama Parotitis epidemica sine complicatione Epidemijske zauške bez komplikacije Infektivna mononukleoza Mononucleosis infectiva Mononukleoza-oboljenje uzrokovano virusom praćeno povećanjem broja monocita u krvi",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -106712,8 +107517,8 @@
       "naziv": "Simptom 529",
       "opis": "Intenzivan set za suzbijanje piogenih bakterija i smanjenje pritiska u korenu zuba.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R09.2",
+        "naziv": "BOLESTI SISTEMA ZA VARENJE (K00-K93) Poremećaj u razvoju i izbijanju zuba Disordines evolutionis et eruptionis dentijm 520.. K00.. Zubni karijes (kvar zuba) Caries dentium Erozija zuba Erosio dentium Nagrizanje zuba K02..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -106933,8 +107738,8 @@
       "naziv": "Simptom 531",
       "opis": "Duboke frekvencije za prodiranje u koštanu srž i suzbijanje infekcije kosti.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -107132,8 +107937,8 @@
       "naziv": "Simptom 533",
       "opis": "Specifične frekvencije za smanjenje tečnosti u cističnim formacijama i dezinfekciju.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E56.1",
+        "naziv": "Poremećaji tečnosti, elektrolita i acido-bazne ravnoteze Dehydratio et hypovolaemia Smanjenje količine vode i zapremine krvi Disordines fluidi, electrolyti et aequilibrii acidobasis alii Drugi poremećaji tečnosti, elektrolita i kiselo-bazne ravnoteze 276..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -107425,8 +108230,8 @@
       "naziv": "Simptom 536",
       "opis": "Intenzivan set za suzbijanje anaerobnih bakterija u dentalnim džepovima i jačanje ligamenta.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S43.1",
+        "naziv": "Uganuća i nategnuća akromioklavikularnog zgloba (ligamenta) Distorsio et distensio articuli acromioclavicularis (ligamentum) Uganuće i istegnuće natplećno-ključnjačkog zgloba (ligamenta)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -108880,8 +109685,8 @@
       "naziv": "Simptom 542",
       "opis": "antiparazitska podrška",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -109150,8 +109955,8 @@
       "naziv": "Simptom 543",
       "opis": "bakterijska infekcija oka",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A48.8",
+        "naziv": "MORBI BACTERIALES ALII, SPECIFICATI DRUGE OZNACENE BAKTERIJSKE BOLESTI INFECTIO BACTERIALIS, LOCI NON SPECIFICATI BAKTERIJSKA INFEKCIJA NEOZNAC.LOKALIZAC.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -109420,8 +110225,8 @@
       "naziv": "Simptom 544",
       "opis": "bakterijska infekcija pluća",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A48.8",
+        "naziv": "MORBI BACTERIALES ALII, SPECIFICATI DRUGE OZNACENE BAKTERIJSKE BOLESTI INFECTIO BACTERIALIS, LOCI NON SPECIFICATI BAKTERIJSKA INFEKCIJA NEOZNAC.LOKALIZAC.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -111580,8 +112385,8 @@
       "naziv": "Simptom 552",
       "opis": "ublažavanje neželjenih efekata",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Y88.0",
+        "naziv": "POSLEDICE NEŽELJENIH EFEKATA IZAZVANIH HEMIKALIJAMA,LEKOVIMA I BIOLOŠKIM",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -112120,11 +112925,16 @@
       "naziv": "Simptom 554",
       "opis": "ozleda usled promene pritiska",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T70.4",
+        "naziv": "EFFECTUS HYPERCOMPRESSIONIS IN FLUIDIS DEJSTVA VISOKOG PRITISKA U TECNOSTIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:02:01.155Z",
+          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -112390,8 +113200,8 @@
       "naziv": "Simptom 555",
       "opis": "ubačavanje infekcije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -112660,11 +113470,16 @@
       "naziv": "Simptom 556",
       "opis": "upala srednjeg uva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H65.9",
+        "naziv": "OTITIS MEDIA NON SUPPURATIVA, NON SPECIFICATA NEGNOJNO ZAPALJ. SRED. UVA, NEOZNAC. OTITIS MEDIA SUPPURATIVA GNOJNO ZAPALJENJE SREDNJEG UVA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:02:01.155Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -112930,8 +113745,8 @@
       "naziv": "Simptom 557",
       "opis": "vrtoglavica i tinitus",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R56.0",
+        "naziv": "Vrtoglavice i nesvestice Instabilitas et vertigo Nestabilnost i vrtoglavica",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -114010,8 +114825,8 @@
       "naziv": "Simptom 561",
       "opis": "poremećaj ravnoteže",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I47.9",
+        "naziv": "Ekstrasistolije Extrasystolae atriales Extrasystolae supraventricularis Pretkomorni poremećaji ritma Extrasystolae nodalis Nodusni poremećaj ritma srca Extrasystolae ventricularis Komorni poremećaj ritma srca Extrasystolae alia, NOS Drugi poremećaj ritma srca, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -114280,8 +115095,8 @@
       "naziv": "Simptom 562",
       "opis": "usled prehlade ili alergije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T48.5",
+        "naziv": "REMEDIA CONTRA FRIGUS COMMUNE LEKOVI PROTIV PREHLADE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -115630,8 +116445,8 @@
       "naziv": "Simptom 567",
       "opis": "akademska podrška",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -115900,8 +116715,8 @@
       "naziv": "Simptom 568",
       "opis": "razvoj socijalnih veština",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z35.7",
+        "naziv": "KONTROLA TRUDNOCE KOJA JE U VISOKOM RIZIKU ZBOG SOCIJALNIH PROBLEMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -117250,11 +118065,16 @@
       "naziv": "Simptom 573",
       "opis": "senzorineuralni gubitak sluha",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "H80.9",
+        "naziv": "Iznenadni gubitak sluha, neoznačeno (laesio n. cochlearis) Surditas idiopathica acuta Naglo nastala samopojavna gluvoća",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:02:01.156Z",
+          "confidence": 0.35
         }
       },
       "psihosomatika": {
@@ -117790,8 +118610,8 @@
       "naziv": "Simptom 575",
       "opis": "upala crevne sluznice",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K56.2",
+        "naziv": "Crevne adhezije sa opstrukcijom Adhaesiones intestini obstructionales Crevne priraslice sa smetnjama u prolaznosti",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -118600,11 +119420,16 @@
       "naziv": "Simptom 578",
       "opis": "podsticanje apetita",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R63.0",
+        "naziv": "ANOREXIA GUBITAK APETITA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:02:01.156Z",
+          "confidence": 0.85
         }
       },
       "psihosomatika": {
@@ -119410,8 +120235,8 @@
       "naziv": "Simptom 581",
       "opis": "umirenje creva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K56.6",
+        "naziv": "Divertikuli tankog creva Diverticulosis intestini tenuis non perforans sine abscessu Divertikuloza tankog creva bez proboja i zagnoja Diverticulosis intestini tenuis perforans cum abscessu Divertikuli tankog creva sa probojem i zagnojem",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -119680,8 +120505,8 @@
       "naziv": "Simptom 582",
       "opis": "upala pankreasa",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C25.0",
+        "naziv": "Maligna neoplazma pankreasa, neoznačeni deo Neoplasma malignum pancreatis, non specificatum Zloćudni tumor gušterače, neoznačen",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -120220,8 +121045,8 @@
       "naziv": "Simptom 584",
       "opis": "regulisanje creva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K56.6",
+        "naziv": "Divertikuli tankog creva Diverticulosis intestini tenuis non perforans sine abscessu Divertikuloza tankog creva bez proboja i zagnoja Diverticulosis intestini tenuis perforans cum abscessu Divertikuli tankog creva sa probojem i zagnojem",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -120760,8 +121585,8 @@
       "naziv": "Simptom 586",
       "opis": "regulisanje crevnih funkcija",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "J94.9",
+        "naziv": "Plućna insuficijencija kao posledica traume i hiruške intervencije Insufficientia pulmonis acuta post operationem thoracalem Akutna nedovoljna funkcija pluća posle operacije grudnog koša Insuffitientia pulmonis acuta post operationem extrathoracalem Akutna nedovoljna funkcija pluća posle operacije van grudnog koša Insufficientia pulmonis postoperativa chronica Hronično popuštanje funkcije pluća posle operacije Syndroma distress respiratoria ad adultum Sindrom poremećenog disanja kod odraslih osoba",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -121030,11 +121855,16 @@
       "naziv": "Simptom 587",
       "opis": "upala debelog creva",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K51.9",
+        "naziv": "COLITIS ULCEROSA, NON SPECIFICATA ZAPALJENJE DEBELOG CREVA, NEOZNACENO GASTROENTERITIS, ILEITIS ET COLITIS NON INFECTIVA ALIA DRUGA NEZAR.ZAP.ŽEL.,TAN.CREVA I DEB.CRE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:02:01.157Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -121300,8 +122130,8 @@
       "naziv": "Simptom 588",
       "opis": "podrška varenju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -122110,11 +122940,16 @@
       "naziv": "Simptom 591",
       "opis": "bol sinusa usled pritiska",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T70.4",
+        "naziv": "EFFECTUS HYPERCOMPRESSIONIS IN FLUIDIS DEJSTVA VISOKOG PRITISKA U TECNOSTIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:02:01.157Z",
+          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -122380,8 +123215,8 @@
       "naziv": "Simptom 592",
       "opis": "ravnoteža tečnosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E56.1",
+        "naziv": "Poremećaji tečnosti, elektrolita i acido-bazne ravnoteze Dehydratio et hypovolaemia Smanjenje količine vode i zapremine krvi Disordines fluidi, electrolyti et aequilibrii acidobasis alii Drugi poremećaji tečnosti, elektrolita i kiselo-bazne ravnoteze 276..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -122920,8 +123755,8 @@
       "naziv": "Simptom 594",
       "opis": "poboljšanje oksigenacije",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z96.2",
+        "naziv": "PRISUSTVO IMPLANTATA ZA POBOLJŠANJE SLUHA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -124270,11 +125105,16 @@
       "naziv": "Simptom 599",
       "opis": "uravnoteženje pritiska",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T70.4",
+        "naziv": "EFFECTUS HYPERCOMPRESSIONIS IN FLUIDIS DEJSTVA VISOKOG PRITISKA U TECNOSTIMA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "INJURY",
+        "ai": {
+          "ts": "2026-02-26T17:02:01.157Z",
+          "confidence": 0.5
         }
       },
       "psihosomatika": {
@@ -125080,8 +125920,8 @@
       "naziv": "Simptom 602",
       "opis": "podrška cirkulaciji",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -125620,8 +126460,8 @@
       "naziv": "Simptom 604",
       "opis": "jačanje kostiju",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S02.6",
+        "naziv": "Višestruki prelomi kostiju lobanje ili lica sa drugim kostima Fractura cranii et fractura ossis faciei multiplex Višestruki prelom lobanje i prelom kosti lica Fracturae cranii et fractura ossium faciei aliorum Prelomi lobanje i drugih kostiju lica Fractura partium ossium cranii et fractura ossium faciei NOS Prelom neoznačenog dela kostiju lobanje i prelom kostiju lica",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -126160,8 +127000,8 @@
       "naziv": "Simptom 606",
       "opis": "podrška apsorpciji",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z63.2",
+        "naziv": "NEODGOVARAJUCA PODRŠKA PORODICE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -126700,8 +127540,8 @@
       "naziv": "Simptom 608",
       "opis": "energija i nervi",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S03.0",
+        "naziv": "Laesions traumaticae nervorum cranialium Laesio traumatica nervi optici et tractus optici Laesio traumatica nervi oculomotorii Laesio traumatica nervi trochlearis Laesio traumatica nervi trigemini Laesio traumatica nervi abducentis Laesio traumatica nervi facialis Laesio traumatica nervi acustici Laesio traumatica nervi accessorii Laesio traumatica nervorum aliorum (IX,XII,I,X) Laesio traumatica nervi cranialis,NOS S04..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -126970,8 +127810,8 @@
       "naziv": "Simptom 609",
       "opis": "jačanje imuniteta",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "D83.9",
+        "naziv": "IMMUNODEFICIENTIA VARIABILIS COMMUNIS, NON SPECIFICATA OPŠ.PROM.SMANJ.IMUNITETA ,NEOZNACENO IMMUNODEFICIENTIAE ALIAE DRUGA SMANJENJA IMUNITETA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -127334,8 +128174,8 @@
       "naziv": "Simptom 611",
       "opis": "Stimulacija resonance atoma gvožđa za bolju ugradnju u hemoglobin.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R82.3",
+        "naziv": "HAEMOGLOBINURIA HEMOGLOBIN U MOKRACI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -127428,8 +128268,8 @@
       "naziv": "Simptom 612",
       "opis": "Frekvencije koje pomažu ćelijama da efikasnije koriste kalcijum iz krvotoka.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "I98.8*",
+        "naziv": "MORBI SYSTEMATIS CIRCULATORII SPECIFICATI, ALII IN MORBIS ALIIS DR.OZNAC.BOLESTI KRVOTOKA U DR.BOLESTIMA MORBI SYSTEMATIS CIRCULATORII ALII, NON SPECIFICATI NEOZNACENE BOLESTI KRVOTOKA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -129529,11 +130369,16 @@
       "naziv": "Simptom 623",
       "opis": "odgovorno ponašanje",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z72.5",
+        "naziv": "VISOKO RIZICNO SEKSUALNO PONAŠANJE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:02:06.872Z",
+          "confidence": 0.75
         }
       },
       "psihosomatika": {
@@ -130725,8 +131570,8 @@
       "naziv": "Simptom 628",
       "opis": "Set za podršku slezini i jetri kod EBV infekcije i hroničnog umora.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -131167,8 +132012,8 @@
       "naziv": "Simptom 632",
       "opis": "Frekvencijski set namenjen jačanju T-ćelija i smanjenju replikacije virusa u krvi.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "C90.2",
+        "naziv": "PLASMOCYTOMA EXTRAMEDULIARE PLAZMOCITOM VAN KOŠTANE SRŽI LEUCAEMIA LYMPHOIDES LEUKE. LIMF. CELIJA KRVI-ZLO. BOLE. KRVI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -131294,8 +132139,8 @@
       "naziv": "Simptom 633",
       "opis": "Napredni set koji targetira sve faze Borrelia burgdorferi infekcije, uključujući cistične forme.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "O23.9",
+        "naziv": "Infekcije genitourinarnog trakta u trudnoći Infectiones tractus urogenitalis in graviditate Infekcije mokraćno-polnih puteva u trudnoći",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -131421,8 +132266,8 @@
       "naziv": "Simptom 634",
       "opis": "Specifične frekvencije za podršku telu kod infekcija uzrokovanih protozoama (Plasmodium).",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "B60.8",
+        "naziv": "MORBI PROTOZOICI ALII,SPECIFICATI DRUGE OZNACENE BOLESTI UZR. PROTOZOAMA MORBUS PROTOZOICUS,NON SPECIFICATUS BOLEST UZROK.PROTOZOAMA,NEOZNACENA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -131526,8 +132371,8 @@
       "naziv": "Simptom 635",
       "opis": "Neutralizacija spora plesni u organizmu i detoksikacija od njihovih nusproizvoda.",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "E70.3",
+        "naziv": "ALBINISMUS NEDOSTATAK PIGMENTA U ORGANIZMU",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -132017,8 +132862,8 @@
       "naziv": "Simptom 638",
       "opis": "upala sluznice materice",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N81.4",
+        "naziv": "Leukoplakija grlica materice Leucoplakia cervicis uteri Bela pločasta zadebljanja sluznice grlica materice",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -132287,8 +133132,8 @@
       "naziv": "Simptom 639",
       "opis": "dismenoreja",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N94.1",
+        "naziv": "Dismenoreja Dysmenorrhoea primaria Dysmenorrhoea secundaria Dysmenorrhoea, NOS Bolna menstruacija (primarna, sekundarna i neoznačena)",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -132557,8 +133402,8 @@
       "naziv": "Simptom 640",
       "opis": "benigni tumori materice",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "N81.6",
+        "naziv": "Prolaps uterusa bez spomena prolapsa vaginalnog zida Prolapsus uteri gradus primus et secundus Nepotpuno ispadanje materice Prolapsus uteri gradus tertius Potpuno ispadanje materice Prolapsus uteri NOS Ispadanje materice, neoznačeno",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -132827,11 +133672,16 @@
       "naziv": "Simptom 641",
       "opis": "podrška plodnosti",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "Z31.6",
+        "naziv": "OPŠTA KONSULTACIJA I SAVET O PLODNOSTI",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "FACTOR",
+        "ai": {
+          "ts": "2026-02-26T17:02:06.873Z",
+          "confidence": 0.6
         }
       },
       "psihosomatika": {
@@ -133097,8 +133947,8 @@
       "naziv": "Simptom 642",
       "opis": "kandida, bakterijska vaginoza",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "A48.8",
+        "naziv": "MORBI BACTERIALES ALII, SPECIFICATI DRUGE OZNACENE BAKTERIJSKE BOLESTI INFECTIO BACTERIALIS, LOCI NON SPECIFICATI BAKTERIJSKA INFEKCIJA NEOZNAC.LOKALIZAC.",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -134128,11 +134978,16 @@
       "naziv": "Simptom 647",
       "opis": "upala desni",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K05.0",
+        "naziv": "Hronični gingivitis Gingivitis chronica Hronično zapaljenje desni",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:02:06.873Z",
+          "confidence": 0.65
         }
       },
       "psihosomatika": {
@@ -134398,8 +135253,8 @@
       "naziv": "Simptom 648",
       "opis": "postoperativni bol",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "T88.2",
+        "naziv": "Postoperativni šok Afflictus (shock) per sive post proceduram [ok za vreme ili posle medicinske intervencije",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -134668,11 +135523,16 @@
       "naziv": "Simptom 649",
       "opis": "osetljivost na toplo/hladno",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R20.3",
+        "naziv": "HYPERAESTHESIA POJACANA OSETLJIVOST",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "SYMPTOM",
+        "ai": {
+          "ts": "2026-02-26T17:02:06.873Z",
+          "confidence": 0.4
         }
       },
       "psihosomatika": {
@@ -135208,8 +136068,8 @@
       "naziv": "Simptom 651",
       "opis": "noćno stiskanje zuba",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R09.2",
+        "naziv": "BOLESTI SISTEMA ZA VARENJE (K00-K93) Poremećaj u razvoju i izbijanju zuba Disordines evolutionis et eruptionis dentijm 520.. K00.. Zubni karijes (kvar zuba) Caries dentium Erozija zuba Erosio dentium Nagrizanje zuba K02..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -135478,8 +136338,8 @@
       "naziv": "Simptom 652",
       "opis": "bol vilice",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "S02.7",
+        "naziv": "Dislokacija ( iščašenje ) vilice Luxatio mandibulae Ičšašenje donje vilice 830..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
@@ -135748,11 +136608,16 @@
       "naziv": "Simptom 653",
       "opis": "upala pulpe",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "K03.2",
+        "naziv": "Pulpitis, pulpalni apsces Pulpitis, Abscessus pulpae dentis Zapaljenje",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
+        },
+        "kind": "DX",
+        "ai": {
+          "ts": "2026-02-26T17:02:06.873Z",
+          "confidence": 0.8
         }
       },
       "psihosomatika": {
@@ -136018,8 +136883,8 @@
       "naziv": "Simptom 654",
       "opis": "ublažavanje bola zuba",
       "mkb10": {
-        "sifra": "",
-        "naziv": "",
+        "sifra": "R09.2",
+        "naziv": "BOLESTI SISTEMA ZA VARENJE (K00-K93) Poremećaj u razvoju i izbijanju zuba Disordines evolutionis et eruptionis dentijm 520.. K00.. Zubni karijes (kvar zuba) Caries dentium Erozija zuba Erosio dentium Nagrizanje zuba K02..",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""

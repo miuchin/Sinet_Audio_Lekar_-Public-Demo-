@@ -23400,12 +23400,16 @@
       "naziv": "Simptom 117",
       "opis": "Napredni set za regulaciju ose kortizol-DHEA i oporavak nadbubrežnih žlezda nakon dugotrajnog stresa.",
       "mkb10": {
-        "sifra": "A18.7+",
+        "sifra": "A18.7",
         "naziv": "TUBERCUIOSIS GLANDULARUM SUPRARENALIUM TUBERKULOZA NADBUBREŽNIH ŽLEZDA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        }
+        },
+        "sifra_raw": "A18.7+",
+        "dagger": true,
+        "asterisk": false,
+        "usage": "dagger"
       },
       "psihosomatika": {
         "uzrok": "",
@@ -23859,12 +23863,16 @@
       "naziv": "Simptom 122",
       "opis": "Popravka integriteta biopolja nakon bolesti, trauma ili emocionalnih šokova.",
       "mkb10": {
-        "sifra": "M73.8*",
+        "sifra": "M73.8",
         "naziv": "MORBI TEXTUUM MOLLIUM IN MORBIS ALIIS DRUGE BOLESTI MEKIH TKIVA U DRUG.BOLESTI MORBI ARTICULL HUMERI BOLESTI ZGLOBA RAMENJACE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        }
+        },
+        "sifra_raw": "M73.8*",
+        "dagger": false,
+        "asterisk": true,
+        "usage": "aster"
       },
       "psihosomatika": {
         "uzrok": "",
@@ -29654,12 +29662,16 @@
       "naziv": "Simptom 146",
       "opis": "iscrpljenost nadbubrežnih žlezda",
       "mkb10": {
-        "sifra": "A18.7+",
+        "sifra": "A18.7",
         "naziv": "TUBERCUIOSIS GLANDULARUM SUPRARENALIUM TUBERKULOZA NADBUBREŽNIH ŽLEZDA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        }
+        },
+        "sifra_raw": "A18.7+",
+        "dagger": true,
+        "asterisk": false,
+        "usage": "dagger"
       },
       "psihosomatika": {
         "uzrok": "",
@@ -33452,12 +33464,16 @@
       "naziv": "Simptom 166",
       "opis": "Set za otčepljivanje limfnih čvorova nakon infekcija ili dugotrajne bolesti.",
       "mkb10": {
-        "sifra": "M73.8*",
+        "sifra": "M73.8",
         "naziv": "MORBI TEXTUUM MOLLIUM IN MORBIS ALIIS DRUGE BOLESTI MEKIH TKIVA U DRUG.BOLESTI MORBI ARTICULL HUMERI BOLESTI ZGLOBA RAMENJACE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        }
+        },
+        "sifra_raw": "M73.8*",
+        "dagger": false,
+        "asterisk": true,
+        "usage": "aster"
       },
       "psihosomatika": {
         "uzrok": "",
@@ -60638,12 +60654,16 @@
       "naziv": "Simptom 293",
       "opis": "Podrška eliminaciji aluminijumskih soli i drugih stabilizatora iz limfnog i nervnog sistema.",
       "mkb10": {
-        "sifra": "A17.9+",
+        "sifra": "A17.9",
         "naziv": "TUBERCULOSIS SYSTEMATIS NERVOSI, NON SPECIFICATA TUBERKULOZA NERVNOG SISTEMA, NEOZNACENA TUBERCULOSIS ORGANORUM ALIORUM TUBERKULOZA DRUGIH ORGANA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        }
+        },
+        "sifra_raw": "A17.9+",
+        "dagger": true,
+        "asterisk": false,
+        "usage": "dagger"
       },
       "psihosomatika": {
         "uzrok": "",
@@ -86226,12 +86246,16 @@
       "naziv": "Simptom 422",
       "opis": "kasni stadijum bolesti",
       "mkb10": {
-        "sifra": "M73.8*",
+        "sifra": "M73.8",
         "naziv": "MORBI TEXTUUM MOLLIUM IN MORBIS ALIIS DRUGE BOLESTI MEKIH TKIVA U DRUG.BOLESTI MORBI ARTICULL HUMERI BOLESTI ZGLOBA RAMENJACE",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        }
+        },
+        "sifra_raw": "M73.8*",
+        "dagger": false,
+        "asterisk": true,
+        "usage": "aster"
       },
       "psihosomatika": {
         "uzrok": "",
@@ -102826,12 +102850,16 @@
       "naziv": "Simptom 510",
       "opis": "pokretljivost zglobova",
       "mkb10": {
-        "sifra": "A17.0+",
+        "sifra": "A17.0",
         "naziv": "TBC kostiju i zglobova, neoznačena Tuberculosis ossium et articulorum Tuberkuloza kostiju i zglobova",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        }
+        },
+        "sifra_raw": "A17.0+",
+        "dagger": true,
+        "asterisk": false,
+        "usage": "dagger"
       },
       "psihosomatika": {
         "uzrok": "",
@@ -127604,12 +127632,16 @@
       "naziv": "Simptom 612",
       "opis": "Frekvencije koje pomažu ćelijama da efikasnije koriste kalcijum iz krvotoka.",
       "mkb10": {
-        "sifra": "I98.8*",
+        "sifra": "I98.8",
         "naziv": "MORBI SYSTEMATIS CIRCULATORII SPECIFICATI, ALII IN MORBIS ALIIS DR.OZNAC.BOLESTI KRVOTOKA U DR.BOLESTIMA MORBI SYSTEMATIS CIRCULATORII ALII, NON SPECIFICATI NEOZNACENE BOLESTI KRVOTOKA",
         "izvor": {
           "sistem": "ICD-10 / MKB-10",
           "url": ""
-        }
+        },
+        "sifra_raw": "I98.8*",
+        "dagger": false,
+        "asterisk": true,
+        "usage": "aster"
       },
       "psihosomatika": {
         "uzrok": "",

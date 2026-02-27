@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SINET Audio Lekar — Funkcionalnosti (detaljno)</title>
+  <style>
+    :root{
+      --bg:#fbfcff; --card:#fff; --text:#172033; --muted:#5b667a; --line:#e8ecf3;
+      --accent:#3b82f6; --ok:#22c55e; --warn:#f59e0b; --shadow:0 12px 28px rgba(16,24,40,.08);
+      --r:18px; --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans",sans-serif;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.55}
+    header, main, footer{max-width:1080px;margin:0 auto;padding:18px}
+    .hero{background:linear-gradient(90deg, rgba(59,130,246,.12), rgba(34,197,94,.10)); border:1px solid var(--line);
+      border-radius:var(--r); box-shadow:var(--shadow); padding:18px}
+    h1{margin:0 0 6px;font-size:1.65rem}
+    .sub{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+    @media(min-width:980px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+    h2{margin:0 0 10px;font-size:1.15rem}
+    h3{margin:14px 0 8px;font-size:1.02rem}
+    ul{margin:8px 0 8px 20px}
+    li{margin:6px 0}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:#f6f8fd;color:var(--muted);
+      font-size:.86rem;margin-right:6px;margin-top:6px;white-space:nowrap}
+    .pill.ok{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.28);color:#166534}
+    .pill.warn{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.28);color:#92400e}
+    .kbd{font-family:var(--mono);font-size:.92em;background:#f3f4f6;border:1px solid #e5e7eb;padding:2px 6px;border-radius:8px}
+    table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+    th,td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+    th{background:#f6f8fd}
+    tr:last-child td{border-bottom:none}
+    .note{border-left:4px solid var(--accent);background:rgba(59,130,246,.06);padding:10px 12px;border-radius:12px;margin-top:10px}
+    .small{font-size:.92rem;color:var(--muted)}
+    a{color:var(--accent)}
+  </style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <h1>SINET Audio Lekar — detaljan opis funkcionalnosti</h1>
+    <p class="sub">Tehnički pregled za korisnike i čitaoce. Datum: <strong>26. februar 2026.</strong></p>
+    <div>
+      <span class="pill ok">Offline-first</span>
+      <span class="pill ok">Besplatan</span>
+      <span class="pill ok">Mobile-first</span>
+      <span class="pill ok">Izveštaji + export</span>
+      <span class="pill ok">MKB-10/ICD-10 organizacija</span>
+      <span class="pill warn">Informativno (nije dijagnostika)</span>
+    </div>
+  </div>
+</header>
+
+<main class="grid">
+
+  <section class="card">
+    <h2>1) Šta je SINET Audio Lekar</h2>
+    <p>
+      SINET Audio Lekar je <strong>offline</strong> (ili minimalno-online) aplikacija za
+      organizovanje zdravstveno-informativnih zapisa i protokola, sa audio plejerom za frekvencijske sesije.
+      Dizajniran je da radi na telefonu i desktop-u, bez obaveznih naloga i bez cloud zavisnosti.
+    </p>
+    <div class="note">
+      <strong>Bezbednosni okvir:</strong> Aplikacija ne postavlja dijagnoze i ne zamenjuje lekara.
+      Sadržaj se prikazuje kao informativno/edukativno-organizacioni materijal, uz jasne napomene i izvore gde su dostupni.
+    </div>
+
+    <h3>2) Katalog tema / simptoma (SINET STL)</h3>
+    <ul>
+      <li><strong>Strukturisani katalog</strong> u fajlu <span class="kbd">SINET_STL.json</span>.</li>
+      <li>Svaka stavka ima polja: <span class="kbd">naziv</span>, <span class="kbd">opis</span>, psihosomatika, afirmacija, molitva/duhovnost, narodni lekovi, akupresura, i lista <span class="kbd">frekvencije[]</span>.</li>
+      <li>Brza pretraga i filtriranje (naziv/ključne reči).</li>
+      <li>Offline pregled — korisnik može da “nosi biblioteku” sa sobom.</li>
+    </ul>
+
+    <h3>3) MKB-10 / ICD-10 sloj (organizacija i pretraga)</h3>
+    <ul>
+      <li>Stavke mogu imati <span class="kbd">mkb10</span> polje (šifra/naziv/kind/confidence).</li>
+      <li>Ugrađen je proces dopune šifarnika ka punom ICD-10 (WHO ClaML), sa normalizacijom <span class="kbd">+/*</span> varijanti (dagger/asterisk).</li>
+      <li>Pravilo kvaliteta: wellness/duhovne/protokol stavke se označavaju kao <span class="kbd">NONE / NON_ICD</span>.</li>
+    </ul>
+
+    <p class="small">
+      Napomena o licenci: WHO ICD-10 nazivnik je licenciran; javna redistribucija punog seta zahteva proveru uslova.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>4) Audio plejer i protokoli sesija</h2>
+
+    <h3>A) Frekvencije i “Queue”</h3>
+    <ul>
+      <li>Svaka stavka ima listu frekvencija (Hz) koje korisnik može da pusti pojedinačno ili kao sekvencu (Queue).</li>
+      <li>Queue se može formirati ručno (od više stavki) ili iz jedne teme/simptoma.</li>
+      <li>Kontrole: start/pause/stop, osnovna jačina zvuka, stabilizacija (limiter/cap) gde je dostupno.</li>
+    </ul>
+
+    <h3>B) Loop i ponavljanje (za starije korisnike — jasno i odmah)</h3>
+    <ul>
+      <li>Default segment loop (npr. 40 min po segmentu, po dogovoru projekta).</li>
+      <li>Opcija <strong>“Ponovi N puta”</strong> sa dva moda:
+        <ul>
+          <li>(A) ponovi izabrani simptom/protokol (default „lekarski“ slučaj)</li>
+          <li>(B) ponovi celu Queue listu</li>
+        </ul>
+      </li>
+      <li>Preporuke prikazuju: trajanje po frekvenciji, uzastopni loop count, dnevna ponavljanja (broj dana), pauzu između ciklusa (u danima).</li>
+    </ul>
+
+    <h3>C) Model A — održiv opis frekvencija (što korisnicima trenutno najviše treba)</h3>
+    <ul>
+      <li>Opis frekvencije se vodi u jednom centralnom rečniku: <span class="kbd">meta.freq_catalog</span> u <span class="kbd">SINET_STL.json</span>.</li>
+      <li>UI prikazuje opis na frekvenciji ovim prioritetom:
+        <ol>
+          <li>ako je <span class="kbd">frekvencije[i].opis</span> popunjen → koristi to</li>
+          <li>inače koristi <span class="kbd">meta.freq_catalog[hz].opis</span></li>
+        </ol>
+      </li>
+      <li>Rezultat: nema dupliranja teksta u 9k+ mesta, a korisnik dobija objašnjenje i (kad postoji) izvor.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>5) AI Upitnik / Anamneza (strukturisani izveštaji)</h2>
+    <p>
+      AI Upitnik služi da korisnika vodi kroz <strong>strukturisana pitanja</strong> (simptomi, trajanje, intenzitet, okidači, terapije, navike),
+      a zatim generiše <strong>pregledan izveštaj</strong> za korisničku arhivu ili deljenje sa lekarom.
+    </p>
+    <ul>
+      <li>Standardizovan izlaz: sažetak, mogući faktori, “red flags” (kada obavezno lekar), i korisne napomene.</li>
+      <li>Ne radi dijagnozu; izveštaj je organizacioni i informativni.</li>
+      <li>Može da se štampa / sačuva kao PDF.</li>
+    </ul>
+    <div class="note">
+      <strong>Prednost:</strong> korisnik dobija jasno strukturisan zapis (često nedostaje kod klasičnih “frekvencijskih” aplikacija).
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>6) Backup / Restore / prenos na drugi uređaj</h2>
+    <ul>
+      <li>Backup omogućava čuvanje: kataloga (verzije), korisničkih podešavanja, upitnika/anamneza i generisanih izveštaja (zavisno od build-a).</li>
+      <li>Restore omogućava vraćanje stanja aplikacije posle resetovanja browser storage-a ili prelaska na drugi uređaj.</li>
+      <li>Format je otvoren (JSON/ZIP), pogodan za arhivu i verzionisanje.</li>
+    </ul>
+    <p class="small">
+      Tehnička napomena: mobilni browseri ponekad brišu storage (cache/data) pri manjku prostora; zato je ručni backup važna “feature”, ne luksuz.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>7) Export, print i “dokazivost”</h2>
+    <table>
+      <thead><tr><th>Funkcija</th><th>Šta dobija korisnik</th><th>Zašto je bitno</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Export (JSON)</strong></td>
+          <td>mašinski čitljiv zapis sesije/kataloga/izveštaja</td>
+          <td>arhiva, integracija, lako deljenje</td>
+        </tr>
+        <tr>
+          <td><strong>Print/PDF</strong></td>
+          <td>format za čitanje i štampu</td>
+          <td>stariji korisnici, “offline dosije”, dokumentacija</td>
+        </tr>
+        <tr>
+          <td><strong>Izvori</strong></td>
+          <td>link/autor/delo/licenca gde je dostupno</td>
+          <td>transparentnost i odgovornost</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>8) Privatnost i bezbednost (praktično)</h2>
+    <ul>
+      <li>Offline-first: aplikacija može raditi bez slanja podataka na server (zavisno od hostovanja).</li>
+      <li>Nema obavezne registracije.</li>
+      <li>Podaci su lokalni (korisnik kontroliše backup fajlove).</li>
+      <li>Jasno označavanje “medicinski vs wellness/duhovno” kroz <span class="kbd">kind</span> i <span class="kbd">NONE</span> pravilo.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>9) Roadmap (transparentno: šta je sledeće)</h2>
+    <ul>
+      <li>Širenje <span class="kbd">freq_catalog</span> opisima i izvorima (prioritet: najčešće frekvencije u katalogu).</li>
+      <li>Podsetnici/alarms (u narednom release-u, po planu).</li>
+      <li>QA dashboard: “low confidence” mapiranja + konflikti (ICD overlay).</li>
+      <li>Bolja pristupačnost: veliki font, visoki kontrast (u svetloj paleti), čitljivost na telefonu.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <p class="small">
+    © SINET — dokument za informativnu upotrebu. Nije medicinski savet.
+  </p>
+</footer>
+</body>
+</html>

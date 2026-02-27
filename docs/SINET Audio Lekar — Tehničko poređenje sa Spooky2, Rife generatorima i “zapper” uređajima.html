@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SINET Audio Lekar — Tehničko poređenje sa Spooky2, Rife generatorima i “zapper” uređajima</title>
+  <style>
+    :root{
+      --bg:#fbfcff;
+      --card:#ffffff;
+      --text:#182033;
+      --muted:#5b667a;
+      --line:#e8ecf3;
+      --accent:#3b82f6;
+      --accent2:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --shadow: 0 12px 28px rgba(16,24,40,.08);
+      --radius: 18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.55}
+    header{
+      padding:28px 18px 10px;
+      max-width:1040px; margin:0 auto;
+    }
+    .title{
+      background:linear-gradient(90deg, rgba(59,130,246,.12), rgba(34,197,94,.12));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px 18px;
+      box-shadow: var(--shadow);
+    }
+    h1{margin:0 0 6px; font-size:1.55rem}
+    .subtitle{margin:0; color:var(--muted)}
+    main{max-width:1040px; margin:0 auto; padding: 10px 18px 48px}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width: 980px){
+      .grid{grid-template-columns: 1.15fr .85fr}
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px 16px;
+    }
+    h2{margin:0 0 10px; font-size:1.15rem}
+    h3{margin:14px 0 8px; font-size:1.0rem}
+    p{margin:8px 0}
+    ul{margin:8px 0 8px 20px}
+    .pill{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#f6f8fd;
+      color:var(--muted);
+      font-size:.86rem;
+      margin-right:6px;
+      margin-top:6px;
+      white-space:nowrap;
+    }
+    .pill.ok{background:rgba(34,197,94,.12); border-color:rgba(34,197,94,.28); color:#166534}
+    .pill.warn{background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.28); color:#92400e}
+    .pill.bad{background:rgba(239,68,68,.10); border-color:rgba(239,68,68,.26); color:#7f1d1d}
+    .kbd{font-family:var(--mono); font-size:.92em; background:#f3f4f6; border:1px solid #e5e7eb; padding:2px 6px; border-radius:8px}
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background:#fff;
+      font-size:.95rem;
+    }
+    th, td{padding:10px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+    th{background:#f6f8fd; text-align:left}
+    tr:last-child td{border-bottom:none}
+    .small{font-size:.92rem; color:var(--muted)}
+    .note{
+      border-left:4px solid var(--accent);
+      background:rgba(59,130,246,.06);
+      padding:10px 12px;
+      border-radius: 12px;
+      margin-top:10px;
+    }
+    .warnbox{
+      border-left:4px solid var(--warn);
+      background:rgba(245,158,11,.08);
+      padding:10px 12px;
+      border-radius: 12px;
+      margin-top:10px;
+    }
+    .refs a{word-break:break-word}
+    footer{
+      max-width:1040px; margin:0 auto; padding: 0 18px 38px;
+      color:var(--muted); font-size:.92rem;
+    }
+    .muted{color:var(--muted)}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="title">
+    <h1>SINET Audio Lekar — tehničko poređenje sa Spooky2, Rife generatorima i “zapper” uređajima</h1>
+    <p class="subtitle">
+      Fokus: funkcionalnosti, dostupnost, privatnost, održivost podataka i nivo tvrdnji. Datum: <strong>26. februar 2026.</strong>
+    </p>
+    <div>
+      <span class="pill ok">Offline-first</span>
+      <span class="pill ok">Besplatno / dostupno svima</span>
+      <span class="pill ok">Katalog + izveštaji + export</span>
+      <span class="pill warn">Audio (bez specijalnog hardvera)</span>
+      <span class="pill warn">Transparentnost izvora (u izradi dopuna)</span>
+    </div>
+  </div>
+</header>
+
+<main class="grid">
+
+  <section class="card">
+    <h2>1) Kratak kontekst i opseg</h2>
+    <p>
+      Ovo poređenje je napisano za korisnike koji istražuju softvere i uređaje bazirane na “frekvencijama”
+      (audio ili elektromagnetni/električni izlaz). Cilj je da se pokaže <strong>šta ko radi</strong>,
+      <strong>šta je realna isporuka (software/hardware)</strong> i <strong>gde su granice i rizici</strong>.
+    </p>
+
+    <div class="warnbox">
+      <strong>Važna bezbednosna napomena</strong><br/>
+      SINET Audio Lekar je informativno-organizacioni alat i audio plejer. Ne postavlja dijagnoze, ne zamenjuje lečenje i ne treba ga koristiti za odlaganje pregleda ili terapije.
+      Kod uređaja koji obećavaju “lečenje” ozbiljnih bolesti bez kliničkih dokaza, potreban je visok oprez: regulatorna tela često upozoravaju na neodobrene tvrdnje i neregistrovane “medical device” prodaje.
+    </div>
+
+    <h3>2) Šta je SINET Audio Lekar (šta zaista postoji u praksi)</h3>
+    <ul>
+      <li><strong>Offline katalog</strong> simptoma/tema (JSON), sa strukturisanim poljima (opis, napomene, preporuke).</li>
+      <li><strong>MKB-10 / ICD-10 mapiranje</strong> za organizaciju i pretragu (uz konservativna pravila: wellness/protokoli/duhovno → <span class="kbd">NONE</span>).</li>
+      <li><strong>Audio frekvencijski plejer</strong>: lista Hz vrednosti, loop/ponavljanje, session struktura (u okviru web aplikacije).</li>
+      <li><strong>Export</strong> (JSON) i <strong>print/PDF</strong> izveštaji (korisnički “dossier” za offline arhivu i deljenje).</li>
+      <li><strong>Privatnost</strong>: offline rad (bez naloga i bez cloud obaveze — kada je offline build pravilno postavljen).</li>
+      <li><strong>Mobile-first UI</strong>: responsive dizajn i brza upotreba na telefonu.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Trenutna dopuna koja je u toku (podatkovno, ne marketinški):</strong>
+      “Opis frekvencija + izvor” — u katalogu postoje polja, ali se dopunjuju sadržajem da bi korisnik video čemu služi i odakle potiče informacija.
+    </div>
+
+    <h3>3) Kako Spooky2 opisuje svoj sistem (činjenice iz njihovih materijala)</h3>
+    <p class="small">
+      Spooky2 je komercijalni ekosistem sa softverom i hardverom koji podržava više “modova” upotrebe (kontakt/remote/plasma/PEMF/laser, zavisno od kompleta).
+      Njihova dokumentacija i marketing navode i “Remote Mode” (transmisija bez kontakta) i druge opcije. <em>Ovo su njihove tvrdnje/opisi.</em>
+    </p>
+    <ul>
+      <li><strong>Contact Mode</strong>, <strong>Remote Mode</strong>, <strong>PEMF Mode</strong>, <strong>Cold Laser Mode</strong> (kako je navedeno na njihovom sajtu). </li>
+      <li>Remote Mode se opisuje terminima poput “quantum entanglement”/“scalar” u njihovom objašnjenju. </li>
+    </ul>
+
+  </section>
+
+  <aside class="card">
+    <h2>4) “Jedna tabela” — brzi pregled</h2>
+    <table aria-label="Feature matrix">
+      <thead>
+        <tr>
+          <th>Osobina</th>
+          <th>SINET Audio Lekar</th>
+          <th>Spooky2 (Rife ekosistem)</th>
+          <th>Zapper / klasični “Rife generatori”</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Trošak</strong></td>
+          <td><span class="pill ok">Besplatno</span></td>
+          <td><span class="pill warn">Komercijalno</span></td>
+          <td><span class="pill warn">Varira (uređaji)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Rad bez interneta</strong></td>
+          <td><span class="pill ok">Da (offline-first)</span></td>
+          <td><span class="pill warn">Da, ali uz PC/softver + uređaje</span></td>
+          <td><span class="pill warn">Da (uređaj)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tip izlaza</strong></td>
+          <td><span class="pill warn">Audio (zvučni signal)</span></td>
+          <td><span class="pill warn">Razni modovi (zavisno od kompleta)</span></td>
+          <td><span class="pill warn">Električni/EMF (zavisno od uređaja)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Transparentnost podataka</strong></td>
+          <td><span class="pill ok">JSON katalog + export</span></td>
+          <td><span class="pill warn">Softverske baze/presetovi (vendor ekosistem)</span></td>
+          <td><span class="pill warn">Često bez standarda</span></td>
+        </tr>
+        <tr>
+          <td><strong>Bezbednosni profil</strong></td>
+          <td><span class="pill ok">Nizak rizik (audio)</span></td>
+          <td><span class="pill warn">Zavisi od modova i tvrdnji</span></td>
+          <td><span class="pill warn">Zavisi od uređaja</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tvrdnje o lečenju</strong></td>
+          <td><span class="pill ok">Ne (informativno)</span></td>
+          <td><span class="pill warn">Vendor marketing (oprez)</span></td>
+          <td><span class="pill bad">Često neregulisane tvrdnje</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>5) Dokazi i regulatorno (kratko, činjenično)</h3>
+    <p class="small">
+      Više relevantnih medicinskih izvora navodi da Rife mašine nemaju dokaz da leče rak i da nisu odobrene kao terapija u takvoj indikaciji.
+      Takođe, regulatorne institucije upozoravaju na nelegalnu prodaju “anti-cancer” tretmana bez odobrenja.
+    </p>
+  </aside>
+
+  <section class="card">
+    <h2>6) Gde su SINET prednosti (tehnički, “hard facts”)</h2>
+    <h3>A) Dostupnost i suverenitet podataka</h3>
+    <ul>
+      <li><strong>Besplatno</strong> i može da radi offline (nema paywall-a, nema obavezne registracije).</li>
+      <li><strong>Podaci su tvoji</strong>: katalog je u <span class="kbd">SINET_STL.json</span>, lako se arhivira, verzioniše i prenosi.</li>
+      <li><strong>Export/print</strong>: izveštaji (PDF/print) i JSON eksporti olakšavaju dokumentovanje.</li>
+    </ul>
+
+    <h3>B) Jasno razdvajanje: informativno vs medicinski uređaj</h3>
+    <ul>
+      <li>SINET je softver + audio. Ne obećava “lečenje”.</li>
+      <li>To automatski smanjuje regulatorni i bezbednosni rizik u poređenju sa uređajima koji isporučuju struju/EMF i daju medicinske tvrdnje.</li>
+    </ul>
+
+    <h3>C) Strukturisanje znanja (MKB-10/ICD-10)</h3>
+    <ul>
+      <li>MKB-10 mapiranje pomaže da korisnik razume “kako se termin klasifikuje” — bez preuzimanja uloge dijagnostike.</li>
+      <li>Wellness/protokoli/duhovne stavke se eksplicitno označavaju kao <span class="kbd">NONE / NON_ICD</span> (transparentno).</li>
+    </ul>
+
+    <h3>D) Roadmap (jasno označeno kao plan)</h3>
+    <ul>
+      <li>Opis frekvencija + izvor (da korisnik vidi “šta je to” i “odakle potiče”).</li>
+      <li>Bolje preporuke: trajanje, broj ponavljanja, pauze između ciklusa, itd. (dokazivo u UI).</li>
+      <li>Podsetnici/alarms (u sledećim release fazama).</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>7) Referentni linkovi (izvori)</h2>
+    <div class="refs">
+      <p><strong>Spooky2 (vendor materijali)</strong></p>
+      <ul>
+        <li><a href="https://www.spooky2.com/sp/explore-spooky2-hardware/" rel="noopener" target="_blank">Spooky2 — Hardware overview (modes: Contact/Remote/PEMF/Cold Laser)</a></li>
+        <li><a href="https://www.spooky2.com/" rel="noopener" target="_blank">Spooky2 — opis “Remote Mode” (marketing tekst)</a></li>
+      </ul>
+
+      <p><strong>Nezavisni medicinski izvori / regulatorno</strong></p>
+      <ul>
+        <li><a href="https://www.cancerresearchuk.org/about-cancer/treatment/complementary-alternative-therapies/individual-therapies/rife-machine-and-cancer" rel="noopener" target="_blank">Cancer Research UK — Rife machines and cancer (nema dokaza da leče)</a></li>
+        <li><a href="https://www.webmd.com/cancer/cancer-rife-machine-evidence" rel="noopener" target="_blank">WebMD — Rife machines: evidence & FDA status (pregled)</a></li>
+        <li><a href="https://www.fda.gov/consumers/health-fraud-scams/illegally-sold-cancer-treatments" rel="noopener" target="_blank">FDA — Illegally sold cancer treatments (upozorenja o neodobrenim tvrdnjama)</a></li>
+      </ul>
+
+      <p class="small muted">
+        Napomena: “Zapper” je često vezan za Hulda Clark narative; na internetu postoji mnogo marketinških tvrdnji.
+        Za ozbiljne zdravstvene teme oslanjaj se na medicinske izvore i regulatorna saopštenja.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    © SINET — informativni dokument. Ovo nije medicinski savet. Za simptome koji traju, pogoršavaju se ili su alarmantni — konsultuj lekara.
+  </p>
+</footer>
+
+</body>
+</html>

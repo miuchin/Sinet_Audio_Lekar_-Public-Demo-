@@ -1,22 +1,20 @@
-# SINET Audio Lekar — Public Demo
+# SINET — Model A (freq_catalog) drop-in
 
-**Language / Jezik**
-- [README (Srpski)](README_SR.md)
-- [README (English)](README_EN.md)
+## Šta je ovo
+Ovaj ZIP sadrži `SINET_STL.json` već dopunjen sa:
+- `meta.freq_catalog` (početni set od 14 frekvencija sa naziv/opis/izvor/evidence)
 
-## Quick links
-- GitHub repo: https://github.com/miuchin/Sinet_Audio_Lekar_-Public-Demo-
-- Demo (Netlify): https://sinet-audio-lekar-nutri-pro-demo.netlify.app/
+## Gde ide (isto ime fajla, bez promena)
+Zameni fajl:
+`/Sinet_Audio_Lekar_(Public Demo)/data/SINET_STL.json`
 
-## What is this?
-SINET Audio Lekar is an educational/informational PWA-style web app for organizing symptom-oriented audio routines, user protocols, lists/queues, and guided workflows (Tutor / Vodiči), with offline-friendly behavior and export/report tools.
+## Kontrola integriteta
+SHA256:
+`530ae7fb82844ccb8d60948f708029a6a2d5afc161a9d2e48e822faaa9cc2937`
 
-> See the language-specific README files for full details, setup, and usage.
+## VAŽNO
+Da bi se opis frekvencije prikazivao u UI-u, potrebno je da UI koristi fallback:
+- ako je `frekvencije[i].opis` prazno → koristi `meta.freq_catalog[hz].opis`
 
-## Important note
-This project is **not** a medical diagnosis or treatment substitute. See:
-- `DISCLAIMER_MEDICAL_SR_EN.md`
-- `PRIVACY_LOCAL_STORAGE_SR_EN.md`
-
-## Release
-Current packaging target: **v15.7.9.6**
+Minimalni JS primer je u:
+`_docs/freq_catalog_ui_patch_min.js`

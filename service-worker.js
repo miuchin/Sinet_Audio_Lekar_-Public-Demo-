@@ -5,7 +5,7 @@
 */
 
 // v15.7.9.6 — cache key bump (prevents stale SW cache)
-const CACHE_NAME = 'sinet-audio-v15.7.9.6';
+const CACHE_NAME = 'sinet-audio-v15.7.9.6-all1176';
 
 const ASSETS_TO_CACHE = [
   './',
